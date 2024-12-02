@@ -4,17 +4,34 @@
     "rootDir": ".",
     "sourceMap": true,
     "declaration": false,
-    "moduleResolution": "node",
+    "moduleResolution": "Node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "target": "es2015",
+    "target": "ESNext",
     "module": "esnext",
-    "lib": ["es2020", "dom"],
+    "lib": ["es2020", "dom", "dom.iterable"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "strict": true,
+    "noUncheckedIndexedAccess": true,
+    "resolveJsonModule": true,
+    "paths": {
+      "@dj-ui/carbon-ext": ["libs/carbon-ext/src/index.ts"],
+      "@dj-ui/carbon-ext/carbon-button": ["libs/carbon-ext/carbon-button/src/index.ts"],
+      "@dj-ui/carbon-ext/carbon-carousel": ["libs/carbon-ext/carbon-carousel/src/index.ts"],
+      "@dj-ui/carbon-ext/carbon-carousel-card": [
+        "libs/carbon-ext/carbon-carousel-card/src/index.ts"
+      ],
+      "@dj-ui/carbon-ext/carbon-simple-text": ["libs/carbon-ext/carbon-simple-text/src/index.ts"],
+      "@dj-ui/carbon-ext/carbon-table": ["libs/carbon-ext/carbon-table/src/index.ts"],
+      "@dj-ui/carbon-ext/carbon-text-card": ["libs/carbon-ext/carbon-text-card/src/index.ts"],
+      "@dj-ui/carbon-ext/shared": ["libs/carbon-ext/shared/src/index.ts"],
+      "@dj-ui/common": ["libs/common/src/index.ts"],
+      "@dj-ui/core": ["libs/core/src/index.ts"],
+      "@dj-ui/core/js-interpolation-worker": ["libs/core/js-interpolation-worker/src/index.ts"]
+    }
   },
-  "exclude": ["node_modules", "tmp"]
+  "exclude": ["node_modules", "tmp", "**/eslint**.js"]
 }

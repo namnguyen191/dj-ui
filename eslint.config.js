@@ -1,11 +1,36 @@
-const nx = require('@nx/eslint-plugin');
+import nxEslintPlugin from '@nx/eslint-plugin';
+import nx from '@nx/eslint-plugin';
+import eslintConfigPrettier from 'eslint-config-prettier';
+import eslintPluginPrettier from 'eslint-plugin-prettier';
+import eslintPluginSimpleImportSort from 'eslint-plugin-simple-import-sort';
+import jsonParser from 'jsonc-eslint-parser';
 
-module.exports = [
+export default [
+  {
+    ignores: [
+      '**/prettier.config.js',
+      '**/node_modules',
+      '**/eslint*.js',
+      '**/lint-staged.config.js',
+      '**/generated-json-schemas/**',
+    ],
+  },
   ...nx.configs['flat/base'],
   ...nx.configs['flat/typescript'],
   ...nx.configs['flat/javascript'],
   {
-    ignores: ['**/dist'],
+    plugins: {
+      '@nx': nxEslintPlugin,
+      prettier: eslintPluginPrettier,
+      'simple-import-sort': eslintPluginSimpleImportSort,
+    },
+  },
+  {
+    rules: {
+      'prettier/prettier': ['error'],
+      'simple-import-sort/imports': 'error',
+      'simple-import-sort/exports': 'error',
+    },
   },
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
@@ -14,11 +39,19 @@ module.exports = [
         'error',
         {
           enforceBuildableLibDependency: true,
-          allow: ['^.*/eslint(\\.base)?\\.config\\.[cm]?js$'],
+          allow: [],
           depConstraints: [
             {
-              sourceTag: '*',
-              onlyDependOnLibsWithTags: ['*'],
+              sourceTag: 'scope:app',
+              onlyDependOnLibsWithTags: ['scope:core', 'scope:common', 'scope:extension'],
+            },
+            {
+              sourceTag: 'scope:common',
+              onlyDependOnLibsWithTags: ['scope:core'],
+            },
+            {
+              sourceTag: 'scope:extension',
+              onlyDependOnLibsWithTags: ['scope:core', 'scope:common'],
             },
           ],
         },
@@ -27,7 +60,37 @@ module.exports = [
   },
   {
     files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
-    // Override or add rules here
-    rules: {},
+    rules: {
+      indent: 'off',
+      '@typescript-eslint/explicit-function-return-type': 'error',
+      'comma-dangle': 'off',
+      '@typescript-eslint/no-inferrable-types': 'off',
+      'no-extra-semi': 'error',
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          args: 'all',
+          argsIgnorePattern: '^_',
+          caughtErrors: 'all',
+          caughtErrorsIgnorePattern: '^_',
+          destructuredArrayIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          ignoreRestSiblings: true,
+        },
+      ],
+    },
   },
+  {
+    files: ['**/*.json'],
+    rules: {
+      '@nx/dependency-checks': [
+        'error',
+        {
+          ignoredDependencies: ['@nx/devkit'],
+        },
+      ],
+    },
+    languageOptions: { parser: jsonParser },
+  },
+  eslintConfigPrettier,
 ];

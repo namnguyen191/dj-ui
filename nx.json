@@ -1,18 +1,10 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
+  "neverConnectToCloud": true,
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
-    "production": [
-      "default",
-      "!{projectRoot}/.eslintrc.json",
-      "!{projectRoot}/eslint.config.js",
-      "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
-      "!{projectRoot}/tsconfig.spec.json",
-      "!{projectRoot}/jest.config.[jt]s",
-      "!{projectRoot}/src/test-setup.[jt]s",
-      "!{projectRoot}/test-setup.[jt]s"
-    ],
-    "sharedGlobals": []
+    "production": ["default", "!{projectRoot}/.eslintrc.json", "!{projectRoot}/eslint.config.js"],
+    "sharedGlobals": ["{workspaceRoot}/go.work"]
   },
   "targetDefaults": {
     "@angular-devkit/build-angular:application": {
@@ -29,21 +21,20 @@
         "{workspaceRoot}/eslint.config.js"
       ]
     },
-    "@nx/jest:jest": {
+    "@nx/angular:package": {
       "cache": true,
-      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
-      "options": {
-        "passWithNoTests": true
-      },
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "codeCoverage": true
-        }
-      }
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
     },
     "e2e-ci--**/*": {
       "dependsOn": ["^build"]
+    },
+    "stylelint": {
+      "inputs": ["default", "{workspaceRoot}/.stylelintrc(.(json|yml|yaml|js))?"],
+      "cache": true,
+      "options": {
+        "args": ["--allow-empty-input"]
+      }
     }
   },
   "plugins": [
@@ -58,14 +49,35 @@
       "options": {
         "targetName": "lint"
       }
-    }
+    },
+    {
+      "plugin": "nx-stylelint/plugin",
+      "options": {
+        "targetName": "stylelint",
+        "extensions": ["scss"]
+      }
+    },
+    "@nx-go/nx-go"
   ],
   "generators": {
     "@nx/angular:application": {
       "e2eTestRunner": "playwright",
       "linter": "eslint",
+      "style": "scss"
+    },
+    "@nx/angular:library": {
+      "linter": "eslint"
+    },
+    "@nx/angular:component": {
       "style": "scss",
-      "unitTestRunner": "jest"
+      "standalone": true,
+      "changeDetection": "OnPush",
+      "displayBlock": true,
+      "skipTests": true
+    },
+    "@nx/angular:directive": {
+      "skipTests": true,
+      "standalone": true
     }
   }
 }

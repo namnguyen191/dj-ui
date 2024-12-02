@@ -2,5 +2,7 @@
 /dist
 /coverage
 /.nx/cache
-/.nx/workspace-data
 .angular
+
+/.nx/workspace-data
+**/generated-json-schemas/**

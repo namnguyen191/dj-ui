@@ -1,13 +1,15 @@
-const playwright = require('eslint-plugin-playwright');
-const baseConfig = require('../../eslint.config.js');
+import { FlatCompat } from '@eslint/eslintrc';
+import js from '@eslint/js';
+import baseConfig from '../../eslint.config.js';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-module.exports = [
-  playwright.configs['flat/recommended'],
+const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
+const __dirname = path.dirname(__filename); // get the name of the directory
 
-  ...baseConfig,
-  {
-    files: ['**/*.ts', '**/*.js'],
-    // Override or add rules here
-    rules: {},
-  },
-];
+const compat = new FlatCompat({
+  baseDirectory: __dirname,
+  recommendedConfig: js.configs.recommended,
+});
+
+export default [...baseConfig, ...compat.extends('plugin:playwright/recommended')];
