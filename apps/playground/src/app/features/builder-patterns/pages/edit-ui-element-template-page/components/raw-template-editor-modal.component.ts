@@ -99,7 +99,7 @@ export class RawTemplateEditorModalComponent extends BaseModal {
       return;
     }
 
-    await this.#uiElementTemplatesStore.updateOne(latestEditedTemplated);
+    await this.#uiElementTemplatesStore.change(latestEditedTemplated);
     if (!untracked(this.#uiElementTemplatesStore.error)) {
       this.closeModal();
     }

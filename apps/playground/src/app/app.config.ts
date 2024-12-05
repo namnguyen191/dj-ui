@@ -59,10 +59,9 @@ export const appConfig: ApplicationConfig = {
 
         return {
           templatesHandlers: {
-            getLayoutTemplate: (id: string) => from(layoutTemplatesStore.getOne(id)),
-            getUiElementTemplate: (id: string) => from(uiElementTemplatesStore.getOne(id)),
-            getRemoteResourceTemplate: (id: string) =>
-              from(remoteResourceTemplatesStore.getOne(id)),
+            getLayoutTemplate: (id: string) => from(layoutTemplatesStore.get(id)),
+            getUiElementTemplate: (id: string) => from(uiElementTemplatesStore.get(id)),
+            getRemoteResourceTemplate: (id: string) => from(remoteResourceTemplatesStore.get(id)),
           },
           componentLoadersMap: CarbonComponentLoader,
         };

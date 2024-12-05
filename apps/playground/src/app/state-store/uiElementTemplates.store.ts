@@ -1,4 +1,5 @@
-import { computed, inject, untracked } from '@angular/core';
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import { computed, inject } from '@angular/core';
 import {
   patchState,
   signalStore,
@@ -7,7 +8,6 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
-import { setAllEntities, setEntity, withEntities } from '@ngrx/signals/entities';
 import { firstValueFrom } from 'rxjs';
 
 import {
@@ -16,12 +16,7 @@ import {
   UpdateAppUIElementTemplatePayload,
 } from '../services/ui-element-templates-api.service';
 import { AppUIElementTemplate, TemplateInfo } from '../shared/dj-ui-app-template';
-import {
-  setError,
-  setFulfilled,
-  setPending,
-  withRequestStatus,
-} from './request-status-store-feature';
+import { withEntitiesAndLoaders } from './entities-and-loaders.store-feat';
 
 type UIElementTemplatesStoreState = {
   query: {
@@ -35,8 +30,18 @@ const uiElementTemplatesStoreInitialState: UIElementTemplatesStoreState = {
 export const UIElementTemplatesStore = signalStore(
   { providedIn: 'root' },
   withState(uiElementTemplatesStoreInitialState),
-  withEntities<AppUIElementTemplate>(),
-  withRequestStatus(),
+  withEntitiesAndLoaders<
+    AppUIElementTemplate,
+    CreateAppUIElementTemplatePayload,
+    UpdateAppUIElementTemplatePayload
+  >((uiElementTemplatesAPIService = inject(UIElementTemplatesAPIService)) => ({
+    fetchAll: () => firstValueFrom(uiElementTemplatesAPIService.getAllUIElementTemplates()),
+    fetch: (id) => firstValueFrom(uiElementTemplatesAPIService.fetchUIElementTemplate(id)),
+    create: (createPayload) =>
+      firstValueFrom(uiElementTemplatesAPIService.createUIElementTemplate(createPayload)),
+    update: (updatePayload) =>
+      firstValueFrom(uiElementTemplatesAPIService.updateUIElementTemplate(updatePayload)),
+  })),
   withComputed(({ entities, query }) => ({
     allUIElementTemplatesInfo: computed<TemplateInfo[]>(() => {
       return entities().map(({ id, createdAt, updatedAt, name, description }) => ({
@@ -59,62 +64,9 @@ export const UIElementTemplatesStore = signalStore(
       });
     }),
   })),
-  withMethods((store, uiElementTemplatesAPIService = inject(UIElementTemplatesAPIService)) => ({
-    loadAll: async (): Promise<void> => {
-      patchState(store, setPending());
-      try {
-        const allUIElementTemplates = await firstValueFrom(
-          uiElementTemplatesAPIService.getAllUIElementTemplates()
-        );
-        patchState(store, setAllEntities(allUIElementTemplates), setFulfilled());
-      } catch (_error) {
-        setError('Something went wrong fetching UI element templates');
-      }
-    },
-    addOne: async (
-      newUIElementTemplatePayload: CreateAppUIElementTemplatePayload
-    ): Promise<void> => {
-      patchState(store, setPending());
-      try {
-        const createdUIElementTemplate = await firstValueFrom(
-          uiElementTemplatesAPIService.createUIElementTemplate(newUIElementTemplatePayload)
-        );
-        patchState(store, setEntity(createdUIElementTemplate));
-      } catch (_error) {
-        setError('Something went wrong creating UI element template');
-      } finally {
-        patchState(store, setFulfilled());
-      }
-    },
-    updateOne: async (
-      updateUIElementTemplatePayload: UpdateAppUIElementTemplatePayload
-    ): Promise<void> => {
-      patchState(store, setPending());
-      try {
-        const updatedUIElementTemplate = await firstValueFrom(
-          uiElementTemplatesAPIService.updateUIElementTemplate(updateUIElementTemplatePayload)
-        );
-        patchState(store, setEntity(updatedUIElementTemplate));
-      } catch (_error) {
-        setError('Something went wrong updating UI element template');
-      } finally {
-        patchState(store, setFulfilled());
-      }
-    },
+  withMethods((store) => ({
     updateQuery: (query: UIElementTemplatesStoreState['query']): void => {
       patchState(store, { query });
-    },
-    getOne: async (id: string): Promise<AppUIElementTemplate> => {
-      const allTemplates = untracked(store.entities);
-      const existingTemplate = allTemplates.find((tpl) => tpl.id === id);
-      if (existingTemplate) {
-        return existingTemplate;
-      }
-
-      patchState(store, setPending());
-      const fetched = await firstValueFrom(uiElementTemplatesAPIService.fetchUIElementTemplate(id));
-      patchState(store, setEntity(fetched), setFulfilled());
-      return fetched;
     },
   })),
   withHooks({

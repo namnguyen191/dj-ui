@@ -163,6 +163,6 @@ export class NewUIElementPageComponent {
       type: 'CARBON_TABLE',
       options: {},
     };
-    this.#uiElementTemplatesStore.addOne(newUIElementPayload);
+    this.#uiElementTemplatesStore.add(newUIElementPayload);
   }
 }
