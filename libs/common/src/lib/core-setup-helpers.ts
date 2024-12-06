@@ -1,4 +1,11 @@
-import { inject, InjectionToken, Type } from '@angular/core';
+import {
+  EnvironmentProviders,
+  inject,
+  InjectionToken,
+  makeEnvironmentProviders,
+  Provider,
+  Type,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import {
   ActionHookHandlerAndPayloadParserMap,
@@ -6,11 +13,14 @@ import {
   BaseUIElementComponent,
   DataFetchingService,
   EventsService,
+  InterpolationService,
   LayoutTemplate,
   LayoutTemplateService,
   logWarning,
+  RemoteResourceService,
   RemoteResourceTemplate,
   RemoteResourceTemplateService,
+  StateStoreService,
   UIElementFactoryService,
   UIElementLoader,
   UIElementPositionAndSize,
@@ -218,4 +228,21 @@ export const setupDefault = (): void => {
   if (componentLoadersMap) {
     registerComponentLoaders(componentLoadersMap);
   }
+};
+
+export const provideDJUI = (): EnvironmentProviders => {
+  const providers: Provider[] = [
+    LayoutTemplateService,
+    UIElementTemplateService,
+    RemoteResourceTemplateService,
+    EventsService,
+    DataFetchingService,
+    InterpolationService,
+    RemoteResourceService,
+    StateStoreService,
+    UIElementFactoryService,
+    ActionHookService,
+  ];
+
+  return makeEnvironmentProviders(providers);
 };

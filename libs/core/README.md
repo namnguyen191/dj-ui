@@ -20,7 +20,7 @@ npm install @dj-ui/carbon-ext
 
 ### 2. JS runner setup:
 
-The way a web worker can be setup can be different between each projects. So follow your framework guidance for setup. The key idea is to provide the injection token `JS_RUNNER_WORKER` with an instance of a web worker.
+The way a web worker can be setup can be different between each projects. So follow your framework guidance for setup. The key idea is to provide the injection token `CREATE_JS_RUNNER_WORKER` with a function that return an instance of a web worker.
 
 - Add a `tsconfig.worker.json` file at the root of your project:
 
@@ -61,19 +61,19 @@ addEventListener('message', (e) => {
 });
 ```
 
-- Provide the `JS_RUNNER_WORKER` token for your app. This is usually in `app.config.ts`:
+- Provide the `CREATE_JS_RUNNER_WORKER` token for your app. This is usually in `app.config.ts`:
 
 ```js
 import {
   ApplicationConfig,
 } from '@angular/core';
-import { JS_RUNNER_WORKER } from '@dj-ui/core';
+import { CREATE_JS_RUNNER_WORKER } from '@dj-ui/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     {
-      provide: JS_RUNNER_WORKER,
-      useFactory: (): Worker => {
+      provide: CREATE_JS_RUNNER_WORKER,
+      useValue: (): Worker => {
         const worker = new Worker(
           new URL('./js-runner.worker', import.meta.url),
           {

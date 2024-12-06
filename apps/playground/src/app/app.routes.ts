@@ -6,5 +6,12 @@ export const appRoutes: Route[] = [
     loadChildren: () =>
       import('./features/builder-patterns/lib.routes').then((m) => m.builderRoutes),
   },
+  {
+    path: 'idependence-configs-patterns',
+    loadChildren: () =>
+      import('./features/independence-configs-pattern/lib.routes').then(
+        (m) => m.independenceConfigsRoutes
+      ),
+  },
   { path: '**', redirectTo: 'builder-patterns', pathMatch: 'full' },
 ];

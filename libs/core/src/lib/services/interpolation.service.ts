@@ -11,7 +11,7 @@ import { BehaviorSubject, filter, firstValueFrom, map } from 'rxjs';
 import { UnknownRecord } from 'type-fest';
 import { z } from 'zod';
 
-import { INTERPOLATION_REGEX, JS_RUNNER_WORKER } from '../global';
+import { CREATE_JS_RUNNER_WORKER, INTERPOLATION_REGEX } from '../global';
 
 export const ZodInterpolationString = z.string().regex(INTERPOLATION_REGEX);
 
@@ -24,10 +24,11 @@ export class InterpolationService {
 
   constructor() {
     try {
-      this.#jsRunnerWorker = inject(JS_RUNNER_WORKER);
+      const createWorkerRunner = inject(CREATE_JS_RUNNER_WORKER);
+      this.#jsRunnerWorker = createWorkerRunner();
     } catch (_error) {
       throw new Error(
-        'You will need to provide a worker through the JS_RUNNER_WORKER token. Please refer to the docs on how to do this'
+        'You will need to provide a function to create a worker through the CREATE_JS_RUNNER_WORKER token. Please refer to the docs on how to do this'
       );
     }
 

@@ -8,7 +8,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { CarbonComponentLoader } from '@dj-ui/carbon-ext';
 import { COMMON_SETUP_CONFIG, SetupConfigs } from '@dj-ui/common';
-import { CORE_CONFIG, JS_RUNNER_WORKER } from '@dj-ui/core';
+import { CORE_CONFIG, CREATE_JS_RUNNER_WORKER } from '@dj-ui/core';
 import { globalDelayInterceptorFactory } from '@namnguyen191/common-angular-helper';
 import { provideMonacoEditor } from 'ngx-monaco-editor-v2';
 import { from } from 'rxjs';
@@ -34,8 +34,8 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptors([globalDelayInterceptorFactory(100)])),
     provideAnimationsAsync(),
     {
-      provide: JS_RUNNER_WORKER,
-      useFactory: (): Worker => {
+      provide: CREATE_JS_RUNNER_WORKER,
+      useValue: (): Worker => {
         const worker = new Worker(new URL('./js-runner.worker', import.meta.url), {
           name: 'CustomWorker',
           type: 'module',
