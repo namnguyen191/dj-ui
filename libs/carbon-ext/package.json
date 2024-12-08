@@ -1,6 +1,6 @@
 {
   "name": "@dj-ui/carbon-ext",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "type": "module",
   "publishConfig": {
     "access": "public"
@@ -15,8 +15,8 @@
     "@angular/router": "~18.2.0",
     "carbon-components-angular": "^5.56.4",
     "lodash-es": "^4.17.21",
-    "@dj-ui/core": "0.2.0",
-    "@dj-ui/common": "0.2.0",
+    "@dj-ui/core": "0.3.0",
+    "@dj-ui/common": "0.3.0",
     "@namnguyen191/types-helper": "1.0.0-1",
     "zod": "^3.23.8"
   },
