@@ -6,9 +6,8 @@ import {
   EMPTY,
   expand,
   filter,
-  firstValueFrom,
+  first,
   forkJoin,
-  from,
   last,
   map,
   Observable,
@@ -237,23 +236,19 @@ export class RemoteResourceService {
         }
         const curReq = requests[currentRequestIndex] as Request;
         currentRequestIndex++;
-        return from(
-          this.#interpolateSequencedRequestOptions({
-            req: curReq,
-            accumulatedRequestsResults,
-            stateSubscriptionConfig,
-          })
-        ).pipe(
+        return this.#interpolateSequencedRequestOptions({
+          req: curReq,
+          accumulatedRequestsResults,
+          stateSubscriptionConfig,
+        }).pipe(
           switchMap((interpolatedRequestOptions) =>
             this.#dataFetchingService.fetchData(curReq.fetcherId, interpolatedRequestOptions)
           ),
           switchMap((requestResult) =>
-            from(
-              this.#interpolateSequencedRequestResult(
-                curReq,
-                requestResult,
-                accumulatedRequestsResults
-              )
+            this.#interpolateSequencedRequestResult(
+              curReq,
+              requestResult,
+              accumulatedRequestsResults
             )
           ),
           map((interpolatedRequestResult) => [
@@ -272,7 +267,7 @@ export class RemoteResourceService {
     requests: Request[],
     stateSubscriptionConfig?: StateSubscriptionConfig
   ): Observable<unknown[]> {
-    return from(this.#interpolateParallelRequestOptions(requests, stateSubscriptionConfig)).pipe(
+    return this.#interpolateParallelRequestOptions(requests, stateSubscriptionConfig).pipe(
       switchMap((fetcherIdToConfigMap) =>
         forkJoin(
           fetcherIdToConfigMap.map(({ fetcherId, configs }) =>
@@ -313,13 +308,13 @@ export class RemoteResourceService {
       filter((rrt) => rrt.status === 'loaded'),
       switchMap((remoteResourceTemplate) => {
         const stateSubscription = remoteResourceTemplate.config.stateSubscription;
-        let states: Observable<unknown> = of(EMPTY);
+        let states$: Observable<unknown> = of(EMPTY);
         if (stateSubscription) {
-          states = runInInjectionContext(this.#environmentInjector, () =>
+          states$ = runInInjectionContext(this.#environmentInjector, () =>
             getStatesSubscriptionAsContext(stateSubscription)
           );
         }
-        return states;
+        return states$;
       })
     );
 
@@ -337,149 +332,156 @@ export class RemoteResourceService {
       });
   }
 
-  async #interpolateResourceHooks(params: {
+  #interpolateResourceHooks(params: {
     onSuccessHooks: Exclude<RemoteResourceTemplate['options']['onSuccess'], undefined>;
     resourceResult: unknown;
     stateSubscription?: StateSubscriptionConfig;
-  }): Promise<ActionHook[]> {
+  }): Observable<ActionHook[]> {
     const { onSuccessHooks, resourceResult, stateSubscription } = params;
 
-    const resourceHooksInterpolationContext = await runInInjectionContext(
+    const resourceHooksInterpolationContext$ = runInInjectionContext(
       this.#environmentInjector,
-      () =>
-        firstValueFrom(
-          getResourceRequestHooksInterpolationContext(resourceResult, stateSubscription)
-        )
+      () => getResourceRequestHooksInterpolationContext(resourceResult, stateSubscription)
     );
-    try {
-      const interpolatedHooks = (await this.#interpolationService.interpolate({
-        value: onSuccessHooks,
-        context: resourceHooksInterpolationContext,
-      })) as ActionHook[];
+    const interpolatedHooks$ = resourceHooksInterpolationContext$.pipe(
+      switchMap((ctx) =>
+        this.#interpolationService.interpolate({
+          value: onSuccessHooks,
+          context: ctx,
+        })
+      ),
+      catchError(() => {
+        console.warn('Failed to interpolate resource hooks');
+        return of([]);
+      })
+    );
 
-      return interpolatedHooks;
-    } catch (_error) {
-      console.warn('Failed to interpolate resource hooks');
-      return [];
-    }
+    return interpolatedHooks$ as Observable<ActionHook[]>;
   }
 
-  async #interpolateSequencedRequestOptions(args: {
+  #interpolateSequencedRequestOptions(args: {
     req: Request;
     accumulatedRequestsResults: unknown[];
     stateSubscriptionConfig?: StateSubscriptionConfig;
-  }): Promise<UnknownRecord> {
+  }): Observable<UnknownRecord> {
     const { req, accumulatedRequestsResults, stateSubscriptionConfig } = args;
-    const requestConfigInterpolationContext = await firstValueFrom(
-      runInInjectionContext(this.#environmentInjector, () =>
+    const requestConfigInterpolationContext$ = runInInjectionContext(
+      this.#environmentInjector,
+      () =>
         getResourceRequestConfigInterpolationContext(
           accumulatedRequestsResults,
           stateSubscriptionConfig
         )
-      )
     );
-    try {
-      const interpolatedRequestOptions = (await this.#interpolationService.interpolate({
-        value: req.configs,
-        context: requestConfigInterpolationContext,
-      })) as UnknownRecord;
 
-      return interpolatedRequestOptions;
-    } catch (error) {
-      console.warn('Fail to interpolate request options');
-      throw error;
-    }
+    const interpolatedRequestOptions$ = requestConfigInterpolationContext$.pipe(
+      switchMap((ctx) =>
+        this.#interpolationService.interpolate({
+          value: req.configs,
+          context: ctx,
+        })
+      ),
+      catchError((err) => {
+        console.warn(`Fail to interpolate request options: ${err}`);
+        return err;
+      }),
+      first()
+    );
+
+    return interpolatedRequestOptions$ as Observable<UnknownRecord>;
   }
 
-  async #interpolateParallelRequestOptions(
+  #interpolateParallelRequestOptions(
     reqs: Request[],
     stateSubscriptionConfig?: StateSubscriptionConfig
-  ): Promise<FetcherIdToConfigMap> {
-    const currentState = stateSubscriptionConfig
-      ? await firstValueFrom(
-          runInInjectionContext(this.#environmentInjector, () =>
-            getStatesSubscriptionAsContext(stateSubscriptionConfig)
-          )
+  ): Observable<FetcherIdToConfigMap> {
+    const currentState$: Observable<StateMap | null> = stateSubscriptionConfig
+      ? runInInjectionContext(this.#environmentInjector, () =>
+          getStatesSubscriptionAsContext(stateSubscriptionConfig)
         )
-      : null;
+      : of(null);
     const requestsConfigs = reqs.map((req) => ({ fetcherId: req.fetcherId, configs: req.configs }));
-    try {
-      const interpolatedRequestOptions = (await this.#interpolationService.interpolate({
-        value: requestsConfigs,
-        context: currentState ?? {},
-      })) as FetcherIdToConfigMap;
+    const interpolatedRequestOptions$ = currentState$.pipe(
+      switchMap((curState) =>
+        this.#interpolationService.interpolate({
+          value: requestsConfigs,
+          context: curState ?? {},
+        })
+      ),
+      catchError((err) => {
+        console.warn('Fail to interpolate parallel requests options');
+        return err;
+      })
+    );
 
-      return interpolatedRequestOptions;
-    } catch (error) {
-      console.warn('Fail to interpolate parallel requests options');
-      throw error;
-    }
+    return interpolatedRequestOptions$ as Observable<FetcherIdToConfigMap>;
   }
 
-  async #interpolateSequencedRequestResult(
+  #interpolateSequencedRequestResult(
     req: Request,
     requestResult: unknown,
     accumulatedRequestsResults: unknown[]
-  ): Promise<unknown> {
+  ): Observable<unknown> {
     const { interpolation } = req;
     if (interpolation) {
-      const requestTransformationContext = await firstValueFrom(
-        runInInjectionContext(this.#environmentInjector, () =>
-          getResourceRequestTransformationInterpolationContext({
-            accumulatedRequestsResults,
-            currentRequestResult: requestResult,
-          })
-        )
+      const requestTransformationContext$ = runInInjectionContext(this.#environmentInjector, () =>
+        getResourceRequestTransformationInterpolationContext({
+          accumulatedRequestsResults,
+          currentRequestResult: requestResult,
+        })
       );
-
-      try {
-        requestResult = await this.#interpolationService.interpolate({
-          value: interpolation,
-          context: requestTransformationContext,
-        });
-      } catch (error) {
-        console.warn('Failed to interpolate request result');
-        throw error;
-      }
+      const requestResult$ = requestTransformationContext$.pipe(
+        switchMap((ctx) =>
+          this.#interpolationService.interpolate({
+            value: interpolation,
+            context: ctx,
+          })
+        ),
+        catchError((err) => {
+          console.warn('Failed to interpolate sequenced request result: ', err);
+          return err;
+        })
+      );
+      return requestResult$;
     }
 
-    return requestResult;
+    return of(requestResult);
   }
 
-  async #interpolateParallelRequestsResult(args: {
+  #interpolateParallelRequestsResult(args: {
     reqs: Request[];
     responses: unknown[];
     stateSubscriptionConfig?: StateSubscriptionConfig;
-  }): Promise<unknown[]> {
+  }): Observable<unknown[]> {
     const { reqs, responses, stateSubscriptionConfig } = args;
-    const results: unknown[] = [];
+    const results: Observable<unknown>[] = [];
     for (let i = 0; i < reqs.length; i++) {
       const { interpolation } = reqs[i] as Request;
       if (interpolation) {
-        const requestTransformationContext = await firstValueFrom(
-          runInInjectionContext(this.#environmentInjector, () =>
-            getResourceRequestTransformationInterpolationContext({
-              currentRequestResult: responses[i],
-              stateSubscriptionConfig,
-            })
-          )
+        const requestTransformationContext$ = runInInjectionContext(this.#environmentInjector, () =>
+          getResourceRequestTransformationInterpolationContext({
+            currentRequestResult: responses[i],
+            stateSubscriptionConfig,
+          })
         );
-
-        try {
-          const requestResult = await this.#interpolationService.interpolate({
-            value: interpolation,
-            context: requestTransformationContext,
-          });
-          results.push(requestResult);
-        } catch (error) {
-          console.warn('Failed to interpolate request result');
-          results.push({ error });
-          throw error;
-        }
+        const requestResult$ = requestTransformationContext$.pipe(
+          switchMap((ctx) =>
+            this.#interpolationService.interpolate({
+              value: interpolation,
+              context: ctx,
+            })
+          ),
+          catchError((err) => {
+            console.warn('Failed to interpolate parallel request result', err);
+            return err;
+          }),
+          first()
+        );
+        results.push(requestResult$);
       }
     }
 
-    return results;
+    return forkJoin(results);
   }
 
   #setLoadingState(remoteResourceState: BehaviorSubject<RemoteResourceState>): void {
@@ -542,7 +544,6 @@ export class RemoteResourceService {
         const proccessMethod = isParallel
           ? this.#processRequestsInParallel(requests, stateSubscriptionConfig)
           : this.#processRequestsInSequence(requests, stateSubscriptionConfig);
-
         return proccessMethod.pipe(map((result) => ({ result, remoteResourceTemplate: rrt })));
       }),
       switchMap(({ result, remoteResourceTemplate }) => {
@@ -558,13 +559,11 @@ export class RemoteResourceService {
             interpolatedHooks: [],
           });
         }
-        return from(
-          this.#interpolateResourceHooks({
-            onSuccessHooks: onSuccessHooks,
-            resourceResult: result,
-            stateSubscription,
-          })
-        ).pipe(
+        return this.#interpolateResourceHooks({
+          onSuccessHooks: onSuccessHooks,
+          resourceResult: result,
+          stateSubscription,
+        }).pipe(
           map((interpolatedHooks) => ({
             interpolatedHooks,
             result,
