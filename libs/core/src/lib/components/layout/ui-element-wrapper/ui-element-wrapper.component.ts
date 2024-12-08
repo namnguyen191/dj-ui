@@ -184,17 +184,17 @@ export class UiElementWrapperComponent {
         : elementInterpolationContext.pipe(
             switchMap((context) => {
               {
-                return from(
-                  this.#interpolationService.interpolate({
+                return this.#interpolationService
+                  .interpolate({
                     context,
                     value: val,
                   })
-                ).pipe(
-                  catchError(() => {
-                    console.warn(`Fail to interpolate ${key}`);
-                    return EMPTY;
-                  })
-                );
+                  .pipe(
+                    catchError((err) => {
+                      console.warn(`Fail to interpolate ${key}. Error: ${err}`);
+                      return EMPTY;
+                    })
+                  );
               }
             })
           );

@@ -4,13 +4,11 @@ import {
   BehaviorSubject,
   combineLatest,
   distinctUntilChanged,
-  from,
   map,
   Observable,
   of,
   pipe,
   switchMap,
-  tap,
   UnaryFunction,
 } from 'rxjs';
 import { UnknownRecord } from 'type-fest';
@@ -87,16 +85,15 @@ export const getStatesSubscriptionAsContext = (
         return of({ ...state });
       }
 
-      return from(
-        interpolationService.interpolate({
+      return interpolationService
+        .interpolate({
           value: variables,
           context: {
             state,
           },
         })
-      ).pipe(map((interpolatedVariables) => ({ ...state, variables: interpolatedVariables })));
-    }),
-    tap((val) => console.log('Nam data is: result', val))
+        .pipe(map((interpolatedVariables) => ({ ...state, variables: interpolatedVariables })));
+    })
   );
 };
 
