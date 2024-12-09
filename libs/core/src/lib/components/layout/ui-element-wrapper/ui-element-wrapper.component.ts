@@ -22,6 +22,7 @@ import { computedFromObservable } from '@namnguyen191/common-angular-helper';
 import { parentContains } from '@namnguyen191/common-js-helper';
 import { isEqual } from 'lodash-es';
 import {
+  BehaviorSubject,
   catchError,
   combineLatest,
   distinctUntilChanged,
@@ -35,6 +36,7 @@ import {
   switchMap,
   take,
   takeUntil,
+  tap,
   throttleTime,
 } from 'rxjs';
 import { UnknownRecord } from 'type-fest';
@@ -51,21 +53,41 @@ import {
 } from '../../../services/remote-resource.service';
 import { getStatesSubscriptionAsContext, StateMap } from '../../../services/state-store.service';
 import {
+  UIElementTemplateOptions,
   UIElementTemplateService,
   UIElementTemplateWithStatus,
 } from '../../../services/templates/ui-element-template.service';
 import { UIElementFactoryService } from '../../../services/ui-element-factory.service';
 import { logSubscription, logWarning } from '../../../utils/logging';
-import { BaseUIElementComponent } from '../../base-ui-element.component';
+import { BaseUIElementComponent, UIElementRequiredConfigs } from '../../base-ui-element.component';
 
 type ElementInputsInterpolationContext = {
   remoteResourcesStates: null | RemoteResourcesStates;
   state: StateMap | null;
 };
 
-type InputsStreams = {
+type RequiredInputStreams = {
+  [K in keyof UIElementRequiredConfigs]: Observable<UIElementRequiredConfigs[K]>;
+};
+
+type InputsFromInterpolationTrackingStreams = Pick<
+  RequiredInputStreams,
+  'isInterpolationLoading' | 'isInterpolationError'
+>;
+
+type InputsFromRemoteResourceStreams = Pick<
+  RequiredInputStreams,
+  'isResourceLoading' | 'isResourceError'
+>;
+
+type UserProvidedInputsStreams = {
   [inputName: string]: Observable<unknown>;
 };
+
+type InputsStreams = RequiredInputStreams & UserProvidedInputsStreams;
+
+type InputsWithInterpolationTrackingStreams = InputsFromInterpolationTrackingStreams &
+  UserProvidedInputsStreams;
 
 @Component({
   selector: 'dj-ui-element-wrapper',
@@ -165,9 +187,9 @@ export class UiElementWrapperComponent {
 
   readonly #componentInputsStream: Signal<InputsStreams | null> = computed(() => {
     const uiElementTemplate = this.uiElementTemplate();
-    const elementInterpolationContext = this.#elementInterpolationContext();
+    const elementInterpolationContext$ = this.#elementInterpolationContext();
 
-    if (uiElementTemplate?.status !== 'loaded' || !elementInterpolationContext) {
+    if (uiElementTemplate?.status !== 'loaded' || !elementInterpolationContext$) {
       return null;
     }
 
@@ -175,55 +197,54 @@ export class UiElementWrapperComponent {
       config: { options: templateOptions, remoteResourceIds },
     } = uiElementTemplate;
 
-    const inputsObservableMap: Record<string, Observable<unknown>> = {};
-    for (const [key, val] of Object.entries(templateOptions)) {
-      const requiredInterpolation = this.#interpolationService.checkForInterpolation(val);
+    const inputsFromRemoteResource: InputsFromRemoteResourceStreams = remoteResourceIds?.length
+      ? this.#generateInputsFromRemoteResource({
+          elementInterpolationContext$,
+        })
+      : {
+          isResourceLoading: of(false),
+          isResourceError: of(false),
+        };
 
-      inputsObservableMap[key] = !requiredInterpolation
-        ? of(val)
-        : elementInterpolationContext.pipe(
-            switchMap((context) => {
-              {
-                return this.#interpolationService
-                  .interpolate({
-                    context,
-                    value: val,
-                  })
-                  .pipe(
-                    catchError((err) => {
-                      console.warn(`Fail to interpolate ${key}. Error: ${err}`);
-                      return EMPTY;
-                    })
-                  );
-              }
-            })
-          );
-    }
+    const inputsWithInterpolationTracking: InputsWithInterpolationTrackingStreams =
+      this.#generateInputsWithInterpolationTracking({
+        templateOptions,
+        elementInterpolationContext$,
+      });
 
-    if (remoteResourceIds?.length) {
-      // Only automatically set isLoading and isError if the user does not provide any override for them
-      if (templateOptions.isLoading === undefined) {
-        inputsObservableMap['isLoading'] = elementInterpolationContext.pipe(
-          map((context) => !!context.remoteResourcesStates?.isPartialLoading.length)
-        );
-      }
+    const loadingAndErrorInputs: Pick<RequiredInputStreams, 'isLoading' | 'isError'> = {
+      isLoading: combineLatest({
+        isResourceLoading: inputsFromRemoteResource.isResourceLoading,
+        isInterpolationLoading: inputsWithInterpolationTracking.isInterpolationLoading,
+      }).pipe(
+        map(
+          ({ isResourceLoading, isInterpolationLoading }) =>
+            isResourceLoading || isInterpolationLoading
+        )
+      ),
+      isError: combineLatest({
+        isResourceError: inputsFromRemoteResource.isResourceError,
+        isInterpolationError: inputsWithInterpolationTracking.isInterpolationError,
+      }).pipe(
+        map(({ isResourceError, isInterpolationError }) => isResourceError || isInterpolationError)
+      ),
+    };
 
-      if (templateOptions.isError === undefined) {
-        inputsObservableMap['isError'] = elementInterpolationContext.pipe(
-          map((context) => !!context.remoteResourcesStates?.isPartialError.length)
-        );
-      }
-    }
+    const inputsStreams: InputsStreams = {
+      ...inputsFromRemoteResource,
+      ...loadingAndErrorInputs,
+      ...inputsWithInterpolationTracking,
+    };
 
     const debouncedAndDistinctInputs = Object.fromEntries(
-      Object.entries(inputsObservableMap).map(([inputName, valObs]) => [
+      Object.entries(inputsStreams).map(([inputName, valObs]) => [
         inputName,
         valObs.pipe(
           distinctUntilChanged(isEqual),
           throttleTime(500, undefined, { leading: true, trailing: true })
         ),
       ])
-    );
+    ) as InputsStreams;
 
     return debouncedAndDistinctInputs;
   });
@@ -332,5 +353,86 @@ export class UiElementWrapperComponent {
     return !!componentInputs.find(
       (input) => input.propName === inputName || input.templateName === inputName
     );
+  }
+
+  #generateInputsWithInterpolationTracking(params: {
+    templateOptions: UIElementTemplateOptions;
+    elementInterpolationContext$: Observable<ElementInputsInterpolationContext>;
+  }): InputsWithInterpolationTrackingStreams {
+    const { templateOptions, elementInterpolationContext$ } = params;
+
+    const interpolationLoadingMapSubject = new BehaviorSubject<{ [inputName: string]: boolean }>(
+      {}
+    );
+    const isInterpolationLoading$ = interpolationLoadingMapSubject
+      .asObservable()
+      .pipe(map((loadingMap) => !Object.values(loadingMap).every((loadingVal) => !loadingVal)));
+    const interpolationErrorMapSubject = new BehaviorSubject<{ [inputName: string]: boolean }>({});
+    const isInterpolationError$ = interpolationErrorMapSubject
+      .asObservable()
+      .pipe(map((errMap) => !Object.values(errMap).every((errVal) => !errVal)));
+
+    const inputsFromInterpolationTracking: InputsFromInterpolationTrackingStreams = {
+      isInterpolationLoading: isInterpolationLoading$,
+      isInterpolationError: isInterpolationError$,
+    };
+
+    const userProvidedInputs: UserProvidedInputsStreams = {};
+    for (const [key, val] of Object.entries(templateOptions)) {
+      const requiredInterpolation = this.#interpolationService.checkForInterpolation(val);
+
+      userProvidedInputs[key] = !requiredInterpolation
+        ? of(val)
+        : elementInterpolationContext$.pipe(
+            switchMap((context) => {
+              const currentLoadingMap = structuredClone(interpolationLoadingMapSubject.getValue());
+              currentLoadingMap[key] = true;
+              interpolationLoadingMapSubject.next(currentLoadingMap);
+              return this.#interpolationService.interpolate({
+                context,
+                value: val,
+              });
+            }),
+            catchError((err) => {
+              const currentErrorMap = structuredClone(interpolationErrorMapSubject.getValue());
+              currentErrorMap[key] = true;
+              interpolationErrorMapSubject.next(currentErrorMap);
+              console.warn(`Fail to interpolate ${key}. Error: ${err}`);
+              return EMPTY;
+            }),
+            tap({
+              next: () => {
+                const currentErrorMap = structuredClone(interpolationErrorMapSubject.getValue());
+                currentErrorMap[key] = false;
+                interpolationErrorMapSubject.next(currentErrorMap);
+                const currentLoadingMap = structuredClone(
+                  interpolationLoadingMapSubject.getValue()
+                );
+                currentLoadingMap[key] = false;
+                interpolationLoadingMapSubject.next(currentLoadingMap);
+              },
+            })
+          );
+    }
+
+    // Always spread inputsFromInterpolationTracking first to allow userProvidedInputs to override it
+    return {
+      ...inputsFromInterpolationTracking,
+      ...userProvidedInputs,
+    };
+  }
+
+  #generateInputsFromRemoteResource(params: {
+    elementInterpolationContext$: Observable<ElementInputsInterpolationContext>;
+  }): InputsFromRemoteResourceStreams {
+    const { elementInterpolationContext$ } = params;
+    return {
+      isResourceLoading: elementInterpolationContext$.pipe(
+        map((context) => !!context.remoteResourcesStates?.isPartialLoading.length)
+      ),
+      isResourceError: elementInterpolationContext$.pipe(
+        map((context) => !!context.remoteResourcesStates?.isPartialError.length)
+      ),
+    };
   }
 }

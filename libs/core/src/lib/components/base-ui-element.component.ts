@@ -18,6 +18,10 @@ export const ZodIsError = z.boolean({
 });
 
 export type UIElementRequiredConfigs = {
+  isInterpolationLoading: boolean;
+  isInterpolationError: boolean;
+  isResourceLoading: boolean;
+  isResourceError: boolean;
   isLoading: boolean;
   isError: boolean;
 };
@@ -72,6 +76,26 @@ export abstract class BaseUIElementComponent
 
   isLoadingConfigOption: InputSignal<boolean> = input(false, {
     alias: 'isLoading',
+    transform: (val) => ZodIsLoading.parse(val),
+  });
+
+  isResourceLoadingConfigOption: InputSignal<boolean> = input(false, {
+    alias: 'isResourceLoading',
+    transform: (val) => ZodIsError.parse(val),
+  });
+
+  isResourceErrorConfigOption: InputSignal<boolean> = input(false, {
+    alias: 'isResourceError',
+    transform: (val) => ZodIsLoading.parse(val),
+  });
+
+  isInterpolationLoadingConfigOption: InputSignal<boolean> = input(false, {
+    alias: 'isInterpolationLoading',
+    transform: (val) => ZodIsError.parse(val),
+  });
+
+  isInterpolationErrorConfigOption: InputSignal<boolean> = input(false, {
+    alias: 'isInterpolationError',
     transform: (val) => ZodIsLoading.parse(val),
   });
 }
