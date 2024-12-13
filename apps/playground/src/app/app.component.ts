@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { setupDefault } from '@dj-ui/common';
 import { ActionHookService } from '@dj-ui/core';
@@ -12,11 +12,9 @@ import {
 
 @Component({
   selector: 'app-root',
-  standalone: true,
   imports: [CommonModule, RouterModule, NotificationModule, ThemeModule, HeaderModule],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
   readonly #actionHookService = inject(ActionHookService);

@@ -245,7 +245,6 @@ import { setupDefault(); } from '@dj-ui/common';
 import { DjuiComponent } from '@namnguyen191/dj-ui-core';
 
 @Component({
-  standalone: true,
   imports: [DjuiComponent],
   selector: 'app-root',
   templateUrl: './app.component.html',

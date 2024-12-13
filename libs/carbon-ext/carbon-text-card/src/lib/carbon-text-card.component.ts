@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, input, InputSignal } from '@angular/core';
+import { Component, inject, input, InputSignal } from '@angular/core';
 import { CarbonTextCardElementType, CarbonTextCardSymbol } from '@dj-ui/carbon-ext/shared';
 import { EmitOnClickDirective } from '@dj-ui/common';
 import { BaseUIElementComponent, UIElementImplementation } from '@dj-ui/core';
@@ -23,11 +23,9 @@ import {
 
 @Component({
   selector: 'dj-ui-carbon-text-card',
-  standalone: true,
   imports: [CommonModule],
   templateUrl: './carbon-text-card.component.html',
   styleUrl: './carbon-text-card.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   hostDirectives: [EmitOnClickDirective],
   host: {
     '[class.clickable]': 'clickableConfigOption()',

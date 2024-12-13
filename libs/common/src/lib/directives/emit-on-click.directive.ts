@@ -2,7 +2,6 @@ import { Directive, output } from '@angular/core';
 
 @Directive({
   selector: '[djuiCommonEmitOnClick]',
-  standalone: true,
   host: {
     '(click)': 'onClick($event)',
   },

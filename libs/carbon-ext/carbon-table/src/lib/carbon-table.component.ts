@@ -1,14 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  input,
-  InputSignal,
-  output,
-  Signal,
-  untracked,
-} from '@angular/core';
+import { Component, computed, input, InputSignal, output, Signal, untracked } from '@angular/core';
 import {
   CarbonButtonSymbol,
   CarbonTableElementType,
@@ -43,11 +34,9 @@ import {
 
 @Component({
   selector: 'dj-ui-carbon-table',
-  standalone: true,
   imports: [CommonModule, TableModule, PaginationModule, UiElementWrapperComponent],
   templateUrl: './carbon-table.component.html',
   styleUrl: './carbon-table.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CarbonTableComponent
   extends BaseUIElementComponent

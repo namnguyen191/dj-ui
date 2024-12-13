@@ -3,7 +3,7 @@
 :host {
   height: base.$max-full-height;
   display: grid;
-  grid-template-columns: 1fr base.$btx-max-width;
+  grid-template-columns: minmax(0, 1fr) base.$btx-max-width;
 
   .edit-controls-container {
     display: flex;

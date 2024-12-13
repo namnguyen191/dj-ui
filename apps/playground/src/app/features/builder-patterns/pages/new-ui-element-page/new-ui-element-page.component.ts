@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import {
   AbstractControl,
   AsyncValidatorFn,
@@ -74,7 +74,6 @@ const isUIElementIdUnique = (): AsyncValidatorFn => {
 
 @Component({
   selector: 'namnguyen191-new-ui-element-page',
-  standalone: true,
   imports: [
     CommonModule,
     ReactiveFormsModule,
@@ -87,7 +86,6 @@ const isUIElementIdUnique = (): AsyncValidatorFn => {
   ],
   templateUrl: './new-ui-element-page.component.html',
   styleUrl: './new-ui-element-page.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewUIElementPageComponent {
   #uiElementTemplatesStore = inject(UIElementTemplatesStore);

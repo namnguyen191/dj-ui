@@ -1,3 +1,15 @@
+## 0.3.1 (2024-12-13)
+
+### 🚀 Features
+
+- add interpolation as a part of ui element state ([301f1ec](https://github.com/namnguyen191/dj-ui/commit/301f1ec))
+- add vitest to core ([10db38b](https://github.com/namnguyen191/dj-ui/commit/10db38b))
+- migrate to latest nx and angular version ([fb68cf1](https://github.com/namnguyen191/dj-ui/commit/fb68cf1))
+
+### ❤️ Thank You
+
+- Nam Nguyen
+
 ## 0.3.0 (2024-12-06)
 
 ### 🚀 Features

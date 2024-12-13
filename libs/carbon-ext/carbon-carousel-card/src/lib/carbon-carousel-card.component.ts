@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input, InputSignal } from '@angular/core';
+import { Component, input, InputSignal } from '@angular/core';
 import {
   CarbonCarouselCardElementType,
   CarbonCarouselCardSymbol,
@@ -18,11 +18,9 @@ import {
 
 @Component({
   selector: 'dj-ui-carbon-carousel-card',
-  standalone: true,
   imports: [CommonModule, UiElementWrapperComponent],
   templateUrl: './carbon-carousel-card.component.html',
   styleUrl: './carbon-carousel-card.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CarbonCarouselCardComponent
   extends BaseUIElementComponent
