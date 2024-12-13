@@ -86,7 +86,7 @@ export default [
       '@nx/dependency-checks': [
         'error',
         {
-          ignoredDependencies: ['@nx/devkit'],
+          ignoredDependencies: ['@nx/devkit', 'vite', '@analogjs/vite-plugin-angular', '@nx/vite'],
         },
       ],
     },

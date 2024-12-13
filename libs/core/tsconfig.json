@@ -1,3 +1,14 @@
 {
-  "extends": "../../tsconfig-angular.base.json"
+  "extends": "../../tsconfig-angular.base.json",
+  "references": [
+    {
+      "path": "./tsconfig.lib.json"
+    },
+    {
+      "path": "./tsconfig.lib.prod.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
+    }
+  ]
 }

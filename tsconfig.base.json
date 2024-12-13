@@ -30,7 +30,8 @@
       "@dj-ui/carbon-ext/shared": ["libs/carbon-ext/shared/src/index.ts"],
       "@dj-ui/common": ["libs/common/src/index.ts"],
       "@dj-ui/core": ["libs/core/src/index.ts"],
-      "@dj-ui/core/js-interpolation-worker": ["libs/core/js-interpolation-worker/src/index.ts"]
+      "@dj-ui/core/js-interpolation-worker": ["libs/core/js-interpolation-worker/src/index.ts"],
+      "@dj-ui/shared-components": ["libs/shared-components/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp", "**/eslint**.js"]
