@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input, InputSignal, output } from '@angular/core';
+import { Component, input, InputSignal, output } from '@angular/core';
 import { CarbonButtonElementType, CarbonButtonSymbol } from '@dj-ui/carbon-ext/shared';
 import { BaseUIElementComponent, UIElementImplementation } from '@dj-ui/core';
 import { parseZodWithDefault } from '@namnguyen191/types-helper';
@@ -14,11 +14,9 @@ import {
 
 @Component({
   selector: 'dj-ui-carbon-button',
-  standalone: true,
   imports: [CommonModule, ButtonModule, InlineLoadingModule],
   templateUrl: './carbon-button.component.html',
   styleUrl: './carbon-button.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CarbonButtonComponent
   extends BaseUIElementComponent

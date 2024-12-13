@@ -2,7 +2,6 @@ import { Directive, input, InputSignalWithTransform } from '@angular/core';
 
 @Directive({
   selector: '[backgroundImage]',
-  standalone: true,
   host: {
     '[style.backgroundImage]': 'imageUrlSig()',
   },

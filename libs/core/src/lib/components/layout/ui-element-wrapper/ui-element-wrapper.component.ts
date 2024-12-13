@@ -1,6 +1,5 @@
 import { CommonModule } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   Component,
   ComponentRef,
   computed,
@@ -91,10 +90,8 @@ type InputsWithInterpolationTrackingStreams = InputsFromInterpolationTrackingStr
 
 @Component({
   selector: 'dj-ui-element-wrapper',
-  standalone: true,
   imports: [CommonModule],
   templateUrl: './ui-element-wrapper.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[attr.elementTemplateId]': 'uiElementTemplateId()',
   },

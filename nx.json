@@ -92,14 +92,11 @@
     },
     "@nx/angular:component": {
       "style": "scss",
-      "standalone": true,
-      "changeDetection": "OnPush",
       "displayBlock": true,
       "skipTests": true
     },
     "@nx/angular:directive": {
-      "skipTests": true,
-      "standalone": true
+      "skipTests": true
     }
   }
 }

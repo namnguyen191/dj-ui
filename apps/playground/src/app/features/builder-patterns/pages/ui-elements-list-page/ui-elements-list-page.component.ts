@@ -1,11 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  ChangeDetectorRef,
-  Component,
-  effect,
-  inject,
-} from '@angular/core';
+import { ChangeDetectorRef, Component, effect, inject } from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import {
   ButtonModule,
@@ -21,11 +15,9 @@ import { UIElementTemplatesStore } from '../../../../state-store/uiElementTempla
 
 @Component({
   selector: 'namnguyen191-ui-elements-list-page',
-  standalone: true,
   imports: [CommonModule, TableModule, ButtonModule, RouterModule],
   templateUrl: './ui-elements-list-page.component.html',
   styleUrl: './ui-elements-list-page.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UiElementsListPageComponent {
   readonly #uiElementTemplatesStore = inject(UIElementTemplatesStore);

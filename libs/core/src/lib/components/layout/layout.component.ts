@@ -1,14 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  ElementRef,
-  inject,
-  input,
-  InputSignal,
-  Signal,
-} from '@angular/core';
+import { Component, computed, ElementRef, inject, input, InputSignal, Signal } from '@angular/core';
 import { computedFromObservable } from '@namnguyen191/common-angular-helper';
 import { parentContains } from '@namnguyen191/common-js-helper';
 import {
@@ -89,11 +80,9 @@ const isLayoutGridItem = (item: GridsterItem): item is LayoutGridItem => {
 
 @Component({
   selector: 'dj-ui-layout',
-  standalone: true,
   imports: [CommonModule, UiElementWrapperComponent, GridsterComponent, GridsterItemComponent],
   templateUrl: './layout.component.html',
   styleUrl: './layout.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[attr.layoutId]': 'layoutId()',
   },

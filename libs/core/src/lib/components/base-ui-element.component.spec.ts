@@ -6,7 +6,6 @@ import { BaseUIElementComponent } from './base-ui-element.component';
 @Component({
   selector: 'extend-base-test',
   imports: [],
-  standalone: true,
   template: '<h1>Hello world</h1>',
 })
 export class ExtendBaseTestComponent extends BaseUIElementComponent {}

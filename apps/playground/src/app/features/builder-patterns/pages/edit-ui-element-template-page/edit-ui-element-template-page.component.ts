@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
+import { Component, effect, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Edit16 from '@carbon/icons/es/edit/16';
 import { DjuiComponent } from '@dj-ui/core';
-import { ButtonModule, IconModule, IconService } from 'carbon-components-angular';
+import { ButtonModule } from 'carbon-components-angular/button';
+import { IconModule, IconService } from 'carbon-components-angular/icon';
 import { map } from 'rxjs';
 
 import {
@@ -16,11 +17,9 @@ import { RawTemplateEditorModalComponent } from './components/raw-template-edito
 
 @Component({
   selector: 'namnguyen191-edit-ui-element-template-page',
-  standalone: true,
   imports: [DjuiComponent, FormsModule, ButtonModule, IconModule, RawTemplateEditorModalComponent],
   templateUrl: './edit-ui-element-template-page.component.html',
   styleUrl: './edit-ui-element-template-page.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditUIElementTemplatePageComponent {
   readonly #activatedRoute = inject(ActivatedRoute);
@@ -60,18 +59,13 @@ export class EditUIElementTemplatePageComponent {
   }
 
   #loadTemplateInPreview(): void {
-    effect(
-      () => {
-        const uiElementTemplate = this.#uiElementTemplatesStore.filteredUIElementTemplates()[0];
-        if (!uiElementTemplate) {
-          return;
-        }
-
-        this.#uiElementTemplateEditorStore.setCurrentEditingTemplate(uiElementTemplate);
-      },
-      {
-        allowSignalWrites: true,
+    effect(() => {
+      const uiElementTemplate = this.#uiElementTemplatesStore.filteredUIElementTemplates()[0];
+      if (!uiElementTemplate) {
+        return;
       }
-    );
+
+      this.#uiElementTemplateEditorStore.setCurrentEditingTemplate(uiElementTemplate);
+    });
   }
 }

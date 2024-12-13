@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgOptimizedImage } from '@angular/common';
 import {
-  ChangeDetectionStrategy,
   Component,
   ElementRef,
   input,
@@ -13,7 +12,6 @@ import {
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import {
-  BackgroundImageDirective,
   CarbonCarouselElementType,
   CarbonCarouselSymbol,
   ModalComponent,
@@ -37,18 +35,9 @@ type CarouselImage = {
 
 @Component({
   selector: 'dj-ui-carbon-carousel',
-  standalone: true,
-  imports: [
-    CommonModule,
-    RouterModule,
-    IconModule,
-    BackgroundImageDirective,
-    ModalComponent,
-    NgOptimizedImage,
-  ],
+  imports: [CommonModule, RouterModule, IconModule, ModalComponent, NgOptimizedImage],
   templateUrl: './carbon-carousel.component.html',
   styleUrl: './carbon-carousel.component.scss',
-  changeDetection: ChangeDetectionStrategy.OnPush,
   host: {
     '[attr.aria-label]': 'ariaLabelConfigOption()',
   },
