@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, computed, ElementRef, inject, input, InputSignal, Signal } from '@angular/core';
 import { computedFromObservable } from '@namnguyen191/common-angular-helper';
-import { parentContains } from '@namnguyen191/common-js-helper';
+import { parentContains } from '@namnguyen191/common-js-helper/dom-utils';
 import {
   DisplayGrid,
   GridsterComponent,

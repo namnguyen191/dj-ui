@@ -26,7 +26,7 @@ export default defineConfig({
     },
     server: {
       deps: {
-        inline: ['@namnguyen191/common-js-helper', 'carbon-components-angular'],
+        inline: ['carbon-components-angular'],
       },
     },
   },

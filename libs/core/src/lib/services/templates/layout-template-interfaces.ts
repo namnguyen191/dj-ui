@@ -1,4 +1,4 @@
-import { compactTypes } from 'angular-gridster2/lib/gridsterConfig.interface';
+import { CompactType } from 'angular-gridster2';
 
 import { ConfigWithStatus } from './shared-types';
 
@@ -20,7 +20,7 @@ export type UIElementInstance = {
 
 export type GridConfigs = {
   gap?: number;
-  compactType?: compactTypes;
+  compactType?: CompactType;
 };
 
 export type LayoutTemplate = {
