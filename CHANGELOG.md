@@ -1,3 +1,13 @@
+## 0.4.0 (2024-12-17)
+
+### 🚀 Features
+
+- update @namnguyen191 packages, adjust tsconfig, use enum for layout config ([#5](https://github.com/namnguyen191/dj-ui/pull/5))
+
+### ❤️ Thank You
+
+- Nam Nguyen @namnguyen191
+
 ## 0.3.1 (2024-12-13)
 
 ### 🚀 Features
