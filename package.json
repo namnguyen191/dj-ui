@@ -20,6 +20,8 @@
     "typecheck:all": "nx run-many --all --skip-nx-cache --parallel=12 -t typecheck",
     "build:affected": "nx affected -t build",
     "build:all": "nx run-many --all --skip-nx-cache --parallel=12 -t build",
+    "test:affected": "nx affected -t test",
+    "test:all": "nx run-many --all --skip-nx-cache --parallel=12 -t test",
     "e2e:affected": "nx affected -t e2e",
     "e2e:all": "nx run-many --all --skip-nx-cache --parallel=12 -t e2e"
   },
