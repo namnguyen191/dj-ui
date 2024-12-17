@@ -3,6 +3,7 @@
   "compilerOptions": {
     "declarationMap": true,
     "declaration": true,
+    "composite": true,
     "outDir": "../../../dist/out-tsc",
     "inlineSources": true,
     "types": []
@@ -24,5 +25,5 @@
     "src/**/*.spec.jsx",
     "src/test-setup.ts"
   ],
-  "include": ["src/**/*.ts"]
+  "include": ["**/*.ts"]
 }
