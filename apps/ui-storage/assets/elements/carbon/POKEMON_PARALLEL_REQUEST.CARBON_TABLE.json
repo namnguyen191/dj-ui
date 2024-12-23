@@ -1,0 +1,12 @@
+{
+  "id": "POKEMON_PARALLEL_REQUEST.CARBON_TABLE",
+  "type": "CARBON_TABLE",
+  "name": "Parallalel requests table",
+  "description": "A table that demonstrate how to make requests in parallel",
+  "remoteResourceIds": ["POKEMON_PARALLEL.REMOTE_RESOURCE"],
+  "options": {
+    "title": "Fetching pokemon data in parallel",
+    "headers": ["ID", "Name", "Height", "Weight", "Types"],
+    "rows": "<${ return this.remoteResourcesStates?.results?.POKEMON_PARALLEL.REMOTE_RESOURCE?.result?.map(({ id, name, height, weight, types }) => ([id, name, height, weight, types.map(typeObj => typeObj.type.name).join(', ')])) ?? [] }$>"
+  }
+}

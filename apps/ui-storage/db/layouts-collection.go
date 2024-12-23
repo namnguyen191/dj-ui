@@ -97,7 +97,7 @@ func (r *LayoutsRepo) ClearMockLayouts() {
 		}
 	}
 
-	err := utils.OperateOnFilesInFolder("assets/layouts", deleteLayoutFile)
+	err := utils.OperateOnFilesInFolder("assets/layouts", deleteLayoutFile, true)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -123,7 +123,7 @@ func (r *LayoutsRepo) InsertMockLayouts() {
 		}
 	}
 
-	err := utils.OperateOnFilesInFolder("assets/layouts", insertLayoutFile)
+	err := utils.OperateOnFilesInFolder("assets/layouts", insertLayoutFile, true)
 	if err != nil {
 		fmt.Println(err)
 		return

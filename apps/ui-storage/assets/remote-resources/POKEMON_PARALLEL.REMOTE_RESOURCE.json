@@ -1,5 +1,5 @@
 {
-  "id": "pokemon_parallel_rr",
+  "id": "POKEMON_PARALLEL.REMOTE_RESOURCE",
   "stateSubscription": {
     "watchedScopes": {
       "global": ["page"]

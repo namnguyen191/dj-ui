@@ -62,8 +62,9 @@ export const withEntitiesAndLoaders = <TEntity extends EntityLike, TCreatePayloa
             patchState(store, setEntity(fetchedEntity), setFulfilled());
             return fetchedEntity;
           } catch (error) {
-            setError(`Something went wrong fetching entity with id ${id}`);
-            throw error;
+            const errMsg = `Something went wrong fetching entity with id ${id}. Err: ${error}`;
+            setError(errMsg);
+            throw Error(errMsg);
           }
         },
         add: async (createPayload) => {

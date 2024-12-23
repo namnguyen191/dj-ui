@@ -124,6 +124,7 @@ export const setupEventsListener = (params: TemplatesHandlers): void => {
       missingUIElementTemplateEvent(),
       mergeMap((event) => {
         const missingUIElementTemplateId = event.payload.id;
+        uiElementTemplatesService.startRegisteringUIElementTemplate(missingUIElementTemplateId);
         return getUiElementTemplate(missingUIElementTemplateId);
       }),
       tap((uiElementTemplate) => {
@@ -138,6 +139,9 @@ export const setupEventsListener = (params: TemplatesHandlers): void => {
       missingRemoteResourceTemplateEvent(),
       mergeMap((event) => {
         const missingRemoteResourceId = event.payload.id;
+        remoteResourceTemplateService.startRegisteringRemoteResourceTemplate(
+          missingRemoteResourceId
+        );
         return getRemoteResourceTemplate(missingRemoteResourceId);
       }),
       tap((remoteResource) =>
