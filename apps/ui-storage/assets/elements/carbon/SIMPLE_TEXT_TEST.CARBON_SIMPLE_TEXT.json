@@ -1,6 +1,8 @@
 {
-  "id": "carbon_simple_text_test",
+  "id": "SIMPLE_TEXT_TEST.CARBON_SIMPLE_TEXT",
   "type": "CARBON_SIMPLE_TEXT",
+  "name": "Simple text test",
+  "description": "A simple text element",
   "options": {
     "textBlocks": [
       {

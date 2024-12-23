@@ -5,7 +5,7 @@ import { delay, Observable, of } from 'rxjs';
 const mockCard = {
   id: 'carbon_text_card_test',
   type: 'CARBON_TEXT_CARD',
-  remoteResourceIds: ['randomJoke1'],
+  remoteResourceIds: ['JOKE_API_REMOTE_RESOURCE'],
   options: {
     title: 'Neocaridina',
     subTitle: 'Beginner level species',

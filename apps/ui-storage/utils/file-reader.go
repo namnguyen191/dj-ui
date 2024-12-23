@@ -1,13 +1,14 @@
 package utils
 
 import (
+	"fmt"
 	"io"
 	"os"
 )
 
 type FileOperation func([]byte)
 
-func OperateOnFilesInFolder(folderPath string, operation FileOperation) error {
+func OperateOnFilesInFolder(folderPath string, operation FileOperation, recursive bool) error {
 	files, err := os.ReadDir(folderPath)
 	if err != nil {
 		return err
@@ -15,6 +16,9 @@ func OperateOnFilesInFolder(folderPath string, operation FileOperation) error {
 
 	for _, file := range files {
 		if file.IsDir() {
+			if recursive {
+				OperateOnFilesInFolder(fmt.Sprintf("%s/%s", folderPath, file.Name()), operation, recursive)
+			}
 			continue
 		}
 

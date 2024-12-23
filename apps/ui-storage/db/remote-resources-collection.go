@@ -89,7 +89,7 @@ func (r *RemoteResourcesRepo) ClearMockRemoteResources() {
 		}
 	}
 
-	err := utils.OperateOnFilesInFolder("assets/remote-resources", deleteRemoteResourceFile)
+	err := utils.OperateOnFilesInFolder("assets/remote-resources", deleteRemoteResourceFile, true)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -115,7 +115,7 @@ func (r *RemoteResourcesRepo) InsertMockRemoteResources() {
 		}
 	}
 
-	err := utils.OperateOnFilesInFolder("assets/remote-resources", insertRemoteResourceFile)
+	err := utils.OperateOnFilesInFolder("assets/remote-resources", insertRemoteResourceFile, true)
 	if err != nil {
 		fmt.Println(err)
 		return

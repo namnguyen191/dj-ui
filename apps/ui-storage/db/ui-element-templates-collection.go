@@ -101,7 +101,7 @@ func (r *UIElementTemplatesRepo) ClearMockUIElementTemplates() {
 		}
 	}
 
-	err := utils.OperateOnFilesInFolder("assets/elements", deleteUIElementTemplateFile)
+	err := utils.OperateOnFilesInFolder("assets/elements", deleteUIElementTemplateFile, true)
 	if err != nil {
 		fmt.Println(err)
 		return
@@ -127,7 +127,7 @@ func (r *UIElementTemplatesRepo) InsertMockUIElementTemplates() {
 		}
 	}
 
-	err := utils.OperateOnFilesInFolder("assets/elements", insertUIElementTemplateFile)
+	err := utils.OperateOnFilesInFolder("assets/elements", insertUIElementTemplateFile, true)
 	if err != nil {
 		fmt.Println(err)
 		return

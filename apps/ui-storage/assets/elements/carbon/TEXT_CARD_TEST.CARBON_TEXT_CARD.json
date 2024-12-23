@@ -1,7 +1,9 @@
 {
-  "id": "carbon_text_card_test",
+  "id": " TEXT_CARD_TEST.CARBON_TEXT_CARD",
   "type": "CARBON_TEXT_CARD",
-  "remoteResourceIds": ["randomJoke1"],
+  "name": "Text card test",
+  "description": "A simple text card",
+  "remoteResourceIds": ["JOKE_API_REMOTE_RESOURCE"],
   "options": {
     "title": "Neocaridina",
     "subTitle": "Beginner level species",

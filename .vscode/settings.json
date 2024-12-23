@@ -26,5 +26,39 @@
     "**/tmp": true,
     "**/_": true
   },
-  "eslint.useFlatConfig": true
+  "eslint.useFlatConfig": true,
+  "json.schemas": [
+    {
+      "fileMatch": ["**/*.CARBON_TEXT_CARD.json"],
+      "url": "/libs/carbon-ext/generated-json-schemas/CarbonTextCardSchema.json"
+    },
+    {
+      "fileMatch": ["**/*.CARBON_TABLE.json"],
+      "url": "/libs/carbon-ext/generated-json-schemas/CarbonTableSchema.json"
+    },
+    {
+      "fileMatch": ["**/*.CARBON_SIMPLE_TEXT.json"],
+      "url": "/libs/carbon-ext/generated-json-schemas/CarbonSimpleTextSchema.json"
+    },
+    {
+      "fileMatch": ["**/*.CARBON_CAROUSEL.json"],
+      "url": "/libs/carbon-ext/generated-json-schemas/CarbonCarouselSchema.json"
+    },
+    {
+      "fileMatch": ["**/*.CARBON_CAROUSEL_CARD.json"],
+      "url": "/libs/carbon-ext/generated-json-schemas/CarbonCarouselCardSchema.json"
+    },
+    {
+      "fileMatch": ["**/*.CARBON_BUTTON.json"],
+      "url": "/libs/carbon-ext/generated-json-schemas/CarbonButtonSchema.json"
+    },
+    {
+      "fileMatch": ["**/*.LAYOUT.json"],
+      "url": "/libs/core/generated-json-schemas/LayoutTemplateSchema.json"
+    },
+    {
+      "fileMatch": ["**/*.REMOTE_RESOURCE.json"],
+      "url": "/libs/core/generated-json-schemas/RemoteResourceTemplateSchema.json"
+    }
+  ]
 }

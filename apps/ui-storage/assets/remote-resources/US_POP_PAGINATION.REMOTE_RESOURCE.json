@@ -1,5 +1,5 @@
 {
-  "id": "us-pop-1",
+  "id": "US_POP_PAGINATION.REMOTE_RESOURCE",
   "stateSubscription": {
     "watchedScopes": {
       "global": ["page"]

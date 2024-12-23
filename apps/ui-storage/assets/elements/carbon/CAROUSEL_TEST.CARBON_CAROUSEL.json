@@ -1,6 +1,8 @@
 {
-  "id": "carbon-carousel-test",
+  "id": "CAROUSEL_TEST.CARBON_CAROUSEL",
   "type": "CARBON_CAROUSEL",
+  "name": "Carbon carousel test",
+  "description": "A simple carousel that displays a bunch of shrimps",
   "options": {
     "imageUrls": [
       "https://www.fishi-pedia.com/wp-content/uploads/2014/12/Caridina-woltareckae.jpg",

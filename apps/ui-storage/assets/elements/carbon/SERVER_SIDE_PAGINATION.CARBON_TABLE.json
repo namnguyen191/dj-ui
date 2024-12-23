@@ -1,7 +1,9 @@
 {
-  "id": "carbon_table_server_side_pagination",
+  "id": "SERVER_SIDE_PAGINATION.CARBON_TABLE",
   "type": "CARBON_TABLE",
-  "remoteResourceIds": ["pokemon-server-pagination"],
+  "name": "Server side pagination table",
+  "description": "A table that demonstrate the server-side pagination pattern",
+  "remoteResourceIds": ["POKEMON_PAGINATION.REMOTE_RESOURCE"],
   "stateSubscription": {
     "watchedScopes": {
       "global": ["usPopPage"]
@@ -10,9 +12,9 @@
   "options": {
     "title": "Server side pagination table",
     "headers": ["Name", "Url"],
-    "rows": "<${ return this.remoteResourcesStates?.results?.[\"pokemon-server-pagination\"]?.result?.pokemons?.map(({name, url}) => ([name, url])) ?? [] }$>",
+    "rows": "<${ return this.remoteResourcesStates?.results?.[\"POKEMON_PAGINATION.REMOTE_RESOURCE\"]?.result?.pokemons?.map(({name, url}) => ([name, url])) ?? [] }$>",
     "pagination": {
-      "totalDataLength": "<${ return this.remoteResourcesStates?.results?.['pokemon-server-pagination']?.result?.totalCount ?? 0 }$>",
+      "totalDataLength": "<${ return this.remoteResourcesStates?.results?.['POKEMON_PAGINATION.REMOTE_RESOURCE']?.result?.totalCount ?? 0 }$>",
       "pageSizes": [10, 15, 25, 50],
       "pageInputDisabled": false
     }
