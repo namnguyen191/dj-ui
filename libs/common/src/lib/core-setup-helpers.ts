@@ -110,10 +110,10 @@ export const setupEventsListener = (params: TemplatesHandlers): void => {
       missingLayoutTemplateEvent(),
       mergeMap((event) => {
         const missingLayoutId = event.payload.id;
-        layoutTemplateService.startRegisteringLayoutTemplate(missingLayoutId);
+        layoutTemplateService.startRegisteringTemplate(missingLayoutId);
         return getLayoutTemplate(missingLayoutId);
       }),
-      tap((layout) => layoutTemplateService.registerLayoutTemplate(layout))
+      tap((layout) => layoutTemplateService.registerTemplate(layout))
     );
 
     missingLayoutEvents.subscribe();
@@ -124,11 +124,11 @@ export const setupEventsListener = (params: TemplatesHandlers): void => {
       missingUIElementTemplateEvent(),
       mergeMap((event) => {
         const missingUIElementTemplateId = event.payload.id;
-        uiElementTemplatesService.startRegisteringUIElementTemplate(missingUIElementTemplateId);
+        uiElementTemplatesService.startRegisteringTemplate(missingUIElementTemplateId);
         return getUiElementTemplate(missingUIElementTemplateId);
       }),
       tap((uiElementTemplate) => {
-        uiElementTemplatesService.registerUIElementTemplate(uiElementTemplate);
+        uiElementTemplatesService.registerTemplate(uiElementTemplate);
       })
     );
     missingUIElementTemplates.subscribe();
@@ -139,14 +139,10 @@ export const setupEventsListener = (params: TemplatesHandlers): void => {
       missingRemoteResourceTemplateEvent(),
       mergeMap((event) => {
         const missingRemoteResourceId = event.payload.id;
-        remoteResourceTemplateService.startRegisteringRemoteResourceTemplate(
-          missingRemoteResourceId
-        );
+        remoteResourceTemplateService.startRegisteringTemplate(missingRemoteResourceId);
         return getRemoteResourceTemplate(missingRemoteResourceId);
       }),
-      tap((remoteResource) =>
-        remoteResourceTemplateService.registerRemoteResourceTemplate(remoteResource)
-      )
+      tap((remoteResource) => remoteResourceTemplateService.registerTemplate(remoteResource))
     );
 
     missingRemoteResources.subscribe();

@@ -3,11 +3,13 @@ import { asyncScheduler, Observable, observeOn, Subject } from 'rxjs';
 
 import { UIElementPositionAndSize } from '../templates/layout-template-interfaces';
 
-export type CoreEvent = {
+export type EventObject = {
+  type: string;
+  payload?: unknown;
+};
+
+export type CoreEventNameToPayLoadMap = {
   GENERIC: never;
-  MISSING_UI_ELEMENT: {
-    type: string;
-  };
   MISSING_LAYOUT_TEMPLATE: {
     id: string;
   };
@@ -24,10 +26,12 @@ export type CoreEvent = {
   };
 };
 
-export type CoreEventPayload<T extends keyof CoreEvent> = CoreEvent[T];
+export type CoreEvent = keyof CoreEventNameToPayLoadMap;
 
-export type EventObject = {
-  [K in keyof CoreEvent]: CoreEventPayload<K> extends never
+export type CoreEventPayload<T extends CoreEvent> = CoreEventNameToPayLoadMap[T];
+
+export type CoreEventObject = {
+  [K in CoreEvent]: CoreEventPayload<K> extends never
     ? {
         type: K;
       }
@@ -35,7 +39,7 @@ export type EventObject = {
         type: K;
         payload: CoreEventPayload<K>;
       };
-}[keyof CoreEvent];
+}[CoreEvent];
 
 @Injectable({
   providedIn: 'root',
