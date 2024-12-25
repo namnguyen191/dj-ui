@@ -294,8 +294,7 @@ export class RemoteResourceService {
       return;
     }
 
-    const remoteResourceTemplate$ =
-      this.#remoteResourceTemplateService.getRemoteResourceTemplate(id);
+    const remoteResourceTemplate$ = this.#remoteResourceTemplateService.getTemplate(id);
 
     const remoteResourceFetchFlow$: Observable<boolean> = this.#generateRemoteResourceFetchFlow(
       remoteResourceTemplate$,

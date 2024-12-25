@@ -1,12 +1,10 @@
-import { inject, Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Injectable } from '@angular/core';
 import { EmptyObject, UnknownRecord } from 'type-fest';
 
 import { UIElementRequiredConfigs } from '../../components/base-ui-element.component';
-import { logError } from '../../utils/logging';
 import { ActionHook } from '../events-and-actions/action-hook.service';
-import { EventsService } from '../events-and-actions/events.service';
 import { StateSubscriptionConfig } from '../state-store.service';
+import { BaseTemplateService, MissingTemplateEvent } from './base-template.service';
 import { ConfigWithStatus } from './shared-types';
 
 export type UIElementTemplateOptions<T extends UnknownRecord = EmptyObject> =
@@ -35,112 +33,9 @@ export type UIElementTemplate<
 
 export type UIElementTemplateWithStatus = ConfigWithStatus<UIElementTemplate>;
 
-type UIElementTemplateId = string;
-
 @Injectable({
   providedIn: 'root',
 })
-export class UIElementTemplateService {
-  readonly #eventsService = inject(EventsService);
-
-  #uiElementTemplateSubjectMap: Record<
-    UIElementTemplateId,
-    BehaviorSubject<UIElementTemplateWithStatus>
-  > = {};
-
-  startRegisteringUIElementTemplate(id: string): void {
-    const existingUIElementTemplateSubject = this.#uiElementTemplateSubjectMap[id];
-    const registeringUIElementTemplate: UIElementTemplateWithStatus = {
-      id,
-      status: 'loading',
-      config: null,
-    };
-    if (!existingUIElementTemplateSubject) {
-      const newUIElementTemplateSubject = new BehaviorSubject<UIElementTemplateWithStatus>(
-        registeringUIElementTemplate
-      );
-      this.#uiElementTemplateSubjectMap[id] = newUIElementTemplateSubject;
-      return;
-    }
-
-    existingUIElementTemplateSubject.next(registeringUIElementTemplate);
-  }
-
-  registerUIElementTemplate<
-    TConfigs extends UnknownRecord = EmptyObject,
-    TEvents extends string = UnknownEvent,
-  >(uiElementTemplate: UIElementTemplate<TConfigs, TEvents>): void {
-    const uiElementId = uiElementTemplate.id;
-    const existingUIElementTemplateSubject = this.#uiElementTemplateSubjectMap[uiElementId];
-    const registeredUIElementTemplate: UIElementTemplateWithStatus = {
-      id: uiElementId,
-      status: 'loaded',
-      config: uiElementTemplate,
-    };
-    if (existingUIElementTemplateSubject) {
-      if (existingUIElementTemplateSubject.getValue().status === 'loaded') {
-        logError(
-          `UIElementTemplate with id of "${uiElementId}" has already been register. Please update it instead`
-        );
-        return;
-      }
-
-      existingUIElementTemplateSubject.next(registeredUIElementTemplate);
-      return;
-    }
-
-    const newUIElementTemplateSubject = new BehaviorSubject<UIElementTemplateWithStatus>(
-      registeredUIElementTemplate
-    );
-
-    this.#uiElementTemplateSubjectMap[uiElementId] = newUIElementTemplateSubject;
-  }
-
-  getUIElementTemplate<T extends string>(id: T): Observable<UIElementTemplateWithStatus> {
-    const existingUIElementTemplateSubject = this.#uiElementTemplateSubjectMap[id];
-    if (!existingUIElementTemplateSubject) {
-      this.#eventsService.emitEvent({
-        type: 'MISSING_UI_ELEMENT_TEMPLATE',
-        payload: {
-          id,
-        },
-      });
-      const newUIElementTemplateSubject = new BehaviorSubject<UIElementTemplateWithStatus>({
-        id,
-        status: 'missing',
-        config: null,
-      });
-      this.#uiElementTemplateSubjectMap[id] = newUIElementTemplateSubject;
-      return newUIElementTemplateSubject.asObservable();
-    }
-    return existingUIElementTemplateSubject.asObservable();
-  }
-
-  updateUIElementTemplate(updatedUIElementTemplate: UIElementTemplate): void {
-    const updatedUIElementTemplateId = updatedUIElementTemplate.id;
-    const existingUIElementTemplateSubject =
-      this.#uiElementTemplateSubjectMap[updatedUIElementTemplateId];
-    const existingUIElementTemplateStatus = existingUIElementTemplateSubject?.getValue().status;
-
-    if (!existingUIElementTemplateSubject || existingUIElementTemplateStatus !== 'loaded') {
-      logError(
-        `UIElementTemplate with id of "${updatedUIElementTemplateId}" has not been register. Please register it instead`
-      );
-      return;
-    }
-
-    existingUIElementTemplateSubject.next({
-      id: updatedUIElementTemplateId,
-      status: 'loaded',
-      config: updatedUIElementTemplate,
-    });
-  }
-
-  updateOrRegisterUIElementTemplate(uiElementTemplate: UIElementTemplate): void {
-    if (this.#uiElementTemplateSubjectMap[uiElementTemplate.id]) {
-      this.updateUIElementTemplate(uiElementTemplate);
-    } else {
-      this.registerUIElementTemplate(uiElementTemplate);
-    }
-  }
+export class UIElementTemplateService extends BaseTemplateService<UIElementTemplate> {
+  protected override missingTemplateEvent: MissingTemplateEvent = 'MISSING_UI_ELEMENT_TEMPLATE';
 }

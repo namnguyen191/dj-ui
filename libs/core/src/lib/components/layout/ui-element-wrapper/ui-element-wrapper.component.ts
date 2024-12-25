@@ -113,7 +113,7 @@ export class UiElementWrapperComponent {
 
   readonly uiElementTemplate: Signal<UIElementTemplateWithStatus | undefined> =
     computedFromObservable(() => {
-      return this.#uiElementTemplatesService.getUIElementTemplate(this.uiElementTemplateId());
+      return this.#uiElementTemplatesService.getTemplate(this.uiElementTemplateId());
     });
 
   readonly uiElementComponent: Signal<Type<BaseUIElementComponent> | undefined> =

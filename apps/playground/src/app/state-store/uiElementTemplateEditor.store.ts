@@ -66,11 +66,11 @@ export const UIElementTemplateEditorStore = signalStore(
       layoutTemplateService = inject(LayoutTemplateService)
     ) => ({
       setCurrentEditingTemplate: (currentEditingTemplate: AppUIElementTemplate): void => {
-        uiElementTemplateService.updateOrRegisterUIElementTemplate({
+        uiElementTemplateService.updateOrRegisterTemplate({
           ...currentEditingTemplate,
           id: PREVIEW_UI_ELEMENT_TEMPLATE_ID,
         });
-        layoutTemplateService.updateLayoutTemplate({
+        layoutTemplateService.updateTemplate({
           ...PREVIEW_LAYOUT_BASE_CONFIG,
           uiElementInstances: [
             {
@@ -82,7 +82,7 @@ export const UIElementTemplateEditorStore = signalStore(
         patchState(store, { currentEditingTemplate });
       },
       updateCurrentEditingTemplate: (updates: AppUIElementTemplateEditableFields): void => {
-        uiElementTemplateService.updateUIElementTemplate({
+        uiElementTemplateService.updateTemplate({
           ...updates,
           id: PREVIEW_UI_ELEMENT_TEMPLATE_ID,
         });
@@ -97,7 +97,7 @@ export const UIElementTemplateEditorStore = signalStore(
         });
       },
       initPreviewLayout: (): void => {
-        layoutTemplateService.registerLayoutTemplate(PREVIEW_LAYOUT_BASE_CONFIG);
+        layoutTemplateService.registerTemplate(PREVIEW_LAYOUT_BASE_CONFIG);
       },
     })
   ),

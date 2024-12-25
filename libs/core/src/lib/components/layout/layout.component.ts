@@ -95,7 +95,7 @@ export class LayoutComponent {
 
   layoutConfig: Signal<LayoutTemplateWithStatus | undefined> = computedFromObservable(() => {
     const layoutId = this.layoutId();
-    return this.#layoutService.getLayoutTemplate(layoutId);
+    return this.#layoutService.getTemplate(layoutId);
   });
 
   gridItems: Signal<LayoutGridItem[] | null> = computed(() => {
