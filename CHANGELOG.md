@@ -1,3 +1,15 @@
+## 0.5.0 (2025-01-20)
+
+### 🚀 Features
+
+- update @namnguyen191 packages, adjust tsconfig, use enum for layout config ([#5](https://github.com/namnguyen191/dj-ui/pull/5))
+- refactor template service to extract common logic, adjust event interface ([#9](https://github.com/namnguyen191/dj-ui/pull/9))
+- implement a way to do file upload - Add sample configs - Adjust element output to be under $eventOutput key - Refactor remote resource and add shouldRunCondition ([631faf6](https://github.com/namnguyen191/dj-ui/commit/631faf6))
+
+### ❤️ Thank You
+
+- Nam Nguyen @namnguyen191
+
 ## 0.4.2 (2024-12-19)
 
 ### 🚀 Features
