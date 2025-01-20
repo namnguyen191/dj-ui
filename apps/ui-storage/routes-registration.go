@@ -17,6 +17,9 @@ func RegisterAllRoutes(r *gin.Engine) {
 	remoteResourceRoutes := routes.NewRemoteResourceRoutes(&App.RemoteResourcesRepo)
 	remoteResourceRoutes.RegisterRemoteResourceRoutes(r)
 
+	fileUploadRoutes := routes.NewFileUploadRoutes()
+	fileUploadRoutes.RegisterFileUploadRoutes((r))
+
 	// Health
 	r.GET("/health", func(ctx *gin.Context) {
 		ctx.Status(http.StatusOK)

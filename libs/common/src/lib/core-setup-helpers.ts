@@ -30,6 +30,7 @@ import {
 import { set } from 'lodash-es';
 import { buffer, debounceTime, forkJoin, map, mergeMap, Observable, tap } from 'rxjs';
 
+import { FileUploadService } from './data-fetchers/file-upload.service';
 import { HttpFetcherService } from './data-fetchers/http-fetcher.service';
 import {
   DefaultActionsHooksService,
@@ -84,11 +85,18 @@ export const registerDefaultHook = (): void => {
   actionHookService.registerHooks(actionHookHandlerAndPayloadParserMap);
 };
 
-export const registerDefaultDataFetcher = (): void => {
+export const registerSimpleHttpDataFetcher = (): void => {
   const httpFetcher = inject(HttpFetcherService).httpFetcher;
   const dataFetchingService = inject(DataFetchingService);
 
   dataFetchingService.registerFetcher('httpFetcher', httpFetcher);
+};
+
+export const registerSingleFileUploadDataFetcher = (): void => {
+  const singleFileUploadFetcher = inject(FileUploadService).singleFileUploadFetcher;
+  const dataFetchingService = inject(DataFetchingService);
+
+  dataFetchingService.registerFetcher('singleFileUploadFetcher', singleFileUploadFetcher);
 };
 
 export const setupEventsListener = (params: TemplatesHandlers): void => {
@@ -213,7 +221,7 @@ export const setupDefault = (): void => {
   }
 
   registerDefaultHook();
-  registerDefaultDataFetcher();
+  registerSimpleHttpDataFetcher();
 
   const { templatesHandlers, componentsMap, componentLoadersMap } = configs;
 

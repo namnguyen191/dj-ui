@@ -15,6 +15,7 @@ export type RemoteResourceTemplate = {
   id: string;
   stateSubscription?: StateSubscriptionConfig;
   options: {
+    runCondition?: boolean;
     requests: Request[];
     onSuccess?: ActionHook[];
     parallel?: boolean;

@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, InputSignal, output } from '@angular/core';
+import { Component, inject, input, InputSignal, output, untracked } from '@angular/core';
 import { CarbonButtonElementType, CarbonButtonSymbol } from '@dj-ui/carbon-ext/shared';
+import { FileService } from '@dj-ui/common';
 import { BaseUIElementComponent, UIElementImplementation } from '@dj-ui/core';
 import { parseZodWithDefault } from '@namnguyen191/types-helper';
 import { ButtonModule, InlineLoadingModule } from 'carbon-components-angular';
 
 import {
+  ButtonFilesSelectorConfig,
   ButtonTypeConfig,
   CarbonButtonUIElementComponentConfigs,
   CarbonButtonUIElementComponentEvents,
@@ -37,6 +39,8 @@ export class CarbonButtonComponent
     return CarbonButtonComponent.ELEMENT_SYMBOL;
   }
 
+  #fileService = inject(FileService);
+
   defaultText = 'Default text';
   textConfigOption: InputSignal<string> = input(this.defaultText, {
     alias: 'text',
@@ -59,9 +63,48 @@ export class CarbonButtonComponent
       ),
   });
 
+  defaultFilesSelectorConfigOption: ButtonFilesSelectorConfig = {
+    enabled: false,
+  };
+  filesSelectorConfigOption: InputSignal<ButtonFilesSelectorConfig> = input(
+    this.defaultFilesSelectorConfigOption,
+    {
+      alias: 'filesSelector',
+      transform: (val) =>
+        parseZodWithDefault(
+          ZodCarbonButtonUIElementComponentConfigs.shape.filesSelector,
+          val,
+          this.defaultFilesSelectorConfigOption
+        ),
+    }
+  );
+
   buttonClicked = output<void>();
+  filesSelected = output<{ files: FileList }>();
 
   onClick(): void {
     this.buttonClicked.emit();
+
+    this.#handleFileSelection();
+  }
+
+  async #handleFileSelection(): Promise<void> {
+    const filesSelectorConfig = untracked(this.filesSelectorConfigOption);
+    const { single, acceptedExtensions, enabled } = filesSelectorConfig;
+
+    if (!enabled) {
+      return;
+    }
+
+    const selectedFiles = await this.#fileService.selectFiles({
+      single,
+      extensions: acceptedExtensions,
+    });
+
+    if (!selectedFiles) {
+      return;
+    }
+
+    this.filesSelected.emit({ files: selectedFiles });
   }
 }

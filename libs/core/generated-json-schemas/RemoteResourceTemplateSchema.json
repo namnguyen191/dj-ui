@@ -26,6 +26,9 @@
     "options": {
       "type": "object",
       "properties": {
+        "runCondition": {
+          "type": "boolean"
+        },
         "requests": {
           "type": "array",
           "items": {
@@ -63,6 +66,7 @@
       },
       "additionalProperties": false,
       "propertyOrder": [
+        "runCondition",
         "requests",
         "onSuccess",
         "parallel"

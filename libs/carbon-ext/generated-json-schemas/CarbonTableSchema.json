@@ -15,10 +15,26 @@
       }
     },
     "stateSubscription": {
-      "$ref": "#/definitions/StateSubscriptionConfig"
+      "type": "object",
+      "properties": {
+        "watchedScopes": {
+          "$ref": "#/definitions/{global?:string[]|undefined;local?:string[]|undefined;layout?:string[]|undefined;}"
+        },
+        "variables": {
+          "$ref": "#/definitions/Record<string,unknown>"
+        }
+      },
+      "additionalProperties": false,
+      "propertyOrder": [
+        "watchedScopes",
+        "variables"
+      ],
+      "required": [
+        "watchedScopes"
+      ]
     },
     "options": {
-      "$ref": "#/definitions/UIElementTemplateOptions<{rows:(string|number|bigint|boolean|symbol)[][];title:string;description:string;headers:(string|number|bigint|boolean|symbol)[];pagination:{pageSizes?:number[]|undefined;pageInputDisabled?:boolean|undefined;totalDataLength?:number|undefined;};primaryButtonId:string;}>"
+      "$ref": "#/definitions/UIElementTemplateOptions<{rows:(string|number|bigint|boolean|symbol)[][];headers:(string|number|bigint|boolean|symbol)[];title:string;description:string;pagination:{pageSizes?:number[]|undefined;pageInputDisabled?:boolean|undefined;totalDataLength?:number|undefined;};primaryButtonId:string;}>"
     },
     "eventsHooks": {
       "$ref": "#/definitions/EventsToHooksMap<\"paginationChanged\">"
@@ -30,7 +46,7 @@
     "type"
   ],
   "definitions": {
-    "StateSubscriptionConfig": {
+    "{global?:string[]|undefined;local?:string[]|undefined;layout?:string[]|undefined;}": {
       "type": "object",
       "properties": {
         "global": {
@@ -59,10 +75,27 @@
         "layout"
       ]
     },
-    "UIElementTemplateOptions<{rows:(string|number|bigint|boolean|symbol)[][];title:string;description:string;headers:(string|number|bigint|boolean|symbol)[];pagination:{pageSizes?:number[]|undefined;pageInputDisabled?:boolean|undefined;totalDataLength?:number|undefined;};primaryButtonId:string;}>": {
+    "Record<string,unknown>": {
+      "type": "object",
+      "additionalProperties": false,
+      "propertyOrder": []
+    },
+    "UIElementTemplateOptions<{rows:(string|number|bigint|boolean|symbol)[][];headers:(string|number|bigint|boolean|symbol)[];title:string;description:string;pagination:{pageSizes?:number[]|undefined;pageInputDisabled?:boolean|undefined;totalDataLength?:number|undefined;};primaryButtonId:string;}>": {
       "additionalProperties": false,
       "type": "object",
       "properties": {
+        "isInterpolationLoading": {
+          "type": "boolean"
+        },
+        "isInterpolationError": {
+          "type": "boolean"
+        },
+        "isResourceLoading": {
+          "type": "boolean"
+        },
+        "isResourceError": {
+          "type": "boolean"
+        },
         "isLoading": {
           "type": "boolean"
         },
@@ -92,12 +125,6 @@
             }
           }
         },
-        "title": {
-          "type": "string"
-        },
-        "description": {
-          "type": "string"
-        },
         "headers": {
           "type": "array",
           "items": {
@@ -117,6 +144,12 @@
               }
             ]
           }
+        },
+        "title": {
+          "type": "string"
+        },
+        "description": {
+          "type": "string"
         },
         "pagination": {
           "$ref": "#/definitions/{pageSizes?:number[]|undefined;pageInputDisabled?:boolean|undefined;totalDataLength?:number|undefined;}"

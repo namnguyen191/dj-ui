@@ -15,10 +15,26 @@
       }
     },
     "stateSubscription": {
-      "$ref": "#/definitions/StateSubscriptionConfig"
+      "type": "object",
+      "properties": {
+        "watchedScopes": {
+          "$ref": "#/definitions/{global?:string[]|undefined;local?:string[]|undefined;layout?:string[]|undefined;}"
+        },
+        "variables": {
+          "$ref": "#/definitions/Record<string,unknown>"
+        }
+      },
+      "additionalProperties": false,
+      "propertyOrder": [
+        "watchedScopes",
+        "variables"
+      ],
+      "required": [
+        "watchedScopes"
+      ]
     },
     "options": {
-      "$ref": "#/definitions/UIElementTemplateOptions<{title:string;body:string;subTitle:string;avatarUrl:string;imageUrl:string;clickable:boolean;}>"
+      "$ref": "#/definitions/UIElementTemplateOptions<{body:string;title:string;subTitle:string;avatarUrl:string;imageUrl:string;clickable:boolean;}>"
     },
     "eventsHooks": {
       "$ref": "#/definitions/EventsToHooksMap<\"onCardClicked\">"
@@ -30,7 +46,7 @@
     "type"
   ],
   "definitions": {
-    "StateSubscriptionConfig": {
+    "{global?:string[]|undefined;local?:string[]|undefined;layout?:string[]|undefined;}": {
       "type": "object",
       "properties": {
         "global": {
@@ -59,20 +75,37 @@
         "layout"
       ]
     },
-    "UIElementTemplateOptions<{title:string;body:string;subTitle:string;avatarUrl:string;imageUrl:string;clickable:boolean;}>": {
+    "Record<string,unknown>": {
+      "type": "object",
+      "additionalProperties": false,
+      "propertyOrder": []
+    },
+    "UIElementTemplateOptions<{body:string;title:string;subTitle:string;avatarUrl:string;imageUrl:string;clickable:boolean;}>": {
       "additionalProperties": false,
       "type": "object",
       "properties": {
+        "isInterpolationLoading": {
+          "type": "boolean"
+        },
+        "isInterpolationError": {
+          "type": "boolean"
+        },
+        "isResourceLoading": {
+          "type": "boolean"
+        },
+        "isResourceError": {
+          "type": "boolean"
+        },
         "isLoading": {
           "type": "boolean"
         },
         "isError": {
           "type": "boolean"
         },
-        "title": {
+        "body": {
           "type": "string"
         },
-        "body": {
+        "title": {
           "type": "string"
         },
         "subTitle": {
