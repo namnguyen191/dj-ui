@@ -49,7 +49,7 @@ import { InterpolationService } from '../../../services/interpolation.service';
 import {
   getRemoteResourcesStatesAsContext,
   RemoteResourcesStates,
-} from '../../../services/remote-resource.service';
+} from '../../../services/remote-resource/remote-resource.interface';
 import { getStatesSubscriptionAsContext, StateMap } from '../../../services/state-store.service';
 import {
   UIElementTemplateOptions,
@@ -325,7 +325,7 @@ export class UiElementWrapperComponent {
                   switchMap((latestContextVal) =>
                     this.#interpolationService.interpolate({
                       value: hooks,
-                      context: { ...latestContextVal, ...(outputVal ?? {}) },
+                      context: { ...latestContextVal, $eventOutput: outputVal },
                     })
                   )
                 )

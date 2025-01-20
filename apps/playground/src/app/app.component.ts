@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { setupDefault } from '@dj-ui/common';
+import { registerSingleFileUploadDataFetcher, setupDefault } from '@dj-ui/common';
 import { ActionHookService } from '@dj-ui/core';
 import {
   HeaderModule,
@@ -31,6 +31,7 @@ export class AppComponent {
 
   constructor() {
     setupDefault();
+    registerSingleFileUploadDataFetcher();
     this.#actionHookService.registerHook({
       hookId: 'showTestNotification',
       handler: () => this.#showNotification(),

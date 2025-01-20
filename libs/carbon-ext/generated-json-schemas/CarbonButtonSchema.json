@@ -1,36 +1,104 @@
 {
-  "additionalProperties": false,
-  "type": "object",
-  "properties": {
-    "id": {
-      "type": "string"
+  "anyOf": [
+    {
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "remoteResourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "stateSubscription": {
+          "type": "object",
+          "properties": {
+            "watchedScopes": {
+              "$ref": "#/definitions/{global?:string[]|undefined;local?:string[]|undefined;layout?:string[]|undefined;}"
+            },
+            "variables": {
+              "$ref": "#/definitions/Record<string,unknown>"
+            }
+          },
+          "additionalProperties": false,
+          "propertyOrder": [
+            "watchedScopes",
+            "variables"
+          ],
+          "required": [
+            "watchedScopes"
+          ]
+        },
+        "options": {
+          "$ref": "#/definitions/UIElementTemplateOptions<{type:\"primary\"|\"secondary\"|\"tertiary\"|\"ghost\"|\"danger\"|\"danger--primary\"|\"danger--tertiary\"|\"danger--ghost\";text:string;filesSelector:{enabled?:boolean|undefined;single?:boolean|undefined;acceptedExtensions?:string[]|undefined;};}>"
+        },
+        "eventsHooks": {
+          "$ref": "#/definitions/EventsToHooksMap<\"buttonClicked\">"
+        }
+      },
+      "required": [
+        "id",
+        "options",
+        "type"
+      ]
     },
-    "type": {
-      "type": "string"
-    },
-    "remoteResourceIds": {
-      "type": "array",
-      "items": {
-        "type": "string"
-      }
-    },
-    "stateSubscription": {
-      "$ref": "#/definitions/StateSubscriptionConfig"
-    },
-    "options": {
-      "$ref": "#/definitions/UIElementTemplateOptions<{type:\"primary\"|\"secondary\"|\"tertiary\"|\"ghost\"|\"danger\"|\"danger--primary\"|\"danger--tertiary\"|\"danger--ghost\";text:string;}>"
-    },
-    "eventsHooks": {
-      "$ref": "#/definitions/EventsToHooksMap<\"buttonClicked\">"
+    {
+      "additionalProperties": false,
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "type": "string"
+        },
+        "remoteResourceIds": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "stateSubscription": {
+          "type": "object",
+          "properties": {
+            "watchedScopes": {
+              "$ref": "#/definitions/{global?:string[]|undefined;local?:string[]|undefined;layout?:string[]|undefined;}"
+            },
+            "variables": {
+              "$ref": "#/definitions/Record<string,unknown>"
+            }
+          },
+          "additionalProperties": false,
+          "propertyOrder": [
+            "watchedScopes",
+            "variables"
+          ],
+          "required": [
+            "watchedScopes"
+          ]
+        },
+        "options": {
+          "$ref": "#/definitions/UIElementTemplateOptions<{type:\"primary\"|\"secondary\"|\"tertiary\"|\"ghost\"|\"danger\"|\"danger--primary\"|\"danger--tertiary\"|\"danger--ghost\";text:string;filesSelector:{enabled?:boolean|undefined;single?:boolean|undefined;acceptedExtensions?:string[]|undefined;};}>"
+        },
+        "eventsHooks": {
+          "$ref": "#/definitions/EventsToHooksMap<\"filesSelected\">"
+        }
+      },
+      "required": [
+        "id",
+        "options",
+        "type"
+      ]
     }
-  },
-  "required": [
-    "id",
-    "options",
-    "type"
   ],
   "definitions": {
-    "StateSubscriptionConfig": {
+    "{global?:string[]|undefined;local?:string[]|undefined;layout?:string[]|undefined;}": {
       "type": "object",
       "properties": {
         "global": {
@@ -59,10 +127,27 @@
         "layout"
       ]
     },
-    "UIElementTemplateOptions<{type:\"primary\"|\"secondary\"|\"tertiary\"|\"ghost\"|\"danger\"|\"danger--primary\"|\"danger--tertiary\"|\"danger--ghost\";text:string;}>": {
+    "Record<string,unknown>": {
+      "type": "object",
+      "additionalProperties": false,
+      "propertyOrder": []
+    },
+    "UIElementTemplateOptions<{type:\"primary\"|\"secondary\"|\"tertiary\"|\"ghost\"|\"danger\"|\"danger--primary\"|\"danger--tertiary\"|\"danger--ghost\";text:string;filesSelector:{enabled?:boolean|undefined;single?:boolean|undefined;acceptedExtensions?:string[]|undefined;};}>": {
       "additionalProperties": false,
       "type": "object",
       "properties": {
+        "isInterpolationLoading": {
+          "type": "boolean"
+        },
+        "isInterpolationError": {
+          "type": "boolean"
+        },
+        "isResourceLoading": {
+          "type": "boolean"
+        },
+        "isResourceError": {
+          "type": "boolean"
+        },
         "isLoading": {
           "type": "boolean"
         },
@@ -84,8 +169,34 @@
         },
         "text": {
           "type": "string"
+        },
+        "filesSelector": {
+          "$ref": "#/definitions/{enabled?:boolean|undefined;single?:boolean|undefined;acceptedExtensions?:string[]|undefined;}"
         }
       }
+    },
+    "{enabled?:boolean|undefined;single?:boolean|undefined;acceptedExtensions?:string[]|undefined;}": {
+      "type": "object",
+      "properties": {
+        "enabled": {
+          "type": "boolean"
+        },
+        "single": {
+          "type": "boolean"
+        },
+        "acceptedExtensions": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "propertyOrder": [
+        "enabled",
+        "single",
+        "acceptedExtensions"
+      ]
     },
     "EventsToHooksMap<\"buttonClicked\">": {
       "type": "object",
@@ -117,6 +228,21 @@
       ],
       "required": [
         "type"
+      ]
+    },
+    "EventsToHooksMap<\"filesSelected\">": {
+      "type": "object",
+      "properties": {
+        "filesSelected": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/{type:string;payload?:any;}"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "propertyOrder": [
+        "filesSelected"
       ]
     }
   },

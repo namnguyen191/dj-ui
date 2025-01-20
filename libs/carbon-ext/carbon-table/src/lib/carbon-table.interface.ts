@@ -36,9 +36,7 @@ export type CarbonTableUIElementComponentConfigs = z.infer<
   typeof ZodCarbonTableUIElementComponentConfigs
 >;
 
-export type PaginationChangedPayload = {
-  $paginationContext: { pageLength: number; selectedPage: number };
-};
+export type PaginationChangedPayload = { pageLength: number; selectedPage: number };
 
 export type CarbonTableUIElementComponentEvents = {
   paginationChanged: PaginationChangedPayload;

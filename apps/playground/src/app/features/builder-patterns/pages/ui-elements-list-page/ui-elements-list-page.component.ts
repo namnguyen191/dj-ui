@@ -41,7 +41,7 @@ export class UiElementsListPageComponent {
   }
 
   onRowClick(e: number): void {
-    const currentId = this.tableModel.data[e]?.[0]?.data as string;
+    const currentId = this.tableModel.data[e]?.[1]?.data as string;
     this.#router.navigate(['edit', currentId], {
       relativeTo: this.#activatedRoute,
     });
@@ -49,6 +49,9 @@ export class UiElementsListPageComponent {
 
   #constructTableHeader(): TableHeaderItem[] {
     return [
+      new TableHeaderItem({
+        data: 'Name',
+      }),
       new TableHeaderItem({
         data: 'ID',
       }),
@@ -63,7 +66,7 @@ export class UiElementsListPageComponent {
 
   #constructTableRows(templatesInfo: TemplateInfo[]): TableItem[][] {
     const dateFormatter = new Intl.DateTimeFormat('en-US');
-    return templatesInfo.map(({ id, createdAt, updatedAt }) => {
+    return templatesInfo.map(({ name, id, createdAt, updatedAt }) => {
       const createdAtDate = new Date(createdAt);
       const formattedCreatedAtDate = dateFormatter.format(createdAtDate);
       const updatedAtDate = updatedAt ? new Date(updatedAt) : null;
@@ -71,6 +74,9 @@ export class UiElementsListPageComponent {
         ? dateFormatter.format(updatedAtDate)
         : 'Newly created';
       return [
+        new TableItem({
+          data: name,
+        }),
         new TableItem({
           data: id,
         }),

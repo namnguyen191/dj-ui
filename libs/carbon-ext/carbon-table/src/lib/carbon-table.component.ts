@@ -154,6 +154,6 @@ export class CarbonTableComponent
 
     const pageLength = paginationModel.pageLength ?? 0;
 
-    this.paginationChanged.emit({ $paginationContext: { pageLength, selectedPage } });
+    this.paginationChanged.emit({ pageLength, selectedPage });
   }
 }

@@ -7,6 +7,6 @@
   "options": {
     "title": "Fetching pokemon data in parallel",
     "headers": ["ID", "Name", "Height", "Weight", "Types"],
-    "rows": "<${ return this.remoteResourcesStates?.results?.POKEMON_PARALLEL.REMOTE_RESOURCE?.result?.map(({ id, name, height, weight, types }) => ([id, name, height, weight, types.map(typeObj => typeObj.type.name).join(', ')])) ?? [] }$>"
+    "rows": "<${ return this.remoteResourcesStates?.results?.['POKEMON_PARALLEL.REMOTE_RESOURCE']?.result?.map(({ id, name, height, weight, types }) => ([id, name, height, weight, types.map(typeObj => typeObj.type.name).join(', ')])) ?? [] }$>"
   }
 }

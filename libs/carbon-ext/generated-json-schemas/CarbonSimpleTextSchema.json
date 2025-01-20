@@ -15,7 +15,23 @@
       }
     },
     "stateSubscription": {
-      "$ref": "#/definitions/StateSubscriptionConfig"
+      "type": "object",
+      "properties": {
+        "watchedScopes": {
+          "$ref": "#/definitions/{global?:string[]|undefined;local?:string[]|undefined;layout?:string[]|undefined;}"
+        },
+        "variables": {
+          "$ref": "#/definitions/Record<string,unknown>"
+        }
+      },
+      "additionalProperties": false,
+      "propertyOrder": [
+        "watchedScopes",
+        "variables"
+      ],
+      "required": [
+        "watchedScopes"
+      ]
     },
     "options": {
       "$ref": "#/definitions/UIElementTemplateOptions<{textBlocks:{text:string;type?:\"title\"|\"paragraph\"|undefined;}[];}>"
@@ -27,7 +43,7 @@
     "type"
   ],
   "definitions": {
-    "StateSubscriptionConfig": {
+    "{global?:string[]|undefined;local?:string[]|undefined;layout?:string[]|undefined;}": {
       "type": "object",
       "properties": {
         "global": {
@@ -56,10 +72,27 @@
         "layout"
       ]
     },
+    "Record<string,unknown>": {
+      "type": "object",
+      "additionalProperties": false,
+      "propertyOrder": []
+    },
     "UIElementTemplateOptions<{textBlocks:{text:string;type?:\"title\"|\"paragraph\"|undefined;}[];}>": {
       "additionalProperties": false,
       "type": "object",
       "properties": {
+        "isInterpolationLoading": {
+          "type": "boolean"
+        },
+        "isInterpolationError": {
+          "type": "boolean"
+        },
+        "isResourceLoading": {
+          "type": "boolean"
+        },
+        "isResourceError": {
+          "type": "boolean"
+        },
         "isLoading": {
           "type": "boolean"
         },

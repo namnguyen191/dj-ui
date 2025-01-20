@@ -26,7 +26,7 @@
         "payload": {
           "scope": "global",
           "data": {
-            "pokemonPage": "<${ return this.$paginationContext }$>"
+            "pokemonPage": "<${ return this.$eventOutput }$>"
           }
         }
       },
