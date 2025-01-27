@@ -1,0 +1,43 @@
+<ng-container #uiElementVCR> </ng-container>
+
+<cds-contained-list
+  #contextMenu
+  class="context-menu"
+  id="context-menu"
+  label="Control menu"
+  [class.hide]="!isContextMenuShow()"
+  [class.show]="isContextMenuShow()"
+>
+  <cds-contained-list-item [clickable]="true">
+    <ng-container ibmContainedListItemButton>
+      <div class="control-menu-item">
+        <span>Edit</span>
+        <svg cdsIcon="edit" size="16"></svg>
+      </div>
+    </ng-container>
+  </cds-contained-list-item>
+  <cds-contained-list-item [clickable]="true">
+    <ng-container ibmContainedListItemButton>
+      <div class="control-menu-item">
+        <span>View details</span>
+        <svg cdsIcon="settings--view" size="16"></svg>
+      </div>
+    </ng-container>
+  </cds-contained-list-item>
+  <cds-contained-list-item [clickable]="true">
+    <ng-container ibmContainedListItemButton>
+      <div class="control-menu-item">
+        <span>Duplicate</span>
+        <svg cdsIcon="copy" size="16"></svg>
+      </div>
+    </ng-container>
+  </cds-contained-list-item>
+  <cds-contained-list-item [clickable]="true">
+    <ng-container ibmContainedListItemButton>
+      <div class="control-menu-item">
+        <span>Delete</span>
+        <svg cdsIcon="trash-can" size="16"></svg>
+      </div>
+    </ng-container>
+  </cds-contained-list-item>
+</cds-contained-list>

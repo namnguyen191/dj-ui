@@ -1,3 +1,17 @@
+## 0.6.0 (2025-01-27)
+
+### 🚀 Features
+
+- update @namnguyen191 packages, adjust tsconfig, use enum for layout config ([#5](https://github.com/namnguyen191/dj-ui/pull/5))
+- refactor template service to extract common logic, adjust event interface ([#9](https://github.com/namnguyen191/dj-ui/pull/9))
+- Implement file upload ([#10](https://github.com/namnguyen191/dj-ui/pull/10))
+- add support for custom extra wrapper element ([4ce0b2b](https://github.com/namnguyen191/dj-ui/commit/4ce0b2b))
+- change peerdeps for libs ([132d87a](https://github.com/namnguyen191/dj-ui/commit/132d87a))
+
+### ❤️ Thank You
+
+- Nam Nguyen @namnguyen191
+
 ## 0.5.0 (2025-01-20)
 
 ### 🚀 Features

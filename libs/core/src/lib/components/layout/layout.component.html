@@ -13,19 +13,19 @@
       }
       @case ('loaded') {
         <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=drag_pan"
           rel="stylesheet"
         />
         <gridster *ngIf="layoutGridConfigs() as gridConfigs" [options]="gridConfigs">
           @if (gridItems(); as gridItems) {
             @if (gridItems.length > 0) {
               @for (item of gridItems; track item.trackById) {
-                <gridster-item [item]="item">
+                <gridster-item [id]="item.elementInstance.id" [item]="item">
                   <span *ngIf="item.dragEnabled" class="material-symbols-outlined drag-area">
-                    drag_indicator
+                    drag_pan
                   </span>
                   <dj-ui-element-wrapper
-                    [uiElementTemplateId]="item.elementInstance.uiElementTemplateId"
+                    [uiElementInstance]="item.elementInstance"
                   ></dj-ui-element-wrapper>
                 </gridster-item>
               }

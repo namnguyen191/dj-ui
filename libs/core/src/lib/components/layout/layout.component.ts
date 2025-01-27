@@ -11,7 +11,6 @@ import {
   GridType,
 } from 'angular-gridster2';
 
-import { CORE_CONFIG } from '../../global';
 import { EventsService } from '../../services/events-and-actions/events.service';
 import { LayoutTemplateService } from '../../services/templates/layout-template.service';
 import {
@@ -19,6 +18,7 @@ import {
   LayoutTemplateWithStatus,
   UIElementInstance,
 } from '../../services/templates/layout-template-interfaces';
+import { CORE_LAYOUT_CONFIG } from './layout.interface';
 import { UiElementWrapperComponent } from './ui-element-wrapper/ui-element-wrapper.component';
 
 type LayoutGridItem = GridsterItem & {
@@ -140,7 +140,7 @@ export class LayoutComponent {
 
   #eventService: EventsService = inject(EventsService);
 
-  layoutLoadingComponent = inject(CORE_CONFIG, { optional: true })?.layoutLoadingComponent;
+  layoutLoadingComponent = inject(CORE_LAYOUT_CONFIG, { optional: true })?.layoutLoadingComponent;
 
   #createGridItems(layoutConfig: LayoutTemplate): LayoutGridItem[] {
     return layoutConfig.uiElementInstances.map((eI) => {

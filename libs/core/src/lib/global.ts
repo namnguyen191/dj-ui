@@ -1,11 +1,9 @@
-import { InjectionToken, Type } from '@angular/core';
+import { InjectionToken } from '@angular/core';
 
 export const INTERPOLATION_REGEX = /^(<\${)(.*)(}\$>)$/;
 
-export type CoreConfig = {
-  layoutLoadingComponent?: Type<unknown>;
-  uiElementLoadingComponent?: Type<unknown>;
-};
+// eslint-disable-next-line @typescript-eslint/no-empty-object-type
+export type CoreConfig = {};
 export const CORE_CONFIG = new InjectionToken<CoreConfig>('CORE_CONFIG');
 export const CREATE_JS_RUNNER_WORKER = new InjectionToken<() => Worker>('CREATE_JS_RUNNER_WORKER');
 export const MAX_WORKER_POOl = new InjectionToken<number>('MAX_WORKER_POOl');
