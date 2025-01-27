@@ -35,12 +35,63 @@ import {
   Request,
 } from '../templates/remote-resource-template.service';
 import { BaseRemoteResourceService } from './base-remote-resource.service';
-import { FetcherIdToConfigMap, RemoteResourceState } from './remote-resource.interface';
+import {
+  FetcherIdToConfigMap,
+  RemoteResourcesStates,
+  RemoteResourceState,
+} from './remote-resource.interface';
 
 export const notRunResource = '[Resource did not run]';
 
 const complete: unique symbol = Symbol('Complete');
 const COMPLETE: Observable<typeof complete> = of(complete);
+
+export const getRemoteResourcesStatesAsContext = (
+  remoteResourceIds: string[]
+): Observable<RemoteResourcesStates> => {
+  const remoteResourceService = inject(RemoteResourceService);
+
+  const remoteResourcesStatesMap: { [id: string]: Observable<RemoteResourceState> } =
+    remoteResourceIds.reduce(
+      (acc, curId) => ({ ...acc, [curId]: remoteResourceService.getRemoteResourceState(curId) }),
+      {}
+    );
+
+  return combineLatest(remoteResourcesStatesMap).pipe(
+    map((statesMap) => {
+      const isAllLoading = Object.entries(statesMap).every(([, state]) => state.isLoading);
+      const isPartialLoading: string[] = Object.entries(statesMap).reduce(
+        (acc, [curId, curState]) => {
+          if (curState.isLoading) {
+            return [...acc, curId];
+          }
+
+          return acc;
+        },
+        [] as string[]
+      );
+      const isAllError = Object.entries(statesMap).every(([, state]) => state.isError);
+      const isPartialError: string[] = Object.entries(statesMap).reduce(
+        (acc, [curId, curState]) => {
+          if (curState.isError) {
+            return [...acc, curId];
+          }
+
+          return acc;
+        },
+        [] as string[]
+      );
+
+      return {
+        results: statesMap,
+        isAllLoading,
+        isPartialLoading,
+        isAllError,
+        isPartialError,
+      };
+    })
+  );
+};
 
 @Injectable({
   providedIn: 'root',
@@ -196,7 +247,6 @@ export class RemoteResourceService extends BaseRemoteResourceService {
       }),
       switchMap((rrt) => this.#processRequest(rrt.config).pipe(map((result) => ({ result, rrt })))),
       switchMap(({ result, rrt }) => {
-        console.log('Nam data is: ', result);
         this.setCompleteState(remoteResourceState, result);
         return this.#processHooks({ resourceResult: result, remoteResourceTemplate: rrt });
       }),

@@ -14,6 +14,7 @@ import {
   runInInjectionContext,
   Signal,
   Type,
+  untracked,
   viewChild,
   ViewContainerRef,
 } from '@angular/core';
@@ -40,17 +41,15 @@ import {
 } from 'rxjs';
 import { UnknownRecord } from 'type-fest';
 
-import { CORE_CONFIG } from '../../../global';
 import {
   ActionHook,
   ActionHookService,
 } from '../../../services/events-and-actions/action-hook.service';
 import { InterpolationService } from '../../../services/interpolation.service';
-import {
-  getRemoteResourcesStatesAsContext,
-  RemoteResourcesStates,
-} from '../../../services/remote-resource/remote-resource.interface';
+import { RemoteResourcesStates } from '../../../services/remote-resource/remote-resource.interface';
+import { getRemoteResourcesStatesAsContext } from '../../../services/remote-resource/remote-resource.service';
 import { getStatesSubscriptionAsContext, StateMap } from '../../../services/state-store.service';
+import { UIElementInstance } from '../../../services/templates/layout-template-interfaces';
 import {
   UIElementTemplateOptions,
   UIElementTemplateService,
@@ -59,6 +58,7 @@ import {
 import { UIElementFactoryService } from '../../../services/ui-element-factory.service';
 import { logSubscription, logWarning } from '../../../utils/logging';
 import { BaseUIElementComponent, UIElementRequiredConfigs } from '../../base-ui-element.component';
+import { CORE_LAYOUT_CONFIG } from '../layout.interface';
 
 type ElementInputsInterpolationContext = {
   remoteResourcesStates: null | RemoteResourcesStates;
@@ -104,8 +104,12 @@ export class UiElementWrapperComponent {
   readonly #actionHookService = inject(ActionHookService);
   readonly #elementRef = inject(ElementRef);
 
-  uiElementTemplateId: InputSignal<string> = input.required();
+  uiElementInstance: InputSignal<UIElementInstance> = input.required();
   requiredComponentSymbols = input<symbol[]>([]);
+
+  uiElementTemplateId = computed<string>(() => {
+    return this.uiElementInstance().uiElementTemplateId;
+  });
 
   private readonly uiElementVCR: Signal<ViewContainerRef | undefined> = viewChild('uiElementVCR', {
     read: ViewContainerRef,
@@ -130,11 +134,13 @@ export class UiElementWrapperComponent {
     () => {
       const vcr = this.uiElementVCR();
       const uiElementComp = this.uiElementComponent();
-      const uiElementTemplateId = this.uiElementTemplateId();
+
       if (!vcr || !uiElementComp) {
         return null;
       }
       vcr.clear();
+
+      const uiElementTemplateId = untracked(this.uiElementTemplateId);
 
       const componentSymbol: symbol = (uiElementComp as unknown as typeof BaseUIElementComponent)
         .ELEMENT_SYMBOL;
@@ -144,6 +150,28 @@ export class UiElementWrapperComponent {
           `${uiElementTemplateId}: Wrong element received: expect ${requiredComponentSymbols.map((sym) => String(sym)).join('or ')} but got ${String(componentSymbol)}`
         );
         return null;
+      }
+
+      if (this.uiElementExtraWrapperComponent) {
+        const extraWrapperComponent = vcr.createComponent(this.uiElementExtraWrapperComponent);
+
+        const uiElementInstance = untracked(this.uiElementInstance);
+
+        // UIElementTemplate should always be available at this point since uiElementComp is available
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const uiElementTemplate = untracked(this.uiElementTemplate)!;
+
+        extraWrapperComponent.setInput('uiElementInstance', uiElementInstance);
+        extraWrapperComponent.setInput('uiElementTemplate', uiElementTemplate);
+        const uiElementVCR = extraWrapperComponent.instance.uiElementVCR();
+
+        if (!uiElementVCR) {
+          return null;
+        }
+        const createdUIElementComponent = uiElementVCR.createComponent(uiElementComp);
+        extraWrapperComponent.setInput('uiElementComponentRef', createdUIElementComponent);
+
+        return createdUIElementComponent;
       }
 
       return vcr.createComponent(uiElementComp);
@@ -263,8 +291,11 @@ export class UiElementWrapperComponent {
     return isInfinite;
   });
 
-  readonly uiElementLoadingComponent = inject(CORE_CONFIG, { optional: true })
+  readonly uiElementLoadingComponent = inject(CORE_LAYOUT_CONFIG, { optional: true })
     ?.uiElementLoadingComponent;
+
+  readonly uiElementExtraWrapperComponent = inject(CORE_LAYOUT_CONFIG, { optional: true })
+    ?.uiElementExtraWrapperComponent;
 
   constructor() {
     this.#setupComponentEffect();

@@ -3,7 +3,10 @@
   <dj-ui-element-wrapper
     *ngIf="primaryButtonIdConfigOption() as primaryButtonId"
     [requiredComponentSymbols]="[carbonButtonSymbol]"
-    [uiElementTemplateId]="primaryButtonId"
+    [uiElementInstance]="{
+      id: primaryButtonId,
+      uiElementTemplateId: primaryButtonId,
+    }"
   ></dj-ui-element-wrapper>
   <cds-table-header>
     <h4 cdsTableHeaderTitle id="table-header">{{ titleConfigOption() }}</h4>

@@ -1,7 +1,7 @@
 import { inject, NgModule } from '@angular/core';
 import { CarbonComponentLoader } from '@dj-ui/carbon-ext';
 import { COMMON_SETUP_CONFIG, provideDJUI, SetupConfigs, setupDefault } from '@dj-ui/common';
-import { CORE_CONFIG, DjuiComponent } from '@dj-ui/core';
+import { CORE_LAYOUT_CONFIG, CoreLayoutConfig, DjuiComponent } from '@dj-ui/core';
 
 import { LayoutTemplateLoadingStateComponent } from './components/layout-template-loading-state/layout-template-loading-state.component';
 import { UiElementTemplateLoadingStateComponent } from './components/ui-element-template-loading-state/ui-element-template-loading-state.component';
@@ -13,11 +13,11 @@ import { TemplateFetcherService } from './services/template-fetcher.service';
   providers: [
     provideDJUI(),
     {
-      provide: CORE_CONFIG,
-      useValue: {
+      provide: CORE_LAYOUT_CONFIG,
+      useFactory: (): CoreLayoutConfig => ({
         layoutLoadingComponent: LayoutTemplateLoadingStateComponent,
         uiElementLoadingComponent: UiElementTemplateLoadingStateComponent,
-      },
+      }),
     },
     {
       provide: COMMON_SETUP_CONFIG,

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { LayoutTemplate, RemoteResourceTemplate, UIElementTemplate } from '@dj-ui/core';
-import { delay, Observable, of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 const mockCard = {
   id: 'carbon_text_card_test',
@@ -44,14 +44,14 @@ export class TemplateFetcherService {
           uiElementTemplateId: mockCard.id,
         },
       ],
-    } as LayoutTemplate).pipe(delay(200));
+    } as LayoutTemplate);
   }
 
   getUIElementTemplate(_id: string): Observable<UIElementTemplate> {
-    return of(mockCard as UIElementTemplate).pipe(delay(200));
+    return of(mockCard as UIElementTemplate);
   }
 
   getRemoteResourceTemplate(id: string): Observable<RemoteResourceTemplate> {
-    return of({ id } as RemoteResourceTemplate).pipe(delay(200));
+    return of({ id } as RemoteResourceTemplate);
   }
 }
