@@ -66,12 +66,16 @@ func (route *LayoutRoutes) updateLayout(c *gin.Context) {
 		return
 	}
 
+	updatedLayout.CreatedAt = existingLayout.CreatedAt
+
 	err = route.layoutRepo.UpdateLayout(&updatedLayout)
 	if err != nil {
 		fmt.Println(err)
 		utils.ServerError(c)
 		return
 	}
+
+	c.JSON(http.StatusCreated, updatedLayout)
 }
 
 func (route *LayoutRoutes) getAllLayouts(c *gin.Context) {

@@ -1,5 +1,14 @@
 import { CommonModule } from '@angular/common';
-import { Component, computed, ElementRef, inject, input, InputSignal, Signal } from '@angular/core';
+import {
+  Component,
+  computed,
+  ElementRef,
+  inject,
+  input,
+  InputSignal,
+  linkedSignal,
+  Signal,
+} from '@angular/core';
 import { computedFromObservable } from '@namnguyen191/common-angular-helper';
 import { parentContains } from '@namnguyen191/common-js-helper/dom-utils';
 import {
@@ -98,13 +107,17 @@ export class LayoutComponent {
     return this.#layoutService.getTemplate(layoutId);
   });
 
-  gridItems: Signal<LayoutGridItem[] | null> = computed(() => {
+  gridItems = linkedSignal<LayoutGridItem[] | null>(() => {
     const layoutConfig = this.layoutConfig();
     if (!layoutConfig || !layoutConfig.config) {
       return null;
     }
 
-    return this.#createGridItems(layoutConfig.config);
+    // Remove all grid items before creating new ones
+    setTimeout(() => {
+      this.gridItems.set(this.#createGridItems(layoutConfig.config));
+    }, 100);
+    return [];
   });
 
   isInfinite: Signal<boolean> = computed(() => {

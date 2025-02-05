@@ -1,9 +1,11 @@
 {
   "id": "TABLES_DEMO.LAYOUT",
+  "name": "Tables demo layout",
+  "description": "A simple layout with a bunch of tables to demo them",
   "uiElementInstances": [
     {
       "id": "instance-1",
-      "uiElementTemplateId": "CARBON_TABLE_V1",
+      "uiElementTemplateId": "SERVER_SIDE_PAGINATION.CARBON_TABLE",
       "positionAndSize": {
         "x": 0,
         "y": 0,
@@ -13,27 +15,17 @@
     },
     {
       "id": "instance-2",
-      "uiElementTemplateId": "POKEMON_PARALLEL_TABLE"
+      "uiElementTemplateId": "POKEMON_PARALLEL_REQUEST.CARBON_TABLE"
     },
     {
       "id": "instance-3",
-      "uiElementTemplateId": "pokemon-and-us-pop-table"
+      "uiElementTemplateId": "MIX_REQUESTS.CARBON_TABLE"
     },
     {
       "id": "instance-4",
-      "uiElementTemplateId": "carbon_table_in_memory_pagination",
+      "uiElementTemplateId": "IN_MEMORY_PAGINATION.CARBON_TABLE",
       "positionAndSize": {
         "x": 0,
-        "y": 20,
-        "rows": 20,
-        "cols": 8
-      }
-    },
-    {
-      "id": "instance-5",
-      "uiElementTemplateId": "carbon_table_server_side_pagination",
-      "positionAndSize": {
-        "x": 9,
         "y": 20,
         "rows": 20,
         "cols": 8

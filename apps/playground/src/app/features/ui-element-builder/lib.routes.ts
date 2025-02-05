@@ -1,6 +1,6 @@
 import { Route } from '@angular/router';
 
-export const builderRoutes: Route[] = [
+export const uiElementBuilderRoutes: Route[] = [
   {
     path: '',
     loadComponent: () =>

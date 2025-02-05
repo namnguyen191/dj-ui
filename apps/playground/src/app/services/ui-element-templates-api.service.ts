@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { SimpleTextConfigs } from '@dj-ui/carbon-ext/carbon-simple-text';
-import { catchError, Observable, of } from 'rxjs';
+import { UIElementTemplateService } from '@dj-ui/core';
+import { catchError, Observable, of, tap } from 'rxjs';
 
 import { AppUIElementTemplate, TimeStamp } from '../shared/dj-ui-app-template';
 
@@ -36,6 +37,7 @@ const getErrorTemplate = (id: string): AppUIElementTemplate<SimpleTextConfigs> =
 })
 export class UIElementTemplatesAPIService {
   readonly #httpClient = inject(HttpClient);
+  readonly #uiElementTemplateService = inject(UIElementTemplateService);
 
   getAllUIElementTemplates = (): Observable<AppUIElementTemplate[]> => {
     return this.#httpClient.get<AppUIElementTemplate[]>(`${BASE_UI_ELEMENT_TEMPLATE_URL}`);
@@ -50,7 +52,13 @@ export class UIElementTemplatesAPIService {
   updateUIElementTemplate = (
     payload: UpdateAppUIElementTemplatePayload
   ): Observable<AppUIElementTemplate> => {
-    return this.#httpClient.put<AppUIElementTemplate>(BASE_UI_ELEMENT_TEMPLATE_URL, payload);
+    return this.#httpClient.put<AppUIElementTemplate>(BASE_UI_ELEMENT_TEMPLATE_URL, payload).pipe(
+      tap({
+        next: (updatedUIElementTemplate) => {
+          this.#uiElementTemplateService.updateOrRegisterTemplate(updatedUIElementTemplate);
+        },
+      })
+    );
   };
 
   fetchUIElementTemplate(id: string): Observable<AppUIElementTemplate> {
