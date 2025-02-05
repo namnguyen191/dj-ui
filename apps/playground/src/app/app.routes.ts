@@ -4,7 +4,12 @@ export const appRoutes: Route[] = [
   {
     path: 'builder-patterns',
     loadChildren: () =>
-      import('./features/builder-patterns/lib.routes').then((m) => m.builderRoutes),
+      import('./features/ui-element-builder/lib.routes').then((m) => m.uiElementBuilderRoutes),
+  },
+  {
+    path: 'layout-builder',
+    loadChildren: () =>
+      import('./features/layout-builder/lib.routes').then((m) => m.layoutBuilderRoutes),
   },
   {
     path: 'idependence-configs-patterns',

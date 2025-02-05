@@ -1,6 +1,13 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { computed, inject } from '@angular/core';
-import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
+import {
+  patchState,
+  signalStore,
+  withComputed,
+  withHooks,
+  withMethods,
+  withState,
+} from '@ngrx/signals';
 import { firstValueFrom } from 'rxjs';
 
 import {
@@ -61,5 +68,10 @@ export const LayoutTemplatesStore = signalStore(
     updateQuery: (query: LayoutTemplatesStoreState['query']): void => {
       patchState(store, { query });
     },
-  }))
+  })),
+  withHooks({
+    onInit: ({ loadAll }) => {
+      loadAll();
+    },
+  })
 );

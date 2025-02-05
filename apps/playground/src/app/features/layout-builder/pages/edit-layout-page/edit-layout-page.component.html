@@ -1,0 +1,15 @@
+<djui [layoutId]="currentLayoutTemplateId"></djui>
+
+<cds-icon-button
+  class="edit-template-button"
+  type="button"
+  [kind]="'primary'"
+  (click)="toggleModal(true)"
+>
+  <svg cdsIcon="edit" class="cds--btn__icon" size="16"></svg>
+</cds-icon-button>
+
+<namnguyen191-layout-template-code-editor-modal
+  [open]="isRawTemplateEditorModalOpenSig()"
+  (close)="toggleModal(false)"
+></namnguyen191-layout-template-code-editor-modal>

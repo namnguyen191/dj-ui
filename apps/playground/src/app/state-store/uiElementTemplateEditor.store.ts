@@ -17,7 +17,7 @@ import {
   AppUIElementTemplateUnEditableFields,
 } from '../shared/dj-ui-app-template';
 
-const PREVIEW_UI_ELEMENT_TEMPLATE_ID = 'TEMPLATE_FOR_PREVIEW_ONLY';
+const PREVIEW_UI_ELEMENT_TEMPLATE_ID = 'UI_ELEMENT_TEMPLATE_FOR_PREVIEW_ONLY';
 
 export const PREVIEW_LAYOUT_BASE_CONFIG: LayoutTemplate = {
   id: 'preview-layout',

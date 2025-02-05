@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { LayoutTemplateService } from '@dj-ui/core';
+import { Observable, tap } from 'rxjs';
 
 import { AppLayoutTemplate, TimeStamp } from '../shared/dj-ui-app-template';
 
@@ -15,6 +16,7 @@ export type UpdateAppLayoutTemplatePayload = CreateAppLayoutTemplatePayload;
 })
 export class LayoutTemplatesAPIService {
   readonly #httpClient = inject(HttpClient);
+  readonly #layoutTemplateService = inject(LayoutTemplateService);
 
   getAllLayoutTemplates = (): Observable<AppLayoutTemplate[]> => {
     return this.#httpClient.get<AppLayoutTemplate[]>(`${BASE_LAYOUT_TEMPLATE_URL}`);
@@ -29,7 +31,12 @@ export class LayoutTemplatesAPIService {
   updateLayoutTemplate = (
     payload: UpdateAppLayoutTemplatePayload
   ): Observable<AppLayoutTemplate> => {
-    return this.#httpClient.put<AppLayoutTemplate>(BASE_LAYOUT_TEMPLATE_URL, payload);
+    return this.#httpClient.put<AppLayoutTemplate>(BASE_LAYOUT_TEMPLATE_URL, payload).pipe(
+      tap({
+        next: (updatedLayoutTemplate) =>
+          this.#layoutTemplateService.updateOrRegisterTemplate(updatedLayoutTemplate),
+      })
+    );
   };
 
   fetchLayoutTemplate(id: string): Observable<AppLayoutTemplate> {
