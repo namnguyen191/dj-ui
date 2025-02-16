@@ -1,5 +1,11 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectorRef, Component, effect, inject } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  ChangeDetectorRef,
+  Component,
+  effect,
+  inject,
+} from '@angular/core';
 import { ActivatedRoute, Router, RouterModule } from '@angular/router';
 import {
   ButtonModule,
@@ -18,6 +24,7 @@ import { LayoutTemplatesStore } from '../../../../state-store/layoutTemplates.st
   imports: [CommonModule, TableModule, ButtonModule, RouterModule],
   templateUrl: './layouts-list-page.component.html',
   styleUrl: './layouts-list-page.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutsListPageComponent {
   readonly #layoutTemplatesStore = inject(LayoutTemplatesStore);

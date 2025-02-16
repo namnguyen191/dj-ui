@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   AbstractControl,
   AsyncValidatorFn,
@@ -86,6 +86,7 @@ const isUIElementIdUnique = (): AsyncValidatorFn => {
   ],
   templateUrl: './new-ui-element-page.component.html',
   styleUrl: './new-ui-element-page.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewUIElementPageComponent {
   #uiElementTemplatesStore = inject(UIElementTemplatesStore);

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 
 import { DJUIConfigModule } from '../dj-ui-config.module';
 
@@ -7,5 +7,6 @@ import { DJUIConfigModule } from '../dj-ui-config.module';
   imports: [DJUIConfigModule],
   templateUrl: './djui-with-different-configs.component.html',
   styleUrl: './djui-with-different-configs.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DjuiWithDifferentConfigsComponent {}

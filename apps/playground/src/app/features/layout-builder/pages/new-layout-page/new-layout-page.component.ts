@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { HttpErrorResponse } from '@angular/common/http';
-import { Component, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   AbstractControl,
   AsyncValidatorFn,
@@ -65,6 +65,7 @@ const isLayoutIdUnique = (): AsyncValidatorFn => {
   ],
   templateUrl: './new-layout-page.component.html',
   styleUrl: './new-layout-page.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NewLayoutPageComponent {
   #layoutTemplatesStore = inject(LayoutTemplatesStore);

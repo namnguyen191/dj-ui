@@ -1,3 +1,18 @@
+## 0.8.0 (2025-02-16)
+
+### 🚀 Features
+
+- update @namnguyen191 packages, adjust tsconfig, use enum for layout config ([#5](https://github.com/namnguyen191/dj-ui/pull/5))
+- refactor template service to extract common logic, adjust event interface ([#9](https://github.com/namnguyen191/dj-ui/pull/9))
+- Implement file upload ([#10](https://github.com/namnguyen191/dj-ui/pull/10))
+- Support extra wrapper and release new version ([#11](https://github.com/namnguyen191/dj-ui/pull/11))
+- add layout builder to playground and adjust layout component ([#12](https://github.com/namnguyen191/dj-ui/pull/12))
+- enable onpush change detection and move context menu to layout builder ([5b541c9](https://github.com/namnguyen191/dj-ui/commit/5b541c9))
+
+### ❤️ Thank You
+
+- Nam Nguyen @namnguyen191
+
 ## 0.7.0 (2025-02-05)
 
 ### 🚀 Features

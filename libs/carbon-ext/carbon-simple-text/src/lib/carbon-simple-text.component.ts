@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, input, InputSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, InputSignal } from '@angular/core';
 import { CarbonSimpleTextElementType, CarbonSimpleTextSymbol } from '@dj-ui/carbon-ext/shared';
 import { BaseUIElementComponent, UIElementImplementation } from '@dj-ui/core';
 import { parseZodWithDefault } from '@namnguyen191/types-helper';
@@ -15,6 +15,7 @@ import {
   imports: [CommonModule],
   templateUrl: './carbon-simple-text.component.html',
   styleUrl: './carbon-simple-text.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CarbonSimpleTextComponent
   extends BaseUIElementComponent

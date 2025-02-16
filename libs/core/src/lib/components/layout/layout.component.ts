@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   computed,
   ElementRef,
@@ -95,6 +96,7 @@ const isLayoutGridItem = (item: GridsterItem): item is LayoutGridItem => {
   host: {
     '[attr.layoutId]': 'layoutId()',
   },
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutComponent {
   readonly #layoutService = inject(LayoutTemplateService);

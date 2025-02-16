@@ -1,4 +1,4 @@
-import { Component, effect, inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, effect, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -20,6 +20,7 @@ import { RawTemplateEditorModalComponent } from './components/raw-template-edito
   imports: [DjuiComponent, FormsModule, ButtonModule, IconModule, RawTemplateEditorModalComponent],
   templateUrl: './edit-ui-element-template-page.component.html',
   styleUrl: './edit-ui-element-template-page.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EditUIElementTemplatePageComponent {
   readonly #activatedRoute = inject(ActivatedRoute);
