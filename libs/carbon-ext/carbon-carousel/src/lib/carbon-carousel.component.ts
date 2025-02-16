@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { NgOptimizedImage } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   input,
@@ -41,6 +42,7 @@ type CarouselImage = {
   host: {
     '[attr.aria-label]': 'ariaLabelConfigOption()',
   },
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CarbonCarouselComponent
   extends BaseUIElementComponent

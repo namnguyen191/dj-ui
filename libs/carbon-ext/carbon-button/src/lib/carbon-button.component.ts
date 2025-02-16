@@ -1,5 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, input, InputSignal, output, untracked } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  inject,
+  input,
+  InputSignal,
+  output,
+  untracked,
+} from '@angular/core';
 import { CarbonButtonElementType, CarbonButtonSymbol } from '@dj-ui/carbon-ext/shared';
 import { FileService } from '@dj-ui/common';
 import { BaseUIElementComponent, UIElementImplementation } from '@dj-ui/core';
@@ -19,6 +27,7 @@ import {
   imports: [CommonModule, ButtonModule, InlineLoadingModule],
   templateUrl: './carbon-button.component.html',
   styleUrl: './carbon-button.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CarbonButtonComponent
   extends BaseUIElementComponent

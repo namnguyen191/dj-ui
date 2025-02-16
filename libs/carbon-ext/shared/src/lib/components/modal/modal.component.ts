@@ -1,11 +1,20 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, ElementRef, input, output, viewChild } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  ElementRef,
+  input,
+  output,
+  viewChild,
+} from '@angular/core';
 
 @Component({
   selector: 'dj-ui-carbon-modal',
   imports: [CommonModule],
   templateUrl: './modal.component.html',
   styleUrl: './modal.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ModalComponent {
   isOpenSig = input<boolean>(false, {

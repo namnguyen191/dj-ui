@@ -1,5 +1,6 @@
 import { CommonModule, DOCUMENT } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   inject,
@@ -21,6 +22,7 @@ import { IconModule, IconService } from 'carbon-components-angular/icon';
   imports: [CommonModule, ContainedListModule, IconModule],
   templateUrl: './dui-ui-element-builder-context-menu-wrapper.component.html',
   styleUrl: './dui-ui-element-builder-context-menu-wrapper.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DuiUIElementBuilderContextMenuWrapperComponent
   extends UIElementExtraWrapperBaseComponent

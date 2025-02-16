@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import {
+  ChangeDetectionStrategy,
   Component,
   ComponentRef,
   computed,
@@ -95,6 +96,7 @@ type InputsWithInterpolationTrackingStreams = InputsFromInterpolationTrackingStr
   host: {
     '[attr.elementTemplateId]': 'uiElementTemplateId()',
   },
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class UiElementWrapperComponent {
   readonly #uiElementFactoryService = inject(UIElementFactoryService);

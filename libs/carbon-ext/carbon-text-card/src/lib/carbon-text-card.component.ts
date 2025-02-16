@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, input, InputSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, InputSignal } from '@angular/core';
 import { CarbonTextCardElementType, CarbonTextCardSymbol } from '@dj-ui/carbon-ext/shared';
 import { EmitOnClickDirective } from '@dj-ui/common';
 import { BaseUIElementComponent, UIElementImplementation } from '@dj-ui/core';
@@ -30,6 +30,7 @@ import {
   host: {
     '[class.clickable]': 'clickableConfigOption()',
   },
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CarbonTextCardComponent
   extends BaseUIElementComponent

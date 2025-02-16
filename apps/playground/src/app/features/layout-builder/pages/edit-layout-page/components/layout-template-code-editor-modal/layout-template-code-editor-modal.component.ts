@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, inject, signal, untracked } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  inject,
+  signal,
+  untracked,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import {
@@ -17,9 +24,9 @@ import * as prettierPluginEstree from 'prettier/plugins/estree';
 import * as prettier from 'prettier/standalone';
 import { debounceTime, Subject, tap } from 'rxjs';
 
-import { AppLayoutTemplateEditableFields } from '../../../../../shared/dj-ui-app-template';
-import { LayoutTemplatesStore } from '../../../../../state-store/layoutTemplates.store';
-import { LayoutTemplateEditorStore } from '../../../../../state-store/uiLayoutTemplateEditor.store';
+import { AppLayoutTemplateEditableFields } from '../../../../../../shared/dj-ui-app-template';
+import { LayoutTemplatesStore } from '../../../../../../state-store/layoutTemplates.store';
+import { LayoutTemplateEditorStore } from '../../../../../../state-store/uiLayoutTemplateEditor.store';
 
 export type IStandaloneEditorConstructionOptions = NonNullable<Parameters<typeof editor.create>[1]>;
 
@@ -36,6 +43,7 @@ export type IStandaloneEditorConstructionOptions = NonNullable<Parameters<typeof
   ],
   templateUrl: './layout-template-code-editor-modal.component.html',
   styleUrl: './layout-template-code-editor-modal.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LayoutTemplateCodeEditorModalComponent extends BaseModal {
   readonly #layoutTemplatesStore = inject(LayoutTemplatesStore);

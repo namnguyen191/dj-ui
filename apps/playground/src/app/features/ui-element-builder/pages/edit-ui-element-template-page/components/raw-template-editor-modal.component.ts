@@ -1,5 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { Component, effect, inject, signal, untracked } from '@angular/core';
+import {
+  ChangeDetectionStrategy,
+  Component,
+  effect,
+  inject,
+  signal,
+  untracked,
+} from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import {
@@ -36,6 +43,7 @@ export type IStandaloneEditorConstructionOptions = NonNullable<Parameters<typeof
   ],
   templateUrl: './raw-template-editor-modal.component.html',
   styleUrl: './raw-template-editor-modal.component.scss',
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class RawTemplateEditorModalComponent extends BaseModal {
   readonly #uiElementTemplatesStore = inject(UIElementTemplatesStore);

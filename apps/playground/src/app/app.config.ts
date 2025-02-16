@@ -15,7 +15,6 @@ import { from } from 'rxjs';
 
 import { appRoutes } from './app.routes';
 import { DuiLayoutLoadingComponent } from './components/dui-layout-loading/dui-layout-loading.component';
-import { DuiUIElementBuilderContextMenuWrapperComponent } from './components/dui-ui-element-builder-context-menu-wrapper/dui-ui-element-builder-context-menu-wrapper.component';
 import { DuiUiElementLoadingComponent } from './components/dui-ui-element-loading/dui-ui-element-loading.component';
 import { LayoutTemplatesStore } from './state-store/layoutTemplates.store';
 import { RemoteResourceTemplatesStore } from './state-store/remoteResourceTemplates.store';
@@ -50,7 +49,6 @@ export const appConfig: ApplicationConfig = {
         return {
           layoutLoadingComponent: DuiLayoutLoadingComponent,
           uiElementLoadingComponent: DuiUiElementLoadingComponent,
-          uiElementExtraWrapperComponent: DuiUIElementBuilderContextMenuWrapperComponent,
         };
       },
     },
