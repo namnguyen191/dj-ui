@@ -16,6 +16,12 @@ import { from } from 'rxjs';
 import { appRoutes } from './app.routes';
 import { DuiLayoutLoadingComponent } from './components/dui-layout-loading/dui-layout-loading.component';
 import { DuiUiElementLoadingComponent } from './components/dui-ui-element-loading/dui-ui-element-loading.component';
+import { LayoutTemplatesAPIService } from './services/layout-templates-api.service';
+import { LayoutTemplatesLocalAPIService } from './services/layout-templates-local-api.service';
+import { RemoteResourceTemplatesAPIService } from './services/remote-resource-templates-api.service';
+import { RemoteResourceTemplatesLocalAPIService } from './services/remote-resource-templates-local-api.service';
+import { UIElementTemplatesAPIService } from './services/ui-element-templates-api.service';
+import { UIElementTemplatesLocalAPIService } from './services/ui-element-templates-local-api.service';
 import { LayoutTemplatesStore } from './state-store/layoutTemplates.store';
 import { RemoteResourceTemplatesStore } from './state-store/remoteResourceTemplates.store';
 import { UIElementTemplatesStore } from './state-store/uiElementTemplates.store';
@@ -67,6 +73,36 @@ export const appConfig: ApplicationConfig = {
           },
           componentLoadersMap: CarbonComponentLoader,
         };
+      },
+    },
+    {
+      provide: UIElementTemplatesAPIService,
+      useFactory: (): UIElementTemplatesAPIService => {
+        if (ENABLE_LOCAL_API) {
+          return new UIElementTemplatesLocalAPIService();
+        } else {
+          return new UIElementTemplatesAPIService();
+        }
+      },
+    },
+    {
+      provide: LayoutTemplatesAPIService,
+      useFactory: (): LayoutTemplatesAPIService => {
+        if (ENABLE_LOCAL_API) {
+          return new LayoutTemplatesLocalAPIService();
+        } else {
+          return new LayoutTemplatesAPIService();
+        }
+      },
+    },
+    {
+      provide: RemoteResourceTemplatesAPIService,
+      useFactory: (): RemoteResourceTemplatesAPIService => {
+        if (ENABLE_LOCAL_API) {
+          return new RemoteResourceTemplatesLocalAPIService();
+        } else {
+          return new RemoteResourceTemplatesAPIService();
+        }
       },
     },
   ],

@@ -64,6 +64,7 @@ export const withEntitiesAndLoaders = <TEntity extends EntityLike, TCreatePayloa
           } catch (error) {
             const errMsg = `Something went wrong fetching entity with id ${id}. Err: ${error}`;
             setError(errMsg);
+            patchState(store, setFulfilled());
             throw Error(errMsg);
           }
         },

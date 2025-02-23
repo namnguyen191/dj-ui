@@ -10,15 +10,26 @@ import {
   ToastContent,
 } from 'carbon-components-angular';
 
+import { ResetLocalApiBtnComponent } from './components/reset-local-api-btn/reset-local-api-btn.component';
+
 @Component({
   selector: 'app-root',
-  imports: [CommonModule, RouterModule, NotificationModule, ThemeModule, HeaderModule],
+  imports: [
+    CommonModule,
+    RouterModule,
+    NotificationModule,
+    ThemeModule,
+    HeaderModule,
+    ResetLocalApiBtnComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
   readonly #actionHookService = inject(ActionHookService);
+
+  readonly ENABLE_LOCAL_API = ENABLE_LOCAL_API;
 
   isNotificationDisplayed = signal<boolean>(false);
   notificationConfig: ToastContent = {
