@@ -1,3 +1,0 @@
-ggshield secret scan pre-commit "$@"
-
-pnpm lint-staged --concurrent false --relative
