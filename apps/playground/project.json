@@ -47,12 +47,19 @@
               "maximumError": "4kb"
             }
           ],
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "define": {
+            "ENABLE_LOCAL_API": "true"
+          },
+          "baseHref": "/dj-ui/"
         },
         "development": {
           "optimization": false,
           "extractLicenses": false,
-          "sourceMap": true
+          "sourceMap": true,
+          "define": {
+            "ENABLE_LOCAL_API": "true"
+          }
         }
       },
       "defaultConfiguration": "production"

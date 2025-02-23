@@ -1,12 +1,31 @@
 <div cdsTheme="g100">
   <cds-header brand="DJUI" name="[Carbon Components]">
     <cds-header-navigation>
-      <cds-header-item [routerLink]="['./ui-element-builder']">UI element builder</cds-header-item>
-      <cds-header-item [routerLink]="['./layout-builder']">Layout builder</cds-header-item>
-      <cds-header-item [routerLink]="['./idependence-configs-patterns']"
+      <cds-header-item
+        #rlaUIElementBuilder="routerLinkActive"
+        routerLinkActive
+        [isCurrentPage]="rlaUIElementBuilder.isActive"
+        [routerLink]="['./ui-element-builder']"
+        >UI element builder</cds-header-item
+      >
+      <cds-header-item
+        #rlaLayoutBuilder="routerLinkActive"
+        routerLinkActive
+        [isCurrentPage]="rlaLayoutBuilder.isActive"
+        [routerLink]="['./layout-builder']"
+        >Layout builder</cds-header-item
+      >
+      <cds-header-item
+        #rlaIndependenceConfigsBuilder="routerLinkActive"
+        routerLinkActive
+        [isCurrentPage]="rlaIndependenceConfigsBuilder.isActive"
+        [routerLink]="['./idependence-configs-patterns']"
         >Independence configs</cds-header-item
       >
     </cds-header-navigation>
+    @defer (when ENABLE_LOCAL_API) {
+      <app-reset-local-api-btn />
+    }
   </cds-header>
 
   <router-outlet></router-outlet>

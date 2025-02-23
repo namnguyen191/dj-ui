@@ -10,7 +10,7 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import {
   CarbonButtonElementType,
   CarbonCarouselCardElementType,
@@ -90,6 +90,8 @@ const isUIElementIdUnique = (): AsyncValidatorFn => {
 })
 export class NewUIElementPageComponent {
   #uiElementTemplatesStore = inject(UIElementTemplatesStore);
+  #router = inject(Router);
+
   loadingSig = this.#uiElementTemplatesStore.isPending;
 
   newUIElementForm = new FormGroup<NewUIElementForm>({
@@ -156,12 +158,12 @@ export class NewUIElementPageComponent {
     return InlineLoadingState.Finished;
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     const newUIElementPayload: CreateAppUIElementTemplatePayload = {
       ...this.newUIElementForm.getRawValue(),
-      type: 'CARBON_TABLE',
       options: {},
     };
-    this.#uiElementTemplatesStore.add(newUIElementPayload);
+    const createdTemplate = await this.#uiElementTemplatesStore.add(newUIElementPayload);
+    this.#router.navigateByUrl(`ui-element-builder/edit/${createdTemplate.id}`);
   }
 }

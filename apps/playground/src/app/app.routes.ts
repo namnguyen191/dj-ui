@@ -2,7 +2,7 @@ import { Route } from '@angular/router';
 
 export const appRoutes: Route[] = [
   {
-    path: 'builder-patterns',
+    path: 'ui-element-builder',
     loadChildren: () =>
       import('./features/ui-element-builder/lib.routes').then((m) => m.uiElementBuilderRoutes),
   },
@@ -18,5 +18,5 @@ export const appRoutes: Route[] = [
         (m) => m.independenceConfigsRoutes
       ),
   },
-  { path: '**', redirectTo: 'builder-patterns', pathMatch: 'full' },
+  { path: '**', redirectTo: 'ui-element-builder', pathMatch: 'full' },
 ];

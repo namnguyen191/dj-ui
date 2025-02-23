@@ -1,0 +1,36 @@
+<button cdsButton="danger" (click)="isConfirmationModalOpenSig.set(true)">
+  Reset all templates
+</button>
+<cds-modal
+  theme="danger"
+  [open]="isConfirmationModalOpenSig()"
+  (close)="isConfirmationModalOpenSig.set(false)"
+  (overlaySelected)="isConfirmationModalOpenSig.set(false)"
+>
+  <cds-modal-header [showCloseButton]="true" (closeSelect)="isConfirmationModalOpenSig.set(false)">
+    <p class="cds--modal-header__label cds--type-delta">Templates reset</p>
+    <p class="cds--modal-header__heading cds--type-beta">
+      Resetting all templates in on your local machine
+    </p>
+  </cds-modal-header>
+  <div class="cds--modal-content">
+    <p>
+      Warning: this action will delete all user created templates as well as reset everything back
+      to their original state! Are you sure you want to proceed?
+    </p>
+  </div>
+  <cds-modal-footer>
+    <ng-container>
+      <button
+        cdsButton="primary"
+        [attr.modal-primary-focus]="true"
+        (click)="isConfirmationModalOpenSig.set(false)"
+      >
+        Cancel
+      </button>
+      <button cdsButton="danger" [attr.modal-primary-focus]="true" (click)="resetLocalAPI()">
+        Proceed
+      </button>
+    </ng-container>
+  </cds-modal-footer>
+</cds-modal>

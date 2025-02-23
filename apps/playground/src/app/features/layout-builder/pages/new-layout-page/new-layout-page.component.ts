@@ -10,7 +10,7 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import {
   ButtonModule,
   DropdownModule,
@@ -70,6 +70,7 @@ const isLayoutIdUnique = (): AsyncValidatorFn => {
 export class NewLayoutPageComponent {
   #layoutTemplatesStore = inject(LayoutTemplatesStore);
   loadingSig = this.#layoutTemplatesStore.isPending;
+  #router = inject(Router);
 
   newLayoutForm = new FormGroup<NewLayoutForm>({
     id: new FormControl('', {
@@ -129,11 +130,12 @@ export class NewLayoutPageComponent {
     return InlineLoadingState.Finished;
   }
 
-  onSubmit(): void {
+  async onSubmit(): Promise<void> {
     const newLayoutPayload: CreateAppLayoutTemplatePayload = {
       ...this.newLayoutForm.getRawValue(),
       uiElementInstances: [],
     };
-    this.#layoutTemplatesStore.add(newLayoutPayload);
+    const createdTemplate = await this.#layoutTemplatesStore.add(newLayoutPayload);
+    this.#router.navigateByUrl(`layout-builder/edit/${createdTemplate.id}`);
   }
 }
