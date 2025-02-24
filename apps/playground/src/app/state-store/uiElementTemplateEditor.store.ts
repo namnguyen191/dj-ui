@@ -1,4 +1,4 @@
-import { computed, inject } from '@angular/core';
+import { computed, inject, untracked } from '@angular/core';
 import { LayoutTemplate, LayoutTemplateService, UIElementTemplateService } from '@dj-ui/core';
 import {
   patchState,
@@ -87,11 +87,12 @@ export const UIElementTemplateEditorStore = signalStore(
           id: PREVIEW_UI_ELEMENT_TEMPLATE_ID,
         });
         immerPatchState(store, (state) => {
-          if (!state.currentEditingTemplate) {
+          const metaData = untracked(store.currentUnEditableFields);
+          if (!state.currentEditingTemplate || !metaData) {
             return;
           }
           state.currentEditingTemplate = {
-            ...state.currentEditingTemplate,
+            ...metaData,
             ...updates,
           };
         });

@@ -48,7 +48,7 @@ export class UIElementTemplatesLocalAPIService extends UIElementTemplatesAPIServ
         return this.#uiElementTemplateRepo$.pipe(
           switchMap((repo) => repo.updateOne(updatedTemplate)),
           tap({
-            next: () => this.#uiElementTemplateService.updateTemplate(updatedTemplate),
+            next: () => this.#uiElementTemplateService.updateOrRegisterTemplate(updatedTemplate),
           })
         );
       })
