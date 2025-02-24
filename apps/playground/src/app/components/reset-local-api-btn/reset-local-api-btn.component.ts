@@ -1,4 +1,4 @@
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { APP_BASE_HREF, CommonModule, DOCUMENT } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { ButtonModule, ModalModule } from 'carbon-components-angular';
 
@@ -26,6 +26,7 @@ export class ResetLocalApiBtnComponent {
     UIElementTemplatesAPIService
   ) as UIElementTemplatesLocalAPIService;
   readonly #document = inject(DOCUMENT);
+  readonly #appBaseHref = inject(APP_BASE_HREF, { optional: true }) ?? '';
 
   isConfirmationModalOpenSig = signal<boolean>(false);
 
@@ -33,6 +34,6 @@ export class ResetLocalApiBtnComponent {
     await this.#layoutTemplatesLocalAPIService.resetTemplates();
     await this.#uiElementTemplatesLocalAPIService.resetTemplates();
     await this.#remoteResourceTemplatesLocalAPIService.resetTemplates();
-    this.#document.location.href = '/';
+    this.#document.location.href = this.#appBaseHref;
   }
 }
