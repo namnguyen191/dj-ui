@@ -48,7 +48,7 @@ export class LayoutTemplatesLocalAPIService extends LayoutTemplatesAPIService {
         return this.#layoutTemplateRepo$.pipe(
           switchMap((repo) => repo.updateOne(updatedTemplate)),
           tap({
-            next: () => this.#layoutTemplateService.updateTemplate(updatedTemplate),
+            next: () => this.#layoutTemplateService.updateOrRegisterTemplate(updatedTemplate),
           })
         );
       })

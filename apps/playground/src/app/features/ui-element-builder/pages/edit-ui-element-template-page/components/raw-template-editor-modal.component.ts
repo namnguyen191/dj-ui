@@ -57,7 +57,7 @@ export class RawTemplateEditorModalComponent extends BaseModal {
     language: 'json',
     wordWrap: 'on',
   };
-  code: string = '';
+  codeSig = signal<string>('');
   readonly errorStateSig = signal<'noError' | 'isError' | 'isPending'>('noError');
   #originalCode = '';
 
@@ -71,6 +71,7 @@ export class RawTemplateEditorModalComponent extends BaseModal {
         debounceTime(500),
         tap({
           next: (code) => {
+            this.codeSig.set(code);
             if (this.#isValidCode(code)) {
               this.errorStateSig.set('noError');
             } else {
@@ -86,8 +87,9 @@ export class RawTemplateEditorModalComponent extends BaseModal {
   }
 
   async updateUIElementTemplate(): Promise<void> {
-    const templateFromCode = JSON.parse(this.code) as AppUIElementTemplateEditableFields;
-
+    const templateFromCode = JSON.parse(
+      untracked(this.codeSig)
+    ) as AppUIElementTemplateEditableFields;
     this.#uiElementTemplateEditorStore.updateCurrentEditingTemplate(templateFromCode);
     const latestEditedTemplated = untracked(
       this.#uiElementTemplateEditorStore.currentEditingTemplate
@@ -113,7 +115,8 @@ export class RawTemplateEditorModalComponent extends BaseModal {
 
       const rawJSON = JSON.stringify(currentEditableTemplate);
       const prettifyJSON = await this.#formatJSON(rawJSON);
-      this.code = this.#originalCode = prettifyJSON;
+      this.#originalCode = prettifyJSON;
+      this.codeSig.set(prettifyJSON);
     });
   }
 
@@ -137,7 +140,7 @@ export class RawTemplateEditorModalComponent extends BaseModal {
   }
 
   override closeModal(): void {
-    this.code = this.#originalCode;
+    this.codeSig.set(this.#originalCode);
     super.closeModal();
   }
 }

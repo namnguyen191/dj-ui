@@ -1,4 +1,5 @@
 @let errorState = errorStateSig();
+@let code = codeSig();
 
 <cds-modal size="lg" [open]="open" (overlaySelected)="closeModal()">
   <cds-modal-header [showCloseButton]="true" (closeSelect)="closeModal()">
@@ -11,8 +12,8 @@
     } @else {
       <ngx-monaco-editor
         class="editor-container"
+        [ngModel]="code"
         [options]="editorOptions"
-        [(ngModel)]="code"
         (ngModelChange)="codeChangeSubject.next($event)"
       ></ngx-monaco-editor>
     }

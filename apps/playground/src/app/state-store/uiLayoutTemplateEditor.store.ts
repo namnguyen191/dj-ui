@@ -1,4 +1,4 @@
-import { computed } from '@angular/core';
+import { computed, untracked } from '@angular/core';
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 import { immerPatchState } from 'ngrx-immer/signals';
 
@@ -46,11 +46,13 @@ export const LayoutTemplateEditorStore = signalStore(
     },
     updateCurrentEditingTemplate: (updates: AppLayoutTemplateEditableFields): void => {
       immerPatchState(store, (state) => {
-        if (!state.currentEditingTemplate) {
+        const metaData = untracked(store.currentUnEditableFields);
+
+        if (!state.currentEditingTemplate || !metaData) {
           return;
         }
         state.currentEditingTemplate = {
-          ...state.currentEditingTemplate,
+          ...metaData,
           ...updates,
         };
       });
