@@ -4,7 +4,7 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "apps/prime-ng-playground/src",
-  "tags": [],
+  "tags": ["scope:app"],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
@@ -22,7 +22,7 @@
           }
         ],
         "styles": ["apps/prime-ng-playground/src/styles.scss"],
-        "scripts": []
+        "webWorkerTsConfig": "apps/prime-ng-playground/tsconfig.worker.json"
       },
       "configurations": {
         "production": {

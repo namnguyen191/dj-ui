@@ -4,7 +4,7 @@
   "sourceRoot": "libs/prime-ng-ext/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": [],
+  "tags": ["scope:extension"],
   "targets": {
     "build": {
       "executor": "@nx/angular:package",
@@ -21,6 +21,21 @@
         }
       },
       "defaultConfiguration": "production"
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["tsc -p tsconfig.lib.prod.json --noEmit"],
+        "cwd": "libs/prime-ng-ext"
+      }
+    },
+    "generate-json-schema": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          "tsx scripts/dj-ui-gen-json-schem.ts libs/prime-ng-ext libs/prime-ng-ext/tsconfig.lib.prod.json"
+        ]
+      }
     }
   }
 }

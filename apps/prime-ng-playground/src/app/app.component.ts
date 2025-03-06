@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { setupDefault } from '@dj-ui/common';
 
 @Component({
   imports: [RouterModule],
@@ -7,4 +8,8 @@ import { RouterModule } from '@angular/router';
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
-export class AppComponent {}
+export class AppComponent {
+  constructor() {
+    setupDefault();
+  }
+}

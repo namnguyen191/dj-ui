@@ -32,6 +32,8 @@
       "@dj-ui/core": ["libs/core/src/index.ts"],
       "@dj-ui/core/js-interpolation-worker": ["libs/core/js-interpolation-worker/src/index.ts"],
       "@dj-ui/prime-ng-ext": ["libs/prime-ng-ext/src/index.ts"],
+      "@dj-ui/prime-ng-ext/shared": ["libs/prime-ng-ext/shared/src/index.ts"],
+      "@dj-ui/prime-ng-ext/simple-text": ["libs/prime-ng-ext/simple-text/src/index.ts"],
       "@dj-ui/shared-components": ["libs/shared-components/src/index.ts"]
     }
   },

@@ -1,0 +1,23 @@
+:host {
+  display: block;
+
+  .loader-container {
+    min-block-size: unset;
+  }
+
+  .text-block {
+    display: flex;
+
+    &.align-left {
+      justify-content: baseline;
+    }
+
+    &.align-right {
+      justify-content: end;
+    }
+
+    &.align-center {
+      justify-content: center;
+    }
+  }
+}

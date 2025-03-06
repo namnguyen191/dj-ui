@@ -59,6 +59,10 @@
     {
       "fileMatch": ["**/*.REMOTE_RESOURCE.json"],
       "url": "/libs/core/generated-json-schemas/RemoteResourceTemplateSchema.json"
+    },
+    {
+      "fileMatch": ["**/*.PRIME_NG_SIMPLE_TEXT.json"],
+      "url": "/libs/prime-ng-ext/generated-json-schemas/SimpleTextSchema.json"
     }
   ]
 }

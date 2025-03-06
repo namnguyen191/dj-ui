@@ -1,0 +1,20 @@
+{
+  "id": "home.LAYOUT",
+  "gridConfigs": {
+    "compactType": "none"
+  },
+  "uiElementInstances": [
+    {
+      "id": "1",
+      "uiElementTemplateId": "home-title.PRIME_NG_SIMPLE_TEXT",
+      "positionAndSize": {
+        "y": 0,
+        "x": 6,
+        "rows": 5,
+        "cols": 4,
+        "dragEnabled": false,
+        "resizeEnabled": false
+      }
+    }
+  ]
+}
