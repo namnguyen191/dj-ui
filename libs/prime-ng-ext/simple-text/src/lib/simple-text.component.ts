@@ -11,7 +11,7 @@ import {
 } from './simple-text.interface';
 
 @Component({
-  selector: 'dj-ui-prime-ng-carbon-button',
+  selector: 'dj-ui-prime-ng-simple-text',
   imports: [CommonModule],
   templateUrl: './simple-text.component.html',
   styleUrl: './simple-text.component.scss',

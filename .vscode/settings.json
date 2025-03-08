@@ -63,6 +63,10 @@
     {
       "fileMatch": ["**/*.PRIME_NG_SIMPLE_TEXT.json"],
       "url": "/libs/prime-ng-ext/generated-json-schemas/SimpleTextSchema.json"
+    },
+    {
+      "fileMatch": ["**/*.PRIME_NG_SIMPLE_IMAGE.json"],
+      "url": "/libs/prime-ng-ext/generated-json-schemas/SimpleImageSchema.json"
     }
   ]
 }

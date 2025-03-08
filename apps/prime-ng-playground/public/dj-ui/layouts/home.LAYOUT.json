@@ -6,11 +6,23 @@
   "uiElementInstances": [
     {
       "id": "1",
-      "uiElementTemplateId": "home-title.PRIME_NG_SIMPLE_TEXT",
+      "uiElementTemplateId": "home-main-icon.PRIME_NG_SIMPLE_IMAGE",
       "positionAndSize": {
         "y": 0,
         "x": 6,
-        "rows": 5,
+        "rows": 14,
+        "cols": 4,
+        "dragEnabled": false,
+        "resizeEnabled": false
+      }
+    },
+    {
+      "id": "2",
+      "uiElementTemplateId": "home-title.PRIME_NG_SIMPLE_TEXT",
+      "positionAndSize": {
+        "y": 15,
+        "x": 6,
+        "rows": 6,
         "cols": 4,
         "dragEnabled": false,
         "resizeEnabled": false
