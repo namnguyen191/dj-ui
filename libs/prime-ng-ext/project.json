@@ -29,12 +29,11 @@
         "cwd": "libs/prime-ng-ext"
       }
     },
-    "generate-json-schema": {
+    "generate-json-schema-with-zod": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": [
-          "tsx scripts/dj-ui-gen-json-schem.ts libs/prime-ng-ext libs/prime-ng-ext/tsconfig.lib.prod.json"
-        ]
+        "cwd": "libs/prime-ng-ext",
+        "commands": ["tsx generate-json-schemas.ts"]
       }
     }
   }

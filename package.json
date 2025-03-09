@@ -52,7 +52,8 @@
     "primeng": "^19.0.8",
     "rxjs": "~7.8.0",
     "type-fest": "^4.29.0",
-    "zod": "^3.23.8"
+    "zod": "^3.23.8",
+    "zod-to-json-schema": "^3.24.3"
   },
   "devDependencies": {
     "@analogjs/vite-plugin-angular": "1.10.1",

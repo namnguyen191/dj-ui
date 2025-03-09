@@ -1,0 +1,137 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "remoteResourceIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "stateSubscription": {
+      "type": "object",
+      "properties": {
+        "watchedScopes": {
+          "type": "object",
+          "properties": {
+            "global": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "local": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "layout": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "variables": {
+          "type": "object",
+          "additionalProperties": {}
+        }
+      },
+      "required": [
+        "watchedScopes"
+      ],
+      "additionalProperties": false
+    },
+    "options": {
+      "type": "object",
+      "properties": {
+        "isInterpolationLoading": {
+          "type": "boolean"
+        },
+        "isInterpolationError": {
+          "type": "boolean"
+        },
+        "isResourceLoading": {
+          "type": "boolean"
+        },
+        "isResourceError": {
+          "type": "boolean"
+        },
+        "isLoading": {
+          "type": "boolean"
+        },
+        "isError": {
+          "type": "boolean"
+        },
+        "textBlocks": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "text": {
+                "type": "string"
+              },
+              "type": {
+                "type": "string",
+                "enum": [
+                  "title",
+                  "paragraph"
+                ],
+                "default": "paragraph"
+              },
+              "styles": {
+                "type": "object",
+                "properties": {
+                  "align": {
+                    "type": "string",
+                    "enum": [
+                      "left",
+                      "center",
+                      "right"
+                    ]
+                  },
+                  "weight": {
+                    "type": "number"
+                  },
+                  "size": {
+                    "type": "number"
+                  },
+                  "underline": {
+                    "type": "boolean"
+                  }
+                },
+                "additionalProperties": false
+              }
+            },
+            "required": [
+              "text"
+            ],
+            "additionalProperties": false
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "eventsHooks": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "id",
+    "type",
+    "options"
+  ],
+  "additionalProperties": false,
+  "description": "PrimeNgSimpleTextUIESchema",
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

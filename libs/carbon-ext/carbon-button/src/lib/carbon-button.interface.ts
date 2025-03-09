@@ -1,4 +1,4 @@
-import { UIElementTemplate } from '@dj-ui/core';
+import { createUIElementTemplateSchema } from '@dj-ui/core';
 import { z } from 'zod';
 
 export const ZodButtonTypeConfig = z.enum([
@@ -37,7 +37,9 @@ export type CarbonButtonUIElementComponentEvents = {
   };
 };
 
-export type CarbonButtonTypeForJsonSchema = UIElementTemplate<
-  CarbonButtonUIElementComponentConfigs,
-  keyof CarbonButtonUIElementComponentEvents
->;
+export const ZCarbonButtonForJsonSchema = createUIElementTemplateSchema(
+  ZodCarbonButtonUIElementComponentConfigs,
+  ['buttonClicked', 'filesSelected']
+);
+
+export type CarbonButtonTypeForJsonSchema = z.infer<typeof ZCarbonButtonForJsonSchema>;

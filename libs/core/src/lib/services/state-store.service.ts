@@ -32,6 +32,14 @@ export type StateSubscriptionConfig = {
   };
   variables?: Record<string, unknown>;
 };
+export const ZStateSubscriptionConfig = z.strictObject({
+  watchedScopes: z.strictObject({
+    global: z.array(z.string()).optional(),
+    local: z.array(z.string()).optional(),
+    layout: z.array(z.string()).optional(),
+  }),
+  variables: z.record(z.any()).optional(),
+}) satisfies z.ZodType<StateSubscriptionConfig>;
 
 export const getStatesAsContext = (): Observable<StateMap> => {
   const stateStoreService = inject(StateStoreService);

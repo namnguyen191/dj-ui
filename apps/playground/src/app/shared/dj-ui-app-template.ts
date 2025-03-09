@@ -1,21 +1,28 @@
 import { LayoutTemplate, RemoteResourceTemplate, UIElementTemplate } from '@dj-ui/core';
-import { EmptyObject, UnknownRecord } from 'type-fest';
+import z from 'zod';
 
-export type TimeStamp = {
-  createdAt: string;
-  updatedAt?: string;
-};
+export const ZTimeStamp = z.strictObject({
+  createdAt: z.string(),
+  updatedAt: z.string().optional(),
+});
+export type TimeStamp = z.infer<typeof ZTimeStamp>;
 
-export type MetaData = {
-  name: string;
-  description: string;
-};
+export const ZMetaData = z.strictObject({
+  name: z.string(),
+  description: z.string(),
+});
+export type MetaData = z.infer<typeof ZMetaData>;
 
-export type TemplateInfo = { id: string } & TimeStamp & MetaData;
+export const ZTemplateInfo = z
+  .strictObject({
+    id: z.string(),
+  })
+  .merge(ZTimeStamp)
+  .merge(ZMetaData);
+export type TemplateInfo = z.infer<typeof ZTemplateInfo>;
 
-export type AppUIElementTemplate<T extends UnknownRecord = EmptyObject> = UIElementTemplate<T> &
-  TimeStamp &
-  MetaData;
+export type AppUIElementTemplate = UIElementTemplate & TimeStamp & MetaData;
+export type CreateAppUIElementTemplate<T extends UIElementTemplate> = T & TimeStamp & MetaData;
 export type AppUIElementTemplateUnEditableFields = TimeStamp & Pick<AppUIElementTemplate, 'id'>;
 export type AppUIElementTemplateEditableFields = Omit<
   AppUIElementTemplate,

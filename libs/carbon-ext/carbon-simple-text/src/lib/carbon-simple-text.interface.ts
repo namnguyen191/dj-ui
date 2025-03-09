@@ -1,4 +1,4 @@
-import { NoEvent, UIElementTemplate } from '@dj-ui/core';
+import { createUIElementTemplateSchema } from '@dj-ui/core';
 import { z } from 'zod';
 
 export const ZTextBlockConfigOption = z.strictObject({
@@ -15,4 +15,6 @@ export const ZSimpleTextConfigs = z.strictObject({
 });
 export type SimpleTextConfigs = z.input<typeof ZSimpleTextConfigs>;
 
-export type CarbonSimpleTextTypeForJsonSchema = UIElementTemplate<SimpleTextConfigs, NoEvent>;
+export const ZCarbonSimpleTextForJsonSchema = createUIElementTemplateSchema(ZSimpleTextConfigs);
+
+export type CarbonSimpleTextTypeForJsonSchema = z.infer<typeof ZCarbonSimpleTextForJsonSchema>;

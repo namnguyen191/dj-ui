@@ -1,10 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { SimpleTextConfigs } from '@dj-ui/carbon-ext/carbon-simple-text';
+import { CarbonSimpleTextTypeForJsonSchema } from '@dj-ui/carbon-ext/carbon-simple-text';
 import { UIElementTemplateService } from '@dj-ui/core';
 import { catchError, Observable, of, tap } from 'rxjs';
 
-import { AppUIElementTemplate, TimeStamp } from '../shared/dj-ui-app-template';
+import {
+  AppUIElementTemplate,
+  CreateAppUIElementTemplate,
+  TimeStamp,
+} from '../shared/dj-ui-app-template';
 
 const BASE_UI_ELEMENT_TEMPLATE_URL = 'http://localhost:8080/ui-element-templates';
 
@@ -12,7 +16,9 @@ export type CreateAppUIElementTemplatePayload = Omit<AppUIElementTemplate, keyof
 
 export type UpdateAppUIElementTemplatePayload = CreateAppUIElementTemplatePayload;
 
-const getErrorTemplate = (id: string): AppUIElementTemplate<SimpleTextConfigs> => ({
+const getErrorTemplate = (
+  id: string
+): CreateAppUIElementTemplate<CarbonSimpleTextTypeForJsonSchema> => ({
   id,
   name: 'UI Element error template',
   createdAt: new Date().toUTCString(),
@@ -27,6 +33,7 @@ const getErrorTemplate = (id: string): AppUIElementTemplate<SimpleTextConfigs> =
       },
       {
         text: 'We could not fetch this UI right now. Please refresh your browser or try again later',
+        type: 'paragraph',
       },
     ],
   },

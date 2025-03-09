@@ -1,4 +1,4 @@
-import { NoEvent, UIElementTemplate } from '@dj-ui/core';
+import { createUIElementTemplateSchema } from '@dj-ui/core';
 import { z } from 'zod';
 
 export const ZTitleConfigOption = z.string({
@@ -25,4 +25,9 @@ export const ZCarouselCardConfigs = z.object({
 });
 export type CarouselCardConfigs = z.infer<typeof ZCarouselCardConfigs>;
 
-export type CarbonCarouselCardTypeForJsonSchema = UIElementTemplate<CarouselCardConfigs, NoEvent>;
+export const ZCarbonCarouselCardForJsonSchema = createUIElementTemplateSchema(
+  ZCarouselCardConfigs,
+  []
+);
+
+export type CarbonCarouselCardTypeForJsonSchema = z.infer<typeof ZCarbonCarouselCardForJsonSchema>;

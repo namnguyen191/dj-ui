@@ -1,4 +1,5 @@
 import baseAngularConfig from '../../eslint-angular.config.js';
+import jsonParser from 'jsonc-eslint-parser';
 
 export default [
   ...baseAngularConfig,
@@ -14,5 +15,24 @@ export default [
         },
       ],
     },
+  },
+  {
+    files: ['**/*.json'],
+    rules: {
+      '@nx/dependency-checks': [
+        'error',
+        {
+          ignoredDependencies: [
+            '@nx/devkit',
+            'vite',
+            '@analogjs/vite-plugin-angular',
+            '@nx/vite',
+            '@angular/compiler',
+            'zod-to-json-schema',
+          ],
+        },
+      ],
+    },
+    languageOptions: { parser: jsonParser },
   },
 ];

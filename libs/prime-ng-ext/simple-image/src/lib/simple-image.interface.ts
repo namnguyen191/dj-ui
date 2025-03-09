@@ -1,4 +1,4 @@
-import { NoEvent, UIElementTemplate } from '@dj-ui/core';
+import { createUIElementTemplateSchema } from '@dj-ui/core';
 import { z } from 'zod';
 
 export const ZImageUrlConfigOption = z.string({
@@ -23,4 +23,6 @@ export const ZSimpleImageConfigs = z.object({
 });
 export type SimpleImageConfigs = z.infer<typeof ZSimpleImageConfigs>;
 
-export type SimpleImageTypeForJsonSchema = UIElementTemplate<SimpleImageConfigs, NoEvent>;
+export const ZSimpleImageUIE = createUIElementTemplateSchema(ZSimpleImageConfigs).describe(
+  'PrimeNgSimpleImageUIESchema'
+);

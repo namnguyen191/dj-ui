@@ -1,4 +1,4 @@
-import { UIElementTemplate } from '@dj-ui/core';
+import { createUIElementTemplateSchema } from '@dj-ui/core';
 import { z } from 'zod';
 
 export const ZTitleConfigOption = z.string({
@@ -45,7 +45,8 @@ export type TextCardEvents = {
   onCardClicked: void;
 };
 
-export type CarbonTextCardTypeForJsonSchema = UIElementTemplate<
-  TextCardConfigs,
-  keyof TextCardEvents
->;
+export const ZCarbonTextCardForJsonSchema = createUIElementTemplateSchema(ZTextCardConfigs, [
+  'onCardClicked',
+]);
+
+export type CarbonTextCardTypeForJsonSchema = z.infer<typeof ZCarbonTextCardForJsonSchema>;

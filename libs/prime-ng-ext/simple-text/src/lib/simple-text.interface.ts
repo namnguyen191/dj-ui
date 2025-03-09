@@ -1,4 +1,4 @@
-import { NoEvent, UIElementTemplate } from '@dj-ui/core';
+import { createUIElementTemplateSchema } from '@dj-ui/core';
 import { z } from 'zod';
 
 export const ZTextStyles = z.strictObject({
@@ -22,6 +22,9 @@ export type TextBlocksConfigOption = z.input<typeof ZTextBlocksConfigOption>;
 export const ZSimpleTextConfigs = z.strictObject({
   textBlocks: ZTextBlocksConfigOption,
 });
+
 export type SimpleTextConfigs = z.input<typeof ZSimpleTextConfigs>;
 
-export type SimpleTextTypeForJsonSchema = UIElementTemplate<SimpleTextConfigs, NoEvent>;
+export const ZSimpleTextUIE = createUIElementTemplateSchema(ZSimpleTextConfigs).describe(
+  'PrimeNgSimpleTextUIESchema'
+);
