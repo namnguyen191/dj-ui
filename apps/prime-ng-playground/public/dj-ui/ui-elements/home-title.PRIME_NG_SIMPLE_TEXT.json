@@ -7,7 +7,9 @@
         "type": "title",
         "text": "DJ-UI",
         "styles": {
-          "align": "center"
+          "align": "center",
+          "size": 60,
+          "weight": 700
         }
       },
       {

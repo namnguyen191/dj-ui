@@ -7,6 +7,7 @@ import { parseZodWithDefault } from '@namnguyen191/types-helper';
 import {
   SimpleTextConfigs,
   TextBlocksConfigOption,
+  TextStyles,
   ZTextBlocksConfigOption,
 } from './simple-text.interface';
 
@@ -40,4 +41,20 @@ export class SimpleTextComponent
         parseZodWithDefault<TextBlocksConfigOption>(ZTextBlocksConfigOption, val, []),
     }
   );
+
+  protected getTextBlockClasses(textBlockStyles: TextStyles): Record<string, boolean> {
+    return {
+      'align-left': textBlockStyles.align === 'left',
+      'align-right': textBlockStyles.align === 'right',
+      'align-center': textBlockStyles.align === 'center',
+      underline: !!textBlockStyles.underline,
+    };
+  }
+
+  protected getTextBlockStyles(textBlockStyles: TextStyles): Record<string, string | undefined> {
+    return {
+      '--font-weight': textBlockStyles.weight?.toString(),
+      '--font-size': textBlockStyles.size ? textBlockStyles.size + 'px' : undefined,
+    };
+  }
 }

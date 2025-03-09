@@ -5,7 +5,9 @@ export const ZTextStyles = z.strictObject({
   align: z.enum(['left', 'center', 'right']).optional(),
   weight: z.number().optional(),
   size: z.number().optional(),
+  underline: z.boolean().optional(),
 });
+export type TextStyles = z.infer<typeof ZTextStyles>;
 
 export const ZTextBlockConfigOption = z.strictObject({
   text: z.string(),

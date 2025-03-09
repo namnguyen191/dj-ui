@@ -22,8 +22,20 @@
       "positionAndSize": {
         "y": 15,
         "x": 6,
-        "rows": 6,
+        "rows": 10,
         "cols": 4,
+        "dragEnabled": false,
+        "resizeEnabled": false
+      }
+    },
+    {
+      "id": "3",
+      "uiElementTemplateId": "home-introduction.PRIME_NG_SIMPLE_TEXT",
+      "positionAndSize": {
+        "y": 30,
+        "x": 2,
+        "rows": 20,
+        "cols": 10,
         "dragEnabled": false,
         "resizeEnabled": false
       }

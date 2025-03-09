@@ -1,3 +1,11 @@
+@use '../shared/styles/global';
+
 :host {
   display: contents;
+
+  .main-nav {
+    position: sticky;
+    top: 0;
+    z-index: global.$main-nav-z-index;
+  }
 }

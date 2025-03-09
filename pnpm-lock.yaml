@@ -78,6 +78,9 @@ importers:
       ngx-monaco-editor-v2:
         specifier: ^19.0.2
         version: 19.0.2(@angular/common@19.0.4(@angular/core@19.0.4(rxjs@7.8.1)(zone.js@0.15.0))(rxjs@7.8.1))(@angular/core@19.0.4(rxjs@7.8.1)(zone.js@0.15.0))(monaco-editor@0.50.0)
+      primeicons:
+        specifier: ^7.0.0
+        version: 7.0.0
       primeng:
         specifier: ^19.0.8
         version: 19.0.8(my5naamqldw4hyfhfkmugboz2u)
@@ -6308,6 +6311,9 @@ packages:
     resolution: {integrity: sha512-973driJZvxiGOQ5ONsFhOF/DtzPMOMtgC11kCpUrPGMTgqp2q/1gwzCquocrN33is0VZ5GFHXZYMM9l6h67v2Q==}
     engines: {node: '>=10'}
 
+  primeicons@7.0.0:
+    resolution: {integrity: sha512-jK3Et9UzwzTsd6tzl2RmwrVY/b8raJ3QZLzoDACj+oTJ0oX7L9Hy+XnVwgo4QVKlKpnP/Ur13SXV/pVh4LzaDw==}
+
   primeng@19.0.8:
     resolution: {integrity: sha512-0Xz/XZ4Nu3GYGvnCMDFW5HTgV8VyPa2gC/rxgawcl25GhyXReGps+AeXyhabrNyCSCfykU1ng/6gGUeTse+GGg==}
     peerDependencies:
@@ -7762,7 +7768,7 @@ snapshots:
       typescript: 5.6.3
       webpack: 5.96.1(@swc/core@1.5.29(@swc/helpers@0.5.15))(esbuild@0.24.0)
       webpack-dev-middleware: 7.4.2(webpack@5.96.1(@swc/core@1.5.29(@swc/helpers@0.5.15))(esbuild@0.24.0))
-      webpack-dev-server: 5.1.0(webpack@5.88.0(@swc/core@1.5.29(@swc/helpers@0.5.15)))
+      webpack-dev-server: 5.1.0(webpack@5.97.1(@swc/core@1.5.29(@swc/helpers@0.5.15)))
       webpack-merge: 6.0.1
       webpack-subresource-integrity: 5.1.0(webpack@5.96.1(@swc/core@1.5.29(@swc/helpers@0.5.15))(esbuild@0.24.0))
     optionalDependencies:
@@ -7793,7 +7799,7 @@ snapshots:
       '@angular-devkit/architect': 0.1900.5(chokidar@4.0.1)
       rxjs: 7.8.1
       webpack: 5.96.1(@swc/core@1.5.29(@swc/helpers@0.5.15))(esbuild@0.24.0)
-      webpack-dev-server: 5.1.0(webpack@5.88.0(@swc/core@1.5.29(@swc/helpers@0.5.15)))
+      webpack-dev-server: 5.1.0(webpack@5.97.1(@swc/core@1.5.29(@swc/helpers@0.5.15)))
     transitivePeerDependencies:
       - chokidar
 
@@ -14396,6 +14402,8 @@ snapshots:
     dependencies:
       parse-ms: 2.1.0
 
+  primeicons@7.0.0: {}
+
   primeng@19.0.8(my5naamqldw4hyfhfkmugboz2u):
     dependencies:
       '@angular/animations': 19.0.4(@angular/core@19.0.4(rxjs@7.8.1)(zone.js@0.15.0))
@@ -15685,17 +15693,6 @@ snapshots:
 
   webidl-conversions@7.0.0: {}
 
-  webpack-dev-middleware@7.4.2(webpack@5.88.0(@swc/core@1.5.29(@swc/helpers@0.5.15))):
-    dependencies:
-      colorette: 2.0.20
-      memfs: 4.15.0
-      mime-types: 2.1.35
-      on-finished: 2.4.1
-      range-parser: 1.2.1
-      schema-utils: 4.3.0
-    optionalDependencies:
-      webpack: 5.88.0(@swc/core@1.5.29(@swc/helpers@0.5.15))
-
   webpack-dev-middleware@7.4.2(webpack@5.96.1(@swc/core@1.5.29(@swc/helpers@0.5.15))(esbuild@0.24.0)):
     dependencies:
       colorette: 2.0.20
@@ -15718,7 +15715,7 @@ snapshots:
     optionalDependencies:
       webpack: 5.97.1(@swc/core@1.5.29(@swc/helpers@0.5.15))
 
-  webpack-dev-server@5.1.0(webpack@5.88.0(@swc/core@1.5.29(@swc/helpers@0.5.15))):
+  webpack-dev-server@5.1.0(webpack@5.97.1(@swc/core@1.5.29(@swc/helpers@0.5.15))):
     dependencies:
       '@types/bonjour': 3.5.13
       '@types/connect-history-api-fallback': 1.5.4
@@ -15746,10 +15743,10 @@ snapshots:
       serve-index: 1.9.1
       sockjs: 0.3.24
       spdy: 4.0.2
-      webpack-dev-middleware: 7.4.2(webpack@5.88.0(@swc/core@1.5.29(@swc/helpers@0.5.15)))
+      webpack-dev-middleware: 7.4.2(webpack@5.97.1(@swc/core@1.5.29(@swc/helpers@0.5.15)))
       ws: 8.18.0
     optionalDependencies:
-      webpack: 5.88.0(@swc/core@1.5.29(@swc/helpers@0.5.15))
+      webpack: 5.97.1(@swc/core@1.5.29(@swc/helpers@0.5.15))
     transitivePeerDependencies:
       - bufferutil
       - debug

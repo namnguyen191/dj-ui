@@ -1,5 +1,7 @@
 :host {
   display: block;
+  height: 100%;
+  overflow: hidden;
 
   .loader-container {
     min-block-size: unset;
@@ -7,6 +9,12 @@
 
   .text-block {
     display: flex;
+
+    h2,
+    p {
+      font-weight: var(--font-weight, revert);
+      font-size: var(--font-size, revert);
+    }
 
     &.align-left {
       justify-content: baseline;
@@ -18,6 +26,10 @@
 
     &.align-center {
       justify-content: center;
+    }
+
+    &.underline {
+      border-bottom: 1px solid;
     }
   }
 }

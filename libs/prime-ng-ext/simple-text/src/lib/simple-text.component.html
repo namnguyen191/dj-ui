@@ -6,11 +6,8 @@
   @for (textBlock of textBlocksConfigOption(); track $index) {
     <div
       class="text-block"
-      [class]="{
-        'align-left': textBlock.styles?.align === 'left',
-        'align-right': textBlock.styles?.align === 'right',
-        'align-center': textBlock.styles?.align === 'center',
-      }"
+      [class]="getTextBlockClasses(textBlock.styles ?? {})"
+      [style]="getTextBlockStyles(textBlock.styles ?? {})"
     >
       @switch (textBlock.type) {
         @case ('title') {
