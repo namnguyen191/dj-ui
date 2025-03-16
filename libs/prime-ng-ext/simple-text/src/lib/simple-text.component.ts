@@ -55,6 +55,7 @@ export class SimpleTextComponent
     return {
       '--font-weight': textBlockStyles.weight?.toString(),
       '--font-size': textBlockStyles.size ? textBlockStyles.size + 'px' : undefined,
+      '--background-color': textBlockStyles.backgroundColor,
     };
   }
 }

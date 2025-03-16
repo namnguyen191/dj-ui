@@ -1,0 +1,48 @@
+<svg
+  width="100"
+  height="100"
+  viewBox="0 0 100 100"
+  fill="none"
+  xmlns="http://www.w3.org/2000/svg"
+>
+  <!-- DJ Head with Gradient -->
+  <circle cx="50" cy="20" r="8" fill="url(#headGradient)"/>
+  
+  <!-- DJ Body -->
+  <path d="M40 30 Q50 45, 60 30" stroke="url(#bodyGradient)" stroke-width="4" fill="none"/>
+  
+  <!-- DJ Arms Controlling UI -->
+  <line x1="45" y1="35" x2="25" y2="55" stroke="#FFD700" stroke-width="4"/> <!-- Left Arm -->
+  <line x1="55" y1="35" x2="75" y2="55" stroke="#00BFFF" stroke-width="4"/> <!-- Right Arm -->
+  
+  <!-- UI Elements (Buttons/Sliders) -->
+  <rect x="20" y="55" width="15" height="10" fill="#FFD700" rx="2"/> <!-- Left UI -->
+  <rect x="65" y="55" width="15" height="10" fill="#00BFFF" rx="2"/> <!-- Right UI -->
+  <rect x="40" y="65" width="20" height="10" fill="#FF5733" rx="2"/> <!-- Center UI (Slider) -->
+  
+  <!-- Turntable/Vinyl with Gradient -->
+  <circle cx="30" cy="75" r="10" stroke="url(#vinylGradient1)" stroke-width="3" fill="none"/>
+  <circle cx="70" cy="75" r="10" stroke="url(#vinylGradient2)" stroke-width="3" fill="none"/>
+  <circle cx="30" cy="75" r="2" fill="#FFD700"/>
+  <circle cx="70" cy="75" r="2" fill="#FFD700"/>
+  
+  <!-- Gradient Definitions -->
+  <defs>
+    <linearGradient id="headGradient" x1="40" y1="10" x2="60" y2="30" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF5733"/>
+      <stop offset="1" stop-color="#FFD700"/>
+    </linearGradient>
+    <linearGradient id="bodyGradient" x1="40" y1="30" x2="60" y2="45" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#00BFFF"/>
+      <stop offset="1" stop-color="#FF5733"/>
+    </linearGradient>
+    <linearGradient id="vinylGradient1" x1="20" y1="70" x2="40" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FF5733"/>
+      <stop offset="1" stop-color="#00BFFF"/>
+    </linearGradient>
+    <linearGradient id="vinylGradient2" x1="60" y1="70" x2="80" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFD700"/>
+      <stop offset="1" stop-color="#00BFFF"/>
+    </linearGradient>
+  </defs>
+</svg>

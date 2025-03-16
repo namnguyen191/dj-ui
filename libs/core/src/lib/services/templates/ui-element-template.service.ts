@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import z from 'zod';
+import { z } from 'zod';
 
 import { ZUIElementRequiredConfigs } from '../../components/base-ui-element.component';
 import { ActionHook, ZodActionHook } from '../events-and-actions/action-hook.service';

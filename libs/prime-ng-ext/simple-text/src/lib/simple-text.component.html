@@ -6,6 +6,7 @@
   @for (textBlock of textBlocksConfigOption(); track $index) {
     <div
       class="text-block"
+      [attr.id]="textBlock.id ?? null"
       [class]="getTextBlockClasses(textBlock.styles ?? {})"
       [style]="getTextBlockStyles(textBlock.styles ?? {})"
     >
@@ -15,6 +16,20 @@
         }
         @case ('paragraph') {
           <p class="paragraph">{{ textBlock.text }}</p>
+        }
+        @case ('list') {
+          <figure class="list-container">
+            <figcaption *ngIf="textBlock.title as title">{{ title }}</figcaption>
+            <ol
+              [style]="{
+                'list-style-type': textBlock.listStyle,
+              }"
+            >
+              @for (item of textBlock.items; track $index) {
+                <li>{{ item }}</li>
+              }
+            </ol>
+          </figure>
         }
       }
     </div>

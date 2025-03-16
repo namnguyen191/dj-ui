@@ -39,6 +39,30 @@
         "dragEnabled": false,
         "resizeEnabled": false
       }
+    },
+    {
+      "id": "4",
+      "uiElementTemplateId": "home-installation-guide.PRIME_NG_SIMPLE_TEXT",
+      "positionAndSize": {
+        "y": 51,
+        "x": 2,
+        "rows": 45,
+        "cols": 10,
+        "dragEnabled": false,
+        "resizeEnabled": false
+      }
+    },
+    {
+      "id": "5",
+      "uiElementTemplateId": "home-simple-setup-guide.PRIME_NG_SIMPLE_TEXT",
+      "positionAndSize": {
+        "y": 97,
+        "x": 2,
+        "rows": 175,
+        "cols": 10,
+        "dragEnabled": false,
+        "resizeEnabled": false
+      }
     }
   ]
 }

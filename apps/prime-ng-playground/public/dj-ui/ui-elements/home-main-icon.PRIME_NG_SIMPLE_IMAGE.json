@@ -2,8 +2,8 @@
   "id": "home-main-icon.PRIME_NG_SIMPLE_IMAGE",
   "type": "SIMPLE_IMAGE",
   "options": {
-    "imageUrl": "/icons/app_icon.svg",
-    "altLabel": "DJUI Icon",
+    "imageUrl": "/icons/app_icon_v2.svg",
+    "altLabel": "DJ-UI Icon",
     "priority": true
   }
 }

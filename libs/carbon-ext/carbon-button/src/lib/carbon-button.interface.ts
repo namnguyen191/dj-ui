@@ -20,7 +20,7 @@ export const ZodButtonFilesSelectorConfig = z.strictObject({
 });
 export type ButtonFilesSelectorConfig = z.input<typeof ZodButtonFilesSelectorConfig>;
 
-export const ZodCarbonButtonUIElementComponentConfigs = z.object({
+export const ZodCarbonButtonUIElementComponentConfigs = z.strictObject({
   text: z.string(),
   type: ZodButtonTypeConfig,
   filesSelector: ZodButtonFilesSelectorConfig,

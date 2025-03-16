@@ -71,6 +71,7 @@ const GRID_CONFIG: GridsterConfig = {
   maxCols: GRID_COLS_MAX,
   maxItemCols: GRID_COLS_MAX,
   maxItemRows: UI_ELEMENT_MAX_ROWS,
+  maxRows: 9999,
   resizable: {
     enabled: true,
     handles: { n: true, s: true, e: true, w: true, se: false, sw: false, nw: false, ne: false },
@@ -81,7 +82,6 @@ const GRID_CONFIG: GridsterConfig = {
   pushItems: true,
   compactType: 'compactLeft&Up',
   keepFixedHeightInMobile: true,
-  // keepFixedWidthInMobile: true,
 };
 
 const isLayoutGridItem = (item: GridsterItem): item is LayoutGridItem => {
