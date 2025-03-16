@@ -1,35 +1,59 @@
 import { Injectable } from '@angular/core';
-import { EmptyObject, UnknownRecord } from 'type-fest';
+import { z } from 'zod';
 
-import { UIElementRequiredConfigs } from '../../components/base-ui-element.component';
-import { ActionHook } from '../events-and-actions/action-hook.service';
-import { StateSubscriptionConfig } from '../state-store.service';
+import { ZUIElementRequiredConfigs } from '../../components/base-ui-element.component';
+import { ActionHook, ZodActionHook } from '../events-and-actions/action-hook.service';
+import { ZStateSubscriptionConfig } from '../state-store.service';
 import { BaseTemplateService, MissingTemplateEvent } from './base-template.service';
 import { ConfigWithStatus } from './shared-types';
 
-export type UIElementTemplateOptions<T extends UnknownRecord = EmptyObject> =
-  Partial<UIElementRequiredConfigs> & Partial<T>;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const createUIElementTemplateOptionsSchema = <T extends z.ZodObject<any>>(
+  customOptionsSchema: T
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+) => ZUIElementRequiredConfigs.merge(customOptionsSchema).partial();
+export const ZUIElementTemplateOptions = createUIElementTemplateOptionsSchema(z.object({}));
+export type UIElementTemplateOptions = z.infer<typeof ZUIElementTemplateOptions>;
 
-export type UnknownEvent = 'unknown-event';
-export type NoEvent = 'no-event';
-export type EventsToHooksMap<TEvents extends string = UnknownEvent> = {
-  [K in TEvents]?: ActionHook[];
+export const ZUnknownEvent = z.literal('unknown-event');
+export type UnknownEvent = z.infer<typeof ZUnknownEvent>;
+export const ZNoEvent = z.literal('no-event');
+export type NoEvent = z.infer<typeof ZNoEvent>;
+
+export const createEventsToHooksMapSchema = <T extends string>(
+  events: T[]
+): z.ZodType<{
+  [K in T]?: ActionHook[];
+}> => {
+  const zObj = z.strictObject({});
+  for (const evt of events) {
+    zObj.extend({
+      [evt]: z.array(ZodActionHook).optional(),
+    });
+  }
+
+  return zObj;
 };
-type HaveEventHooks<TEvents extends string = UnknownEvent> = TEvents extends UnknownEvent
-  ? { eventsHooks?: EventsToHooksMap }
-  : TEvents extends NoEvent
-    ? Record<string, never>
-    : { eventsHooks?: EventsToHooksMap<TEvents> };
-export type UIElementTemplate<
-  TConfigs extends UnknownRecord = EmptyObject,
-  TEvents extends string = UnknownEvent,
-> = {
-  id: string;
-  type: string;
-  remoteResourceIds?: string[];
-  stateSubscription?: StateSubscriptionConfig;
-  options: UIElementTemplateOptions<TConfigs>;
-} & HaveEventHooks<TEvents>;
+export const createUIElementTemplateSchema = <
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  TConfigs extends z.ZodObject<any>,
+  TEvent extends string,
+>(
+  configs: TConfigs,
+  events: TEvent[] = []
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+) => {
+  return z.strictObject({
+    id: z.string(),
+    type: z.string(),
+    remoteResourceIds: z.array(z.string()).optional(),
+    stateSubscription: ZStateSubscriptionConfig.optional(),
+    options: createUIElementTemplateOptionsSchema(configs),
+    eventsHooks: createEventsToHooksMapSchema(events).optional(),
+  });
+};
+export const ZBaseUIElementTemplate = createUIElementTemplateSchema(z.object({}), []);
+export type UIElementTemplate = z.infer<typeof ZBaseUIElementTemplate>;
 
 export type UIElementTemplateWithStatus = ConfigWithStatus<UIElementTemplate>;
 

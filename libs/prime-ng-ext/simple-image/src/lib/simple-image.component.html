@@ -1,0 +1,14 @@
+@if (isLoadingConfigOption()) {
+  <span>Loading...</span>
+} @else if (isErrorConfigOption()) {
+  <span>Something went wrong</span>
+} @else {
+  <img
+    class="slides-container__slide__snapper"
+    fill
+    [alt]="altLabelConfigOption()"
+    [fill]="true"
+    [ngSrc]="imageUrlConfigOption()"
+    [priority]="priorityConfigOption()"
+  />
+}

@@ -1,0 +1,229 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "remoteResourceIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "stateSubscription": {
+      "type": "object",
+      "properties": {
+        "watchedScopes": {
+          "type": "object",
+          "properties": {
+            "global": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "local": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "layout": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "variables": {
+          "type": "object",
+          "additionalProperties": {}
+        }
+      },
+      "required": [
+        "watchedScopes"
+      ],
+      "additionalProperties": false
+    },
+    "options": {
+      "type": "object",
+      "properties": {
+        "isInterpolationLoading": {
+          "type": "boolean"
+        },
+        "isInterpolationError": {
+          "type": "boolean"
+        },
+        "isResourceLoading": {
+          "type": "boolean"
+        },
+        "isResourceError": {
+          "type": "boolean"
+        },
+        "isLoading": {
+          "type": "boolean"
+        },
+        "isError": {
+          "type": "boolean"
+        },
+        "textBlocks": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "title"
+                    ]
+                  },
+                  "styles": {
+                    "type": "object",
+                    "properties": {
+                      "align": {
+                        "type": "string",
+                        "enum": [
+                          "left",
+                          "center",
+                          "right"
+                        ]
+                      },
+                      "weight": {
+                        "type": "number"
+                      },
+                      "size": {
+                        "type": "number"
+                      },
+                      "underline": {
+                        "type": "boolean"
+                      },
+                      "backgroundColor": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false
+                  },
+                  "id": {
+                    "type": "string"
+                  },
+                  "text": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "text"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "paragraph"
+                    ]
+                  },
+                  "styles": {
+                    "$ref": "#/properties/options/properties/textBlocks/items/anyOf/0/properties/styles"
+                  },
+                  "id": {
+                    "$ref": "#/properties/options/properties/textBlocks/items/anyOf/0/properties/id"
+                  },
+                  "text": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "type",
+                  "text"
+                ],
+                "additionalProperties": false
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "type": {
+                    "type": "string",
+                    "enum": [
+                      "list"
+                    ]
+                  },
+                  "styles": {
+                    "$ref": "#/properties/options/properties/textBlocks/items/anyOf/0/properties/styles"
+                  },
+                  "id": {
+                    "$ref": "#/properties/options/properties/textBlocks/items/anyOf/0/properties/id"
+                  },
+                  "title": {
+                    "type": "string"
+                  },
+                  "items": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "listStyle": {
+                    "type": "string",
+                    "enum": [
+                      "circle",
+                      "disc",
+                      "square",
+                      "armenian",
+                      "cjk-ideographic",
+                      "decimal",
+                      "decimal-leading-zero",
+                      "georgian",
+                      "hebrew",
+                      "hiragana",
+                      "hiragana-iroha",
+                      "katakana",
+                      "katakana-iroha",
+                      "lower-alpha",
+                      "lower-greek",
+                      "lower-latin",
+                      "lower-roman",
+                      "upper-alpha",
+                      "upper-greek",
+                      "upper-latin",
+                      "upper-roman"
+                    ],
+                    "default": "circle"
+                  }
+                },
+                "required": [
+                  "type",
+                  "items"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "eventsHooks": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "id",
+    "type",
+    "options"
+  ],
+  "additionalProperties": false,
+  "description": "PrimeNgSimpleTextUIESchema",
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

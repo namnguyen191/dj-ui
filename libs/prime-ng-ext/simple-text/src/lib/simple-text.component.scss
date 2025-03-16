@@ -1,0 +1,45 @@
+:host {
+  display: block;
+  height: 100%;
+  overflow: hidden;
+  white-space: pre-wrap;
+
+  .loader-container {
+    min-block-size: unset;
+  }
+
+  .text-block {
+    display: flex;
+    background-color: var(--background-color);
+
+    h2,
+    p {
+      font-weight: var(--font-weight, revert);
+      font-size: var(--font-size, revert);
+    }
+
+    &.align-left {
+      justify-content: baseline;
+    }
+
+    &.align-right {
+      justify-content: end;
+    }
+
+    &.align-center {
+      justify-content: center;
+    }
+
+    &.underline {
+      border-bottom: 1px solid;
+    }
+
+    .list-container {
+      margin-left: 0;
+
+      li {
+        margin-top: 5px;
+      }
+    }
+  }
+}

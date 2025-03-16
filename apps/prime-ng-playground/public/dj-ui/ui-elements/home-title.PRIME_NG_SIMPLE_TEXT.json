@@ -1,0 +1,24 @@
+{
+  "id": "home-title.PRIME_NG_SIMPLE_TEXT",
+  "type": "SIMPLE_TEXT",
+  "options": {
+    "textBlocks": [
+      {
+        "type": "title",
+        "text": "DJ-UI",
+        "styles": {
+          "align": "center",
+          "size": 60,
+          "weight": 700
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "(With Prime NG Integration)",
+        "styles": {
+          "align": "center"
+        }
+      }
+    ]
+  }
+}

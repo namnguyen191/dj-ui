@@ -1,0 +1,162 @@
+{
+  "id": "home-simple-setup-guide.PRIME_NG_SIMPLE_TEXT",
+  "type": "SIMPLE_TEXT",
+  "options": {
+    "textBlocks": [
+      {
+        "type": "title",
+        "text": "Simple setup",
+        "styles": {
+          "underline": true
+        }
+      },
+      {
+        "id": "home-simple-setup-guide.PRIME_NG_SIMPLE_TEXT.fetcher-and-component-loaders",
+        "type": "title",
+        "text": "Fetchers and component loaders setup",
+        "styles": {
+          "size": 20
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "The bellow example show how to setup NG Prime component loaders as well as some simple fetchers using Http client:"
+      },
+      {
+        "type": "paragraph",
+        "text": "...\nimport { COMMON_SETUP_CONFIG, SetupConfigs } from '@dj-ui/common';\nimport { PrimeNgComponentLoader } from '@dj-ui/prime-ng-ext';\n\nexport const appConfig: ApplicationConfig = {\n  providers: [\n    ...,\n    {\n      provide: COMMON_SETUP_CONFIG,\n      useFactory: (): SetupConfigs => {\n        const httpClient = inject(HttpClient);\n        return {\n          templatesHandlers: {\n            getLayoutTemplate: (id: string) =>\n              httpClient.get<LayoutTemplate>(`/dj-ui/layouts/${id}.json`),\n            getUiElementTemplate: (id: string) =>\n              httpClient.get<UIElementTemplate>(`/dj-ui/ui-elements/${id}.json`),\n            getRemoteResourceTemplate: (id: string) =>\n              httpClient.get<RemoteResourceTemplate>(`/dj-ui/remote-resources/${id}.json`),\n          },\n          componentLoadersMap: PrimeNgComponentLoader,\n        };\n      },\n    },\n  ],\n};",
+        "styles": {
+          "backgroundColor": "#34434b"
+        }
+      },
+      {
+        "id": "home-simple-setup-guide.PRIME_NG_SIMPLE_TEXT.js-runner",
+        "type": "title",
+        "text": "JS runner setup",
+        "styles": {
+          "size": 20
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "Please refer to Angular docs on how to setup a webworker in your application.\nOnce the setup is ready, create your \"js-runner.worker.ts\" worker file"
+      },
+      {
+        "type": "paragraph",
+        "text": "/// <reference lib=\"webworker\" />\n\nimport { handleRunJsMessage } from '@dj-ui/core/js-interpolation-worker';\n\naddEventListener('message', (e) => {\n  const allowList = new Set<string>(['console', 'JSON', 'Math', 'Intl']);\n  handleRunJsMessage(e, allowList);\n});\n",
+        "styles": {
+          "backgroundColor": "#34434b"
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "Then hook it up to your app:"
+      },
+      {
+        "type": "paragraph",
+        "text": "import { CREATE_JS_RUNNER_WORKER } from '@dj-ui/core';\n\nexport const appConfig: ApplicationConfig = {\n  ...\n  providers: [\n    {\n      provide: CREATE_JS_RUNNER_WORKER,\n      useValue: (): Worker => {\n        const worker = new Worker(new URL('./js-runner.worker', import.meta.url), {\n          name: 'CustomWorker',\n          type: 'module',\n        });\n        return worker;\n      },\n    },\n  ],\n};",
+        "styles": {
+          "backgroundColor": "#34434b"
+        }
+      },
+      {
+        "id": "home-simple-setup-guide.PRIME_NG_SIMPLE_TEXT.lib-integration",
+        "type": "title",
+        "text": "Library integration setup",
+        "styles": {
+          "size": 20
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "DJ-UI comes with a highly configurable API for advanced users. For a more seamless default setup, @dj-ui/common expose an API to quickly get your app up and running, perfect for users who are looking for a quick adoption. To do this, at your app component, add the following:"
+      },
+      {
+        "type": "paragraph",
+        "text": "import { Component } from '@angular/core';\nimport { setupDefault } from '@dj-ui/common';\n\n@Component({\n  selector: 'app-root',\n  templateUrl: './app.component.html',\n  styleUrl: './app.component.scss',\n})\nexport class AppComponent {\n  constructor() {\n    setupDefault();\n  }\n}\n",
+        "styles": {
+          "backgroundColor": "#34434b"
+        }
+      },
+      {
+        "id": "home-simple-setup-guide.PRIME_NG_SIMPLE_TEXT.ext-integration",
+        "type": "title",
+        "text": "Extension integration setup",
+        "styles": {
+          "size": 20
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "When using a component extension library with DJ-UI, such as \"@dj-ui/prime-ng-ext\", you might be required to do some extra additional setup. These setup are very specific to the extension library that you are using so please refer to their documentation for instruction. The bellow example will be for \"@dj-ui/prime-ng-ext\""
+      },
+      {
+        "type": "paragraph",
+        "text": "import Aura from '@primeng/themes/aura';\nimport { providePrimeNG } from 'primeng/config';\n\nexport const appConfig: ApplicationConfig = {\n  providers: [\n    providePrimeNG({\n      theme: {\n        preset: Aura,\n      },\n    }),\n  ],\n};",
+        "styles": {
+          "backgroundColor": "#34434b"
+        }
+      },
+      {
+        "id": "home-simple-setup-guide.PRIME_NG_SIMPLE_TEXT.basic-usage",
+        "type": "title",
+        "text": "Basic usage examples",
+        "styles": {
+          "size": 20
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "Once is everything is setup, you can start creating your first page using nothing but JSON!"
+      },
+      {
+        "type": "paragraph",
+        "text": "Start by creating a UI element template, for example \"/public/dj-ui/ui-elements/hello-world-text.json\":"
+      },
+      {
+        "type": "paragraph",
+        "text": "{\n  \"id\": \"hello-world-text\",\n  \"type\": \"SIMPLE_TEXT\",\n  \"options\": {\n    \"textBlocks\": [\n      {\n        \"type\": \"title\",\n        \"text\": \"Hello world!\"\n      },\n      {\n        \"type\": \"paragraph\",\n        \"text\": \"This is my first simple text ui element.\",\n        \"styles\": {\n          \"backgroundColor\": \"#ccebd4\"\n        }\n      }\n    ]\n  }\n}\n",
+        "styles": {
+          "backgroundColor": "#34434b"
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "Then create a layout \"/public/dj-ui/layouts/home.json\" template to utilize the above UI element template:"
+      },
+      {
+        "type": "paragraph",
+        "text": "{\n  \"id\": \"home\",\n  \"gridConfigs\": {\n    \"compactType\": \"none\"\n  },\n  \"uiElementInstances\": [\n    {\n      \"id\": \"1\",\n      \"uiElementTemplateId\": \"hello-world-text\",\n      \"positionAndSize\": {\n        \"y\": 0,\n        \"x\": 6,\n        \"rows\": 14,\n        \"cols\": 4,\n        \"dragEnabled\": false,\n        \"resizeEnabled\": false\n      }\n    }\n  ]\n}\n",
+        "styles": {
+          "backgroundColor": "#34434b"
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "Finally, we can display our layout anywhere we want using the \"LayoutComponent\". Remember to import it in your component, for example:"
+      },
+      {
+        "type": "paragraph",
+        "text": "import { Component } from '@angular/core';\nimport { LayoutComponent } from '@dj-ui/core';\n\n@Component({\n  selector: 'app-root',\n  imports: [LayoutComponent],\n  templateUrl: './app.component.html',\n  styleUrl: './app.component.scss',\n})\nexport class AppComponent {\n  ...\n}\n",
+        "styles": {
+          "backgroundColor": "#34434b"
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "Then, in the html:"
+      },
+      {
+        "type": "paragraph",
+        "text": "<dj-ui-layout [layoutId]=\"'home'\"></dj-ui-layout>",
+        "styles": {
+          "backgroundColor": "#34434b"
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "And just like that, you've built your first fully customizable page with DJ-UI!"
+      }
+    ]
+  }
+}

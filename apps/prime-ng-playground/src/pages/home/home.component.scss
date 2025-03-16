@@ -1,0 +1,14 @@
+@use '../../shared/styles/global';
+
+:host {
+  display: grid;
+  grid-template-columns: 1fr 10fr;
+  grid-template-rows: calc(100vh - global.$main-nav-height);
+  overflow: scroll;
+
+  .nav-menu {
+    position: sticky;
+    left: 0;
+    top: 0;
+  }
+}

@@ -84,7 +84,8 @@
     "@nx/angular:application": {
       "e2eTestRunner": "playwright",
       "linter": "eslint",
-      "style": "scss"
+      "style": "scss",
+      "unitTestRunner": "none"
     },
     "@nx/angular:library": {
       "linter": "eslint",

@@ -1,0 +1,39 @@
+{
+  "id": "home-introduction.PRIME_NG_SIMPLE_TEXT",
+  "type": "SIMPLE_TEXT",
+  "options": {
+    "textBlocks": [
+      {
+        "type": "title",
+        "text": "Introduction",
+        "styles": {
+          "underline": true
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "DJ-UI: The Ultimate UI Builder Framework for Angular",
+        "styles": {
+          "weight": 500,
+          "size": 20
+        }
+      },
+      {
+        "type": "paragraph",
+        "text": "DJ-UI is a powerful and flexible Angular library designed to help developers create their own UI builder platforms with ease. Whether you're building a low-code/no-code solution or a fully customizable design system, DJ-UI provides the essential tools to generate dynamic, interactive, and reusable UI components."
+      },
+      {
+        "type": "paragraph",
+        "text": "At its core, DJ-UI leverages JSON-based configuration to define layouts, components like cards, and even API calls—allowing developers and end-users to create and modify UIs dynamically without writing extensive code. This makes it ideal for building intuitive, customizable, and scalable applications."
+      },
+      {
+        "type": "paragraph",
+        "text": "With its modular architecture and intuitive API, DJ-UI streamlines UI composition, state management, and event handling, enabling you to focus on innovation rather than boilerplate code."
+      },
+      {
+        "type": "paragraph",
+        "text": "Start crafting your own UI builder with DJ-UI today! 🚀"
+      }
+    ]
+  }
+}

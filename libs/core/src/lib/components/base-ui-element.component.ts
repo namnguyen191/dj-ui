@@ -17,14 +17,15 @@ export const ZodIsError = z.boolean({
   invalid_type_error: 'error state must be a boolean',
 });
 
-export type UIElementRequiredConfigs = {
-  isInterpolationLoading: boolean;
-  isInterpolationError: boolean;
-  isResourceLoading: boolean;
-  isResourceError: boolean;
-  isLoading: boolean;
-  isError: boolean;
-};
+export const ZUIElementRequiredConfigs = z.strictObject({
+  isInterpolationLoading: z.boolean(),
+  isInterpolationError: z.boolean(),
+  isResourceLoading: z.boolean(),
+  isResourceError: z.boolean(),
+  isLoading: z.boolean(),
+  isError: z.boolean(),
+});
+export type UIElementRequiredConfigs = z.infer<typeof ZUIElementRequiredConfigs>;
 
 type CreateUIElementInputOptions<TConfigs> = Required<{
   [K in keyof TConfigs as K extends string ? `${K}ConfigOption` : never]:

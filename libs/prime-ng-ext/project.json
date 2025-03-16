@@ -1,0 +1,40 @@
+{
+  "name": "prime-ng-ext",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/prime-ng-ext/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["scope:extension"],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/prime-ng-ext/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/prime-ng-ext/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/prime-ng-ext/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["tsc -p tsconfig.lib.prod.json --noEmit"],
+        "cwd": "libs/prime-ng-ext"
+      }
+    },
+    "generate-json-schema-with-zod": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/prime-ng-ext",
+        "commands": ["tsx generate-json-schemas.ts"]
+      }
+    }
+  }
+}

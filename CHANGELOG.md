@@ -1,3 +1,36 @@
+## 0.9.0 (2025-03-16)
+
+### 🚀 Features
+
+- update @namnguyen191 packages, adjust tsconfig, use enum for layout config ([#5](https://github.com/namnguyen191/dj-ui/pull/5))
+- refactor template service to extract common logic, adjust event interface ([#9](https://github.com/namnguyen191/dj-ui/pull/9))
+- Implement file upload ([#10](https://github.com/namnguyen191/dj-ui/pull/10))
+- Support extra wrapper and release new version ([#11](https://github.com/namnguyen191/dj-ui/pull/11))
+- add layout builder to playground and adjust layout component ([#12](https://github.com/namnguyen191/dj-ui/pull/12))
+- enable onpush change detection and move context menu to layout builder ([#13](https://github.com/namnguyen191/dj-ui/pull/13))
+- enable local api and deployment ([#14](https://github.com/namnguyen191/dj-ui/pull/14))
+- install prime ng ([2b25b84](https://github.com/namnguyen191/dj-ui/commit/2b25b84))
+- skaffold prime-ng-playground angular app ([56da9cd](https://github.com/namnguyen191/dj-ui/commit/56da9cd))
+- skaffold prime-ng-ext angular lib ([18af94d](https://github.com/namnguyen191/dj-ui/commit/18af94d))
+- add prime ng simple text ([43f9127](https://github.com/namnguyen191/dj-ui/commit/43f9127))
+- add prime ng simple image ui element ([b7eed69](https://github.com/namnguyen191/dj-ui/commit/b7eed69))
+- improve simple text, add shell and introduction section ([bc8ae81](https://github.com/namnguyen191/dj-ui/commit/bc8ae81))
+- generate schemas from zod types ([52cc49c](https://github.com/namnguyen191/dj-ui/commit/52cc49c))
+- add basic guides on home layout ([1d36401](https://github.com/namnguyen191/dj-ui/commit/1d36401))
+- update lint stage to check for circular deps ([16daf45](https://github.com/namnguyen191/dj-ui/commit/16daf45))
+
+### 🩹 Fixes
+
+- fix deployment by using checkout v4 ([#15](https://github.com/namnguyen191/dj-ui/pull/15))
+- fix deployment by changing pnpm version ([#16](https://github.com/namnguyen191/dj-ui/pull/16))
+- fix redirection logic and add icons ([#17](https://github.com/namnguyen191/dj-ui/pull/17))
+- use relative path for assets ([#18](https://github.com/namnguyen191/dj-ui/pull/18))
+- template editor loading and error issues ([#19](https://github.com/namnguyen191/dj-ui/pull/19))
+
+### ❤️ Thank You
+
+- Nam Nguyen @namnguyen191
+
 ## 0.8.0 (2025-02-16)
 
 ### 🚀 Features

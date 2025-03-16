@@ -1,4 +1,4 @@
-import { UIElementTemplate } from '@dj-ui/core';
+import { createUIElementTemplateSchema } from '@dj-ui/core';
 import { ZodNonEmptyPrimitive } from '@namnguyen191/types-helper';
 import { z } from 'zod';
 
@@ -42,7 +42,9 @@ export type CarbonTableUIElementComponentEvents = {
   paginationChanged: PaginationChangedPayload;
 };
 
-export type CarbonTableTypeForJsonSchema = UIElementTemplate<
-  CarbonTableUIElementComponentConfigs,
-  keyof CarbonTableUIElementComponentEvents
->;
+export const ZCarbonTableForJsonSchema = createUIElementTemplateSchema(
+  ZodCarbonTableUIElementComponentConfigs,
+  ['paginationChanged']
+);
+
+export type CarbonTableTypeForJsonSchema = z.infer<typeof ZCarbonTableForJsonSchema>;

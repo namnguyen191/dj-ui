@@ -1,0 +1,19 @@
+{
+  "id": "hello-world-text",
+  "type": "SIMPLE_TEXT",
+  "options": {
+    "textBlocks": [
+      {
+        "type": "title",
+        "text": "Hello world!"
+      },
+      {
+        "type": "paragraph",
+        "text": "This is my first simple text ui element.",
+        "styles": {
+          "backgroundColor": "#ccebd4"
+        }
+      }
+    ]
+  }
+}

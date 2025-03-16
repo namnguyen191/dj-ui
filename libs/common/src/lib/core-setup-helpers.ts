@@ -27,8 +27,18 @@ import {
   UIElementTemplate,
   UIElementTemplateService,
 } from '@dj-ui/core';
+import { Template } from '@dj-ui/core';
 import { set } from 'lodash-es';
-import { buffer, debounceTime, forkJoin, map, mergeMap, Observable, tap } from 'rxjs';
+import {
+  buffer,
+  debounceTime,
+  forkJoin,
+  map,
+  mergeMap,
+  MonoTypeOperatorFunction,
+  Observable,
+  tap,
+} from 'rxjs';
 
 import { FileUploadService } from './data-fetchers/file-upload.service';
 import { HttpFetcherService } from './data-fetchers/http-fetcher.service';
@@ -113,13 +123,27 @@ export const setupEventsListener = (params: TemplatesHandlers): void => {
 
   const allEvents = eventsService.getEvents().pipe(takeUntilDestroyed());
 
+  const warnMismatchTemplateId = <T extends Template>(
+    requestedId: string
+  ): MonoTypeOperatorFunction<T> => {
+    return tap({
+      next: (template) => {
+        if (template.id !== requestedId) {
+          console.warn(
+            `Request for template with id ${requestedId} but received ${template.id} instead. This might cause DJ-UI to register the wrong template, leading to missing UI. Please check your template configuration for mis-matching id`
+          );
+        }
+      },
+    });
+  };
+
   if (getLayoutTemplate) {
     const missingLayoutEvents = allEvents.pipe(
       missingLayoutTemplateEvent(),
       mergeMap((event) => {
         const missingLayoutId = event.payload.id;
         layoutTemplateService.startRegisteringTemplate(missingLayoutId);
-        return getLayoutTemplate(missingLayoutId);
+        return getLayoutTemplate(missingLayoutId).pipe(warnMismatchTemplateId(missingLayoutId));
       }),
       tap((layout) => layoutTemplateService.registerTemplate(layout))
     );
@@ -133,7 +157,9 @@ export const setupEventsListener = (params: TemplatesHandlers): void => {
       mergeMap((event) => {
         const missingUIElementTemplateId = event.payload.id;
         uiElementTemplatesService.startRegisteringTemplate(missingUIElementTemplateId);
-        return getUiElementTemplate(missingUIElementTemplateId);
+        return getUiElementTemplate(missingUIElementTemplateId).pipe(
+          warnMismatchTemplateId(missingUIElementTemplateId)
+        );
       }),
       tap((uiElementTemplate) => {
         uiElementTemplatesService.registerTemplate(uiElementTemplate);
@@ -148,7 +174,9 @@ export const setupEventsListener = (params: TemplatesHandlers): void => {
       mergeMap((event) => {
         const missingRemoteResourceId = event.payload.id;
         remoteResourceTemplateService.startRegisteringTemplate(missingRemoteResourceId);
-        return getRemoteResourceTemplate(missingRemoteResourceId);
+        return getRemoteResourceTemplate(missingRemoteResourceId).pipe(
+          warnMismatchTemplateId(missingRemoteResourceId)
+        );
       }),
       tap((remoteResource) => remoteResourceTemplateService.registerTemplate(remoteResource))
     );

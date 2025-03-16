@@ -1,6 +1,6 @@
 {
-  "name": "DJUI Playground",
-  "short_name": "DJUI",
+  "name": "DJ-UI Playground",
+  "short_name": "DJ-UI",
   "icons": [
     { "src": "main_icons/android-chrome-192x192.png", "sizes": "192x192", "type": "image/png" },
     { "src": "main_icons/android-chrome-512x512.png", "sizes": "512x512", "type": "image/png" }
