@@ -1,1 +1,0 @@
-import"./chunk-Q7L6LLAK.js";var e=[{path:"",loadComponent:()=>import("./chunk-PITJ5J4X.js").then(t=>t.DjuiWithDifferentConfigsComponent)},{path:"**",redirectTo:"",pathMatch:"full"}];export{e as independenceConfigsRoutes};
