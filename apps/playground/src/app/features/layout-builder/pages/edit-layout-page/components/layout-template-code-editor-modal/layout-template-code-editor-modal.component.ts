@@ -118,6 +118,7 @@ export class LayoutTemplateCodeEditorModalComponent extends BaseModal {
   }
 
   async #formatJSON(rawJSON: string): Promise<string> {
+    console.log('Nam data is: are we here');
     const formatted = await prettier.format(rawJSON, {
       parser: 'json',
       plugins: [parserBabel, prettierPluginEstree as Plugin],

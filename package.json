@@ -42,7 +42,6 @@
     "@namnguyen191/types-helper": "1.1.1",
     "@ngrx/signals": "^19.0.0",
     "@primeng/themes": "^19.0.8",
-    "angular-gridster2": "^19.0.0",
     "carbon-components": "^10.58.15",
     "carbon-components-angular": "^5.56.4",
     "lodash-es": "^4.17.21",

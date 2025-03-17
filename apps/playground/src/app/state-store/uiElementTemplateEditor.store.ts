@@ -8,7 +8,6 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
-import { CompactType } from 'angular-gridster2';
 import { immerPatchState } from 'ngrx-immer/signals';
 
 import {
@@ -21,9 +20,6 @@ const PREVIEW_UI_ELEMENT_TEMPLATE_ID = 'UI_ELEMENT_TEMPLATE_FOR_PREVIEW_ONLY';
 
 export const PREVIEW_LAYOUT_BASE_CONFIG: LayoutTemplate = {
   id: 'preview-layout',
-  gridConfigs: {
-    compactType: CompactType.None,
-  },
   uiElementInstances: [],
 };
 

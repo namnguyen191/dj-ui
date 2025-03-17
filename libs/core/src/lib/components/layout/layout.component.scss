@@ -2,26 +2,15 @@
   display: block;
   width: 100%;
 
-  .drag-area {
-    position: absolute;
-    top: 0.25rem;
-    right: 0.25rem;
-    opacity: 0;
-    transition: opacity ease-in-out 200ms;
-    cursor: grab;
-    z-index: 99999;
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(var(--grid-columns), 1fr);
+    grid-auto-rows: var(--grid-row-height);
+    gap: var(--grid-gap);
 
-    &:hover {
-      opacity: 1;
-    }
-  }
-
-  gridster {
-    background: unset;
-
-    gridster-item {
-      background: unset;
-      overflow: visible;
+    .grid-item {
+      grid-column-start: span var(--grid-item-columns);
+      grid-row-start: span var(--grid-item-rows);
     }
   }
 }

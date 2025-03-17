@@ -1,34 +1,35 @@
-import { CompactType } from 'angular-gridster2';
+import { z } from 'zod';
 
 import { ConfigWithStatus } from './shared-types';
 
-export type UIElementPositionAndSize = {
-  x: number;
-  y: number;
-  cols: number;
-  rows: number;
-};
+export const ZGridConfigs = z.strictObject({
+  columns: z.number(),
+  rowHeight: z.string(),
+  gap: z.string(),
+  padding: z.string(),
+});
+export type GridConfigs = z.infer<typeof ZGridConfigs>;
 
-export type UIElementInstance = {
-  id: string;
-  uiElementTemplateId: string;
-  positionAndSize?: Partial<UIElementPositionAndSize> & {
-    resizeEnabled?: boolean;
-    dragEnabled?: boolean;
-  };
-};
+export const ZUIElementPositionAndSize = z.strictObject({
+  cols: z.number(),
+  rows: z.number(),
+});
+export type UIElementPositionAndSize = z.infer<typeof ZUIElementPositionAndSize>;
 
-export type GridConfigs = {
-  gap?: number;
-  compactType?: CompactType;
-};
+export const ZUIElementInstance = z.strictObject({
+  id: z.string(),
+  uiElementTemplateId: z.string(),
+  positionAndSize: ZUIElementPositionAndSize.partial().optional(),
+});
+export type UIElementInstance = z.infer<typeof ZUIElementInstance>;
 
-export type LayoutTemplate = {
-  id: string;
-  gridConfigs?: GridConfigs;
-  uiElementInstances: UIElementInstance[];
-};
+export const ZLayoutTemplate = z
+  .strictObject({
+    id: z.string(),
+    gridConfigs: ZGridConfigs.partial().optional(),
+    uiElementInstances: z.array(ZUIElementInstance),
+  })
+  .describe('LayoutTemplateSchema');
+export type LayoutTemplate = z.infer<typeof ZLayoutTemplate>;
 
 export type LayoutTemplateWithStatus = ConfigWithStatus<LayoutTemplate>;
-
-export type LayoutTemplateTypeForJsonSchema = LayoutTemplate;
