@@ -14,7 +14,6 @@
     "@angular/core": "~19.0.4",
     "@namnguyen191/common-angular-helper": "1.1.2",
     "@namnguyen191/common-js-helper": "1.1.1",
-    "angular-gridster2": "^19.0.0",
     "rxjs": "~7.8.1",
     "lodash-es": "^4.17.21",
     "zod": "^3.23.8",

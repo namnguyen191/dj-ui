@@ -12,28 +12,33 @@
         }
       }
       @case ('loaded') {
-        <link
-          href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&icon_names=drag_pan"
-          rel="stylesheet"
-        />
-        <gridster *ngIf="layoutGridConfigs() as gridConfigs" [options]="gridConfigs">
+        <div
+          *ngIf="layoutGridConfigs() as gridConfigs"
+          class="grid"
+          [style.--grid-columns]="gridConfigs.columns"
+          [style.--grid-gap]="gridConfigs.gap"
+          [style.--grid-row-height]="gridConfigs.rowHeight"
+          [style.padding]="gridConfigs.padding"
+        >
           @if (gridItems(); as gridItems) {
             @if (gridItems.length > 0) {
               @for (item of gridItems; track item.trackById) {
-                <gridster-item [id]="item.elementInstance.id" [item]="item">
-                  <span *ngIf="item.dragEnabled" class="material-symbols-outlined drag-area">
-                    drag_pan
-                  </span>
+                <div
+                  class="grid-item"
+                  [id]="item.elementInstance.id"
+                  [style.--grid-item-columns]="item.positionAndSize.cols"
+                  [style.--grid-item-rows]="item.positionAndSize.rows"
+                >
                   <dj-ui-element-wrapper
                     [uiElementInstance]="item.elementInstance"
                   ></dj-ui-element-wrapper>
-                </gridster-item>
+                </div>
               }
             } @else {
               <span>This layout is empty</span>
             }
           }
-        </gridster>
+        </div>
       }
     }
   } @else {

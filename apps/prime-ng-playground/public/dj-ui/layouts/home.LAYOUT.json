@@ -1,67 +1,44 @@
 {
   "id": "home.LAYOUT",
   "gridConfigs": {
-    "compactType": "none"
+    "gap": "1rem",
+    "padding": "0 10vw",
+    "rowHeight": "auto"
   },
   "uiElementInstances": [
     {
       "id": "1",
       "uiElementTemplateId": "home-main-icon.PRIME_NG_SIMPLE_IMAGE",
       "positionAndSize": {
-        "y": 0,
-        "x": 6,
-        "rows": 14,
-        "cols": 4,
-        "dragEnabled": false,
-        "resizeEnabled": false
+        "cols": 16
       }
     },
     {
       "id": "2",
       "uiElementTemplateId": "home-title.PRIME_NG_SIMPLE_TEXT",
       "positionAndSize": {
-        "y": 15,
-        "x": 6,
-        "rows": 10,
-        "cols": 4,
-        "dragEnabled": false,
-        "resizeEnabled": false
+        "cols": 16
       }
     },
     {
       "id": "3",
       "uiElementTemplateId": "home-introduction.PRIME_NG_SIMPLE_TEXT",
       "positionAndSize": {
-        "y": 30,
-        "x": 2,
-        "rows": 20,
-        "cols": 10,
-        "dragEnabled": false,
-        "resizeEnabled": false
+        "cols": 16
       }
     },
     {
       "id": "4",
       "uiElementTemplateId": "home-installation-guide.PRIME_NG_SIMPLE_TEXT",
       "positionAndSize": {
-        "y": 51,
-        "x": 2,
-        "rows": 45,
-        "cols": 10,
-        "dragEnabled": false,
-        "resizeEnabled": false
+        "cols": 16
       }
     },
     {
       "id": "5",
       "uiElementTemplateId": "home-simple-setup-guide.PRIME_NG_SIMPLE_TEXT",
       "positionAndSize": {
-        "y": 97,
-        "x": 2,
-        "rows": 175,
-        "cols": 10,
-        "dragEnabled": false,
-        "resizeEnabled": false
+        "cols": 16
       }
     }
   ]

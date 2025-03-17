@@ -97,10 +97,7 @@ export class DuiUIElementBuilderContextMenuWrapperComponent
     let clickedElement = e.target as HTMLElement;
 
     while (clickedElement.parentElement) {
-      if (
-        clickedElement.tagName.toLowerCase() === 'gridster-item' &&
-        clickedElement.id === uiElementId
-      ) {
+      if (clickedElement.className === 'grid-item' && clickedElement.id === uiElementId) {
         return clickedElement;
       }
 

@@ -30,10 +30,11 @@
         "cwd": "libs/core"
       }
     },
-    "generate-json-schema": {
+    "generate-json-schema-with-zod": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["tsx scripts/dj-ui-gen-json-schem.ts libs/core libs/core/tsconfig.lib.json"]
+        "cwd": "libs/core",
+        "commands": ["tsx generate-json-schemas.ts"]
       }
     }
   }

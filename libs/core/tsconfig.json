@@ -6,6 +6,10 @@
     },
     {
       "path": "./tsconfig.spec.json"
+    },
+    {
+      "path": "./tsconfig.script.json"
     }
-  ]
+  ],
+  "exclude": ["generate-json-schemas.ts"]
 }

@@ -86,7 +86,14 @@ export default [
       '@nx/dependency-checks': [
         'error',
         {
-          ignoredDependencies: ['@nx/devkit', 'vite', '@analogjs/vite-plugin-angular', '@nx/vite'],
+          ignoredDependencies: [
+            '@nx/devkit',
+            'vite',
+            '@analogjs/vite-plugin-angular',
+            '@nx/vite',
+            '@angular/compiler',
+            'zod-to-json-schema',
+          ],
         },
       ],
     },
