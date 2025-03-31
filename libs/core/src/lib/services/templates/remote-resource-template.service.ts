@@ -21,7 +21,7 @@ export const ZRemoteResourceTemplate = z
     options: z.strictObject({
       runCondition: z.boolean().optional(),
       requests: z.array(ZRequest),
-      onSuccess: z.array(ZodActionHook),
+      onSuccess: z.array(ZodActionHook).optional(),
       parallel: z.boolean().optional(),
     }),
   })

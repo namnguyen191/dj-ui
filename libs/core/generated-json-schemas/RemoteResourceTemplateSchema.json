@@ -88,8 +88,7 @@
         }
       },
       "required": [
-        "requests",
-        "onSuccess"
+        "requests"
       ],
       "additionalProperties": false
     }

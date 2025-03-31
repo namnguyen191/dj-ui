@@ -192,10 +192,7 @@ export class InterpolationService {
   }
 
   #extractRawJs(input: string): RawJsString | null {
-    if (INTERPOLATION_REGEX.test(input)) {
-      return INTERPOLATION_REGEX.exec(input)?.[2] as RawJsString;
-    }
-    return null;
+    return (input.match(INTERPOLATION_REGEX)?.[2] as RawJsString) ?? null;
   }
 
   #interpolateString(params: {

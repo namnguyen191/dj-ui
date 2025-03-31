@@ -25,9 +25,9 @@ export const createEventsToHooksMapSchema = <T extends string>(
 ): z.ZodType<{
   [K in T]?: ActionHook[];
 }> => {
-  const zObj = z.strictObject({});
+  let zObj = z.object({});
   for (const evt of events) {
-    zObj.extend({
+    zObj = zObj.extend({
       [evt]: z.array(ZodActionHook).optional(),
     });
   }
