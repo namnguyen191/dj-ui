@@ -4,8 +4,8 @@ import * as fs from 'fs';
 import { ZodType } from 'zod';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 
-import { ZSimpleImageUIE } from './simple-image/src';
-import { ZSimpleTextUIE } from './simple-text/src';
+import { ZSimpleImageUIESchema } from './simple-image/src';
+import { ZSimpleTextUIESchema } from './simple-text/src';
 
 const generateJSONSchemaFromZodTypes = (zodTypes: ZodType[]): void => {
   for (const zt of zodTypes) {
@@ -19,4 +19,4 @@ const generateJSONSchemaFromZodTypes = (zodTypes: ZodType[]): void => {
   }
 };
 
-generateJSONSchemaFromZodTypes([ZSimpleTextUIE, ZSimpleImageUIE]);
+generateJSONSchemaFromZodTypes([ZSimpleTextUIESchema, ZSimpleImageUIESchema]);
