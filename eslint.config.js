@@ -13,6 +13,8 @@ export default [
       '**/eslint*.js',
       '**/lint-staged.config.js',
       '**/generated-json-schemas/**',
+      '**/vite.config.*.timestamp*',
+      '**/vitest.config.*.timestamp*',
     ],
   },
   ...nx.configs['flat/base'],
