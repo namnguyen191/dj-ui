@@ -35,6 +35,7 @@
       "@dj-ui/prime-ng-ext/shared": ["libs/prime-ng-ext/shared/src/index.ts"],
       "@dj-ui/prime-ng-ext/simple-image": ["libs/prime-ng-ext/simple-image/src/index.ts"],
       "@dj-ui/prime-ng-ext/simple-text": ["libs/prime-ng-ext/simple-text/src/index.ts"],
+      "@dj-ui/prime-ng-ext/simple-table": ["libs/prime-ng-ext/simple-table/src/index.ts"],
       "@dj-ui/shared-components": ["libs/shared-components/src/index.ts"]
     }
   },
