@@ -24,7 +24,7 @@
     "test:all": "nx run-many --all --skip-nx-cache --parallel=12 -t test",
     "e2e:affected": "nx affected -t e2e",
     "e2e:all": "nx run-many --all --skip-nx-cache --parallel=12 -t e2e",
-    "clean-artifacts": "rm -rf .nx .angular dist tmp node_modules/.cache"
+    "clean-artifacts": "nx reset && rm -rf .nx .angular dist tmp node_modules/.cache"
   },
   "dependencies": {
     "@angular/animations": "19.2.4",

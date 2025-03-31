@@ -95,6 +95,8 @@ export default [
             '@nx/vite',
             '@angular/compiler',
             'zod-to-json-schema',
+            '@analogjs/vitest-angular',
+            '@angular/platform-browser-dynamic',
           ],
         },
       ],

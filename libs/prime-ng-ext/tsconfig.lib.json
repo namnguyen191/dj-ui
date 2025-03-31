@@ -5,8 +5,25 @@
     "declaration": true,
     "declarationMap": true,
     "inlineSources": true,
-    "types": [],
-    "composite": true
+    "types": []
   },
+  "exclude": [
+    "**/*.spec.ts",
+    "**/test-setup.ts",
+    "jest.config.ts",
+    "**/*.test.ts",
+    "vite.config.ts",
+    "vite.config.mts",
+    "vitest.config.ts",
+    "vitest.config.mts",
+    "**/*.test.tsx",
+    "**/*.spec.tsx",
+    "**/*.test.js",
+    "**/*.spec.js",
+    "**/*.test.jsx",
+    "**/*.spec.jsx",
+    "**/test-setup.ts",
+    "generate-json-schemas.ts"
+  ],
   "include": ["**/*.ts"]
 }

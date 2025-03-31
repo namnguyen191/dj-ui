@@ -3,5 +3,6 @@
   "compilerOptions": {
     "types": ["node"]
   },
-  "exclude": []
+  "exclude": [],
+  "files": ["generate-json-schemas.ts"]
 }

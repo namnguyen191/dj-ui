@@ -8,17 +8,12 @@ export default defineConfig({
   root: __dirname,
   cacheDir: '../../node_modules/.vite/libs/core',
   plugins: [angular(), nxViteTsPaths(), nxCopyAssetsPlugin(['*.md'])],
-  // Uncomment this if you are using workers.
-  // worker: {
-  //  plugins: [ nxViteTsPaths() ],
-  // },
-
   test: {
     watch: false,
     globals: true,
     environment: 'jsdom',
-    include: ['src/**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
-    setupFiles: ['src/test-setup.ts'],
+    include: ['**/*.{test,spec}.{js,mjs,cjs,ts,mts,cts,jsx,tsx}'],
+    setupFiles: ['test-setup.ts'],
     reporters: ['default'],
     coverage: {
       reportsDirectory: '../../coverage/libs/core',
