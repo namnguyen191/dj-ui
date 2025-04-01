@@ -4,8 +4,8 @@ import { z } from 'zod';
 import { ZodActionHook } from '../events-and-actions/action-hook.service';
 import { ZodInterpolationString } from '../interpolation.service';
 import { ZStateSubscriptionConfig } from '../state-store.service';
-import { BaseTemplateService, MissingTemplateEvent } from './base-template.service';
-import { ConfigWithStatus } from './shared-types';
+import { BaseTemplateService, type MissingTemplateEvent } from './base-template.service';
+import type { ConfigWithStatus } from './shared-types';
 
 export const ZRequest = z.strictObject({
   fetcherId: z.string(),

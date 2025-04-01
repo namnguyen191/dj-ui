@@ -22,11 +22,10 @@
       },
       "defaultConfiguration": "production"
     },
-
     "typecheck": {
       "executor": "nx:run-commands",
       "options": {
-        "commands": ["tsc -p tsconfig.lib.json --noEmit"],
+        "commands": ["tsc -p tsconfig.lib.prod.json --noEmit"],
         "cwd": "libs/core"
       }
     },

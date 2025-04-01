@@ -9,9 +9,9 @@ import {
   of,
   pipe,
   switchMap,
-  UnaryFunction,
+  type UnaryFunction,
 } from 'rxjs';
-import { UnknownRecord } from 'type-fest';
+import type { UnknownRecord } from 'type-fest';
 import { z } from 'zod';
 
 import { InterpolationService } from './interpolation.service';
@@ -109,9 +109,9 @@ export const getStatesSubscriptionAsContext = (
   providedIn: 'root',
 })
 export class StateStoreService {
-  #globalState: BehaviorSubject<UnknownRecord> = new BehaviorSubject({});
-  #layoutState: BehaviorSubject<UnknownRecord> = new BehaviorSubject({});
-  #localState: BehaviorSubject<UnknownRecord> = new BehaviorSubject({});
+  #globalState = new BehaviorSubject<UnknownRecord>({});
+  #layoutState = new BehaviorSubject<UnknownRecord>({});
+  #localState = new BehaviorSubject<UnknownRecord>({});
 
   getGlobalState(): Observable<UnknownRecord> {
     return this.#globalState.asObservable();

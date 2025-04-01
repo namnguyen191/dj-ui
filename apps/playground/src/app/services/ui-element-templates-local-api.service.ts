@@ -3,13 +3,13 @@ import { inject, Injectable } from '@angular/core';
 import { UIElementTemplateService } from '@dj-ui/core';
 import { firstValueFrom, from, map, Observable, switchMap, tap } from 'rxjs';
 
-import { AppUIElementTemplate } from '../shared/dj-ui-app-template';
+import type { AppUIElementTemplate } from '../shared/dj-ui-app-template';
 import { mockUIElementTemplates } from '../utils/mock-templates';
 import { IdbService } from './idb.service';
 import {
-  CreateAppUIElementTemplatePayload,
+  type CreateAppUIElementTemplatePayload,
   UIElementTemplatesAPIService,
-  UpdateAppUIElementTemplatePayload,
+  type UpdateAppUIElementTemplatePayload,
 } from './ui-element-templates-api.service';
 
 @Injectable()
@@ -48,7 +48,9 @@ export class UIElementTemplatesLocalAPIService extends UIElementTemplatesAPIServ
         return this.#uiElementTemplateRepo$.pipe(
           switchMap((repo) => repo.updateOne(updatedTemplate)),
           tap({
-            next: () => this.#uiElementTemplateService.updateOrRegisterTemplate(updatedTemplate),
+            next: () => {
+              this.#uiElementTemplateService.updateOrRegisterTemplate(updatedTemplate);
+            },
           })
         );
       })

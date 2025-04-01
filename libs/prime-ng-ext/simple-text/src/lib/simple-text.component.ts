@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input, InputSignal } from '@angular/core';
-import { BaseUIElementComponent, UIElementImplementation } from '@dj-ui/core';
+import { ChangeDetectionStrategy, Component, input, type InputSignal } from '@angular/core';
+import { BaseUIElementComponent, type UIElementImplementation } from '@dj-ui/core';
 import { SimpleTextElementType, SimpleTextSymbol } from '@dj-ui/prime-ng-ext/shared';
 import { parseZodWithDefault } from '@namnguyen191/types-helper';
 
 import {
-  SimpleTextConfigs,
-  TextBlocksConfigOption,
-  TextStyles,
+  type SimpleTextConfigs,
+  type TextBlocksConfigOption,
+  type TextStyles,
   ZTextBlocksConfigOption,
 } from './simple-text.interface';
 

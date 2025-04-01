@@ -1,6 +1,6 @@
 import { Directive } from '@angular/core';
 
-import { TableColumnsConfig } from './simple-table.interface';
+import type { TableColumnsConfig } from './simple-table.interface';
 
 @Directive({ selector: 'ng-template[columns]' })
 export class ColumnsTemplateTypeDirective {

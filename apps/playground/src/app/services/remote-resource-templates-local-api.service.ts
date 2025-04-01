@@ -3,13 +3,13 @@ import { inject, Injectable } from '@angular/core';
 import { RemoteResourceTemplateService } from '@dj-ui/core';
 import { firstValueFrom, from, map, Observable, switchMap, tap } from 'rxjs';
 
-import { AppRemoteResourceTemplate } from '../shared/dj-ui-app-template';
+import type { AppRemoteResourceTemplate } from '../shared/dj-ui-app-template';
 import { mockRemoteResourceTemplates } from '../utils/mock-templates';
 import { IdbService } from './idb.service';
 import {
-  CreateAppRemoteResourceTemplatePayload,
+  type CreateAppRemoteResourceTemplatePayload,
   RemoteResourceTemplatesAPIService,
-  UpdateAppRemoteResourceTemplatePayload,
+  type UpdateAppRemoteResourceTemplatePayload,
 } from './remote-resource-templates-api.service';
 
 @Injectable()
@@ -50,7 +50,9 @@ export class RemoteResourceTemplatesLocalAPIService extends RemoteResourceTempla
         return this.#remoteResourceTemplateRepo$.pipe(
           switchMap((repo) => repo.updateOne(updatedTemplate)),
           tap({
-            next: () => this.#remoteResourceTemplateService.updateTemplate(updatedTemplate),
+            next: () => {
+              this.#remoteResourceTemplateService.updateTemplate(updatedTemplate);
+            },
           })
         );
       })

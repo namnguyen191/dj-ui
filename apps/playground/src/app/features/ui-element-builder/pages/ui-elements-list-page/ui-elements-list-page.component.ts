@@ -16,7 +16,7 @@ import {
   TableModule,
 } from 'carbon-components-angular';
 
-import { TemplateInfo } from '../../../../shared/dj-ui-app-template';
+import type { TemplateInfo } from '../../../../shared/dj-ui-app-template';
 import { UIElementTemplatesStore } from '../../../../state-store/uiElementTemplates.store';
 
 @Component({
@@ -49,7 +49,7 @@ export class UiElementsListPageComponent {
 
   onRowClick(e: number): void {
     const currentId = this.tableModel.data[e]?.[1]?.data as string;
-    this.#router.navigate(['edit', currentId], {
+    void this.#router.navigate(['edit', currentId], {
       relativeTo: this.#activatedRoute,
     });
   }

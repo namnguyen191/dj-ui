@@ -4,21 +4,21 @@ import {
   Component,
   inject,
   input,
-  InputSignal,
+  type InputSignal,
   output,
   untracked,
 } from '@angular/core';
 import { CarbonButtonElementType, CarbonButtonSymbol } from '@dj-ui/carbon-ext/shared';
 import { FileService } from '@dj-ui/common';
-import { BaseUIElementComponent, UIElementImplementation } from '@dj-ui/core';
+import { BaseUIElementComponent, type UIElementImplementation } from '@dj-ui/core';
 import { parseZodWithDefault } from '@namnguyen191/types-helper';
 import { ButtonModule, InlineLoadingModule } from 'carbon-components-angular';
 
 import {
-  ButtonFilesSelectorConfig,
-  ButtonTypeConfig,
-  CarbonButtonUIElementComponentConfigs,
-  CarbonButtonUIElementComponentEvents,
+  type ButtonFilesSelectorConfig,
+  type ButtonTypeConfig,
+  type CarbonButtonUIElementComponentConfigs,
+  type CarbonButtonUIElementComponentEvents,
   ZodCarbonButtonUIElementComponentConfigs,
 } from './carbon-button.interface';
 

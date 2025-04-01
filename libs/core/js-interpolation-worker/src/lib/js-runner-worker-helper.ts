@@ -1,11 +1,11 @@
-import { UnknownRecord } from 'type-fest';
+import type { UnknownRecord } from 'type-fest';
 
-import {
+import type {
   FailedInterpolationResult,
-  GetWorkerEvent,
-  INTERPOLATION_ERROR_MESSAGE,
+  InterpolateWorkerEvent,
   WorkerResponse,
 } from './worker-interfaces';
+import { INTERPOLATION_ERROR_MESSAGE } from './worker-interfaces';
 
 export type JSRunnerContext = UnknownRecord;
 
@@ -18,12 +18,12 @@ export const runRawJs = (
   if (allowList) {
     contextOverride = restrictCurrentExecutionContextGlobal(allowList);
   }
-  const result = new Function(`${contextOverride}${rawJs}`).bind(context).call();
+  const result: unknown = new Function(`${contextOverride}${rawJs}`).bind(context).call();
   return result;
 };
 
 export const handleRunJsMessage = (
-  e: MessageEvent<GetWorkerEvent<'INTERPOLATE'>>,
+  e: MessageEvent<InterpolateWorkerEvent>,
   allowList?: Set<string>
 ): void => {
   const {

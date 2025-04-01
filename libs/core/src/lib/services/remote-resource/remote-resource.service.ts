@@ -18,24 +18,24 @@ import {
   takeUntil,
   tap,
 } from 'rxjs';
-import { UnknownRecord } from 'type-fest';
+import type { UnknownRecord } from 'type-fest';
 
 import { logSubscription } from '../../utils/logging';
 import { DataFetchingService } from '../data-fetching.service';
 import { ActionHookService } from '../events-and-actions/action-hook.service';
 import {
   getStatesSubscriptionAsContext,
-  StateMap,
-  StateSubscriptionConfig,
+  type StateMap,
+  type StateSubscriptionConfig,
 } from '../state-store.service';
 import {
-  RemoteResourceTemplate,
+  type RemoteResourceTemplate,
   RemoteResourceTemplateService,
-  RemoteResourceTemplateWithStatus,
-  Request,
+  type RemoteResourceTemplateWithStatus,
+  type Request,
 } from '../templates/remote-resource-template.service';
 import { BaseRemoteResourceService } from './base-remote-resource.service';
-import {
+import type {
   FetcherIdToConfigMap,
   RemoteResourcesStates,
   RemoteResourceState,

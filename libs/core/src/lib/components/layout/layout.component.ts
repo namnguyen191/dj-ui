@@ -6,15 +6,15 @@ import {
   ElementRef,
   inject,
   input,
-  InputSignal,
+  type InputSignal,
   linkedSignal,
-  Signal,
+  type Signal,
 } from '@angular/core';
 import { computedFromObservable } from '@namnguyen191/common-angular-helper';
 import { parentContains } from '@namnguyen191/common-js-helper/dom-utils';
 
 import { LayoutTemplateService } from '../../services/templates/layout-template.service';
-import {
+import type {
   GridConfigs,
   LayoutTemplateWithStatus,
   UIElementInstance,

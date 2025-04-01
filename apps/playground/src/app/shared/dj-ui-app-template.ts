@@ -1,4 +1,4 @@
-import { LayoutTemplate, RemoteResourceTemplate, UIElementTemplate } from '@dj-ui/core';
+import type { LayoutTemplate, RemoteResourceTemplate, UIElementTemplate } from '@dj-ui/core';
 import { z } from 'zod';
 
 export const ZTimeStamp = z.strictObject({

@@ -4,9 +4,9 @@ import {
   Component,
   ElementRef,
   inject,
-  OnDestroy,
-  OnInit,
-  Signal,
+  type OnDestroy,
+  type OnInit,
+  type Signal,
   signal,
   untracked,
   viewChild,
@@ -74,7 +74,7 @@ export class DuiUIElementBuilderContextMenuWrapperComponent
 
   constructor() {
     super();
-    this.#iconService.registerAll([Edit16, SettingsView16]);
+    this.#iconService.registerAll([Edit16, SettingsView16] as object[]);
   }
 
   ngOnInit(): void {
@@ -88,7 +88,7 @@ export class DuiUIElementBuilderContextMenuWrapperComponent
   }
 
   #getUIElementArea(e: MouseEvent): HTMLElement | null {
-    const uiElementId = untracked(this.uiElementInstance)?.id;
+    const uiElementId = untracked(this.uiElementInstance).id;
 
     if (!uiElementId) {
       throw new Error('Element instance ID has not been received');

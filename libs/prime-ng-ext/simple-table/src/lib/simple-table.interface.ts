@@ -1,5 +1,5 @@
 import { createUIElementTemplateSchema } from '@dj-ui/core';
-import { UnionToTuple } from 'type-fest';
+import type { UnionToTuple } from 'type-fest';
 import { z } from 'zod';
 
 export const ZTableRowObject = z.record(

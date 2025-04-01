@@ -1,6 +1,6 @@
 import { z } from 'zod';
 
-import { ConfigWithStatus } from './shared-types';
+import type { ConfigWithStatus } from './shared-types';
 
 export const ZGridConfigs = z.strictObject({
   columns: z.number(),

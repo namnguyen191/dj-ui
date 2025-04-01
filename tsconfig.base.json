@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "strict": true,
     "noUncheckedIndexedAccess": true,
+    "verbatimModuleSyntax": true,
     "resolveJsonModule": true,
     "paths": {
       "@dj-ui/carbon-ext": ["libs/carbon-ext/src/index.ts"],

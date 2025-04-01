@@ -2,8 +2,8 @@ import { inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { logError } from '../../utils/logging';
-import { CoreEvent, EventsService } from '../events-and-actions/events.service';
-import { ConfigWithStatus } from './shared-types';
+import { type CoreEvent, EventsService } from '../events-and-actions/events.service';
+import type { ConfigWithStatus } from './shared-types';
 
 export type TemplateId = string;
 export type Template = {

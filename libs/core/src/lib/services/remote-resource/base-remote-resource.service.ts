@@ -9,11 +9,14 @@ import {
   switchMap,
 } from 'rxjs';
 
-import { ActionHook } from '../events-and-actions/action-hook.service';
+import type { ActionHook } from '../events-and-actions/action-hook.service';
 import { InterpolationService } from '../interpolation.service';
-import { getStatesSubscriptionAsContext, StateSubscriptionConfig } from '../state-store.service';
-import { RemoteResourceTemplate } from '../templates/remote-resource-template.service';
 import {
+  getStatesSubscriptionAsContext,
+  type StateSubscriptionConfig,
+} from '../state-store.service';
+import type { RemoteResourceTemplate } from '../templates/remote-resource-template.service';
+import type {
   AccumulatedRequestsResults,
   RemoteResourceState,
   RequestConfigsInterpolationContext,

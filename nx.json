@@ -1,12 +1,16 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "neverConnectToCloud": true,
+  "sync": {
+    "disabledTaskSyncGenerators": ["@nx/js:typescript-sync"]
+  },
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals"],
     "production": [
       "default",
       "!{projectRoot}/.eslintrc.json",
       "!{projectRoot}/eslint.config.js",
+      "!{projectRoot}/eslint.config.mts",
       "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
       "!{projectRoot}/tsconfig.spec.json",
       "!{projectRoot}/src/test-setup.[jt]s"

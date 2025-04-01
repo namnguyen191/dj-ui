@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { EmptyObject, UnknownRecord } from 'type-fest';
+import type { EmptyObject, UnknownRecord } from 'type-fest';
 
 import { logError, logWarning } from '../utils/logging';
 

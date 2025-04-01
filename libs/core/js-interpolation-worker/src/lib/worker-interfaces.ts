@@ -1,33 +1,21 @@
-import { Tagged, UnknownRecord } from 'type-fest';
+import type { Tagged } from 'type-fest';
+import { z } from 'zod';
 
-export type BaseWorkerEventPayload = {
-  id: string;
-};
+export const ZBaseWorkerEventPayload = z.strictObject({
+  id: z.string(),
+});
+export type BaseWorkerEventPayload = z.infer<typeof ZBaseWorkerEventPayload>;
 
-export type WorkerEventPayloadMap = {
-  INTERPOLATE: {
-    rawJs: string;
-    context: UnknownRecord;
-  };
-  TEST: never;
-};
-
-export type WorkerEventPayload<T extends keyof WorkerEventPayloadMap> = BaseWorkerEventPayload &
-  WorkerEventPayloadMap[T];
-
-export type GetWorkerEvent<K extends keyof WorkerEventPayloadMap> =
-  WorkerEventPayload<K> extends never
-    ? {
-        type: K;
-      }
-    : {
-        type: K;
-        payload: WorkerEventPayload<K>;
-      };
-
-export type WorkerEventObject = {
-  [K in keyof WorkerEventPayloadMap]: GetWorkerEvent<K>;
-}[keyof WorkerEventPayloadMap];
+export const ZInterpolateWorkerEventPayload = ZBaseWorkerEventPayload.extend({
+  rawJs: z.string(),
+  context: z.record(z.unknown(), z.unknown()),
+});
+export type InterpolateWorkerEventPayload = z.infer<typeof ZInterpolateWorkerEventPayload>;
+export const ZInterpolateWorkerEvent = z.strictObject({
+  type: z.literal('INTERPOLATE'),
+  payload: ZInterpolateWorkerEventPayload,
+});
+export type InterpolateWorkerEvent = z.infer<typeof ZInterpolateWorkerEvent>;
 
 export const INTERPOLATION_ERROR_MESSAGE = 'Interpolation failed';
 
@@ -44,9 +32,14 @@ export function isFailedInterpolationResult(result: unknown): result is FailedIn
   );
 }
 
-export type WorkerResponse = {
-  id: string;
-  result: unknown | FailedInterpolationResult;
-};
+export type WorkerResponse =
+  | {
+      id: string;
+      result: FailedInterpolationResult;
+    }
+  | {
+      id: string;
+      result: unknown;
+    };
 
 export type RawJsString = Tagged<string, 'RawJsString'>;

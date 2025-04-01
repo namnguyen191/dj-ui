@@ -3,7 +3,7 @@ import { inject, Injectable } from '@angular/core';
 import { LayoutTemplateService } from '@dj-ui/core';
 import { Observable, tap } from 'rxjs';
 
-import { AppLayoutTemplate, TimeStamp } from '../shared/dj-ui-app-template';
+import type { AppLayoutTemplate, TimeStamp } from '../shared/dj-ui-app-template';
 
 const BASE_LAYOUT_TEMPLATE_URL = 'http://localhost:8080/layout-templates';
 
@@ -19,7 +19,7 @@ export class LayoutTemplatesAPIService {
   readonly #layoutTemplateService = inject(LayoutTemplateService);
 
   getAllLayoutTemplates = (): Observable<AppLayoutTemplate[]> => {
-    return this.#httpClient.get<AppLayoutTemplate[]>(`${BASE_LAYOUT_TEMPLATE_URL}`);
+    return this.#httpClient.get<AppLayoutTemplate[]>(BASE_LAYOUT_TEMPLATE_URL);
   };
 
   createLayoutTemplate = (
@@ -33,8 +33,9 @@ export class LayoutTemplatesAPIService {
   ): Observable<AppLayoutTemplate> => {
     return this.#httpClient.put<AppLayoutTemplate>(BASE_LAYOUT_TEMPLATE_URL, payload).pipe(
       tap({
-        next: (updatedLayoutTemplate) =>
-          this.#layoutTemplateService.updateOrRegisterTemplate(updatedLayoutTemplate),
+        next: (updatedLayoutTemplate) => {
+          this.#layoutTemplateService.updateOrRegisterTemplate(updatedLayoutTemplate);
+        },
       })
     );
   };

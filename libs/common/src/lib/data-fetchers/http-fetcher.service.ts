@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { DataFetcher } from '@dj-ui/core';
+import type { DataFetcher } from '@dj-ui/core';
 
 export type HttpFetcherConfigs = {
   endpoint: string;

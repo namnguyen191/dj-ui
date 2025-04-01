@@ -1,14 +1,13 @@
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
-import {
-  ApplicationConfig,
-  inject,
-  provideExperimentalZonelessChangeDetection,
-} from '@angular/core';
+import type { ApplicationConfig } from '@angular/core';
+import { inject, provideExperimentalZonelessChangeDetection } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { CarbonComponentLoader } from '@dj-ui/carbon-ext';
-import { COMMON_SETUP_CONFIG, SetupConfigs } from '@dj-ui/common';
-import { CORE_LAYOUT_CONFIG, CoreLayoutConfig, CREATE_JS_RUNNER_WORKER } from '@dj-ui/core';
+import type { SetupConfigs } from '@dj-ui/common';
+import { COMMON_SETUP_CONFIG } from '@dj-ui/common';
+import type { CoreLayoutConfig } from '@dj-ui/core';
+import { CORE_LAYOUT_CONFIG, CREATE_JS_RUNNER_WORKER } from '@dj-ui/core';
 import { globalDelayInterceptorFactory } from '@namnguyen191/common-angular-helper';
 import { provideMonacoEditor } from 'ngx-monaco-editor-v2';
 import { from } from 'rxjs';

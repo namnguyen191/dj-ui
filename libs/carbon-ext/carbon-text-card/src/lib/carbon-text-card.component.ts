@@ -1,19 +1,19 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, input, InputSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, input, type InputSignal } from '@angular/core';
 import { CarbonTextCardElementType, CarbonTextCardSymbol } from '@dj-ui/carbon-ext/shared';
 import { EmitOnClickDirective } from '@dj-ui/common';
-import { BaseUIElementComponent, UIElementImplementation } from '@dj-ui/core';
+import { BaseUIElementComponent, type UIElementImplementation } from '@dj-ui/core';
 import { parseZodWithDefault } from '@namnguyen191/types-helper';
 
 import {
-  AvatarUrlConfigOption,
-  BodyConfigOption,
-  ClickableConfigOption,
-  ImageUrlConfigOption,
-  SubTitleConfigOption,
-  TextCardConfigs,
-  TextCardEvents,
-  TitleConfigOption,
+  type AvatarUrlConfigOption,
+  type BodyConfigOption,
+  type ClickableConfigOption,
+  type ImageUrlConfigOption,
+  type SubTitleConfigOption,
+  type TextCardConfigs,
+  type TextCardEvents,
+  type TitleConfigOption,
   ZBodyConfigOption,
   ZClickableConfigOption,
   ZImageUrlConfigOption,

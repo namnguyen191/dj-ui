@@ -7,7 +7,7 @@ import {
   HeaderModule,
   NotificationModule,
   ThemeModule,
-  ToastContent,
+  type ToastContent,
 } from 'carbon-components-angular';
 
 import { ResetLocalApiBtnComponent } from './components/reset-local-api-btn/reset-local-api-btn.component';
@@ -46,7 +46,9 @@ export class AppComponent {
     registerSingleFileUploadDataFetcher();
     this.#actionHookService.registerHook({
       hookId: 'showTestNotification',
-      handler: () => this.#showNotification(),
+      handler: () => {
+        this.#showNotification();
+      },
     });
   }
 

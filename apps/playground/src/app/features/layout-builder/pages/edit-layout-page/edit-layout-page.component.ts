@@ -3,7 +3,7 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Edit16 from '@carbon/icons/es/edit/16';
-import { CORE_LAYOUT_CONFIG, CoreLayoutConfig, DjuiComponent } from '@dj-ui/core';
+import { CORE_LAYOUT_CONFIG, type CoreLayoutConfig, DjuiComponent } from '@dj-ui/core';
 import { ButtonModule } from 'carbon-components-angular/button';
 import { IconModule, IconService } from 'carbon-components-angular/icon';
 import { map } from 'rxjs';
@@ -47,7 +47,7 @@ export class EditLayoutPageComponent {
   readonly #layoutTemplateEditorStore = inject(LayoutTemplateEditorStore);
   readonly #iconService = inject(IconService);
 
-  readonly currentLayoutTemplateId: string = this.#activatedRoute.snapshot.params['id'];
+  readonly currentLayoutTemplateId: string = this.#activatedRoute.snapshot.params['id'] as string;
   readonly #showEditModalQueryParam = 'editRawTemplate';
   readonly isRawTemplateEditorModalOpenSig = toSignal(
     this.#activatedRoute.queryParams.pipe(
@@ -59,14 +59,14 @@ export class EditLayoutPageComponent {
   );
 
   constructor() {
-    this.#iconService.registerAll([Edit16]);
+    this.#iconService.registerAll([Edit16] as object[]);
     this.#layoutTemplatesStore.updateQuery({ id: this.currentLayoutTemplateId });
 
     this.#loadTemplateInPreview();
   }
 
   toggleModal(show: boolean): void {
-    this.#router.navigate([], {
+    void this.#router.navigate([], {
       relativeTo: this.#activatedRoute,
       queryParams: {
         [this.#showEditModalQueryParam]: show ? true : null,

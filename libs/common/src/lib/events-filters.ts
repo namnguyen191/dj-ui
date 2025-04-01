@@ -1,5 +1,5 @@
-import { CoreEventObject, EventObject } from '@dj-ui/core';
-import { filter, Observable, pipe, UnaryFunction } from 'rxjs';
+import type { CoreEventObject, EventObject } from '@dj-ui/core';
+import { filter, Observable, pipe, type UnaryFunction } from 'rxjs';
 
 export const missingLayoutTemplateEvent = <
   TExtracted extends EventObject = Extract<CoreEventObject, { type: 'MISSING_LAYOUT_TEMPLATE' }>,

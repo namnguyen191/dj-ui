@@ -1,12 +1,12 @@
 import {
   Directive,
   input,
-  InputSignal,
-  InputSignalWithTransform,
+  type InputSignal,
+  type InputSignalWithTransform,
   OutputEmitterRef,
 } from '@angular/core';
 import { Observable } from 'rxjs';
-import { UnknownRecord } from 'type-fest';
+import type { UnknownRecord } from 'type-fest';
 import { z } from 'zod';
 
 export const ZodIsLoading = z.boolean({

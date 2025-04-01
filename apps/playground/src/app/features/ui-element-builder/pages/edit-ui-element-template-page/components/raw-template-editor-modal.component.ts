@@ -18,13 +18,13 @@ import {
 } from 'carbon-components-angular';
 import { editor } from 'monaco-editor';
 import { EditorComponent } from 'ngx-monaco-editor-v2';
-import { Plugin } from 'prettier';
+import type { Plugin } from 'prettier';
 import * as parserBabel from 'prettier/plugins/babel';
 import * as prettierPluginEstree from 'prettier/plugins/estree';
 import * as prettier from 'prettier/standalone';
 import { debounceTime, Subject, tap } from 'rxjs';
 
-import { AppUIElementTemplateEditableFields } from '../../../../../shared/dj-ui-app-template';
+import type { AppUIElementTemplateEditableFields } from '../../../../../shared/dj-ui-app-template';
 import { UIElementTemplateEditorStore } from '../../../../../state-store/uiElementTemplateEditor.store';
 import { UIElementTemplatesStore } from '../../../../../state-store/uiElementTemplates.store';
 
@@ -66,7 +66,9 @@ export class RawTemplateEditorModalComponent extends BaseModal {
     this.codeChangeSubject
       .pipe(
         tap({
-          next: () => this.errorStateSig.set('isPending'),
+          next: () => {
+            this.errorStateSig.set('isPending');
+          },
         }),
         debounceTime(500),
         tap({

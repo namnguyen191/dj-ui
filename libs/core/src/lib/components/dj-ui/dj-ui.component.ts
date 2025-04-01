@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input, InputSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, type InputSignal } from '@angular/core';
 
 import { LayoutComponent } from '../layout/layout.component';
 

@@ -1,33 +1,33 @@
 import {
-  EnvironmentProviders,
+  type EnvironmentProviders,
   inject,
   InjectionToken,
   makeEnvironmentProviders,
-  Provider,
+  type Provider,
   Type,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import type { Template } from '@dj-ui/core';
 import {
-  ActionHookHandlerAndPayloadParserMap,
+  type ActionHookHandlerAndPayloadParserMap,
   ActionHookService,
   BaseUIElementComponent,
   DataFetchingService,
   EventsService,
   InterpolationService,
-  LayoutTemplate,
+  type LayoutTemplate,
   LayoutTemplateService,
   logWarning,
   RemoteResourceService,
-  RemoteResourceTemplate,
+  type RemoteResourceTemplate,
   RemoteResourceTemplateService,
   StateStoreService,
   UIElementFactoryService,
-  UIElementLoader,
-  UIElementPositionAndSize,
-  UIElementTemplate,
+  type UIElementLoader,
+  type UIElementPositionAndSize,
+  type UIElementTemplate,
   UIElementTemplateService,
 } from '@dj-ui/core';
-import { Template } from '@dj-ui/core';
 import { set } from 'lodash-es';
 import {
   buffer,
@@ -35,7 +35,7 @@ import {
   forkJoin,
   map,
   mergeMap,
-  MonoTypeOperatorFunction,
+  type MonoTypeOperatorFunction,
   Observable,
   tap,
 } from 'rxjs';
@@ -61,11 +61,11 @@ export type TemplatesHandlers = {
   getRemoteResourceTemplate?: (id: string) => Observable<RemoteResourceTemplate>;
   updateElementsPositionsHandler?: (
     layoutId: string,
-    eleWithNewPosAndSize: { [id: string]: UIElementPositionAndSize }
+    eleWithNewPosAndSize: Record<string, UIElementPositionAndSize>
   ) => Observable<void>;
 };
-export type ComponentsMap = { [componentType: string]: Type<BaseUIElementComponent> };
-export type ComponentLoadersMap = { [componentType: string]: UIElementLoader };
+export type ComponentsMap = Record<string, Type<BaseUIElementComponent>>;
+export type ComponentLoadersMap = Record<string, UIElementLoader>;
 export type SetupConfigs = {
   templatesHandlers?: TemplatesHandlers;
   componentsMap?: ComponentsMap;
@@ -192,16 +192,13 @@ export const setupEventsListener = (params: TemplatesHandlers): void => {
     const updateElementPosition = uiElementReposition.pipe(
       buffer(buffTrigger),
       map((events) =>
-        events.reduce<{ [layoutId: string]: { [eleId: string]: UIElementPositionAndSize } }>(
-          (acc, cur) => {
-            const {
-              payload: { elementId, layoutId, newPositionAndSize },
-            } = cur;
-            acc = set(acc, `${layoutId}.${elementId}`, newPositionAndSize);
-            return acc;
-          },
-          {}
-        )
+        events.reduce<Record<string, Record<string, UIElementPositionAndSize>>>((acc, cur) => {
+          const {
+            payload: { elementId, layoutId, newPositionAndSize },
+          } = cur;
+          acc = set(acc, `${layoutId}.${elementId}`, newPositionAndSize);
+          return acc;
+        }, {})
       ),
       mergeMap((val) => {
         const updateLayoutRequests = Object.entries(val).map(([layoutId, eleWithNewPosAndSize]) =>

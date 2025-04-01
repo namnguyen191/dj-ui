@@ -1,10 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { CarbonSimpleTextTypeForJsonSchema } from '@dj-ui/carbon-ext/carbon-simple-text';
+import type { CarbonSimpleTextTypeForJsonSchema } from '@dj-ui/carbon-ext/carbon-simple-text';
 import { UIElementTemplateService } from '@dj-ui/core';
 import { catchError, Observable, of, tap } from 'rxjs';
 
-import {
+import type {
   AppUIElementTemplate,
   CreateAppUIElementTemplate,
   TimeStamp,
@@ -47,7 +47,7 @@ export class UIElementTemplatesAPIService {
   readonly #uiElementTemplateService = inject(UIElementTemplateService);
 
   getAllUIElementTemplates = (): Observable<AppUIElementTemplate[]> => {
-    return this.#httpClient.get<AppUIElementTemplate[]>(`${BASE_UI_ELEMENT_TEMPLATE_URL}`);
+    return this.#httpClient.get<AppUIElementTemplate[]>(BASE_UI_ELEMENT_TEMPLATE_URL);
   };
 
   createUIElementTemplate = (

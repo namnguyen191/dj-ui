@@ -3,11 +3,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   AbstractControl,
-  AsyncValidatorFn,
+  type AsyncValidatorFn,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
-  ValidationErrors,
+  type ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -25,13 +25,13 @@ import {
   InlineLoadingModule,
   InlineLoadingState,
   InputModule,
-  ListItem,
+  type ListItem,
   LoadingModule,
 } from 'carbon-components-angular';
 import { catchError, map, Observable, of, switchMap, timer } from 'rxjs';
 
 import {
-  CreateAppUIElementTemplatePayload,
+  type CreateAppUIElementTemplatePayload,
   UIElementTemplatesAPIService,
 } from '../../../../services/ui-element-templates-api.service';
 import { UIElementTemplatesStore } from '../../../../state-store/uiElementTemplates.store';
@@ -56,7 +56,7 @@ export type NewUIElementForm = {
 
 const isUIElementIdUnique = (): AsyncValidatorFn => {
   const uiElementTemplatesAPIService = inject(UIElementTemplatesAPIService);
-  return (control: AbstractControl): Observable<ValidationErrors | null> => {
+  return (control: AbstractControl<string>): Observable<ValidationErrors | null> => {
     return timer(500).pipe(
       switchMap(() => uiElementTemplatesAPIService.fetchUIElementTemplate(control.value)),
       map(() => ({ idNotUnique: true })),
@@ -164,6 +164,6 @@ export class NewUIElementPageComponent {
       options: {},
     };
     const createdTemplate = await this.#uiElementTemplatesStore.add(newUIElementPayload);
-    this.#router.navigateByUrl(`ui-element-builder/edit/${createdTemplate.id}`);
+    void this.#router.navigateByUrl(`ui-element-builder/edit/${createdTemplate.id}`);
   }
 }

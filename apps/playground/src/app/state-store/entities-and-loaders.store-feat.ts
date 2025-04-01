@@ -1,7 +1,8 @@
 import { untracked } from '@angular/core';
 import { patchState, signalStoreFeature, withMethods } from '@ngrx/signals';
-import { EntityId, setAllEntities, setEntity, withEntities } from '@ngrx/signals/entities';
-import { UnknownRecord } from 'type-fest';
+import type { EntityId } from '@ngrx/signals/entities';
+import { setAllEntities, setEntity, withEntities } from '@ngrx/signals/entities';
+import type { UnknownRecord } from 'type-fest';
 
 import { setError, setFulfilled, setPending, withRequestStatus } from './request-status.store-feat';
 

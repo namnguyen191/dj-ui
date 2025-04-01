@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { asyncScheduler, Observable, observeOn, Subject } from 'rxjs';
 
-import { UIElementPositionAndSize } from '../templates/layout-template-interfaces';
+import type { UIElementPositionAndSize } from '../templates/layout-template-interfaces';
 
 export type EventObject = {
   type: string;
@@ -45,7 +45,7 @@ export type CoreEventObject = {
   providedIn: 'root',
 })
 export class EventsService {
-  #events$: Subject<EventObject> = new Subject();
+  #events$ = new Subject<EventObject>();
 
   getEvents(): Observable<EventObject> {
     return this.#events$.asObservable().pipe(observeOn(asyncScheduler));
