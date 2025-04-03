@@ -3,41 +3,48 @@
 @if (isErrorConfigOption()) {
   <span>Something went wrong fetching data</span>
 } @else {
-  <p-table
-    [columns]="columnsConfigOption()"
-    [loading]="isLoadingConfigOption()"
-    [resizableColumns]="resizableColumnsConfigOption()"
-    [showGridlines]="gridLinesConfigOption()"
-    [stripedRows]="stripesConfigOption()"
-    [value]="rowsConfigOption()"
-  >
-    <ng-template #header columns let-columns>
-      <tr>
-        @for (col of columns; track $index) {
-          <th pResizableColumn [pResizableColumnDisabled]="col.disableResizable">
-            {{ col.label }}
-          </th>
-        }
-      </tr>
-    </ng-template>
-    <ng-template #body let-columns="columns" let-rowData rows>
-      <tr>
-        @for (col of columns; track $index) {
-          <td>
-            {{ rowData[col.id] }}
-          </td>
-        }
-      </tr>
-    </ng-template>
-  </p-table>
-  <p-paginator
-    *ngIf="shouldDisplayPagination()"
-    currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
-    [first]="0"
-    [rows]="paginationConfig.pageSizes?.[0]"
-    [rowsPerPageOptions]="paginationConfig.pageSizes"
-    [showCurrentPageReport]="true"
-    [totalRecords]="paginationConfig.totalDataLength"
-    (onPageChange)="pageChange($event)"
-  />
+  <div class="table-container">
+    <h3 *ngIf="titleConfigOption() as title" class="table-header">{{ title }}</h3>
+
+    <p-table
+      class="table-content"
+      [columns]="columnsConfigOption()"
+      [loading]="isLoadingConfigOption()"
+      [resizableColumns]="resizableColumnsConfigOption()"
+      [showGridlines]="gridLinesConfigOption()"
+      [stripedRows]="stripesConfigOption()"
+      [value]="rowsConfigOption()"
+    >
+      <ng-template #header columns let-columns>
+        <tr class="headers-row">
+          @for (col of columns; track $index) {
+            <th pResizableColumn [pResizableColumnDisabled]="col.disableResizable">
+              {{ col.label }}
+            </th>
+          }
+        </tr>
+      </ng-template>
+      <ng-template #body let-columns="columns" let-rowData rows>
+        <tr>
+          @for (col of columns; track $index) {
+            <td>
+              {{ rowData[col.id] }}
+            </td>
+          }
+        </tr>
+      </ng-template>
+    </p-table>
+
+    <p-paginator
+      *ngIf="shouldDisplayPagination()"
+      class="table-paginator"
+      currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
+      [first]="0"
+      [rows]="paginationConfig.pageSizes?.[0]"
+      [rowsPerPageOptions]="paginationConfig.pageSizes"
+      [showCurrentPageReport]="true"
+      [totalRecords]="paginationConfig.totalDataLength"
+      (onPageChange)="pageChange($event)"
+    />
+  </div>
 }

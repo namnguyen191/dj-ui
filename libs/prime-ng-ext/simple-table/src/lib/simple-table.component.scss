@@ -1,3 +1,40 @@
 :host {
-  display: block;
+  display: flex;
+  justify-content: center;
+  max-height: 100%;
+
+  .table-container {
+    display: flex;
+    flex-direction: column;
+
+    .table-header {
+      flex: 1 0 auto;
+    }
+
+    .table-content {
+      flex-shrink: 1;
+      overflow: scroll;
+
+      /* stylelint-disable-next-line selector-pseudo-element-no-unknown */
+      ::ng-deep {
+        // override so that the header can stay sticky while not having to defined a "scrollHeight"
+        .p-datatable {
+          height: 100% !important;
+
+          .p-datatable-table-container {
+            height: 100% !important;
+          }
+        }
+      }
+
+      .headers-row {
+        position: sticky;
+        top: 0;
+      }
+    }
+
+    .table-paginator {
+      flex: 1 0 auto;
+    }
+  }
 }

@@ -26,8 +26,15 @@
                 <div
                   class="grid-item"
                   [id]="item.elementInstance.id"
-                  [style.--grid-item-columns]="item.positionAndSize.cols"
-                  [style.--grid-item-rows]="item.positionAndSize.rows"
+                  [style.--grid-item-columns]="
+                    item.elementInstance.positionAndSize?.cols ?? DEFAULT_UI_ELEMENT_COLS
+                  "
+                  [style.--grid-item-max-height]="
+                    item.elementInstance.positionAndSize?.maxHeight ?? DEFAULT_UI_ELEMENT_MAX_HEIGHT
+                  "
+                  [style.--grid-item-rows]="
+                    item.elementInstance.positionAndSize?.rows ?? DEFAULT_UI_ELEMENT_MAX_HEIGHT
+                  "
                 >
                   <dj-ui-element-wrapper
                     [uiElementInstance]="item.elementInstance"

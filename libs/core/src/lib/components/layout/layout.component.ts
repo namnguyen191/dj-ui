@@ -7,7 +7,6 @@ import {
   inject,
   input,
   type InputSignal,
-  linkedSignal,
   type Signal,
 } from '@angular/core';
 import { computedFromObservable } from '@namnguyen191/common-angular-helper';
@@ -27,7 +26,6 @@ type GridItem = {
   id: string;
   trackById: string;
   elementInstance: UIElementInstance;
-  positionAndSize: UIElementPositionAndSize;
 };
 
 const DEFAULT_GRID_COLS: GridConfigs['columns'] = 16;
@@ -39,13 +37,6 @@ const DEFAULT_GRID_CONFIGS: GridConfigs = {
   rowHeight: DEFAULT_GRID_ROW_HEIGHT,
   gap: DEFAULT_GRID_GAP,
   padding: DEFAULT_GRID_PADDING,
-};
-
-const DEFAULT_UI_ELEMENT_COLS: UIElementPositionAndSize['cols'] = 4;
-const DEFAULT_UI_ELEMENT_ROWS: UIElementPositionAndSize['rows'] = 20;
-const DEFAULT_GRID_ITEM_POSITION_AND_SIZE: UIElementPositionAndSize = {
-  cols: DEFAULT_UI_ELEMENT_COLS,
-  rows: DEFAULT_UI_ELEMENT_ROWS,
 };
 
 @Component({
@@ -62,6 +53,10 @@ export class LayoutComponent {
   readonly #layoutService = inject(LayoutTemplateService);
   readonly #elementRef = inject(ElementRef);
 
+  readonly DEFAULT_UI_ELEMENT_COLS: UIElementPositionAndSize['cols'] = 4;
+  readonly DEFAULT_UI_ELEMENT_ROWS: UIElementPositionAndSize['rows'] = 20;
+  readonly DEFAULT_UI_ELEMENT_MAX_HEIGHT: UIElementPositionAndSize['maxHeight'] = 'auto';
+
   layoutId: InputSignal<string> = input.required<string>();
 
   layoutConfig: Signal<LayoutTemplateWithStatus | undefined> = computedFromObservable(() => {
@@ -69,22 +64,17 @@ export class LayoutComponent {
     return this.#layoutService.getTemplate(layoutId);
   });
 
-  gridItems = linkedSignal<GridItem[] | null>(() => {
+  gridItems = computed<GridItem[] | null>(() => {
     const layoutConfig = this.layoutConfig();
     if (!layoutConfig || !layoutConfig.config) {
       return null;
     }
 
     return layoutConfig.config.uiElementInstances.map((eI) => {
-      const { positionAndSize } = eI;
       return {
         id: eI.id,
         elementInstance: eI,
         trackById: `LAYOUT: ${layoutConfig.id} - ELEMENT: ${eI.id}`,
-        positionAndSize: {
-          ...DEFAULT_GRID_ITEM_POSITION_AND_SIZE,
-          ...positionAndSize,
-        },
       };
     });
   });

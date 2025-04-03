@@ -8,7 +8,7 @@
     }
   },
   "options": {
-    "title": "Server side pagination table",
+    "title": "Pokemon table with server-side pagination",
     "stripes": true,
     "gridLines": true,
     "resizableColumns": true,

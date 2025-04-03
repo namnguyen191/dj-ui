@@ -10,7 +10,8 @@
       "id": "6",
       "uiElementTemplateId": "test-table.PRIME_NG_SIMPLE_TABLE",
       "positionAndSize": {
-        "cols": 16
+        "cols": 16,
+        "maxHeight": "50vh"
       }
     },
     {

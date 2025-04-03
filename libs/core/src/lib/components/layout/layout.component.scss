@@ -9,6 +9,7 @@
     gap: var(--grid-gap);
 
     .grid-item {
+      max-height: var(--grid-item-max-height);
       grid-column-start: span var(--grid-item-columns);
       grid-row-start: span var(--grid-item-rows);
     }

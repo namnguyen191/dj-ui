@@ -11,15 +11,16 @@ export const ZGridConfigs = z.strictObject({
 export type GridConfigs = z.infer<typeof ZGridConfigs>;
 
 export const ZUIElementPositionAndSize = z.strictObject({
-  cols: z.number(),
-  rows: z.number(),
+  cols: z.number().optional(),
+  rows: z.number().optional(),
+  maxHeight: z.string().optional(),
 });
 export type UIElementPositionAndSize = z.infer<typeof ZUIElementPositionAndSize>;
 
 export const ZUIElementInstance = z.strictObject({
   id: z.string(),
   uiElementTemplateId: z.string(),
-  positionAndSize: ZUIElementPositionAndSize.partial().optional(),
+  positionAndSize: ZUIElementPositionAndSize.optional(),
 });
 export type UIElementInstance = z.infer<typeof ZUIElementInstance>;
 
