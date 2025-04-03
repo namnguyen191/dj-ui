@@ -1,17 +1,17 @@
 import { HttpClient, provideHttpClient } from '@angular/common/http';
 import {
-  ApplicationConfig,
+  type ApplicationConfig,
   inject,
   provideExperimentalZonelessChangeDetection,
 } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
-import { COMMON_SETUP_CONFIG, SetupConfigs } from '@dj-ui/common';
+import { COMMON_SETUP_CONFIG, type SetupConfigs } from '@dj-ui/common';
 import {
   CREATE_JS_RUNNER_WORKER,
-  LayoutTemplate,
-  RemoteResourceTemplate,
-  UIElementTemplate,
+  type LayoutTemplate,
+  type RemoteResourceTemplate,
+  type UIElementTemplate,
 } from '@dj-ui/core';
 import { PrimeNgComponentLoader } from '@dj-ui/prime-ng-ext';
 import Aura from '@primeng/themes/aura';

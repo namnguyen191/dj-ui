@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import {
-  ActionHookHandler,
+  type ActionHookHandler,
   RemoteResourceService,
   StateStoreService,
   ZodAvailableStateScope,

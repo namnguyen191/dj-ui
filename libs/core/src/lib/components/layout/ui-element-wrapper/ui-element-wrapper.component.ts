@@ -9,11 +9,11 @@ import {
   EnvironmentInjector,
   inject,
   input,
-  InputSignal,
+  type InputSignal,
   OutputEmitterRef,
   reflectComponentType,
   runInInjectionContext,
-  Signal,
+  type Signal,
   Type,
   untracked,
   viewChild,
@@ -40,25 +40,31 @@ import {
   tap,
   throttleTime,
 } from 'rxjs';
-import { UnknownRecord } from 'type-fest';
+import type { UnknownRecord } from 'type-fest';
 
 import {
-  ActionHook,
+  type ActionHook,
   ActionHookService,
 } from '../../../services/events-and-actions/action-hook.service';
 import { InterpolationService } from '../../../services/interpolation.service';
-import { RemoteResourcesStates } from '../../../services/remote-resource/remote-resource.interface';
+import type { RemoteResourcesStates } from '../../../services/remote-resource/remote-resource.interface';
 import { getRemoteResourcesStatesAsContext } from '../../../services/remote-resource/remote-resource.service';
-import { getStatesSubscriptionAsContext, StateMap } from '../../../services/state-store.service';
-import { UIElementInstance } from '../../../services/templates/layout-template-interfaces';
 import {
-  UIElementTemplateOptions,
+  getStatesSubscriptionAsContext,
+  type StateMap,
+} from '../../../services/state-store.service';
+import type { UIElementInstance } from '../../../services/templates/layout-template-interfaces';
+import {
+  type UIElementTemplateOptions,
   UIElementTemplateService,
-  UIElementTemplateWithStatus,
+  type UIElementTemplateWithStatus,
 } from '../../../services/templates/ui-element-template.service';
 import { UIElementFactoryService } from '../../../services/ui-element-factory.service';
 import { logSubscription, logWarning } from '../../../utils/logging';
-import { BaseUIElementComponent, UIElementRequiredConfigs } from '../../base-ui-element.component';
+import {
+  BaseUIElementComponent,
+  type UIElementRequiredConfigs,
+} from '../../base-ui-element.component';
 import { CORE_LAYOUT_CONFIG } from '../layout.interface';
 
 type ElementInputsInterpolationContext = {

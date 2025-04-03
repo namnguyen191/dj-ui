@@ -1,4 +1,4 @@
-import { Directive, input, InputSignalWithTransform } from '@angular/core';
+import { Directive, input, type InputSignalWithTransform } from '@angular/core';
 
 @Directive({
   selector: '[backgroundImage]',

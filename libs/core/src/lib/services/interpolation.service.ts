@@ -1,10 +1,10 @@
 import { inject, Injectable } from '@angular/core';
 import {
+  type InterpolateWorkerEvent,
   isFailedInterpolationResult,
-  JSRunnerContext,
-  RawJsString,
-  WorkerEventObject,
-  WorkerResponse,
+  type JSRunnerContext,
+  type RawJsString,
+  type WorkerResponse,
 } from '@dj-ui/core/js-interpolation-worker';
 import { isEmpty } from 'lodash-es';
 import {
@@ -18,7 +18,7 @@ import {
   tap,
   timeout,
 } from 'rxjs';
-import { UnknownRecord } from 'type-fest';
+import type { UnknownRecord } from 'type-fest';
 import { z } from 'zod';
 
 import { CREATE_JS_RUNNER_WORKER, INTERPOLATION_REGEX, MAX_WORKER_POOl } from '../global';
@@ -114,7 +114,7 @@ export class InterpolationService {
     const { rawJs, context } = params;
 
     const id = Math.random().toString();
-    const interpolateEvent: WorkerEventObject = {
+    const interpolateEvent: InterpolateWorkerEvent = {
       type: 'INTERPOLATE',
       payload: {
         id,
@@ -192,10 +192,7 @@ export class InterpolationService {
   }
 
   #extractRawJs(input: string): RawJsString | null {
-    if (INTERPOLATION_REGEX.test(input)) {
-      return INTERPOLATION_REGEX.exec(input)?.[2] as RawJsString;
-    }
-    return null;
+    return (input.match(INTERPOLATION_REGEX)?.[2] as RawJsString) ?? null;
   }
 
   #interpolateString(params: {
@@ -250,8 +247,7 @@ export class InterpolationService {
 
   #checkForInterpolationInArray(arr: unknown[]): boolean {
     let result = false;
-    for (let i = 0; i < arr.length; i++) {
-      const val = arr[i];
+    for (const val of arr) {
       result = result || this.checkForInterpolation(val);
     }
     return result;
@@ -266,7 +262,7 @@ export class InterpolationService {
     return result;
   }
 
-  #postEventToAvailableWorker(evt: WorkerEventObject): Observable<number> {
+  #postEventToAvailableWorker(evt: InterpolateWorkerEvent): Observable<number> {
     let searchingForWorkerJobID: number | undefined;
     const workerId$ = new Observable<WorkerInPool['id']>((sub) => {
       const findAvailableWorkerAndSendEvent = (): void => {

@@ -10,12 +10,12 @@ import {
 } from '@ngrx/signals';
 import { firstValueFrom } from 'rxjs';
 
-import {
+import type {
   CreateAppUIElementTemplatePayload,
-  UIElementTemplatesAPIService,
   UpdateAppUIElementTemplatePayload,
 } from '../services/ui-element-templates-api.service';
-import { AppUIElementTemplate, TemplateInfo } from '../shared/dj-ui-app-template';
+import { UIElementTemplatesAPIService } from '../services/ui-element-templates-api.service';
+import type { AppUIElementTemplate, TemplateInfo } from '../shared/dj-ui-app-template';
 import { withEntitiesAndLoaders } from './entities-and-loaders.store-feat';
 
 type UIElementTemplatesStoreState = {
@@ -71,7 +71,7 @@ export const UIElementTemplatesStore = signalStore(
   })),
   withHooks({
     onInit: ({ loadAll }) => {
-      loadAll();
+      void loadAll();
     },
   })
 );

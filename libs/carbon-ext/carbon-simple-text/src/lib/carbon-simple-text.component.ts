@@ -1,12 +1,12 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input, InputSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, type InputSignal } from '@angular/core';
 import { CarbonSimpleTextElementType, CarbonSimpleTextSymbol } from '@dj-ui/carbon-ext/shared';
-import { BaseUIElementComponent, UIElementImplementation } from '@dj-ui/core';
+import { BaseUIElementComponent, type UIElementImplementation } from '@dj-ui/core';
 import { parseZodWithDefault } from '@namnguyen191/types-helper';
 
 import {
-  SimpleTextConfigs,
-  TextBlocksConfigOption,
+  type SimpleTextConfigs,
+  type TextBlocksConfigOption,
   ZTextBlocksConfigOption,
 } from './carbon-simple-text.interface';
 

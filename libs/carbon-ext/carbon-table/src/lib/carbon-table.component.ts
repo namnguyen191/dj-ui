@@ -4,9 +4,9 @@ import {
   Component,
   computed,
   input,
-  InputSignal,
+  type InputSignal,
   output,
-  Signal,
+  type Signal,
   untracked,
 } from '@angular/core';
 import {
@@ -16,7 +16,7 @@ import {
 } from '@dj-ui/carbon-ext/shared';
 import {
   BaseUIElementComponent,
-  UIElementImplementation,
+  type UIElementImplementation,
   UiElementWrapperComponent,
 } from '@dj-ui/core';
 import { parseZodWithDefault } from '@namnguyen191/types-helper';
@@ -31,13 +31,13 @@ import {
 import { isEmpty } from 'lodash-es';
 
 import {
-  CarbonTableUIElementComponentConfigs,
-  CarbonTableUIElementComponentEvents,
-  PaginationChangedPayload,
-  TableDescriptionConfig,
-  TableHeadersConfig,
-  TablePaginationConfigs,
-  TableRowsConfig,
+  type CarbonTableUIElementComponentConfigs,
+  type CarbonTableUIElementComponentEvents,
+  type PaginationChangedPayload,
+  type TableDescriptionConfig,
+  type TableHeadersConfig,
+  type TablePaginationConfigs,
+  type TableRowsConfig,
   ZodCarbonTableUIElementComponentConfigs,
 } from './carbon-table.interface';
 

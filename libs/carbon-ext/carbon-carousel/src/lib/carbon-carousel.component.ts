@@ -5,9 +5,9 @@ import {
   Component,
   ElementRef,
   input,
-  InputSignal,
-  InputSignalWithTransform,
-  Signal,
+  type InputSignal,
+  type InputSignalWithTransform,
+  type Signal,
   signal,
   viewChildren,
 } from '@angular/core';
@@ -17,14 +17,14 @@ import {
   CarbonCarouselSymbol,
   ModalComponent,
 } from '@dj-ui/carbon-ext/shared';
-import { BaseUIElementComponent, logWarning, UIElementImplementation } from '@dj-ui/core';
+import { BaseUIElementComponent, logWarning, type UIElementImplementation } from '@dj-ui/core';
 import { parseZodWithDefault } from '@namnguyen191/types-helper';
 import { IconModule } from 'carbon-components-angular';
 
 import {
-  AriaLabelConfigOption,
-  CarouselConfigs,
-  ImageUrlsConfigOption,
+  type AriaLabelConfigOption,
+  type CarouselConfigs,
+  type ImageUrlsConfigOption,
   ZAriaLabelConfigOption,
   ZImageUrlsConfigOption,
 } from './carbon-carousel.interface';

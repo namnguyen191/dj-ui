@@ -29,7 +29,9 @@ export class EditUIElementTemplatePageComponent {
   readonly #uiElementTemplateEditorStore = inject(UIElementTemplateEditorStore);
   readonly #iconService = inject(IconService);
 
-  readonly #currentUIElementTemplateId: string = this.#activatedRoute.snapshot.params['id'];
+  readonly #currentUIElementTemplateId: string = this.#activatedRoute.snapshot.params[
+    'id'
+  ] as string;
   readonly #showEditModalQueryParam = 'editRawTemplate';
   readonly isRawTemplateEditorModalOpenSig = toSignal(
     this.#activatedRoute.queryParams.pipe(
@@ -43,14 +45,14 @@ export class EditUIElementTemplatePageComponent {
   readonly PREVIEW_LAYOUT_ID = PREVIEW_LAYOUT_BASE_CONFIG.id;
 
   constructor() {
-    this.#iconService.registerAll([Edit16]);
+    this.#iconService.registerAll([Edit16] as object[]);
     this.#uiElementTemplatesStore.updateQuery({ id: this.#currentUIElementTemplateId });
 
     this.#loadTemplateInPreview();
   }
 
   toggleModal(show: boolean): void {
-    this.#router.navigate([], {
+    void this.#router.navigate([], {
       relativeTo: this.#activatedRoute,
       queryParams: {
         [this.#showEditModalQueryParam]: show ? true : null,

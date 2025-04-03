@@ -3,11 +3,11 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import {
   AbstractControl,
-  AsyncValidatorFn,
+  type AsyncValidatorFn,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
-  ValidationErrors,
+  type ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
@@ -22,7 +22,7 @@ import {
 import { catchError, map, Observable, of, switchMap, timer } from 'rxjs';
 
 import {
-  CreateAppLayoutTemplatePayload,
+  type CreateAppLayoutTemplatePayload,
   LayoutTemplatesAPIService,
 } from '../../../../services/layout-templates-api.service';
 import { LayoutTemplatesStore } from '../../../../state-store/layoutTemplates.store';
@@ -35,7 +35,7 @@ export type NewLayoutForm = {
 
 const isLayoutIdUnique = (): AsyncValidatorFn => {
   const layoutTemplatesAPIService = inject(LayoutTemplatesAPIService);
-  return (control: AbstractControl): Observable<ValidationErrors | null> => {
+  return (control: AbstractControl<string>): Observable<ValidationErrors | null> => {
     return timer(500).pipe(
       switchMap(() => layoutTemplatesAPIService.fetchLayoutTemplate(control.value)),
       map(() => ({ idNotUnique: true })),
@@ -136,6 +136,6 @@ export class NewLayoutPageComponent {
       uiElementInstances: [],
     };
     const createdTemplate = await this.#layoutTemplatesStore.add(newLayoutPayload);
-    this.#router.navigateByUrl(`layout-builder/edit/${createdTemplate.id}`);
+    void this.#router.navigateByUrl(`layout-builder/edit/${createdTemplate.id}`);
   }
 }

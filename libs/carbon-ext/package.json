@@ -1,6 +1,6 @@
 {
   "name": "@dj-ui/carbon-ext",
-  "version": "0.9.1",
+  "version": "0.10.0",
   "type": "module",
   "publishConfig": {
     "access": "public"
@@ -10,9 +10,9 @@
     "url": "https://github.com/namnguyen191/dj-ui"
   },
   "peerDependencies": {
-    "@angular/common": "~19.0.4",
-    "@angular/core": "~19.0.4",
-    "@angular/router": "19.0.4",
+    "@angular/common": "^19.0.4",
+    "@angular/core": "^19.0.4",
+    "@angular/router": "^19.0.4",
     "carbon-components-angular": "^5.56.4",
     "lodash-es": "^4.17.21",
     "@dj-ui/core": "*",

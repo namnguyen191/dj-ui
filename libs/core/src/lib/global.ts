@@ -1,6 +1,6 @@
 import { InjectionToken } from '@angular/core';
 
-export const INTERPOLATION_REGEX = /^(<\${)(.*)(}\$>)$/;
+export const INTERPOLATION_REGEX = /^(<\${)([\s\S]*?)(}\$>)$/;
 
 // eslint-disable-next-line @typescript-eslint/no-empty-object-type
 export type CoreConfig = {};

@@ -2,7 +2,7 @@ import { computed, untracked } from '@angular/core';
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 import { immerPatchState } from 'ngrx-immer/signals';
 
-import {
+import type {
   AppLayoutTemplate,
   AppLayoutTemplateEditableFields,
   AppLayoutTemplateUnEditableFields,

@@ -10,12 +10,12 @@ import {
 } from '@ngrx/signals';
 import { firstValueFrom } from 'rxjs';
 
-import {
+import type {
   CreateAppLayoutTemplatePayload,
-  LayoutTemplatesAPIService,
   UpdateAppLayoutTemplatePayload,
 } from '../services/layout-templates-api.service';
-import { AppLayoutTemplate, TemplateInfo } from '../shared/dj-ui-app-template';
+import { LayoutTemplatesAPIService } from '../services/layout-templates-api.service';
+import type { AppLayoutTemplate, TemplateInfo } from '../shared/dj-ui-app-template';
 import { withEntitiesAndLoaders } from './entities-and-loaders.store-feat';
 
 type LayoutTemplatesStoreState = {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { BaseTemplateService, MissingTemplateEvent } from './base-template.service';
-import { LayoutTemplate } from './layout-template-interfaces';
+import { BaseTemplateService, type MissingTemplateEvent } from './base-template.service';
+import type { LayoutTemplate } from './layout-template-interfaces';
 
 @Injectable({
   providedIn: 'root',

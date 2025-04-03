@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LayoutTemplate, RemoteResourceTemplate, UIElementTemplate } from '@dj-ui/core';
+import type { LayoutTemplate, RemoteResourceTemplate, UIElementTemplate } from '@dj-ui/core';
 import { Observable, of } from 'rxjs';
 
 const mockCard = {

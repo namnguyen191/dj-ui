@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { AppRemoteResourceTemplate, TimeStamp } from '../shared/dj-ui-app-template';
+import type { AppRemoteResourceTemplate, TimeStamp } from '../shared/dj-ui-app-template';
 
 const BASE_LAYOUT_TEMPLATE_URL = 'http://localhost:8080/remote-resource-templates';
 
@@ -20,7 +20,7 @@ export class RemoteResourceTemplatesAPIService {
   readonly #httpClient = inject(HttpClient);
 
   getAllRemoteResourceTemplates = (): Observable<AppRemoteResourceTemplate[]> => {
-    return this.#httpClient.get<AppRemoteResourceTemplate[]>(`${BASE_LAYOUT_TEMPLATE_URL}`);
+    return this.#httpClient.get<AppRemoteResourceTemplate[]>(BASE_LAYOUT_TEMPLATE_URL);
   };
 
   createRemoteResourceTemplate = (

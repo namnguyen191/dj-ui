@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, delay, filter, firstValueFrom, map } from 'rxjs';
 
-import {
+import type {
   AppLayoutTemplate,
   AppRemoteResourceTemplate,
   AppUIElementTemplate,
@@ -78,17 +78,19 @@ export class IdbService {
       }
     };
 
-    req.onsuccess = (): void =>
+    req.onsuccess = (): void => {
       this.#dbSubject.next({
         status: 'ready',
         conn: req.result,
       });
+    };
 
-    req.onerror = (): void =>
+    req.onerror = (): void => {
       this.#dbSubject.next({
         status: 'error',
         conn: null,
       });
+    };
   }
 }
 
@@ -105,10 +107,14 @@ export class IdbRepo<T> {
     return new Promise<T[]>((resolve, reject) => {
       const trans = this.#conn.transaction(this.#storeName, 'readonly');
       const store = trans.objectStore(this.#storeName);
-      const req: IDBRequest<T[]> = store.getAll();
+      const req: IDBRequest<T[]> = store.getAll() as IDBRequest<T[]>;
 
-      req.onsuccess = (): void => resolve(req.result);
-      req.onerror = (): void => reject(req.error);
+      req.onsuccess = (): void => {
+        resolve(req.result);
+      };
+      req.onerror = (): void => {
+        reject(req.error);
+      };
     });
   };
 
@@ -118,8 +124,12 @@ export class IdbRepo<T> {
       const store = trans.objectStore(this.#storeName);
       const req = store.add(object);
 
-      req.onsuccess = (): void => resolve(object);
-      req.onerror = (): void => reject(req.error);
+      req.onsuccess = (): void => {
+        resolve(object);
+      };
+      req.onerror = (): void => {
+        reject(req.error);
+      };
     });
   };
 
@@ -129,8 +139,12 @@ export class IdbRepo<T> {
       const store = trans.objectStore(this.#storeName);
       const req = store.put(updatedObject);
 
-      req.onsuccess = (): void => resolve(updatedObject);
-      req.onerror = (): void => reject(req.error);
+      req.onsuccess = (): void => {
+        resolve(updatedObject);
+      };
+      req.onerror = (): void => {
+        reject(req.error);
+      };
     });
   };
 
@@ -138,7 +152,7 @@ export class IdbRepo<T> {
     return new Promise<T | null>((resolve, reject) => {
       const trans = this.#conn.transaction(this.#storeName, 'readonly');
       const store = trans.objectStore(this.#storeName);
-      const req: IDBRequest<T> = store.get(id);
+      const req: IDBRequest<T> = store.get(id) as IDBRequest<T>;
 
       req.onsuccess = (): void => {
         if (req.result === undefined) {
@@ -148,7 +162,9 @@ export class IdbRepo<T> {
 
         resolve(req.result);
       };
-      req.onerror = (): void => reject(req.error);
+      req.onerror = (): void => {
+        reject(req.error);
+      };
     });
   }
 
@@ -166,7 +182,9 @@ export class IdbRepo<T> {
 
         reject(req.result);
       };
-      req.onerror = (): void => reject(req.error);
+      req.onerror = (): void => {
+        reject(req.error);
+      };
     });
   }
 }

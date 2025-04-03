@@ -2,10 +2,10 @@ import { Injectable } from '@angular/core';
 import { z } from 'zod';
 
 import { ZUIElementRequiredConfigs } from '../../components/base-ui-element.component';
-import { ActionHook, ZodActionHook } from '../events-and-actions/action-hook.service';
+import { type ActionHook, ZodActionHook } from '../events-and-actions/action-hook.service';
 import { ZStateSubscriptionConfig } from '../state-store.service';
-import { BaseTemplateService, MissingTemplateEvent } from './base-template.service';
-import { ConfigWithStatus } from './shared-types';
+import { BaseTemplateService, type MissingTemplateEvent } from './base-template.service';
+import type { ConfigWithStatus } from './shared-types';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const createUIElementTemplateOptionsSchema = <T extends z.ZodObject<any>>(
@@ -25,9 +25,9 @@ export const createEventsToHooksMapSchema = <T extends string>(
 ): z.ZodType<{
   [K in T]?: ActionHook[];
 }> => {
-  const zObj = z.strictObject({});
+  let zObj = z.object({});
   for (const evt of events) {
-    zObj.extend({
+    zObj = zObj.extend({
       [evt]: z.array(ZodActionHook).optional(),
     });
   }

@@ -1,5 +1,6 @@
 import { computed, inject, untracked } from '@angular/core';
-import { LayoutTemplate, LayoutTemplateService, UIElementTemplateService } from '@dj-ui/core';
+import type { LayoutTemplate } from '@dj-ui/core';
+import { LayoutTemplateService, UIElementTemplateService } from '@dj-ui/core';
 import {
   patchState,
   signalStore,
@@ -10,7 +11,7 @@ import {
 } from '@ngrx/signals';
 import { immerPatchState } from 'ngrx-immer/signals';
 
-import {
+import type {
   AppUIElementTemplate,
   AppUIElementTemplateEditableFields,
   AppUIElementTemplateUnEditableFields,

@@ -1,7 +1,14 @@
-import { ComponentRef, Directive, input, Signal, viewChild, ViewContainerRef } from '@angular/core';
+import {
+  ComponentRef,
+  Directive,
+  input,
+  type Signal,
+  viewChild,
+  ViewContainerRef,
+} from '@angular/core';
 
-import { UIElementInstance } from '../../services/templates/layout-template-interfaces';
-import { UIElementTemplate } from '../../services/templates/ui-element-template.service';
+import type { UIElementInstance } from '../../services/templates/layout-template-interfaces';
+import type { UIElementTemplate } from '../../services/templates/ui-element-template.service';
 import { BaseUIElementComponent } from '../base-ui-element.component';
 
 @Directive()

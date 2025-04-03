@@ -1,12 +1,16 @@
 {
   "extends": "../../tsconfig-angular.base.json",
+  "files": [],
+  "include": [],
   "references": [
     {
       "path": "./tsconfig.lib.json"
     },
     {
+      "path": "./tsconfig.spec.json"
+    },
+    {
       "path": "./tsconfig.script.json"
     }
-  ],
-  "exclude": ["generate-json-schemas.ts"]
+  ]
 }

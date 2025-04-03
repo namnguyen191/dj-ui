@@ -1,6 +1,6 @@
-import { UnknownRecord } from 'type-fest';
+import type { UnknownRecord } from 'type-fest';
 
-import { StateMap } from '../state-store.service';
+import type { StateMap } from '../state-store.service';
 
 export type RemoteResourceState = {
   status: 'init' | 'completed' | 'error';

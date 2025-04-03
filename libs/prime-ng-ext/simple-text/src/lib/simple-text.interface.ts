@@ -72,6 +72,6 @@ export const ZSimpleTextConfigs = z.strictObject({
 
 export type SimpleTextConfigs = z.input<typeof ZSimpleTextConfigs>;
 
-export const ZSimpleTextUIE = createUIElementTemplateSchema(ZSimpleTextConfigs).describe(
+export const ZSimpleTextUIESchema = createUIElementTemplateSchema(ZSimpleTextConfigs).describe(
   'PrimeNgSimpleTextUIESchema'
 );

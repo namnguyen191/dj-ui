@@ -1,7 +1,7 @@
 import angular from 'angular-eslint';
 import tseslint from 'typescript-eslint';
 
-import baseConfigs from './eslint.config.js';
+import baseConfigs from './eslint.config.mjs';
 
 const angularConfigs = tseslint.config(
   {
@@ -9,8 +9,8 @@ const angularConfigs = tseslint.config(
     extends: [...angular.configs.tsRecommended],
     processor: angular.processInlineTemplates,
     rules: {
-      '@angular-eslint/no-input-rename': 'off'
-    }
+      '@angular-eslint/no-input-rename': 'off',
+    },
   },
   {
     files: ['**/*.html'],

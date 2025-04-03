@@ -1,16 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, input, InputSignal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, input, type InputSignal } from '@angular/core';
 import {
   CarbonCarouselCardElementType,
   CarbonCarouselCardSymbol,
   CarbonCarouselSymbol,
 } from '@dj-ui/carbon-ext/shared';
-import { BaseUIElementComponent, UIElementImplementation } from '@dj-ui/core';
+import { BaseUIElementComponent, type UIElementImplementation } from '@dj-ui/core';
 import { UiElementWrapperComponent } from '@dj-ui/core';
 import { parseZodWithDefault } from '@namnguyen191/types-helper';
 
 import {
-  CarouselCardConfigs,
+  type CarouselCardConfigs,
   ZCarouselIdConfigOption,
   ZDescriptionConfigOption,
   ZTitleConfigOption,

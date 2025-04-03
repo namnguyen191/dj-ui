@@ -3,12 +3,12 @@ import { computed, inject } from '@angular/core';
 import { patchState, signalStore, withComputed, withMethods, withState } from '@ngrx/signals';
 import { firstValueFrom } from 'rxjs';
 
-import {
+import type {
   CreateAppRemoteResourceTemplatePayload,
-  RemoteResourceTemplatesAPIService,
   UpdateAppRemoteResourceTemplatePayload,
 } from '../services/remote-resource-templates-api.service';
-import { AppRemoteResourceTemplate, TemplateInfo } from '../shared/dj-ui-app-template';
+import { RemoteResourceTemplatesAPIService } from '../services/remote-resource-templates-api.service';
+import type { AppRemoteResourceTemplate, TemplateInfo } from '../shared/dj-ui-app-template';
 import { withEntitiesAndLoaders } from './entities-and-loaders.store-feat';
 
 type RemoteResourceTemplatesStoreState = {

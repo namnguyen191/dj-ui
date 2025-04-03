@@ -1,8 +1,16 @@
 {
   "extends": "../../tsconfig-angular.base.json",
+  "files": [],
+  "include": [],
   "references": [
     {
       "path": "./tsconfig.editor.json"
+    },
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.spec.json"
     }
   ]
 }

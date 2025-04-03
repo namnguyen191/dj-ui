@@ -58,7 +58,7 @@
               "configs": {},
               "interpolation": {
                 "type": "string",
-                "pattern": "^(<\\${)(.*)(}\\$>)$"
+                "pattern": "^(<\\${)([\\s\\S]*?)(}\\$>)$"
               }
             },
             "required": [
@@ -88,8 +88,7 @@
         }
       },
       "required": [
-        "requests",
-        "onSuccess"
+        "requests"
       ],
       "additionalProperties": false
     }
