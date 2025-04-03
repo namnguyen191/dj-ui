@@ -1,3 +1,36 @@
+## 0.10.0 (2025-04-03)
+
+### 🚀 Features
+
+- update @namnguyen191 packages, adjust tsconfig, use enum for layout config ([#5](https://github.com/namnguyen191/dj-ui/pull/5))
+- refactor template service to extract common logic, adjust event interface ([#9](https://github.com/namnguyen191/dj-ui/pull/9))
+- Implement file upload ([#10](https://github.com/namnguyen191/dj-ui/pull/10))
+- Support extra wrapper and release new version ([#11](https://github.com/namnguyen191/dj-ui/pull/11))
+- add layout builder to playground and adjust layout component ([#12](https://github.com/namnguyen191/dj-ui/pull/12))
+- enable onpush change detection and move context menu to layout builder ([#13](https://github.com/namnguyen191/dj-ui/pull/13))
+- enable local api and deployment ([#14](https://github.com/namnguyen191/dj-ui/pull/14))
+- Add PrimeNG playground ([#20](https://github.com/namnguyen191/dj-ui/pull/20))
+- remove gridster ([#21](https://github.com/namnguyen191/dj-ui/pull/21))
+- fix interpolation logic ([afc1a52](https://github.com/namnguyen191/dj-ui/commit/afc1a52))
+- rename variable to be more specific ([5eb3047](https://github.com/namnguyen191/dj-ui/commit/5eb3047))
+- add simple table ([01aba55](https://github.com/namnguyen191/dj-ui/commit/01aba55))
+- migrate to latest versions ([95edbf2](https://github.com/namnguyen191/dj-ui/commit/95edbf2))
+- fix tsconfigs ([019c0cf](https://github.com/namnguyen191/dj-ui/commit/019c0cf))
+- migrate eslint and use verbatimModuleSyntax ([93a25a1](https://github.com/namnguyen191/dj-ui/commit/93a25a1))
+- improve simple table ([750313f](https://github.com/namnguyen191/dj-ui/commit/750313f))
+
+### 🩹 Fixes
+
+- fix deployment by using checkout v4 ([#15](https://github.com/namnguyen191/dj-ui/pull/15))
+- fix deployment by changing pnpm version ([#16](https://github.com/namnguyen191/dj-ui/pull/16))
+- fix redirection logic and add icons ([#17](https://github.com/namnguyen191/dj-ui/pull/17))
+- use relative path for assets ([#18](https://github.com/namnguyen191/dj-ui/pull/18))
+- template editor loading and error issues ([#19](https://github.com/namnguyen191/dj-ui/pull/19))
+
+### ❤️ Thank You
+
+- Nam Nguyen @namnguyen191
+
 ## 0.9.1 (2025-03-17)
 
 ### 🚀 Features
