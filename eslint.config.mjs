@@ -46,7 +46,12 @@ export default tseslint.config([
           depConstraints: [
             {
               sourceTag: 'scope:app',
-              onlyDependOnLibsWithTags: ['scope:core', 'scope:common', 'scope:extension'],
+              onlyDependOnLibsWithTags: [
+                'scope:core',
+                'scope:common',
+                'scope:extension',
+                'scope:shared',
+              ],
             },
             {
               sourceTag: 'scope:common',

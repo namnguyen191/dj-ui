@@ -5,7 +5,7 @@ import { firstValueFrom, from, map, Observable, switchMap, tap } from 'rxjs';
 
 import type { AppLayoutTemplate } from '../shared/dj-ui-app-template';
 import { mockLayoutTemplates } from '../utils/mock-templates';
-import { IdbService } from './idb.service';
+import { AppIdbService } from './app-idb.service';
 import {
   type CreateAppLayoutTemplatePayload,
   LayoutTemplatesAPIService,
@@ -16,7 +16,7 @@ import {
 export class LayoutTemplatesLocalAPIService extends LayoutTemplatesAPIService {
   readonly #layoutTemplateService = inject(LayoutTemplateService);
 
-  readonly #idbService = inject(IdbService);
+  readonly #idbService = inject(AppIdbService);
   readonly #layoutTemplateRepo$ = from(this.#idbService.getRepo('layoutTemplates'));
 
   override getAllLayoutTemplates = (): Observable<AppLayoutTemplate[]> => {

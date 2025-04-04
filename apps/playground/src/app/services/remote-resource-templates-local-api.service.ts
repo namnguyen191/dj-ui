@@ -5,7 +5,7 @@ import { firstValueFrom, from, map, Observable, switchMap, tap } from 'rxjs';
 
 import type { AppRemoteResourceTemplate } from '../shared/dj-ui-app-template';
 import { mockRemoteResourceTemplates } from '../utils/mock-templates';
-import { IdbService } from './idb.service';
+import { AppIdbService } from './app-idb.service';
 import {
   type CreateAppRemoteResourceTemplatePayload,
   RemoteResourceTemplatesAPIService,
@@ -16,7 +16,7 @@ import {
 export class RemoteResourceTemplatesLocalAPIService extends RemoteResourceTemplatesAPIService {
   readonly #remoteResourceTemplateService = inject(RemoteResourceTemplateService);
 
-  readonly #idbService = inject(IdbService);
+  readonly #idbService = inject(AppIdbService);
   readonly #remoteResourceTemplateRepo$ = from(this.#idbService.getRepo('remoteResourceTemplates'));
 
   override getAllRemoteResourceTemplates = (): Observable<AppRemoteResourceTemplate[]> => {

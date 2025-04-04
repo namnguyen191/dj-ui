@@ -37,7 +37,8 @@
       "@dj-ui/prime-ng-ext/simple-image": ["libs/prime-ng-ext/simple-image/src/index.ts"],
       "@dj-ui/prime-ng-ext/simple-table": ["libs/prime-ng-ext/simple-table/src/index.ts"],
       "@dj-ui/prime-ng-ext/simple-text": ["libs/prime-ng-ext/simple-text/src/index.ts"],
-      "@dj-ui/shared-components": ["libs/shared-components/src/index.ts"]
+      "@dj-ui/shared-components": ["libs/shared-components/src/index.ts"],
+      "@dj-ui/utils": ["libs/shared/utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp", "**/eslint**.js"]

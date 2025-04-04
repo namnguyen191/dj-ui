@@ -1,25 +1,12 @@
-import { Injectable } from '@angular/core';
 import { BehaviorSubject, delay, filter, firstValueFrom, map } from 'rxjs';
+import type { UnionToTuple } from 'type-fest';
 
-import type {
-  AppLayoutTemplate,
-  AppRemoteResourceTemplate,
-  AppUIElementTemplate,
-} from '../shared/dj-ui-app-template';
-
-export const DB_NAME = 'DJ_UI_LOCAL_DB';
-export const DB_VERSION = 2;
-export type IdbStoresMap = {
-  uiElementTemplates: AppUIElementTemplate;
-  layoutTemplates: AppLayoutTemplate;
-  remoteResourceTemplates: AppRemoteResourceTemplate;
+export type IdbStoresMap = Record<string, unknown>;
+export type DbServiceConfigs<TStores extends IdbStoresMap> = {
+  stores: UnionToTuple<keyof TStores>;
+  dbName: string;
+  dbVersion: number;
 };
-export type IdbStoreName = keyof IdbStoresMap;
-export const ALL_STORES: IdbStoreName[] = [
-  'layoutTemplates',
-  'uiElementTemplates',
-  'remoteResourceTemplates',
-];
 
 export type InitDbParams = { storeName: string; objectIdPath: string };
 
@@ -33,10 +20,10 @@ export type DbWithStatus =
       conn: IDBDatabase;
     };
 
-@Injectable({
-  providedIn: 'root',
-})
-export class IdbService {
+export class IdbService<
+  TStores extends IdbStoresMap,
+  TStoreName extends keyof IdbStoresMap = keyof IdbStoresMap,
+> {
   #dbSubject = new BehaviorSubject<DbWithStatus>({
     status: 'idle',
     conn: null,
@@ -44,15 +31,15 @@ export class IdbService {
 
   db$ = this.#dbSubject.asObservable().pipe(delay(2000));
 
-  constructor() {
+  constructor(private configs: DbServiceConfigs<TStores>) {
     this.#initDB();
   }
 
-  getRepo<T extends IdbStoreName>(storeName: T): Promise<IdbRepo<IdbStoresMap[T]>> {
+  getRepo<T extends TStoreName>(storeName: T): Promise<IdbRepo<TStores[T]>> {
     return firstValueFrom(
       this.db$.pipe(
         filter((db) => db.conn !== null),
-        map((db) => new IdbRepo<IdbStoresMap[T]>(db.conn, storeName))
+        map((db) => new IdbRepo<TStores[T]>(db.conn, storeName))
       )
     );
   }
@@ -64,11 +51,11 @@ export class IdbService {
       return;
     }
 
-    const req = indexedDB.open(DB_NAME, DB_VERSION);
+    const req = indexedDB.open(this.configs.dbName, this.configs.dbVersion);
 
     req.onupgradeneeded = (e): void => {
       const db = (e.target as IDBOpenDBRequest).result;
-      for (const storeName of ALL_STORES) {
+      for (const storeName of this.configs.stores as TStoreName[]) {
         if (!db.objectStoreNames.contains(storeName)) {
           db.createObjectStore(storeName, {
             keyPath: 'id',
