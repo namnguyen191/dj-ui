@@ -1,7 +1,11 @@
 {
-  "id": "test-table.PRIME_NG_SIMPLE_TABLE",
+  "id": "pokemon-server-side-pagination-table.PRIME_NG_SIMPLE_TABLE",
   "type": "SIMPLE_TABLE",
   "remoteResourceIds": ["POKEMON_PAGINATION.REMOTE_RESOURCE"],
+  "name": "Pokemon server-side pagination table",
+  "description": "A table that fetch a bunch of pokemon using server-side pagination",
+  "createdAt": "2025-04-05T17:07:36.743Z",
+  "updatedAt": "2025-04-05T17:07:36.743Z",
   "stateSubscription": {
     "watchedScopes": {
       "global": ["usPopPage"]

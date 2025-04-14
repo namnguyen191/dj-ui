@@ -54,6 +54,11 @@ export const createUIElementTemplateSchema = <
 };
 export const ZBaseUIElementTemplate = createUIElementTemplateSchema(z.object({}), []);
 export type UIElementTemplate = z.infer<typeof ZBaseUIElementTemplate>;
+export type AnyUIElementTemplate = Omit<UIElementTemplate, 'options'> & {
+  options: {
+    [key: string]: unknown;
+  };
+};
 
 export type UIElementTemplateWithStatus = ConfigWithStatus<UIElementTemplate>;
 

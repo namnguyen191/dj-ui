@@ -155,6 +155,26 @@ export class IdbRepo<T> {
     });
   }
 
+  deleteOne(id: string): Promise<void> {
+    return new Promise<void>((resolve, reject) => {
+      const trans = this.#conn.transaction(this.#storeName, 'readwrite');
+      const store = trans.objectStore(this.#storeName);
+      const req: IDBRequest<undefined> = store.delete(id);
+
+      req.onsuccess = (): void => {
+        if (req.result === undefined) {
+          resolve();
+          return;
+        }
+
+        resolve(req.result);
+      };
+      req.onerror = (): void => {
+        reject(req.error);
+      };
+    });
+  }
+
   clearAll(): Promise<void> {
     return new Promise<void>((resolve, reject) => {
       const trans = this.#conn.transaction(this.#storeName, 'readwrite');

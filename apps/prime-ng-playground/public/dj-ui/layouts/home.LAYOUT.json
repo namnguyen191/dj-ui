@@ -7,14 +7,6 @@
   },
   "uiElementInstances": [
     {
-      "id": "6",
-      "uiElementTemplateId": "test-table.PRIME_NG_SIMPLE_TABLE",
-      "positionAndSize": {
-        "cols": 16,
-        "maxHeight": "50vh"
-      }
-    },
-    {
       "id": "1",
       "uiElementTemplateId": "home-main-icon.PRIME_NG_SIMPLE_IMAGE",
       "positionAndSize": {
