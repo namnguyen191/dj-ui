@@ -9,6 +9,13 @@ export const buildersRoutes: Route[] = [
       ),
   },
   {
+    path: 'ui-element/:id',
+    loadComponent: () =>
+      import('./ui-element/edit-ui-element-template/edit-ui-element-template.component').then(
+        (m) => m.EditUIElementTemplateComponent
+      ),
+  },
+  {
     path: '**',
     pathMatch: 'full',
     redirectTo: 'ui-element',

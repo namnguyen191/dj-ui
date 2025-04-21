@@ -9,6 +9,7 @@ import {
   withMethods,
   withState,
 } from '@ngrx/signals';
+import { isEqual } from 'lodash-es';
 import { firstValueFrom } from 'rxjs';
 
 import type { AppUIElementTemplate, TemplateInfo } from '../shared/app-template';
@@ -52,17 +53,20 @@ export const UIElementTemplatesStore = signalStore(
         description,
       }));
     }),
-    filteredUIElementTemplates: computed<AppUIElementTemplate[]>(() => {
-      const { id } = query();
+    filteredUIElementTemplates: computed<AppUIElementTemplate[]>(
+      () => {
+        const { id } = query();
 
-      return entities().filter((uiEleTemp) => {
-        if (id) {
-          return uiEleTemp.id === id;
-        }
+        return entities().filter((uiEleTemp) => {
+          if (id) {
+            return uiEleTemp.id === id;
+          }
 
-        return false;
-      });
-    }),
+          return false;
+        });
+      },
+      { equal: isEqual }
+    ),
   })),
   withMethods((store, uieTemplatesAPIService = inject(UIElementTemplateAPIService)) => ({
     updateQuery: (query: UIElementTemplatesStoreState['query']): void => {

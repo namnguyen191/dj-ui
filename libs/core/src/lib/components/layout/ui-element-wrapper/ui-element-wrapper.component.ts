@@ -198,7 +198,7 @@ export class UiElementWrapperComponent {
 
       const state = stateSubscription
         ? runInInjectionContext(this.#environmentInjector, () =>
-            getStatesSubscriptionAsContext(stateSubscription)
+            getStatesSubscriptionAsContext(stateSubscription, `UI Element ${uiElementTemplate.id}`)
           )
         : of(null);
       const remoteResourcesStates = remoteResourceIds?.length

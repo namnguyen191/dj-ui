@@ -215,7 +215,10 @@ export class RemoteResourceService extends BaseRemoteResourceService {
         let states$: Observable<unknown> = of(EMPTY);
         if (stateSubscription) {
           states$ = runInInjectionContext(this.environmentInjector, () =>
-            getStatesSubscriptionAsContext(stateSubscription)
+            getStatesSubscriptionAsContext(
+              stateSubscription,
+              `Remote resource refresh trigger for ${id}`
+            )
           );
         }
         return states$;
@@ -291,7 +294,10 @@ export class RemoteResourceService extends BaseRemoteResourceService {
   ): Observable<FetcherIdToConfigMap> {
     const currentState$: Observable<StateMap | null> = stateSubscriptionConfig
       ? runInInjectionContext(this.environmentInjector, () =>
-          getStatesSubscriptionAsContext(stateSubscriptionConfig)
+          getStatesSubscriptionAsContext(
+            stateSubscriptionConfig,
+            'Parallel resource request options interpolation context'
+          )
         )
       : of(null);
     const requestsConfigs = reqs.map((req) => ({ fetcherId: req.fetcherId, configs: req.configs }));
@@ -429,7 +435,7 @@ export class RemoteResourceService extends BaseRemoteResourceService {
     // eslint-disable-next-line @typescript-eslint/no-empty-object-type
     const conditionContext$: Observable<StateMap | {}> = stateSubscription
       ? runInInjectionContext(this.environmentInjector, () =>
-          getStatesSubscriptionAsContext(stateSubscription)
+          getStatesSubscriptionAsContext(stateSubscription, 'Resource run condition')
         )
       : of({});
 

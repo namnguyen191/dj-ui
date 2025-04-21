@@ -23,7 +23,8 @@ export type TemplateInfo = z.infer<typeof ZTemplateInfo>;
 
 export type AppUIElementTemplate = UIElementTemplate & TimeStamp & MetaData;
 export type CreateAppUIElementTemplate<T extends UIElementTemplate> = T & TimeStamp & MetaData;
-export type AppUIElementTemplateUnEditableFields = TimeStamp & Pick<AppUIElementTemplate, 'id'>;
+export type AppUIElementTemplateUnEditableFields = TimeStamp &
+  Pick<AppUIElementTemplate, 'id' | 'type'>;
 export type AppUIElementTemplateEditableFields = Omit<
   AppUIElementTemplate,
   keyof AppUIElementTemplateUnEditableFields

@@ -9,11 +9,13 @@ import {
   of,
   pipe,
   switchMap,
+  tap,
   type UnaryFunction,
 } from 'rxjs';
 import type { UnknownRecord } from 'type-fest';
 import { z } from 'zod';
 
+import { logInfo } from '../utils/logging';
 import { InterpolationService } from './interpolation.service';
 
 export const ZodAvailableStateScope = z.enum(['global', 'local', 'layout']);
@@ -58,7 +60,8 @@ export const getStatesAsContext = (): Observable<StateMap> => {
 };
 
 export const getStatesSubscriptionAsContext = (
-  stateSubscription: StateSubscriptionConfig
+  stateSubscription: StateSubscriptionConfig,
+  requesterIdentity?: string
 ): Observable<StateMap> => {
   const { watchedScopes, variables } = stateSubscription;
 
@@ -88,6 +91,13 @@ export const getStatesSubscriptionAsContext = (
     local,
     layout,
   }).pipe(
+    tap({
+      next: () => {
+        if (requesterIdentity) {
+          logInfo(`States requested by "${requesterIdentity}"`);
+        }
+      },
+    }),
     switchMap((state) => {
       if (!variables) {
         return of({ ...state });

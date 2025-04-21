@@ -1,0 +1,30 @@
+@let errorState = errorStateSig();
+@let codeEditorConfigs = codeEditorConfigsSig();
+
+<p-dialog header="Editor" [modal]="true" [visible]="visible()" (visibleChange)="editCancel.emit()">
+  <section class="modal-content">
+    @if (loadingSig() || !codeEditorConfigs) {
+      <p-progress-spinner ariaLabel="loading" />
+    } @else {
+      <div class="modal-content__editor">
+        <app-code-editor
+          [configs]="codeEditorConfigs"
+          (valueChanged)="codeChangeSubject.next($event)"
+        ></app-code-editor>
+      </div>
+      <div class="modal-content__btn-container">
+        <p-button
+          [disabled]="errorState === 'isError' || errorState === 'isPending'"
+          [label]="errorState === 'isError' ? 'Error in JSON' : 'Save your changes'"
+          [loading]="errorState === 'isPending'"
+          [severity]="errorState === 'isError' ? 'danger' : 'primary'"
+          (click)="updateUIElementTemplate()"
+        >
+        </p-button>
+        <p-button label="Cancel" severity="secondary" (click)="editCancel.emit()" />
+      </div>
+    }
+  </section>
+</p-dialog>
+
+<p-toast class="toast" />

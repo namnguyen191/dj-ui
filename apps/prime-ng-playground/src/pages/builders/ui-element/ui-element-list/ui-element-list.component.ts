@@ -1,11 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, type Signal } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { TableModule } from 'primeng/table';
 
 import type { TemplateInfo } from '../../../../shared/app-template';
+import { RemoteResourceTemplatesStore } from '../../../../state-stores/remoteResourceTemplates.store';
 import { UIElementTemplatesStore } from '../../../../state-stores/uiElementTemplates.store';
 
 @Component({
@@ -18,11 +20,18 @@ import { UIElementTemplatesStore } from '../../../../state-stores/uiElementTempl
 })
 export class UIElementListComponent {
   readonly #uiElementTemplatesStore = inject(UIElementTemplatesStore);
+  readonly #remoteResourceTemplatesStore = inject(RemoteResourceTemplatesStore);
   readonly #confirmationService = inject(ConfirmationService);
+  readonly #router = inject(Router);
+  readonly #activatedRoute = inject(ActivatedRoute);
 
   protected loadingSig = this.#uiElementTemplatesStore.isPending;
   allTemplatesInfoSig: Signal<TemplateInfo[]> =
     this.#uiElementTemplatesStore.allUIElementTemplatesInfo;
+
+  navigateToEditPage(uieTemplateId: string): void {
+    this.#router.navigate(['.', uieTemplateId], { relativeTo: this.#activatedRoute });
+  }
 
   confirmResetMockTemplates(event: Event): void {
     this.#confirmationService.confirm({
@@ -44,6 +53,7 @@ export class UIElementListComponent {
       },
       accept: () => {
         void this.#uiElementTemplatesStore.resetMockTemplates();
+        void this.#remoteResourceTemplatesStore.resetMockTemplates();
       },
     });
   }

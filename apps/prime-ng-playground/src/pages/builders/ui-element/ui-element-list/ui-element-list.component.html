@@ -1,5 +1,7 @@
 <p-table
+  selectionMode="single"
   [loading]="loadingSig()"
+  [metaKeySelection]="true"
   [showGridlines]="true"
   [stripedRows]="true"
   [value]="allTemplatesInfoSig()"
@@ -20,7 +22,7 @@
     </tr>
   </ng-template>
   <ng-template #body let-template>
-    <tr>
+    <tr (click)="navigateToEditPage(template.id)">
       <td>{{ template.id }}</td>
       <td>{{ template.name }}</td>
       <td>{{ template.description }}</td>

@@ -40,20 +40,21 @@ import {
   tap,
 } from 'rxjs';
 
-import { FileUploadService } from './data-fetchers/file-upload.service';
-import { HttpFetcherService } from './data-fetchers/http-fetcher.service';
-import {
-  DefaultActionsHooksService,
-  ZAddToStateActionHookPayload,
-  ZNavigateHookPayload,
-  ZTriggerRemoteResourceHookPayload,
-} from './defaut-actions-hooks.service';
 import {
   missingLayoutTemplateEvent,
   missingRemoteResourceTemplateEvent,
   missingUIElementTemplateEvent,
   UIElementRepositionEvent,
 } from './events-filters';
+import { FileUploadService } from './services/data-fetchers/file-upload.service';
+import { HttpFetcherService } from './services/data-fetchers/http-fetcher.service';
+import {
+  DefaultActionsHooksService,
+  ZAddToStateActionHookPayload,
+  ZNavigateHookPayload,
+  ZTriggerRemoteResourceHookPayload,
+} from './services/defaut-actions-hooks.service';
+import { FileService } from './services/file.service';
 
 export type TemplatesHandlers = {
   getLayoutTemplate?: (id: string) => Observable<LayoutTemplate>;
@@ -275,6 +276,17 @@ export const provideDJUI = (): EnvironmentProviders => {
     StateStoreService,
     UIElementFactoryService,
     ActionHookService,
+  ];
+
+  return makeEnvironmentProviders(providers);
+};
+
+export const provideDJUICommon = (): EnvironmentProviders => {
+  const providers: Provider[] = [
+    FileUploadService,
+    FileService,
+    HttpFetcherService,
+    DefaultActionsHooksService,
   ];
 
   return makeEnvironmentProviders(providers);
