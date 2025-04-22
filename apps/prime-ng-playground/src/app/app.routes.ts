@@ -6,8 +6,9 @@ export const appRoutes: Route[] = [
     loadComponent: () => import('../pages/home/home.component').then((m) => m.HomeComponent),
   },
   {
-    path: 'builders',
-    loadChildren: () => import('../pages/builders/builders.routes').then((m) => m.buildersRoutes),
+    path: 'builder',
+    loadChildren: () =>
+      import('@dj-ui/prime-ng-playground/features/builder').then((m) => m.builderRoutes),
   },
   {
     path: '**',

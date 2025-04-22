@@ -1,10 +1,8 @@
-import { Component, inject } from '@angular/core';
+import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { setupDefault } from '@dj-ui/common';
 import type { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
-
-import { MonacoEditorService } from '../shared/services/monaco-editor.service';
 
 @Component({
   imports: [RouterModule, MenubarModule],
@@ -13,8 +11,6 @@ import { MonacoEditorService } from '../shared/services/monaco-editor.service';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  readonly #monacoEditorService = inject(MonacoEditorService);
-
   mainMenuItems: MenuItem[] = [
     {
       label: 'Home',
@@ -28,7 +24,7 @@ export class AppComponent {
         {
           label: 'UI Element',
           icon: 'pi pi-chart-bar',
-          routerLink: '/builders/ui-element',
+          routerLink: '/builder/ui-element',
         },
       ],
     },
@@ -36,6 +32,5 @@ export class AppComponent {
 
   constructor() {
     setupDefault();
-    this.#monacoEditorService.init();
   }
 }

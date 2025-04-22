@@ -1,7 +1,7 @@
 /* stylelint-disable property-no-vendor-prefix */
 
 @use 'primeicons/primeicons.css';
-@use './shared/styles/prime_ng_override';
+@use '../../../libs/prime-ng-playground/shared/src/lib/styles/prime_ng_override';
 
 :root {
   font-family: Inter, sans-serif;

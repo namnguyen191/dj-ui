@@ -4,7 +4,7 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "apps/prime-ng-playground/src",
-  "tags": ["scope:app"],
+  "tags": ["type:app", "scope:prime-ng-playground"],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
@@ -19,6 +19,11 @@
           {
             "glob": "**/*",
             "input": "apps/prime-ng-playground/public"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/prime-ng-playground/shared/src/lib/dj-ui-templates",
+            "output": "dj-ui-templates"
           }
         ],
         "styles": ["apps/prime-ng-playground/src/styles.scss"],

@@ -47,11 +47,13 @@ export const appConfig: ApplicationConfig = {
         return {
           templatesHandlers: {
             getLayoutTemplate: (id: string) =>
-              httpClient.get<LayoutTemplate>(`/dj-ui/layouts/${id}.json`),
+              httpClient.get<LayoutTemplate>(`/dj-ui-templates/layouts/${id}.json`),
             getUiElementTemplate: (id: string) =>
-              httpClient.get<UIElementTemplate>(`/dj-ui/ui-elements/${id}.json`),
+              httpClient.get<UIElementTemplate>(`/dj-ui-templates/ui-elements/${id}.json`),
             getRemoteResourceTemplate: (id: string) =>
-              httpClient.get<RemoteResourceTemplate>(`/dj-ui/remote-resources/${id}.json`),
+              httpClient.get<RemoteResourceTemplate>(
+                `/dj-ui-templates/remote-resources/${id}.json`
+              ),
           },
           componentLoadersMap: PrimeNgComponentLoader,
         };
