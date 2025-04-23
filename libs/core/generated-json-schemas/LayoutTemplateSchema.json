@@ -4,24 +4,6 @@
     "id": {
       "type": "string"
     },
-    "gridConfigs": {
-      "type": "object",
-      "properties": {
-        "columns": {
-          "type": "number"
-        },
-        "rowHeight": {
-          "type": "string"
-        },
-        "gap": {
-          "type": "string"
-        },
-        "padding": {
-          "type": "string"
-        }
-      },
-      "additionalProperties": false
-    },
     "uiElementInstances": {
       "type": "array",
       "items": {
@@ -32,21 +14,6 @@
           },
           "uiElementTemplateId": {
             "type": "string"
-          },
-          "positionAndSize": {
-            "type": "object",
-            "properties": {
-              "cols": {
-                "type": "number"
-              },
-              "rows": {
-                "type": "number"
-              },
-              "maxHeight": {
-                "type": "string"
-              }
-            },
-            "additionalProperties": false
           }
         },
         "required": [

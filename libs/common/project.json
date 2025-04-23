@@ -28,6 +28,13 @@
         "commands": ["tsc -p tsconfig.lib.prod.json --noEmit"],
         "cwd": "libs/common"
       }
+    },
+    "generate-json-schema-with-zod": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/common",
+        "commands": ["tsx generate-json-schemas.ts"]
+      }
     }
   }
 }

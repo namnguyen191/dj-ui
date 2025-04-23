@@ -22,7 +22,8 @@
     "**/*.spec.js",
     "**/*.test.jsx",
     "**/*.spec.jsx",
-    "**/test-setup.ts"
+    "**/test-setup.ts",
+    "generate-json-schemas.ts"
   ],
   "include": ["**/*.ts"]
 }

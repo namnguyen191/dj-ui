@@ -6,6 +6,6 @@ import type { LayoutTemplate } from './layout-template-interfaces';
 @Injectable({
   providedIn: 'root',
 })
-export class LayoutTemplateService extends BaseTemplateService<LayoutTemplate> {
+export class LayoutTemplateService<T extends LayoutTemplate> extends BaseTemplateService<T> {
   protected override missingTemplateEvent: MissingTemplateEvent = 'MISSING_LAYOUT_TEMPLATE';
 }

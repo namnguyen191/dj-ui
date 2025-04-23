@@ -57,6 +57,10 @@
       "url": "/libs/core/generated-json-schemas/LayoutTemplateSchema.json"
     },
     {
+      "fileMatch": ["**/*.SIMPLE_GRID_LAYOUT.json"],
+      "url": "/libs/common/generated-json-schemas/SIMPLE_GRID_LAYOUT.json"
+    },
+    {
       "fileMatch": ["**/*.REMOTE_RESOURCE.json"],
       "url": "/libs/core/generated-json-schemas/RemoteResourceTemplateSchema.json"
     },

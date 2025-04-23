@@ -19,9 +19,6 @@
     "verbatimModuleSyntax": true,
     "resolveJsonModule": true,
     "paths": {
-      "@dj-ui/prime-ng-playground/features/builder": [
-        "libs/prime-ng-playground/features/builder/src/index.ts"
-      ],
       "@dj-ui/carbon-ext": ["libs/carbon-ext/src/index.ts"],
       "@dj-ui/carbon-ext/carbon-button": ["libs/carbon-ext/carbon-button/src/index.ts"],
       "@dj-ui/carbon-ext/carbon-carousel": ["libs/carbon-ext/carbon-carousel/src/index.ts"],
@@ -40,6 +37,9 @@
       "@dj-ui/prime-ng-ext/simple-image": ["libs/prime-ng-ext/simple-image/src/index.ts"],
       "@dj-ui/prime-ng-ext/simple-table": ["libs/prime-ng-ext/simple-table/src/index.ts"],
       "@dj-ui/prime-ng-ext/simple-text": ["libs/prime-ng-ext/simple-text/src/index.ts"],
+      "@dj-ui/prime-ng-playground/features/builder": [
+        "libs/prime-ng-playground/features/builder/src/index.ts"
+      ],
       "@dj-ui/prime-ng-playground/shared": ["libs/prime-ng-playground/shared/src/index.ts"],
       "@dj-ui/utils": ["libs/shared/utils/src/index.ts"]
     }

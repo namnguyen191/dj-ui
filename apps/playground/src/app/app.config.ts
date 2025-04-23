@@ -52,7 +52,6 @@ export const appConfig: ApplicationConfig = {
       provide: CORE_LAYOUT_CONFIG,
       useFactory: (): CoreLayoutConfig => {
         return {
-          layoutLoadingComponent: DuiLayoutLoadingComponent,
           uiElementLoadingComponent: DuiUiElementLoadingComponent,
         };
       },
@@ -71,6 +70,7 @@ export const appConfig: ApplicationConfig = {
             getRemoteResourceTemplate: (id: string) => from(remoteResourceTemplatesStore.get(id)),
           },
           componentLoadersMap: CarbonComponentLoader,
+          layoutLoadingComponent: DuiLayoutLoadingComponent,
         };
       },
     },

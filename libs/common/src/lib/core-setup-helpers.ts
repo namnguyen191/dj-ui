@@ -24,27 +24,15 @@ import {
   StateStoreService,
   UIElementFactoryService,
   type UIElementLoader,
-  type UIElementPositionAndSize,
   type UIElementTemplate,
   UIElementTemplateService,
 } from '@dj-ui/core';
-import { set } from 'lodash-es';
-import {
-  buffer,
-  debounceTime,
-  forkJoin,
-  map,
-  mergeMap,
-  type MonoTypeOperatorFunction,
-  Observable,
-  tap,
-} from 'rxjs';
+import { mergeMap, type MonoTypeOperatorFunction, Observable, tap } from 'rxjs';
 
 import {
   missingLayoutTemplateEvent,
   missingRemoteResourceTemplateEvent,
   missingUIElementTemplateEvent,
-  UIElementRepositionEvent,
 } from './events-filters';
 import { FileUploadService } from './services/data-fetchers/file-upload.service';
 import { HttpFetcherService } from './services/data-fetchers/http-fetcher.service';
@@ -60,10 +48,6 @@ export type TemplatesHandlers = {
   getLayoutTemplate?: (id: string) => Observable<LayoutTemplate>;
   getUiElementTemplate?: (id: string) => Observable<UIElementTemplate>;
   getRemoteResourceTemplate?: (id: string) => Observable<RemoteResourceTemplate>;
-  updateElementsPositionsHandler?: (
-    layoutId: string,
-    eleWithNewPosAndSize: Record<string, UIElementPositionAndSize>
-  ) => Observable<void>;
 };
 export type ComponentsMap = Record<string, Type<BaseUIElementComponent>>;
 export type ComponentLoadersMap = Record<string, UIElementLoader>;
@@ -71,6 +55,7 @@ export type SetupConfigs = {
   templatesHandlers?: TemplatesHandlers;
   componentsMap?: ComponentsMap;
   componentLoadersMap?: ComponentLoadersMap;
+  layoutLoadingComponent?: Type<unknown>;
 };
 export const COMMON_SETUP_CONFIG = new InjectionToken<SetupConfigs>('COMMON_SETUP_CONFIG');
 
@@ -111,12 +96,7 @@ export const registerSingleFileUploadDataFetcher = (): void => {
 };
 
 export const setupEventsListener = (params: TemplatesHandlers): void => {
-  const {
-    getLayoutTemplate,
-    getUiElementTemplate,
-    getRemoteResourceTemplate,
-    updateElementsPositionsHandler,
-  } = params;
+  const { getLayoutTemplate, getUiElementTemplate, getRemoteResourceTemplate } = params;
   const eventsService = inject(EventsService);
   const layoutTemplateService = inject(LayoutTemplateService);
   const uiElementTemplatesService = inject(UIElementTemplateService);
@@ -183,33 +163,6 @@ export const setupEventsListener = (params: TemplatesHandlers): void => {
     );
 
     missingRemoteResources.subscribe();
-  }
-
-  if (updateElementsPositionsHandler) {
-    const uiElementReposition = allEvents.pipe(UIElementRepositionEvent());
-
-    const buffTrigger = uiElementReposition.pipe(debounceTime(3000));
-
-    const updateElementPosition = uiElementReposition.pipe(
-      buffer(buffTrigger),
-      map((events) =>
-        events.reduce<Record<string, Record<string, UIElementPositionAndSize>>>((acc, cur) => {
-          const {
-            payload: { elementId, layoutId, newPositionAndSize },
-          } = cur;
-          acc = set(acc, `${layoutId}.${elementId}`, newPositionAndSize);
-          return acc;
-        }, {})
-      ),
-      mergeMap((val) => {
-        const updateLayoutRequests = Object.entries(val).map(([layoutId, eleWithNewPosAndSize]) =>
-          updateElementsPositionsHandler(layoutId, eleWithNewPosAndSize)
-        );
-        return forkJoin(updateLayoutRequests);
-      })
-    );
-
-    updateElementPosition.subscribe();
   }
 };
 

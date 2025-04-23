@@ -7,22 +7,19 @@ import {
   type SetupConfigs,
   setupDefault,
 } from '@dj-ui/common';
-import { CORE_LAYOUT_CONFIG, type CoreLayoutConfig, DjuiComponent } from '@dj-ui/core';
+import { CORE_LAYOUT_CONFIG, type CoreLayoutConfig } from '@dj-ui/core';
 
 import { LayoutTemplateLoadingStateComponent } from './components/layout-template-loading-state/layout-template-loading-state.component';
 import { UiElementTemplateLoadingStateComponent } from './components/ui-element-template-loading-state/ui-element-template-loading-state.component';
 import { TemplateFetcherService } from './services/template-fetcher.service';
 
 @NgModule({
-  imports: [DjuiComponent],
-  exports: [DjuiComponent],
   providers: [
     provideDJUI(),
     provideDJUICommon(),
     {
       provide: CORE_LAYOUT_CONFIG,
       useFactory: (): CoreLayoutConfig => ({
-        layoutLoadingComponent: LayoutTemplateLoadingStateComponent,
         uiElementLoadingComponent: UiElementTemplateLoadingStateComponent,
       }),
     },
@@ -39,6 +36,7 @@ import { TemplateFetcherService } from './services/template-fetcher.service';
               templateFetcherService.getRemoteResourceTemplate(id),
           },
           componentLoadersMap: CarbonComponentLoader,
+          layoutLoadingComponent: LayoutTemplateLoadingStateComponent,
         };
       },
     },

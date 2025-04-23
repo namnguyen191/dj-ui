@@ -1,12 +1,12 @@
 import { CommonModule, DOCUMENT } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
-import { LayoutComponent } from '@dj-ui/core';
+import { SimpleGridLayoutComponent } from '@dj-ui/common';
 import type { MenuItem } from 'primeng/api';
 import { MenuModule } from 'primeng/menu';
 
 @Component({
   selector: 'app-home',
-  imports: [CommonModule, LayoutComponent, MenuModule],
+  imports: [CommonModule, SimpleGridLayoutComponent, MenuModule],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

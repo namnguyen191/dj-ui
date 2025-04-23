@@ -3,7 +3,8 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Edit16 from '@carbon/icons/es/edit/16';
-import { CORE_LAYOUT_CONFIG, type CoreLayoutConfig, DjuiComponent } from '@dj-ui/core';
+import { SimpleGridLayoutComponent } from '@dj-ui/common';
+import { CORE_LAYOUT_CONFIG, type CoreLayoutConfig } from '@dj-ui/core';
 import { ButtonModule } from 'carbon-components-angular/button';
 import { IconModule, IconService } from 'carbon-components-angular/icon';
 import { map } from 'rxjs';
@@ -16,11 +17,11 @@ import { LayoutTemplateCodeEditorModalComponent } from './components/layout-temp
 @Component({
   selector: 'namnguyen191-edit-layout-page',
   imports: [
-    DjuiComponent,
     FormsModule,
     ButtonModule,
     IconModule,
     LayoutTemplateCodeEditorModalComponent,
+    SimpleGridLayoutComponent,
   ],
   providers: [
     {

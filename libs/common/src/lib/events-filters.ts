@@ -26,9 +26,3 @@ export const missingUIElementTemplateEvent = <
 >(): UnaryFunction<Observable<EventObject>, Observable<TExtracted>> => {
   return pipe(filter((event): event is TExtracted => event.type === 'MISSING_UI_ELEMENT_TEMPLATE'));
 };
-
-export const UIElementRepositionEvent = <
-  TExtracted extends EventObject = Extract<CoreEventObject, { type: 'UI_ELEMENT_REPOSITION' }>,
->(): UnaryFunction<Observable<EventObject>, Observable<TExtracted>> => {
-  return pipe(filter((event): event is TExtracted => event.type === 'UI_ELEMENT_REPOSITION'));
-};

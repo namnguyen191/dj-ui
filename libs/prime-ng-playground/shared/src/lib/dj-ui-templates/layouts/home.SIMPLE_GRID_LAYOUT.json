@@ -1,5 +1,5 @@
 {
-  "id": "home.LAYOUT",
+  "id": "home.SIMPLE_GRID_LAYOUT",
   "gridConfigs": {
     "gap": "1rem",
     "padding": "0 10vw",
