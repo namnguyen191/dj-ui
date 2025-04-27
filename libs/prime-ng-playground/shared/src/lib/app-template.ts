@@ -1,4 +1,4 @@
-import type { LayoutTemplate, RemoteResourceTemplate, UIElementTemplate } from '@dj-ui/core';
+import type { RemoteResourceTemplate, UIElementTemplate } from '@dj-ui/core';
 import { z } from 'zod';
 
 export const ZTimeStamp = z.strictObject({
@@ -28,13 +28,6 @@ export type AppUIElementTemplateUnEditableFields = TimeStamp &
 export type AppUIElementTemplateEditableFields = Omit<
   AppUIElementTemplate,
   keyof AppUIElementTemplateUnEditableFields
->;
-
-export type AppLayoutTemplate = LayoutTemplate & TimeStamp & MetaData;
-export type AppLayoutTemplateUnEditableFields = TimeStamp & Pick<AppLayoutTemplate, 'id'>;
-export type AppLayoutTemplateEditableFields = Omit<
-  AppLayoutTemplate,
-  keyof AppLayoutTemplateUnEditableFields
 >;
 
 export type AppRemoteResourceTemplate = RemoteResourceTemplate & TimeStamp & MetaData;

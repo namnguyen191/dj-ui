@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   effect,
   inject,
   signal,
@@ -24,8 +25,10 @@ import * as prettierPluginEstree from 'prettier/plugins/estree';
 import * as prettier from 'prettier/standalone';
 import { debounceTime, Subject, tap } from 'rxjs';
 
-import type { AppUIElementTemplateEditableFields } from '../../../../../shared/dj-ui-app-template';
-import { UIElementTemplateEditorStore } from '../../../../../state-store/uiElementTemplateEditor.store';
+import type {
+  AppUIElementTemplateEditableFields,
+  AppUIElementTemplateUnEditableFields,
+} from '../../../../../shared/dj-ui-app-template';
 import { UIElementTemplatesStore } from '../../../../../state-store/uiElementTemplates.store';
 
 export type IStandaloneEditorConstructionOptions = NonNullable<Parameters<typeof editor.create>[1]>;
@@ -47,7 +50,6 @@ export type IStandaloneEditorConstructionOptions = NonNullable<Parameters<typeof
 })
 export class RawTemplateEditorModalComponent extends BaseModal {
   readonly #uiElementTemplatesStore = inject(UIElementTemplatesStore);
-  readonly #uiElementTemplateEditorStore = inject(UIElementTemplateEditorStore);
 
   readonly loadingSig = this.#uiElementTemplatesStore.isPending;
 
@@ -60,67 +62,89 @@ export class RawTemplateEditorModalComponent extends BaseModal {
   codeSig = signal<string>('');
   readonly errorStateSig = signal<'noError' | 'isError' | 'isPending'>('noError');
   #originalCode = '';
+  readonly #templateEditableFields = computed<AppUIElementTemplateEditableFields | null>(() => {
+    const currentTemplate = this.#uiElementTemplatesStore.filteredUIElementTemplates()?.[0];
+    if (!currentTemplate) {
+      return null;
+    }
+    return {
+      name: currentTemplate.name,
+      description: currentTemplate.description,
+      options: currentTemplate.options,
+      remoteResourceIds: currentTemplate.remoteResourceIds,
+      stateSubscription: currentTemplate.stateSubscription,
+      eventsHooks: currentTemplate.eventsHooks,
+    };
+  });
 
-  constructor() {
-    super();
-    this.codeChangeSubject
-      .pipe(
-        tap({
-          next: () => {
-            this.errorStateSig.set('isPending');
-          },
-        }),
-        debounceTime(500),
-        tap({
-          next: (code) => {
-            this.codeSig.set(code);
-            if (this.#isValidCode(code)) {
-              this.errorStateSig.set('noError');
-            } else {
-              this.errorStateSig.set('isError');
-            }
-          },
-        }),
-        takeUntilDestroyed()
-      )
-      .subscribe();
+  readonly #templateUnEditableFields = computed<AppUIElementTemplateUnEditableFields | null>(() => {
+    const currentTemplate = this.#uiElementTemplatesStore.filteredUIElementTemplates()?.[0];
+    if (!currentTemplate) {
+      return null;
+    }
+    return {
+      id: currentTemplate.id,
+      type: currentTemplate.type,
+      updatedAt: currentTemplate.updatedAt,
+      createdAt: currentTemplate.createdAt,
+    };
+  });
 
-    this.#loadTemplateIntoCode();
-  }
+  // eslint-disable-next-line no-unused-private-class-members
+  readonly #codeChangeSubscription = this.codeChangeSubject
+    .pipe(
+      tap({
+        next: () => {
+          this.errorStateSig.set('isPending');
+        },
+      }),
+      debounceTime(500),
+      tap({
+        next: (code) => {
+          this.codeSig.set(code);
+          if (this.#isValidCode(code)) {
+            this.errorStateSig.set('noError');
+          } else {
+            this.errorStateSig.set('isError');
+          }
+        },
+      }),
+      takeUntilDestroyed()
+    )
+    .subscribe();
 
   async updateUIElementTemplate(): Promise<void> {
-    const templateFromCode = JSON.parse(
-      untracked(this.codeSig)
-    ) as AppUIElementTemplateEditableFields;
-    this.#uiElementTemplateEditorStore.updateCurrentEditingTemplate(templateFromCode);
-    const latestEditedTemplated = untracked(
-      this.#uiElementTemplateEditorStore.currentEditingTemplate
-    );
+    const templateUnEditableFields = untracked(this.#templateUnEditableFields);
 
-    if (!latestEditedTemplated) {
-      console.error('Edited template is missing from store');
+    if (!templateUnEditableFields) {
       return;
     }
 
-    await this.#uiElementTemplatesStore.change(latestEditedTemplated);
+    const templateFromCode = JSON.parse(
+      untracked(this.codeSig)
+    ) as AppUIElementTemplateEditableFields;
+
+    await this.#uiElementTemplatesStore.change({
+      ...templateUnEditableFields,
+      ...templateFromCode,
+    });
     if (!untracked(this.#uiElementTemplatesStore.error)) {
       this.closeModal();
     }
   }
 
-  #loadTemplateIntoCode(): void {
-    effect(async () => {
-      const currentEditableTemplate = this.#uiElementTemplateEditorStore.currentEditableFields();
-      if (!currentEditableTemplate) {
-        return;
-      }
+  // eslint-disable-next-line no-unused-private-class-members
+  #loadTemplateIntoCodeEffect = effect(async () => {
+    const currentEditableTemplate = this.#templateEditableFields();
+    if (!currentEditableTemplate) {
+      return;
+    }
 
-      const rawJSON = JSON.stringify(currentEditableTemplate);
-      const prettifyJSON = await this.#formatJSON(rawJSON);
-      this.#originalCode = prettifyJSON;
-      this.codeSig.set(prettifyJSON);
-    });
-  }
+    const rawJSON = JSON.stringify(currentEditableTemplate);
+    const prettifyJSON = await this.#formatJSON(rawJSON);
+    this.#originalCode = prettifyJSON;
+    this.codeSig.set(prettifyJSON);
+  });
 
   async #formatJSON(rawJSON: string): Promise<string> {
     const formatted = await prettier.format(rawJSON, {

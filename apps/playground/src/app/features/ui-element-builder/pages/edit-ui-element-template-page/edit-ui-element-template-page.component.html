@@ -1,5 +1,4 @@
-<dj-ui-common-simple-grid-layout [layoutId]="PREVIEW_LAYOUT_ID"></dj-ui-common-simple-grid-layout>
-
+<ng-container [djuiUIElementRenderer]="currentUIElementTemplateId"></ng-container>
 <div class="edit-controls-container">
   <button cdsButton="primary" (click)="toggleModal(true)">
     Open template editor

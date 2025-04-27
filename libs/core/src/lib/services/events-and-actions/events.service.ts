@@ -8,9 +8,6 @@ export type EventObject = {
 
 export type CoreEventNameToPayLoadMap = {
   GENERIC: never;
-  MISSING_LAYOUT_TEMPLATE: {
-    id: string;
-  };
   MISSING_UI_ELEMENT_TEMPLATE: {
     id: string;
   };

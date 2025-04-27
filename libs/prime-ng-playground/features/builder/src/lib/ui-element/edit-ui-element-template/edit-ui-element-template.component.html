@@ -7,12 +7,7 @@
   (click)="toggleModal(true)"
 />
 
-<dj-ui-element-wrapper
-  [uiElementInstance]="{
-    id: 'current-editing-uie',
-    uiElementTemplateId: currentUIElementTemplateId,
-  }"
-></dj-ui-element-wrapper>
+<ng-container [djuiUIElementRenderer]="currentUIElementTemplateId"></ng-container>
 
 <prime-ng-playground-builder-feat-raw-template-editor-modal
   [visible]="isRawTemplateEditorModalOpenSig()"

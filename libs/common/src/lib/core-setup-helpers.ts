@@ -1,36 +1,37 @@
 import {
   type EnvironmentProviders,
   inject,
-  InjectionToken,
   makeEnvironmentProviders,
   type Provider,
-  Type,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import {
+  COMMON_SETUP_CONFIG,
+  type ComponentLoadersMap,
+  type ComponentsMap,
+  type SetupConfigs,
+  type TemplatesHandlers,
+} from '@dj-ui/common/shared';
 import type { Template } from '@dj-ui/core';
 import {
   type ActionHookHandlerAndPayloadParserMap,
   ActionHookService,
-  BaseUIElementComponent,
   DataFetchingService,
+  ELEMENT_RENDERER_CONFIG,
   EventsService,
   InterpolationService,
-  type LayoutTemplate,
-  LayoutTemplateService,
   logWarning,
   RemoteResourceService,
-  type RemoteResourceTemplate,
   RemoteResourceTemplateService,
   StateStoreService,
   UIElementFactoryService,
-  type UIElementLoader,
-  type UIElementTemplate,
   UIElementTemplateService,
 } from '@dj-ui/core';
-import { mergeMap, type MonoTypeOperatorFunction, Observable, tap } from 'rxjs';
+import { mergeMap, type MonoTypeOperatorFunction, tap } from 'rxjs';
 
+import { DefaultUiElementInfiniteErrorComponentComponent } from './components/default-ui-element-infinite-error-component/default-ui-element-infinite-error-component.component';
+import { DefaultUiElementLoadingComponentComponent } from './components/default-ui-element-loading-component/default-ui-element-loading-component.component';
 import {
-  missingLayoutTemplateEvent,
   missingRemoteResourceTemplateEvent,
   missingUIElementTemplateEvent,
 } from './events-filters';
@@ -43,21 +44,6 @@ import {
   ZTriggerRemoteResourceHookPayload,
 } from './services/defaut-actions-hooks.service';
 import { FileService } from './services/file.service';
-
-export type TemplatesHandlers = {
-  getLayoutTemplate?: (id: string) => Observable<LayoutTemplate>;
-  getUiElementTemplate?: (id: string) => Observable<UIElementTemplate>;
-  getRemoteResourceTemplate?: (id: string) => Observable<RemoteResourceTemplate>;
-};
-export type ComponentsMap = Record<string, Type<BaseUIElementComponent>>;
-export type ComponentLoadersMap = Record<string, UIElementLoader>;
-export type SetupConfigs = {
-  templatesHandlers?: TemplatesHandlers;
-  componentsMap?: ComponentsMap;
-  componentLoadersMap?: ComponentLoadersMap;
-  layoutLoadingComponent?: Type<unknown>;
-};
-export const COMMON_SETUP_CONFIG = new InjectionToken<SetupConfigs>('COMMON_SETUP_CONFIG');
 
 export const registerDefaultHook = (): void => {
   const defaultActionsHooksService = inject(DefaultActionsHooksService);
@@ -96,9 +82,8 @@ export const registerSingleFileUploadDataFetcher = (): void => {
 };
 
 export const setupEventsListener = (params: TemplatesHandlers): void => {
-  const { getLayoutTemplate, getUiElementTemplate, getRemoteResourceTemplate } = params;
+  const { getUiElementTemplate, getRemoteResourceTemplate } = params;
   const eventsService = inject(EventsService);
-  const layoutTemplateService = inject(LayoutTemplateService);
   const uiElementTemplatesService = inject(UIElementTemplateService);
   const remoteResourceTemplateService = inject(RemoteResourceTemplateService);
 
@@ -117,20 +102,6 @@ export const setupEventsListener = (params: TemplatesHandlers): void => {
       },
     });
   };
-
-  if (getLayoutTemplate) {
-    const missingLayoutEvents = allEvents.pipe(
-      missingLayoutTemplateEvent(),
-      mergeMap((event) => {
-        const missingLayoutId = event.payload.id;
-        layoutTemplateService.startRegisteringTemplate(missingLayoutId);
-        return getLayoutTemplate(missingLayoutId).pipe(warnMismatchTemplateId(missingLayoutId));
-      }),
-      tap((layout) => layoutTemplateService.registerTemplate(layout))
-    );
-
-    missingLayoutEvents.subscribe();
-  }
 
   if (getUiElementTemplate) {
     const missingUIElementTemplates = allEvents.pipe(
@@ -219,7 +190,6 @@ export const setupDefault = (): void => {
 
 export const provideDJUI = (): EnvironmentProviders => {
   const providers: Provider[] = [
-    LayoutTemplateService,
     UIElementTemplateService,
     RemoteResourceTemplateService,
     EventsService,
@@ -240,6 +210,20 @@ export const provideDJUICommon = (): EnvironmentProviders => {
     FileService,
     HttpFetcherService,
     DefaultActionsHooksService,
+  ];
+
+  return makeEnvironmentProviders(providers);
+};
+
+export const provideDefaultDJUIConfig = (): EnvironmentProviders => {
+  const providers: Provider[] = [
+    {
+      provide: ELEMENT_RENDERER_CONFIG,
+      useValue: {
+        uiElementLoadingComponent: DefaultUiElementLoadingComponentComponent,
+        uiElementInfiniteErrorComponent: DefaultUiElementInfiniteErrorComponentComponent,
+      },
+    },
   ];
 
   return makeEnvironmentProviders(providers);

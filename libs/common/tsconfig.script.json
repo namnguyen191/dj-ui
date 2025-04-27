@@ -3,6 +3,6 @@
   "compilerOptions": {
     "types": ["node"]
   },
-  "exclude": [],
+  "exclude": ["test-setup.ts"],
   "files": ["generate-json-schemas.ts"]
 }

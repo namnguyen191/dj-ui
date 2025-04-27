@@ -1,0 +1,48 @@
+{
+  "id": "home.SIMPLE_GRID_LAYOUT",
+  "type": "SIMPLE_GRID_LAYOUT",
+  "options": {
+    "grid": {
+      "gap": "1rem",
+      "padding": "0 10vw",
+      "rowHeight": "auto"
+    },
+    "uiElementInstances": [
+      {
+        "id": "1",
+        "uiElementTemplateId": "home-main-icon.PRIME_NG_SIMPLE_IMAGE",
+        "positionAndSize": {
+          "cols": 16
+        }
+      },
+      {
+        "id": "2",
+        "uiElementTemplateId": "home-title.PRIME_NG_SIMPLE_TEXT",
+        "positionAndSize": {
+          "cols": 16
+        }
+      },
+      {
+        "id": "3",
+        "uiElementTemplateId": "home-introduction.PRIME_NG_SIMPLE_TEXT",
+        "positionAndSize": {
+          "cols": 16
+        }
+      },
+      {
+        "id": "4",
+        "uiElementTemplateId": "home-installation-guide.PRIME_NG_SIMPLE_TEXT",
+        "positionAndSize": {
+          "cols": 16
+        }
+      },
+      {
+        "id": "5",
+        "uiElementTemplateId": "home-simple-setup-guide.PRIME_NG_SIMPLE_TEXT",
+        "positionAndSize": {
+          "cols": 16
+        }
+      }
+    ]
+  }
+}

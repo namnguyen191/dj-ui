@@ -1,4 +1,4 @@
-import type { ComponentLoadersMap } from '@dj-ui/common';
+import type { ComponentLoadersMap } from '@dj-ui/common/shared';
 import {
   SimpleImageElementType,
   SimpleTableElementType,

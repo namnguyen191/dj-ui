@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UiElementWrapperComponent } from '@dj-ui/core';
+import { UIElementRendererDirective } from '@dj-ui/core';
 import { UIElementTemplatesStore } from '@dj-ui/prime-ng-playground/shared';
 import { Button } from 'primeng/button';
 import { map } from 'rxjs';
@@ -10,7 +10,7 @@ import { RawTemplateEditorModalComponent } from './components/raw-template-edito
 
 @Component({
   selector: 'prime-ng-playground-builder-feat-edit-ui-element-template',
-  imports: [UiElementWrapperComponent, RawTemplateEditorModalComponent, Button],
+  imports: [UIElementRendererDirective, RawTemplateEditorModalComponent, Button],
   templateUrl: './edit-ui-element-template.component.html',
   styleUrl: './edit-ui-element-template.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

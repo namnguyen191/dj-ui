@@ -3,15 +3,11 @@ import { toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import Edit16 from '@carbon/icons/es/edit/16';
-import { SimpleGridLayoutComponent } from '@dj-ui/common';
+import { UIElementRendererDirective } from '@dj-ui/core';
 import { ButtonModule } from 'carbon-components-angular/button';
 import { IconModule, IconService } from 'carbon-components-angular/icon';
 import { map } from 'rxjs';
 
-import {
-  PREVIEW_LAYOUT_BASE_CONFIG,
-  UIElementTemplateEditorStore,
-} from '../../../../state-store/uiElementTemplateEditor.store';
 import { UIElementTemplatesStore } from '../../../../state-store/uiElementTemplates.store';
 import { RawTemplateEditorModalComponent } from './components/raw-template-editor-modal.component';
 
@@ -22,7 +18,7 @@ import { RawTemplateEditorModalComponent } from './components/raw-template-edito
     ButtonModule,
     IconModule,
     RawTemplateEditorModalComponent,
-    SimpleGridLayoutComponent,
+    UIElementRendererDirective,
   ],
   templateUrl: './edit-ui-element-template-page.component.html',
   styleUrl: './edit-ui-element-template-page.component.scss',
@@ -32,10 +28,9 @@ export class EditUIElementTemplatePageComponent {
   readonly #activatedRoute = inject(ActivatedRoute);
   readonly #router = inject(Router);
   readonly #uiElementTemplatesStore = inject(UIElementTemplatesStore);
-  readonly #uiElementTemplateEditorStore = inject(UIElementTemplateEditorStore);
   readonly #iconService = inject(IconService);
 
-  readonly #currentUIElementTemplateId: string = this.#activatedRoute.snapshot.params[
+  protected readonly currentUIElementTemplateId: string = this.#activatedRoute.snapshot.params[
     'id'
   ] as string;
   readonly #showEditModalQueryParam = 'editRawTemplate';
@@ -48,11 +43,9 @@ export class EditUIElementTemplatePageComponent {
     }
   );
 
-  readonly PREVIEW_LAYOUT_ID = PREVIEW_LAYOUT_BASE_CONFIG.id;
-
   constructor() {
     this.#iconService.registerAll([Edit16] as object[]);
-    this.#uiElementTemplatesStore.updateQuery({ id: this.#currentUIElementTemplateId });
+    this.#uiElementTemplatesStore.updateQuery({ id: this.currentUIElementTemplateId });
 
     this.#loadTemplateInPreview();
   }
@@ -73,8 +66,6 @@ export class EditUIElementTemplatePageComponent {
       if (!uiElementTemplate) {
         return;
       }
-
-      this.#uiElementTemplateEditorStore.setCurrentEditingTemplate(uiElementTemplate);
     });
   }
 }

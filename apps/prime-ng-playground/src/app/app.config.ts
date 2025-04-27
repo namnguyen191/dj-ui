@@ -6,10 +6,10 @@ import {
 } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter } from '@angular/router';
-import { COMMON_SETUP_CONFIG, type SetupConfigs } from '@dj-ui/common';
+import { CommonComponentLoader, provideDefaultDJUIConfig } from '@dj-ui/common';
+import { COMMON_SETUP_CONFIG, type SetupConfigs } from '@dj-ui/common/shared';
 import {
   CREATE_JS_RUNNER_WORKER,
-  type LayoutTemplate,
   type RemoteResourceTemplate,
   type UIElementTemplate,
 } from '@dj-ui/core';
@@ -30,6 +30,7 @@ export const appConfig: ApplicationConfig = {
       },
     }),
     provideHttpClient(),
+    provideDefaultDJUIConfig(),
     {
       provide: CREATE_JS_RUNNER_WORKER,
       useValue: (): Worker => {
@@ -46,8 +47,6 @@ export const appConfig: ApplicationConfig = {
         const httpClient = inject(HttpClient);
         return {
           templatesHandlers: {
-            getLayoutTemplate: (id: string) =>
-              httpClient.get<LayoutTemplate>(`/dj-ui-templates/layouts/${id}.json`),
             getUiElementTemplate: (id: string) =>
               httpClient.get<UIElementTemplate>(`/dj-ui-templates/ui-elements/${id}.json`),
             getRemoteResourceTemplate: (id: string) =>
@@ -55,7 +54,10 @@ export const appConfig: ApplicationConfig = {
                 `/dj-ui-templates/remote-resources/${id}.json`
               ),
           },
-          componentLoadersMap: PrimeNgComponentLoader,
+          componentLoadersMap: {
+            ...PrimeNgComponentLoader,
+            ...CommonComponentLoader,
+          },
         };
       },
     },

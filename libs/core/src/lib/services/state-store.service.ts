@@ -18,7 +18,7 @@ import { z } from 'zod';
 import { logInfo } from '../utils/logging';
 import { InterpolationService } from './interpolation.service';
 
-export const ZodAvailableStateScope = z.enum(['global', 'local', 'layout']);
+export const ZodAvailableStateScope = z.enum(['global', 'local']);
 export type AvailableStateScope = z.infer<typeof ZodAvailableStateScope>;
 
 export type StateMap = {
@@ -38,7 +38,6 @@ export const ZStateSubscriptionConfig = z.strictObject({
   watchedScopes: z.strictObject({
     global: z.array(z.string()).optional(),
     local: z.array(z.string()).optional(),
-    layout: z.array(z.string()).optional(),
   }),
   variables: z.record(z.any()).optional(),
 }) satisfies z.ZodType<StateSubscriptionConfig>;
@@ -50,12 +49,9 @@ export const getStatesAsContext = (): Observable<StateMap> => {
 
   const global: Observable<UnknownRecord> = stateStoreService.getGlobalState();
 
-  const layout: Observable<UnknownRecord> = stateStoreService.getLayoutState();
-
   return combineLatest({
     global,
     local,
-    layout,
   });
 };
 
@@ -65,11 +61,7 @@ export const getStatesSubscriptionAsContext = (
 ): Observable<StateMap> => {
   const { watchedScopes, variables } = stateSubscription;
 
-  const {
-    local: localSubscription,
-    layout: layoutSubscription,
-    global: globalSubscription,
-  } = watchedScopes;
+  const { local: localSubscription, global: globalSubscription } = watchedScopes;
 
   const stateStoreService = inject(StateStoreService);
   const interpolationService = inject(InterpolationService);
@@ -82,14 +74,9 @@ export const getStatesSubscriptionAsContext = (
     ? stateStoreService.getGlobalStateByPaths(globalSubscription)
     : of({});
 
-  const layout: Observable<UnknownRecord> = layoutSubscription
-    ? stateStoreService.getLayoutStateByPaths(layoutSubscription)
-    : of({});
-
   return combineLatest({
     global,
     local,
-    layout,
   }).pipe(
     tap({
       next: () => {
@@ -120,7 +107,6 @@ export const getStatesSubscriptionAsContext = (
 })
 export class StateStoreService {
   #globalState = new BehaviorSubject<UnknownRecord>({});
-  #layoutState = new BehaviorSubject<UnknownRecord>({});
   #localState = new BehaviorSubject<UnknownRecord>({});
 
   getGlobalState(): Observable<UnknownRecord> {
@@ -139,14 +125,6 @@ export class StateStoreService {
     return this.#localState.asObservable().pipe(this.watchStatePaths(paths));
   }
 
-  getLayoutState(): Observable<UnknownRecord> {
-    return this.#layoutState.asObservable();
-  }
-
-  getLayoutStateByPaths(paths: string[]): Observable<UnknownRecord> {
-    return this.#layoutState.asObservable().pipe(this.watchStatePaths(paths));
-  }
-
   addToState(params: { scope: AvailableStateScope; data: UnknownRecord }): void {
     const { scope, data } = params;
 
@@ -155,14 +133,6 @@ export class StateStoreService {
         const oldGLobalState = this.#globalState.getValue();
         this.#globalState.next({
           ...oldGLobalState,
-          ...data,
-        });
-        break;
-      }
-      case 'layout': {
-        const oldLayoutState = this.#layoutState.getValue();
-        this.#layoutState.next({
-          ...oldLayoutState,
           ...data,
         });
         break;

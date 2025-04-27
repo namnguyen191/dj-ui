@@ -2,8 +2,6 @@ import { APP_BASE_HREF, CommonModule, DOCUMENT } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
 import { ButtonModule, ModalModule } from 'carbon-components-angular';
 
-import { LayoutTemplatesAPIService } from '../../services/layout-templates-api.service';
-import { LayoutTemplatesLocalAPIService } from '../../services/layout-templates-local-api.service';
 import { RemoteResourceTemplatesAPIService } from '../../services/remote-resource-templates-api.service';
 import { RemoteResourceTemplatesLocalAPIService } from '../../services/remote-resource-templates-local-api.service';
 import { UIElementTemplatesAPIService } from '../../services/ui-element-templates-api.service';
@@ -16,9 +14,6 @@ import { UIElementTemplatesLocalAPIService } from '../../services/ui-element-tem
   styleUrl: './reset-local-api-btn.component.scss',
 })
 export class ResetLocalApiBtnComponent {
-  readonly #layoutTemplatesLocalAPIService = inject(
-    LayoutTemplatesAPIService
-  ) as LayoutTemplatesLocalAPIService;
   readonly #remoteResourceTemplatesLocalAPIService = inject(
     RemoteResourceTemplatesAPIService
   ) as RemoteResourceTemplatesLocalAPIService;
@@ -31,7 +26,6 @@ export class ResetLocalApiBtnComponent {
   isConfirmationModalOpenSig = signal<boolean>(false);
 
   async resetLocalAPI(): Promise<void> {
-    await this.#layoutTemplatesLocalAPIService.resetTemplates();
     await this.#uiElementTemplatesLocalAPIService.resetTemplates();
     await this.#remoteResourceTemplatesLocalAPIService.resetTemplates();
     this.#document.location.href = this.#appBaseHref;

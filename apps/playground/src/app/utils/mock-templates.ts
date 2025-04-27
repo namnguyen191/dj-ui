@@ -1,4 +1,3 @@
-import mockTablesDemo from '../../../public/sample-templates/layouts/TABLES_DEMO.LAYOUT.json';
 import mockJokeAPIRR from '../../../public/sample-templates/remote-resources/JOKE_API_REMOTE_RESOURCE.json';
 import mockPokemonPaginationRR from '../../../public/sample-templates/remote-resources/POKEMON_PAGINATION.REMOTE_RESOURCE.json';
 import mockPokemonParallelRR from '../../../public/sample-templates/remote-resources/POKEMON_PARALLEL.REMOTE_RESOURCE.json';
@@ -21,8 +20,6 @@ export const mockUIElementTemplates = [
   mockServerSidePaginationTable,
   mockTextCardTable,
 ];
-
-export const mockLayoutTemplates = [mockTablesDemo];
 
 export const mockRemoteResourceTemplates = [
   mockJokeAPIRR,

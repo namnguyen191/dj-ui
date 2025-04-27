@@ -5,12 +5,8 @@ import {
   type Provider,
 } from '@angular/core';
 import type { Route } from '@angular/router';
-import {
-  COMMON_SETUP_CONFIG,
-  provideDJUI,
-  provideDJUICommon,
-  type SetupConfigs,
-} from '@dj-ui/common';
+import { provideDJUI, provideDJUICommon } from '@dj-ui/common';
+import { COMMON_SETUP_CONFIG, type SetupConfigs } from '@dj-ui/common/shared';
 import { PrimeNgComponentLoader } from '@dj-ui/prime-ng-ext';
 import {
   RemoteResourceTemplatesStore,
@@ -33,7 +29,6 @@ const provideDJUIBuilder = (): EnvironmentProviders => {
 
           return {
             templatesHandlers: {
-              // getLayoutTemplate: (id: string) => null as any,
               getUiElementTemplate: (id: string) => from(uielementTemplatesStore.get(id)),
               getRemoteResourceTemplate: (id: string) => from(remoteResourceTemplatesStore.get(id)),
             },

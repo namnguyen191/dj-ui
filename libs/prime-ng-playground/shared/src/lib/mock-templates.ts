@@ -8,6 +8,4 @@ export const mockUIElementTemplates: CreateAppUIElementTemplate<AnyUIElementTemp
   pokemonServerSidePaginationTable,
 ];
 
-export const mockLayoutTemplates = [];
-
 export const mockRemoteResourceTemplates: AppRemoteResourceTemplate[] = [pokemonWithPaginationRR];

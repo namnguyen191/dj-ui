@@ -6,7 +6,7 @@ import {
   CarbonCarouselSymbol,
 } from '@dj-ui/carbon-ext/shared';
 import { BaseUIElementComponent, type UIElementImplementation } from '@dj-ui/core';
-import { UiElementWrapperComponent } from '@dj-ui/core';
+import { UIElementRendererDirective } from '@dj-ui/core';
 import { parseZodWithDefault } from '@namnguyen191/types-helper';
 
 import {
@@ -18,7 +18,7 @@ import {
 
 @Component({
   selector: 'dj-ui-carbon-carousel-card',
-  imports: [CommonModule, UiElementWrapperComponent],
+  imports: [CommonModule, UIElementRendererDirective],
   templateUrl: './carbon-carousel-card.component.html',
   styleUrl: './carbon-carousel-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
