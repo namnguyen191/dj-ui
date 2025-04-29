@@ -26,6 +26,11 @@ export class AppComponent {
           icon: 'pi pi-chart-bar',
           routerLink: '/builder/ui-element',
         },
+        {
+          label: 'Layout',
+          icon: 'pi pi-objects-column',
+          routerLink: '/builder/layout',
+        },
       ],
     },
   ];

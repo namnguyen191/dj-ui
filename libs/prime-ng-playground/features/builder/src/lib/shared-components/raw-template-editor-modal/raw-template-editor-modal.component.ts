@@ -19,6 +19,8 @@ import {
   type AppUIElementTemplateEditableFields,
   CodeEditorComponent,
   type CodeEditorConfigs,
+  type FilterQuery,
+  filterTemplatesByQuery,
   UIElementTemplatesStore,
 } from '@dj-ui/prime-ng-playground/shared';
 import type { Plugin } from 'prettier';
@@ -43,9 +45,9 @@ import { filter, from, map, Subject, switchMap, tap } from 'rxjs';
 export class RawTemplateEditorModalComponent {
   readonly #uiElementTemplatesStore = inject(UIElementTemplatesStore);
   readonly #uiElementTemplateService = inject(UIElementTemplateService);
-
   readonly #messageService = inject(MessageService);
 
+  readonly query = input.required<Required<FilterQuery>>();
   readonly visible = input.required<boolean>();
 
   readonly editCancel = output<void>();
@@ -55,19 +57,25 @@ export class RawTemplateEditorModalComponent {
   protected readonly codeChangeSubject = new Subject<string>();
   readonly errorStateSig = signal<'noError' | 'isError' | 'isPending'>('noError');
 
+  readonly #templatesFilteredByIdSig: Signal<AppUIElementTemplate[]> = computed(() => {
+    const query = untracked(this.query);
+
+    return this.#uiElementTemplatesStore.entities().filter(filterTemplatesByQuery(query));
+  });
   readonly #currentTemplateSig: Signal<AppUIElementTemplate | null> = computed(() => {
-    const filteredTemplates = this.#uiElementTemplatesStore.filteredUIElementTemplates();
-    if (filteredTemplates.length <= 0) {
+    const templatesFilteredById = this.#templatesFilteredByIdSig();
+
+    if (templatesFilteredById.length <= 0) {
       return null;
     }
 
-    if (filteredTemplates.length > 1) {
+    if (templatesFilteredById.length > 1) {
       console.warn(
-        'Multiple UIE templates with the same ID detected. This could be an error. The first one will be selected for editing'
+        `Multiple UIE templates with the same ID of ${untracked(this.query).id} detected. This could be an error. The first one will be selected for editing`
       );
     }
 
-    return filteredTemplates[0] ?? null;
+    return templatesFilteredById[0] as AppUIElementTemplate;
   });
 
   readonly #currentEditableFieldsSig: Signal<AppUIElementTemplateEditableFields | null> = computed(

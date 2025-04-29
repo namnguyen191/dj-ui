@@ -9,13 +9,13 @@ import { map } from 'rxjs';
 import { RawTemplateEditorModalComponent } from '../../shared-components/raw-template-editor-modal/raw-template-editor-modal.component';
 
 @Component({
-  selector: 'prime-ng-playground-builder-feat-edit-ui-element-template',
+  selector: 'prime-ng-playground-builder-feat-edit-layout-template',
   imports: [UIElementRendererDirective, RawTemplateEditorModalComponent, Button],
-  templateUrl: './edit-ui-element-template.component.html',
-  styleUrl: './edit-ui-element-template.component.scss',
+  templateUrl: './edit-layout-template.component.html',
+  styleUrl: './edit-layout-template.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EditUIElementTemplateComponent {
+export class EditLayoutTemplateComponent {
   readonly #uiElementTemplatesStore = inject(UIElementTemplatesStore);
   readonly #activatedRoute = inject(ActivatedRoute);
   readonly #router = inject(Router);

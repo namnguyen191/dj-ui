@@ -1,7 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, inject, type Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, inject, type Signal } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
+  layoutUIElement,
   RemoteResourceTemplatesStore,
   type TemplateInfo,
   UIElementTemplatesStore,
@@ -27,8 +28,11 @@ export class UIElementListComponent {
   readonly #activatedRoute = inject(ActivatedRoute);
 
   protected loadingSig = this.#uiElementTemplatesStore.isPending;
-  allTemplatesInfoSig: Signal<TemplateInfo[]> =
-    this.#uiElementTemplatesStore.allUIElementTemplatesInfo;
+  allTemplatesInfoSig: Signal<TemplateInfo[]> = computed(() => {
+    const allTemplatesInfo = this.#uiElementTemplatesStore.allUIElementTemplatesInfo();
+
+    return allTemplatesInfo.filter((tempInfo) => !layoutUIElement.has(tempInfo.type));
+  });
 
   navigateToEditPage(uieTemplateId: string): void {
     this.#router.navigate(['.', uieTemplateId], { relativeTo: this.#activatedRoute });

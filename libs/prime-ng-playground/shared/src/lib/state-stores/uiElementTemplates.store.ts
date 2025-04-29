@@ -1,5 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { computed, inject } from '@angular/core';
+import { SimpleGridLayoutElementType } from '@dj-ui/common/shared';
+import type { UIElementTemplate } from '@dj-ui/core';
 import { withEntitiesAndLoaders } from '@dj-ui/utils';
 import {
   patchState,
@@ -22,11 +24,16 @@ import {
 type UIElementTemplatesStoreState = {
   query: {
     id?: string;
+    isLayout?: boolean;
   };
 };
 const uiElementTemplatesStoreInitialState: UIElementTemplatesStoreState = {
   query: {},
 };
+
+export const layoutUIElement = new Set([SimpleGridLayoutElementType]);
+
+export type UIElementTemplateInfo = TemplateInfo & Pick<UIElementTemplate, 'type'>;
 
 export const UIElementTemplatesStore = signalStore(
   { providedIn: 'root' },
@@ -44,9 +51,10 @@ export const UIElementTemplatesStore = signalStore(
       firstValueFrom(uiElementTemplateAPIService.updateUIElementTemplate(updatePayload)),
   })),
   withComputed(({ entities, query }) => ({
-    allUIElementTemplatesInfo: computed<TemplateInfo[]>(() => {
-      return entities().map(({ id, createdAt, updatedAt, name, description }) => ({
+    allUIElementTemplatesInfo: computed<UIElementTemplateInfo[]>(() => {
+      return entities().map(({ id, createdAt, updatedAt, name, description, type }) => ({
         id,
+        type,
         createdAt,
         updatedAt,
         name,
@@ -55,14 +63,20 @@ export const UIElementTemplatesStore = signalStore(
     }),
     filteredUIElementTemplates: computed<AppUIElementTemplate[]>(
       () => {
-        const { id } = query();
+        const { id, isLayout = false } = query();
 
         return entities().filter((uiEleTemp) => {
+          let matched = true;
+
           if (id) {
-            return uiEleTemp.id === id;
+            matched = matched && uiEleTemp.id === id;
           }
 
-          return false;
+          if (isLayout) {
+            matched = matched && layoutUIElement.has(uiEleTemp.type);
+          }
+
+          return matched;
         });
       },
       { equal: isEqual }
@@ -83,3 +97,28 @@ export const UIElementTemplatesStore = signalStore(
     },
   })
 );
+
+export type FilterQuery = {
+  id?: string;
+  isLayout?: boolean;
+};
+export const filterTemplatesByQuery = ({
+  id,
+  isLayout,
+}: FilterQuery): ((uiEleTemp: AppUIElementTemplate) => boolean) => {
+  return (uiEleTemp: AppUIElementTemplate): boolean => {
+    let matched = true;
+
+    if (id) {
+      matched = matched && uiEleTemp.id === id;
+    }
+
+    if (isLayout) {
+      matched = matched && layoutUIElement.has(uiEleTemp.type);
+    } else {
+      matched = matched && !layoutUIElement.has(uiEleTemp.type);
+    }
+
+    return matched;
+  };
+};
