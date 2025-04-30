@@ -7,11 +7,6 @@ export const appRoutes: Route[] = [
       import('./features/ui-element-builder/lib.routes').then((m) => m.uiElementBuilderRoutes),
   },
   {
-    path: 'layout-builder',
-    loadChildren: () =>
-      import('./features/layout-builder/lib.routes').then((m) => m.layoutBuilderRoutes),
-  },
-  {
     path: 'idependence-configs-patterns',
     loadChildren: () =>
       import('./features/independence-configs-pattern/lib.routes').then(

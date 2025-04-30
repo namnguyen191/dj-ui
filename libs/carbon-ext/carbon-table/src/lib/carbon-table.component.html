@@ -1,13 +1,10 @@
 <cds-table-container>
   <!-- requiredComponentSymbols should be a class... -->
-  <dj-ui-element-wrapper
+  <ng-container
     *ngIf="primaryButtonIdConfigOption() as primaryButtonId"
+    [djuiUIElementRenderer]="primaryButtonId"
     [requiredComponentSymbols]="[carbonButtonSymbol]"
-    [uiElementInstance]="{
-      id: primaryButtonId,
-      uiElementTemplateId: primaryButtonId,
-    }"
-  ></dj-ui-element-wrapper>
+  ></ng-container>
   <cds-table-header>
     <h4 cdsTableHeaderTitle id="table-header">{{ titleConfigOption() }}</h4>
     <p

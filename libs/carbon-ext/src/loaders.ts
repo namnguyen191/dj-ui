@@ -6,7 +6,7 @@ import {
   CarbonTableElementType,
   CarbonTextCardElementType,
 } from '@dj-ui/carbon-ext/shared';
-import type { ComponentLoadersMap } from '@dj-ui/common';
+import type { ComponentLoadersMap } from '@dj-ui/common/shared';
 
 export const CarbonComponentLoader: ComponentLoadersMap = {
   [CarbonButtonElementType]: () =>

@@ -53,8 +53,8 @@
       "url": "/libs/carbon-ext/generated-json-schemas/CarbonButtonSchema.json"
     },
     {
-      "fileMatch": ["**/*.LAYOUT.json"],
-      "url": "/libs/core/generated-json-schemas/LayoutTemplateSchema.json"
+      "fileMatch": ["**/*.SIMPLE_GRID_LAYOUT.json"],
+      "url": "/libs/common/generated-json-schemas/CommonSimpleGridUIESchema.json"
     },
     {
       "fileMatch": ["**/*.REMOTE_RESOURCE.json"],

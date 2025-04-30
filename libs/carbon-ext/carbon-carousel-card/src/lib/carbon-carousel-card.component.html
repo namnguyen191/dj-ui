@@ -4,13 +4,10 @@
   <span>Something went wrong</span>
 } @else {
   <section class="card-carousel">
-    <dj-ui-element-wrapper
+    <ng-container
+      [djuiUIElementRenderer]="carouselIdConfigOption()"
       [requiredComponentSymbols]="[carouselSymbol]"
-      [uiElementInstance]="{
-        id: carouselIdConfigOption(),
-        uiElementTemplateId: carouselIdConfigOption(),
-      }"
-    ></dj-ui-element-wrapper>
+    ></ng-container>
   </section>
 
   <section class="card-body">

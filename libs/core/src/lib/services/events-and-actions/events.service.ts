@@ -1,8 +1,6 @@
 import { Injectable } from '@angular/core';
 import { asyncScheduler, Observable, observeOn, Subject } from 'rxjs';
 
-import type { UIElementPositionAndSize } from '../templates/layout-template-interfaces';
-
 export type EventObject = {
   type: string;
   payload?: unknown;
@@ -10,19 +8,11 @@ export type EventObject = {
 
 export type CoreEventNameToPayLoadMap = {
   GENERIC: never;
-  MISSING_LAYOUT_TEMPLATE: {
-    id: string;
-  };
   MISSING_UI_ELEMENT_TEMPLATE: {
     id: string;
   };
   MISSING_REMOTE_RESOURCE_TEMPLATE: {
     id: string;
-  };
-  UI_ELEMENT_REPOSITION: {
-    layoutId: string;
-    elementId: string;
-    newPositionAndSize: UIElementPositionAndSize;
   };
 };
 

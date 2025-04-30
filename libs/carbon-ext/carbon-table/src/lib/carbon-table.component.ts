@@ -17,7 +17,7 @@ import {
 import {
   BaseUIElementComponent,
   type UIElementImplementation,
-  UiElementWrapperComponent,
+  UIElementRendererDirective,
 } from '@dj-ui/core';
 import { parseZodWithDefault } from '@namnguyen191/types-helper';
 import {
@@ -43,7 +43,7 @@ import {
 
 @Component({
   selector: 'dj-ui-carbon-table',
-  imports: [CommonModule, TableModule, PaginationModule, UiElementWrapperComponent],
+  imports: [CommonModule, TableModule, PaginationModule, UIElementRendererDirective],
   templateUrl: './carbon-table.component.html',
   styleUrl: './carbon-table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

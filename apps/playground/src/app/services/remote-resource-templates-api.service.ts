@@ -4,7 +4,7 @@ import { Observable } from 'rxjs';
 
 import type { AppRemoteResourceTemplate, TimeStamp } from '../shared/dj-ui-app-template';
 
-const BASE_LAYOUT_TEMPLATE_URL = 'http://localhost:8080/remote-resource-templates';
+const BASE_REMOTE_RESOURCE_TEMPLATE_URL = 'http://localhost:8080/remote-resource-templates';
 
 export type CreateAppRemoteResourceTemplatePayload = Omit<
   AppRemoteResourceTemplate,
@@ -20,22 +20,30 @@ export class RemoteResourceTemplatesAPIService {
   readonly #httpClient = inject(HttpClient);
 
   getAllRemoteResourceTemplates = (): Observable<AppRemoteResourceTemplate[]> => {
-    return this.#httpClient.get<AppRemoteResourceTemplate[]>(BASE_LAYOUT_TEMPLATE_URL);
+    return this.#httpClient.get<AppRemoteResourceTemplate[]>(BASE_REMOTE_RESOURCE_TEMPLATE_URL);
   };
 
   createRemoteResourceTemplate = (
     payload: CreateAppRemoteResourceTemplatePayload
   ): Observable<AppRemoteResourceTemplate> => {
-    return this.#httpClient.post<AppRemoteResourceTemplate>(BASE_LAYOUT_TEMPLATE_URL, payload);
+    return this.#httpClient.post<AppRemoteResourceTemplate>(
+      BASE_REMOTE_RESOURCE_TEMPLATE_URL,
+      payload
+    );
   };
 
   updateRemoteResourceTemplate = (
     payload: UpdateAppRemoteResourceTemplatePayload
   ): Observable<AppRemoteResourceTemplate> => {
-    return this.#httpClient.put<AppRemoteResourceTemplate>(BASE_LAYOUT_TEMPLATE_URL, payload);
+    return this.#httpClient.put<AppRemoteResourceTemplate>(
+      BASE_REMOTE_RESOURCE_TEMPLATE_URL,
+      payload
+    );
   };
 
   fetchRemoteResourceTemplate(id: string): Observable<AppRemoteResourceTemplate> {
-    return this.#httpClient.get<AppRemoteResourceTemplate>(`${BASE_LAYOUT_TEMPLATE_URL}/${id}`);
+    return this.#httpClient.get<AppRemoteResourceTemplate>(
+      `${BASE_REMOTE_RESOURCE_TEMPLATE_URL}/${id}`
+    );
   }
 }

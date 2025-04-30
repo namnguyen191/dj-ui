@@ -1,5 +1,4 @@
-<djui [layoutId]="PREVIEW_LAYOUT_ID"></djui>
-
+<ng-container [djuiUIElementRenderer]="currentUIElementTemplateId"></ng-container>
 <div class="edit-controls-container">
   <button cdsButton="primary" (click)="toggleModal(true)">
     Open template editor

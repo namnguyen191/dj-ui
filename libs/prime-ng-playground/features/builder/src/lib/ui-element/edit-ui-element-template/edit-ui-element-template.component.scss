@@ -1,0 +1,12 @@
+:host {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  .open-template-editor-btn {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+  }
+}

@@ -1,0 +1,16 @@
+<p-button
+  aria-label="Open template editor"
+  class="open-template-editor-btn"
+  icon="pi pi-file-edit"
+  iconPos="bottom"
+  label="Open template editor"
+  (click)="toggleModal(true)"
+/>
+
+<ng-container [djuiUIElementRenderer]="currentUIElementTemplateId"></ng-container>
+
+<prime-ng-playground-builder-feat-raw-template-editor-modal
+  [query]="{ id: currentUIElementTemplateId, isLayout: true }"
+  [visible]="isRawTemplateEditorModalOpenSig()"
+  (editCancel)="toggleModal(false)"
+></prime-ng-playground-builder-feat-raw-template-editor-modal>

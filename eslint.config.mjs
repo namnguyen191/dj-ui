@@ -45,16 +45,32 @@ export default tseslint.config([
           allow: [],
           depConstraints: [
             {
-              sourceTag: 'scope:app',
-              onlyDependOnLibsWithTags: ['scope:core', 'scope:common', 'scope:extension'],
+              sourceTag: 'type:app',
+              onlyDependOnLibsWithTags: ['type:lib', 'type:util', 'type:feat'],
             },
             {
-              sourceTag: 'scope:common',
-              onlyDependOnLibsWithTags: ['scope:core'],
+              sourceTag: 'type:feat',
+              onlyDependOnLibsWithTags: ['type:lib', 'type:util'],
             },
             {
-              sourceTag: 'scope:extension',
-              onlyDependOnLibsWithTags: ['scope:core', 'scope:common'],
+              sourceTag: 'type:lib',
+              onlyDependOnLibsWithTags: ['type:util', 'type:lib'],
+            },
+            {
+              sourceTag: 'scope:dj-ui-core',
+              onlyDependOnLibsWithTags: ['scope:dj-ui-core'],
+            },
+            {
+              sourceTag: 'scope:dj-ui-common',
+              onlyDependOnLibsWithTags: ['scope:dj-ui-common', 'scope:dj-ui-core'],
+            },
+            {
+              sourceTag: 'scope:dj-ui-extension',
+              onlyDependOnLibsWithTags: ['scope:dj-ui-core', 'scope:dj-ui-common'],
+            },
+            {
+              sourceTag: 'scope:prime-ng-playground',
+              onlyDependOnLibsWithTags: ['scope:prime-ng-playground', 'scope:shared'],
             },
           ],
         },

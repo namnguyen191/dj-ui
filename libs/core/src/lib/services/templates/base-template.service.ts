@@ -11,7 +11,7 @@ export type Template = {
 };
 export type MissingTemplateEvent = Extract<
   CoreEvent,
-  'MISSING_LAYOUT_TEMPLATE' | 'MISSING_REMOTE_RESOURCE_TEMPLATE' | 'MISSING_UI_ELEMENT_TEMPLATE'
+  'MISSING_REMOTE_RESOURCE_TEMPLATE' | 'MISSING_UI_ELEMENT_TEMPLATE'
 >;
 
 export abstract class BaseTemplateService<T extends Template> {

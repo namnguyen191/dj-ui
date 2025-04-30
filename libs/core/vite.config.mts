@@ -19,10 +19,5 @@ export default defineConfig({
       reportsDirectory: '../../coverage/libs/core',
       provider: 'v8',
     },
-    server: {
-      deps: {
-        inline: ['carbon-components-angular'],
-      },
-    },
   },
 });

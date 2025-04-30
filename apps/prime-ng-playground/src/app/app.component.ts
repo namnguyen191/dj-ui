@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { setupDefault } from '@dj-ui/common';
+import type { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
 
 @Component({
@@ -10,11 +11,27 @@ import { MenubarModule } from 'primeng/menubar';
   styleUrl: './app.component.scss',
 })
 export class AppComponent {
-  mainMenuItems = [
+  mainMenuItems: MenuItem[] = [
     {
       label: 'Home',
       icon: 'pi pi-home',
-      routerLink: 'home',
+      routerLink: '/',
+    },
+    {
+      label: 'Builders',
+      icon: 'pi pi-cog',
+      items: [
+        {
+          label: 'UI Element',
+          icon: 'pi pi-chart-bar',
+          routerLink: '/builder/ui-element',
+        },
+        {
+          label: 'Layout',
+          icon: 'pi pi-objects-column',
+          routerLink: '/builder/layout',
+        },
+      ],
     },
   ];
 

@@ -1,0 +1,8 @@
+{
+  "extends": "./tsconfig.lib.json",
+  "compilerOptions": {
+    "types": ["node"]
+  },
+  "exclude": ["test-setup.ts"],
+  "files": ["generate-json-schemas.ts"]
+}

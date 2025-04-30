@@ -242,10 +242,10 @@ export const appConfig: ApplicationConfig = {
 ```js
 import { Component } from '@angular/core';
 import { setupDefault(); } from '@dj-ui/common';
-import { DjuiComponent } from '@namnguyen191/dj-ui-core';
+import { SimpleGridLayoutComponent } from '@dj-ui/common';
 
 @Component({
-  imports: [DjuiComponent],
+  imports: [SimpleGridLayoutComponent],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -260,5 +260,7 @@ export class AppComponent {
 - And now we can display the layout in `src/app/app.component.html`:
 
 ```html
-<djui layoutId="carbon_example_layout_template"></djui>
+<dj-ui-common-simple-grid-layout
+  layoutId="carbon_example_layout_template"
+></dj-ui-common-simple-grid-layout>
 ```

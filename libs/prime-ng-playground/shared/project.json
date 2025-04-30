@@ -1,0 +1,9 @@
+{
+  "name": "prime-ng-playground/shared",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/prime-ng-playground/shared/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["type:util", "scope:prime-ng-playground"],
+  "targets": {}
+}

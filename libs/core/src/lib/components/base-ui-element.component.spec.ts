@@ -4,7 +4,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { BaseUIElementComponent } from './base-ui-element.component';
 
 @Component({
-  selector: 'extend-base-test',
+  selector: 'dj-ui-extend-base-test',
   imports: [],
   template: '<h1>Hello world</h1>',
 })

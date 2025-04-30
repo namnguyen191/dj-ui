@@ -1,0 +1,17 @@
+{
+  "name": "utils",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/utils/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["type:util", "scope:shared"],
+  "targets": {
+    "typecheck": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": ["tsc -p tsconfig.lib.json --noEmit"],
+        "cwd": "libs/shared/utils"
+      }
+    }
+  }
+}

@@ -5,7 +5,7 @@ import { firstValueFrom, from, map, Observable, switchMap, tap } from 'rxjs';
 
 import type { AppUIElementTemplate } from '../shared/dj-ui-app-template';
 import { mockUIElementTemplates } from '../utils/mock-templates';
-import { IdbService } from './idb.service';
+import { AppIdbService } from './app-idb.service';
 import {
   type CreateAppUIElementTemplatePayload,
   UIElementTemplatesAPIService,
@@ -16,7 +16,7 @@ import {
 export class UIElementTemplatesLocalAPIService extends UIElementTemplatesAPIService {
   readonly #uiElementTemplateService = inject(UIElementTemplateService);
 
-  readonly #idbService = inject(IdbService);
+  readonly #idbService = inject(AppIdbService);
   readonly #uiElementTemplateRepo$ = from(this.#idbService.getRepo('uiElementTemplates'));
 
   override getAllUIElementTemplates = (): Observable<AppUIElementTemplate[]> => {

@@ -4,24 +4,22 @@ import { inject, provideExperimentalZonelessChangeDetection } from '@angular/cor
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { CarbonComponentLoader } from '@dj-ui/carbon-ext';
-import type { SetupConfigs } from '@dj-ui/common';
-import { COMMON_SETUP_CONFIG } from '@dj-ui/common';
-import type { CoreLayoutConfig } from '@dj-ui/core';
-import { CORE_LAYOUT_CONFIG, CREATE_JS_RUNNER_WORKER } from '@dj-ui/core';
+import { COMMON_SETUP_CONFIG, type SetupConfigs } from '@dj-ui/common/shared';
+import {
+  CREATE_JS_RUNNER_WORKER,
+  ELEMENT_RENDERER_CONFIG,
+  type ElementRendererConfig,
+} from '@dj-ui/core';
 import { globalDelayInterceptorFactory } from '@namnguyen191/common-angular-helper';
 import { provideMonacoEditor } from 'ngx-monaco-editor-v2';
 import { from } from 'rxjs';
 
 import { appRoutes } from './app.routes';
-import { DuiLayoutLoadingComponent } from './components/dui-layout-loading/dui-layout-loading.component';
 import { DuiUiElementLoadingComponent } from './components/dui-ui-element-loading/dui-ui-element-loading.component';
-import { LayoutTemplatesAPIService } from './services/layout-templates-api.service';
-import { LayoutTemplatesLocalAPIService } from './services/layout-templates-local-api.service';
 import { RemoteResourceTemplatesAPIService } from './services/remote-resource-templates-api.service';
 import { RemoteResourceTemplatesLocalAPIService } from './services/remote-resource-templates-local-api.service';
 import { UIElementTemplatesAPIService } from './services/ui-element-templates-api.service';
 import { UIElementTemplatesLocalAPIService } from './services/ui-element-templates-local-api.service';
-import { LayoutTemplatesStore } from './state-store/layoutTemplates.store';
 import { RemoteResourceTemplatesStore } from './state-store/remoteResourceTemplates.store';
 import { UIElementTemplatesStore } from './state-store/uiElementTemplates.store';
 
@@ -49,10 +47,9 @@ export const appConfig: ApplicationConfig = {
       },
     },
     {
-      provide: CORE_LAYOUT_CONFIG,
-      useFactory: (): CoreLayoutConfig => {
+      provide: ELEMENT_RENDERER_CONFIG,
+      useFactory: (): ElementRendererConfig => {
         return {
-          layoutLoadingComponent: DuiLayoutLoadingComponent,
           uiElementLoadingComponent: DuiUiElementLoadingComponent,
         };
       },
@@ -61,12 +58,10 @@ export const appConfig: ApplicationConfig = {
       provide: COMMON_SETUP_CONFIG,
       useFactory: (): SetupConfigs => {
         const uiElementTemplatesStore = inject(UIElementTemplatesStore);
-        const layoutTemplatesStore = inject(LayoutTemplatesStore);
         const remoteResourceTemplatesStore = inject(RemoteResourceTemplatesStore);
 
         return {
           templatesHandlers: {
-            getLayoutTemplate: (id: string) => from(layoutTemplatesStore.get(id)),
             getUiElementTemplate: (id: string) => from(uiElementTemplatesStore.get(id)),
             getRemoteResourceTemplate: (id: string) => from(remoteResourceTemplatesStore.get(id)),
           },
@@ -81,16 +76,6 @@ export const appConfig: ApplicationConfig = {
           return new UIElementTemplatesLocalAPIService();
         } else {
           return new UIElementTemplatesAPIService();
-        }
-      },
-    },
-    {
-      provide: LayoutTemplatesAPIService,
-      useFactory: (): LayoutTemplatesAPIService => {
-        if (ENABLE_LOCAL_API) {
-          return new LayoutTemplatesLocalAPIService();
-        } else {
-          return new LayoutTemplatesAPIService();
         }
       },
     },

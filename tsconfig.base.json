@@ -30,6 +30,8 @@
       "@dj-ui/carbon-ext/carbon-text-card": ["libs/carbon-ext/carbon-text-card/src/index.ts"],
       "@dj-ui/carbon-ext/shared": ["libs/carbon-ext/shared/src/index.ts"],
       "@dj-ui/common": ["libs/common/src/index.ts"],
+      "@dj-ui/common/shared": ["libs/common/shared/src/index.ts"],
+      "@dj-ui/common/simple-grid-layout": ["libs/common/simple-grid-layout/src/index.ts"],
       "@dj-ui/core": ["libs/core/src/index.ts"],
       "@dj-ui/core/js-interpolation-worker": ["libs/core/js-interpolation-worker/src/index.ts"],
       "@dj-ui/prime-ng-ext": ["libs/prime-ng-ext/src/index.ts"],
@@ -37,7 +39,11 @@
       "@dj-ui/prime-ng-ext/simple-image": ["libs/prime-ng-ext/simple-image/src/index.ts"],
       "@dj-ui/prime-ng-ext/simple-table": ["libs/prime-ng-ext/simple-table/src/index.ts"],
       "@dj-ui/prime-ng-ext/simple-text": ["libs/prime-ng-ext/simple-text/src/index.ts"],
-      "@dj-ui/shared-components": ["libs/shared-components/src/index.ts"]
+      "@dj-ui/prime-ng-playground/features/builder": [
+        "libs/prime-ng-playground/features/builder/src/index.ts"
+      ],
+      "@dj-ui/prime-ng-playground/shared": ["libs/prime-ng-playground/shared/src/index.ts"],
+      "@dj-ui/utils": ["libs/shared/utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp", "**/eslint**.js"]

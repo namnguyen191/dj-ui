@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import type { LayoutTemplate, RemoteResourceTemplate, UIElementTemplate } from '@dj-ui/core';
+import type { RemoteResourceTemplate, UIElementTemplate } from '@dj-ui/core';
 import { Observable, of } from 'rxjs';
 
 const mockCard = {
@@ -35,18 +35,6 @@ const mockCard = {
   providedIn: 'root',
 })
 export class TemplateFetcherService {
-  getLayoutTemplate(id: string): Observable<LayoutTemplate> {
-    return of({
-      id,
-      uiElementInstances: [
-        {
-          id: 'instance-1',
-          uiElementTemplateId: mockCard.id,
-        },
-      ],
-    } as LayoutTemplate);
-  }
-
   getUIElementTemplate(_id: string): Observable<UIElementTemplate> {
     return of(mockCard as UIElementTemplate);
   }

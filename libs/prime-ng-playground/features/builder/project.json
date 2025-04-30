@@ -1,0 +1,9 @@
+{
+  "name": "prime-ng-playground/features/builder",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/prime-ng-playground/features/builder/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": ["type:feat", "scope:prime-ng-playground"],
+  "targets": {}
+}

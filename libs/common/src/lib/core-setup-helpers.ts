@@ -1,77 +1,49 @@
 import {
   type EnvironmentProviders,
   inject,
-  InjectionToken,
   makeEnvironmentProviders,
   type Provider,
-  Type,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import {
+  COMMON_SETUP_CONFIG,
+  type ComponentLoadersMap,
+  type ComponentsMap,
+  type SetupConfigs,
+  type TemplatesHandlers,
+} from '@dj-ui/common/shared';
 import type { Template } from '@dj-ui/core';
 import {
   type ActionHookHandlerAndPayloadParserMap,
   ActionHookService,
-  BaseUIElementComponent,
   DataFetchingService,
+  ELEMENT_RENDERER_CONFIG,
   EventsService,
   InterpolationService,
-  type LayoutTemplate,
-  LayoutTemplateService,
   logWarning,
   RemoteResourceService,
-  type RemoteResourceTemplate,
   RemoteResourceTemplateService,
   StateStoreService,
   UIElementFactoryService,
-  type UIElementLoader,
-  type UIElementPositionAndSize,
-  type UIElementTemplate,
   UIElementTemplateService,
 } from '@dj-ui/core';
-import { set } from 'lodash-es';
-import {
-  buffer,
-  debounceTime,
-  forkJoin,
-  map,
-  mergeMap,
-  type MonoTypeOperatorFunction,
-  Observable,
-  tap,
-} from 'rxjs';
+import { mergeMap, type MonoTypeOperatorFunction, tap } from 'rxjs';
 
-import { FileUploadService } from './data-fetchers/file-upload.service';
-import { HttpFetcherService } from './data-fetchers/http-fetcher.service';
+import { DefaultUiElementInfiniteErrorComponentComponent } from './components/default-ui-element-infinite-error-component/default-ui-element-infinite-error-component.component';
+import { DefaultUiElementLoadingComponentComponent } from './components/default-ui-element-loading-component/default-ui-element-loading-component.component';
+import {
+  missingRemoteResourceTemplateEvent,
+  missingUIElementTemplateEvent,
+} from './events-filters';
+import { FileUploadService } from './services/data-fetchers/file-upload.service';
+import { HttpFetcherService } from './services/data-fetchers/http-fetcher.service';
 import {
   DefaultActionsHooksService,
   ZAddToStateActionHookPayload,
   ZNavigateHookPayload,
   ZTriggerRemoteResourceHookPayload,
-} from './defaut-actions-hooks.service';
-import {
-  missingLayoutTemplateEvent,
-  missingRemoteResourceTemplateEvent,
-  missingUIElementTemplateEvent,
-  UIElementRepositionEvent,
-} from './events-filters';
-
-export type TemplatesHandlers = {
-  getLayoutTemplate?: (id: string) => Observable<LayoutTemplate>;
-  getUiElementTemplate?: (id: string) => Observable<UIElementTemplate>;
-  getRemoteResourceTemplate?: (id: string) => Observable<RemoteResourceTemplate>;
-  updateElementsPositionsHandler?: (
-    layoutId: string,
-    eleWithNewPosAndSize: Record<string, UIElementPositionAndSize>
-  ) => Observable<void>;
-};
-export type ComponentsMap = Record<string, Type<BaseUIElementComponent>>;
-export type ComponentLoadersMap = Record<string, UIElementLoader>;
-export type SetupConfigs = {
-  templatesHandlers?: TemplatesHandlers;
-  componentsMap?: ComponentsMap;
-  componentLoadersMap?: ComponentLoadersMap;
-};
-export const COMMON_SETUP_CONFIG = new InjectionToken<SetupConfigs>('COMMON_SETUP_CONFIG');
+} from './services/defaut-actions-hooks.service';
+import { FileService } from './services/file.service';
 
 export const registerDefaultHook = (): void => {
   const defaultActionsHooksService = inject(DefaultActionsHooksService);
@@ -110,14 +82,8 @@ export const registerSingleFileUploadDataFetcher = (): void => {
 };
 
 export const setupEventsListener = (params: TemplatesHandlers): void => {
-  const {
-    getLayoutTemplate,
-    getUiElementTemplate,
-    getRemoteResourceTemplate,
-    updateElementsPositionsHandler,
-  } = params;
+  const { getUiElementTemplate, getRemoteResourceTemplate } = params;
   const eventsService = inject(EventsService);
-  const layoutTemplateService = inject(LayoutTemplateService);
   const uiElementTemplatesService = inject(UIElementTemplateService);
   const remoteResourceTemplateService = inject(RemoteResourceTemplateService);
 
@@ -136,20 +102,6 @@ export const setupEventsListener = (params: TemplatesHandlers): void => {
       },
     });
   };
-
-  if (getLayoutTemplate) {
-    const missingLayoutEvents = allEvents.pipe(
-      missingLayoutTemplateEvent(),
-      mergeMap((event) => {
-        const missingLayoutId = event.payload.id;
-        layoutTemplateService.startRegisteringTemplate(missingLayoutId);
-        return getLayoutTemplate(missingLayoutId).pipe(warnMismatchTemplateId(missingLayoutId));
-      }),
-      tap((layout) => layoutTemplateService.registerTemplate(layout))
-    );
-
-    missingLayoutEvents.subscribe();
-  }
 
   if (getUiElementTemplate) {
     const missingUIElementTemplates = allEvents.pipe(
@@ -182,33 +134,6 @@ export const setupEventsListener = (params: TemplatesHandlers): void => {
     );
 
     missingRemoteResources.subscribe();
-  }
-
-  if (updateElementsPositionsHandler) {
-    const uiElementReposition = allEvents.pipe(UIElementRepositionEvent());
-
-    const buffTrigger = uiElementReposition.pipe(debounceTime(3000));
-
-    const updateElementPosition = uiElementReposition.pipe(
-      buffer(buffTrigger),
-      map((events) =>
-        events.reduce<Record<string, Record<string, UIElementPositionAndSize>>>((acc, cur) => {
-          const {
-            payload: { elementId, layoutId, newPositionAndSize },
-          } = cur;
-          acc = set(acc, `${layoutId}.${elementId}`, newPositionAndSize);
-          return acc;
-        }, {})
-      ),
-      mergeMap((val) => {
-        const updateLayoutRequests = Object.entries(val).map(([layoutId, eleWithNewPosAndSize]) =>
-          updateElementsPositionsHandler(layoutId, eleWithNewPosAndSize)
-        );
-        return forkJoin(updateLayoutRequests);
-      })
-    );
-
-    updateElementPosition.subscribe();
   }
 };
 
@@ -265,7 +190,6 @@ export const setupDefault = (): void => {
 
 export const provideDJUI = (): EnvironmentProviders => {
   const providers: Provider[] = [
-    LayoutTemplateService,
     UIElementTemplateService,
     RemoteResourceTemplateService,
     EventsService,
@@ -275,6 +199,31 @@ export const provideDJUI = (): EnvironmentProviders => {
     StateStoreService,
     UIElementFactoryService,
     ActionHookService,
+  ];
+
+  return makeEnvironmentProviders(providers);
+};
+
+export const provideDJUICommon = (): EnvironmentProviders => {
+  const providers: Provider[] = [
+    FileUploadService,
+    FileService,
+    HttpFetcherService,
+    DefaultActionsHooksService,
+  ];
+
+  return makeEnvironmentProviders(providers);
+};
+
+export const provideDefaultDJUIConfig = (): EnvironmentProviders => {
+  const providers: Provider[] = [
+    {
+      provide: ELEMENT_RENDERER_CONFIG,
+      useValue: {
+        uiElementLoadingComponent: DefaultUiElementLoadingComponentComponent,
+        uiElementInfiniteErrorComponent: DefaultUiElementInfiniteErrorComponentComponent,
+      },
+    },
   ];
 
   return makeEnvironmentProviders(providers);

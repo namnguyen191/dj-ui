@@ -4,7 +4,6 @@ import * as fs from 'fs';
 import { ZodType } from 'zod';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 
-import { ZLayoutTemplate } from './src/lib/services/templates/layout-template-interfaces';
 import { ZRemoteResourceTemplate } from './src/lib/services/templates/remote-resource-template.service';
 
 const generateJSONSchemaFromZodTypes = (zodTypes: ZodType[]): void => {
@@ -19,4 +18,4 @@ const generateJSONSchemaFromZodTypes = (zodTypes: ZodType[]): void => {
   }
 };
 
-generateJSONSchemaFromZodTypes([ZLayoutTemplate, ZRemoteResourceTemplate]);
+generateJSONSchemaFromZodTypes([ZRemoteResourceTemplate]);

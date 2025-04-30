@@ -1,6 +1,6 @@
 {
   "name": "@dj-ui/common",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "type": "module",
   "publishConfig": {
     "access": "public"
@@ -16,8 +16,7 @@
     "rxjs": "~7.8.1",
     "zod": "^3.23.8",
     "@dj-ui/core": "*",
-    "@namnguyen191/types-helper": "1.1.1",
-    "lodash-es": "^4.17.21"
+    "@namnguyen191/types-helper": "1.1.1"
   },
   "sideEffects": false
 }

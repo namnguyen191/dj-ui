@@ -1,0 +1,61 @@
+{
+  "id": "pokemon-server-side-pagination-table.PRIME_NG_SIMPLE_TABLE",
+  "type": "SIMPLE_TABLE",
+  "remoteResourceIds": ["POKEMON_PAGINATION.REMOTE_RESOURCE"],
+  "name": "Pokemon server-side pagination table",
+  "description": "A table that fetch a bunch of pokemon using server-side pagination",
+  "createdAt": "2025-04-05T17:07:36.743Z",
+  "updatedAt": "2025-04-05T17:07:36.743Z",
+  "stateSubscription": {
+    "watchedScopes": {
+      "global": ["usPopPage"]
+    }
+  },
+  "options": {
+    "title": "Pokemon table with server-side pagination",
+    "stripes": true,
+    "gridLines": true,
+    "resizableColumns": true,
+    "columns": [
+      {
+        "id": "id",
+        "label": "Id",
+        "disableResizable": true
+      },
+      {
+        "id": "name",
+        "label": "Name"
+      },
+      {
+        "id": "height",
+        "label": "Height"
+      },
+      {
+        "id": "abilities",
+        "label": "Abilities"
+      },
+      {
+        "id": "types",
+        "label": "Types"
+      }
+    ],
+    "rows": "<${ return this.remoteResourcesStates?.results?.[\"POKEMON_PAGINATION.REMOTE_RESOURCE\"]?.result?.pokemons ?? [] }$>",
+    "pagination": {
+      "totalDataLength": "<${ return this.remoteResourcesStates?.results?.['POKEMON_PAGINATION.REMOTE_RESOURCE']?.result?.totalCount ?? 0 }$>",
+      "pageSizes": [10, 15, 25, 50]
+    }
+  },
+  "eventsHooks": {
+    "paginationChanged": [
+      {
+        "type": "addToState",
+        "payload": {
+          "scope": "global",
+          "data": {
+            "pokemonPagination": "<${ return this.$eventOutput }$>"
+          }
+        }
+      }
+    ]
+  }
+}

@@ -96,7 +96,10 @@ export abstract class BaseRemoteResourceService {
   ): Observable<RequestConfigsInterpolationContext> {
     const state = stateSubscriptionConfig
       ? runInInjectionContext(this.environmentInjector, () =>
-          getStatesSubscriptionAsContext(stateSubscriptionConfig)
+          getStatesSubscriptionAsContext(
+            stateSubscriptionConfig,
+            'Resource configs interpolation context'
+          )
         )
       : of(null);
     const $requests = of(accumulatedRequestsResults);
@@ -120,7 +123,10 @@ export abstract class BaseRemoteResourceService {
     const { accumulatedRequestsResults, currentRequestResult, stateSubscriptionConfig } = params;
     const state = stateSubscriptionConfig
       ? runInInjectionContext(this.environmentInjector, () =>
-          getStatesSubscriptionAsContext(stateSubscriptionConfig)
+          getStatesSubscriptionAsContext(
+            stateSubscriptionConfig,
+            'Resource transformation interpolation context'
+          )
         )
       : of(null);
     const $requests = of(accumulatedRequestsResults);
@@ -144,7 +150,7 @@ export abstract class BaseRemoteResourceService {
   ): Observable<RequestHooksInterpolationContext> {
     const state = stateSubscription
       ? runInInjectionContext(this.environmentInjector, () =>
-          getStatesSubscriptionAsContext(stateSubscription)
+          getStatesSubscriptionAsContext(stateSubscription, 'Resource hooks interpolation context')
         )
       : of(null);
     const $result = of(transformationResult);
