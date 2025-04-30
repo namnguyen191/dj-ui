@@ -4,8 +4,7 @@ import loader from '@monaco-editor/loader';
 import type { editor } from 'monaco-editor';
 import { filter, firstValueFrom, Observable } from 'rxjs';
 
-export type MonacoAPI =
-  typeof import('/Users/namnguyen/Desktop/projects/dj-ui/node_modules/.pnpm/monaco-editor@0.52.2/node_modules/monaco-editor/esm/vs/editor/editor.api');
+export type MonacoAPI = typeof import('monaco-editor/esm/vs/editor/editor.api');
 
 export type MonacoEditorAPI = typeof editor;
 
