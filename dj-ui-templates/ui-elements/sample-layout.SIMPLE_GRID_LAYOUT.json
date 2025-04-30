@@ -1,0 +1,24 @@
+{
+  "id": "sample-layout.SIMPLE_GRID_LAYOUT",
+  "type": "SIMPLE_GRID_LAYOUT",
+  "name": "Sample layout",
+  "description": "A simple grid layout that displays a bunch of different UI elements",
+  "createdAt": "2025-04-05T17:07:36.743Z",
+  "updatedAt": "2025-04-05T17:07:36.743Z",
+  "options": {
+    "grid": {
+      "gap": "1rem",
+      "padding": "0 10vw",
+      "rowHeight": "auto"
+    },
+    "uiElementInstances": [
+      {
+        "id": "1",
+        "uiElementTemplateId": "pokemon-server-side-pagination-table.PRIME_NG_SIMPLE_TABLE",
+        "positionAndSize": {
+          "cols": 16
+        }
+      }
+    ]
+  }
+}
