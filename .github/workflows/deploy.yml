@@ -27,10 +27,10 @@ jobs:
       - name: Install and Build
         run: |
           pnpm install
-          pnpm exec nx run playground:build --configuration=production
+          pnpm exec nx run prime-ng-playground:build --configuration=production
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4
         with:
           branch: gh-pages
-          folder: dist/apps/playground/browser
+          folder: dist/apps/prime-ng-playground/browser
