@@ -1,3 +1,4 @@
+import { APP_BASE_HREF } from '@angular/common';
 import { HttpClient, provideHttpClient } from '@angular/common/http';
 import {
   type ApplicationConfig,
@@ -45,13 +46,16 @@ export const appConfig: ApplicationConfig = {
       provide: COMMON_SETUP_CONFIG,
       useFactory: (): SetupConfigs => {
         const httpClient = inject(HttpClient);
+        const baseHref = inject(APP_BASE_HREF, { optional: true }) ?? '';
         return {
           templatesHandlers: {
             getUiElementTemplate: (id: string) =>
-              httpClient.get<UIElementTemplate>(`/dj-ui-templates/ui-elements/${id}.json`),
+              httpClient.get<UIElementTemplate>(
+                `${baseHref}dj-ui-templates/ui-elements/${id}.json`
+              ),
             getRemoteResourceTemplate: (id: string) =>
               httpClient.get<RemoteResourceTemplate>(
-                `/dj-ui-templates/remote-resources/${id}.json`
+                `${baseHref}dj-ui-templates/remote-resources/${id}.json`
               ),
           },
           componentLoadersMap: {
