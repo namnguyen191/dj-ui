@@ -6,7 +6,7 @@ import {
   provideExperimentalZonelessChangeDetection,
 } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { provideRouter } from '@angular/router';
+import { provideRouter, withHashLocation } from '@angular/router';
 import { CommonComponentLoader, provideDefaultDJUIConfig } from '@dj-ui/common';
 import { COMMON_SETUP_CONFIG, type SetupConfigs } from '@dj-ui/common/shared';
 import {
@@ -23,7 +23,7 @@ import { appRoutes } from './app.routes';
 export const appConfig: ApplicationConfig = {
   providers: [
     provideExperimentalZonelessChangeDetection(),
-    provideRouter(appRoutes),
+    provideRouter(appRoutes, withHashLocation()),
     provideAnimationsAsync(),
     providePrimeNG({
       theme: {
