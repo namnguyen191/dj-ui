@@ -1,6 +1,9 @@
 import { createUIElementTemplateSchema } from '@dj-ui/core';
 import { z } from 'zod';
 
+export const SimpleTextElementType = 'SIMPLE_TEXT';
+export const SimpleTextSymbol = Symbol('SimpleText');
+
 export const ZTextStyles = z.strictObject({
   align: z.enum(['left', 'center', 'right']).optional(),
   weight: z.number().optional(),

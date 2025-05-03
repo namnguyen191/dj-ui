@@ -1,4 +1,10 @@
+import { ZSimpleGridLayoutUIESchema } from '@dj-ui/common/shared';
 import type { RemoteResourceTemplate, UIElementTemplate } from '@dj-ui/core';
+import {
+  ZSimpleImageUIESchema,
+  ZSimpleTableUIESchema,
+  ZSimpleTextUIESchema,
+} from '@dj-ui/prime-ng-ext/shared';
 import { z } from 'zod';
 
 export const ZTimeStamp = z.strictObject({
@@ -37,3 +43,27 @@ export type AppRemoteResourceTemplateEditableFields = Omit<
   AppRemoteResourceTemplate,
   keyof AppRemoteResourceTemplateUnEditableFields
 >;
+
+// Let TS infer the type here
+// eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+export const createAppUIEEditTemplate = (originalTemplate: z.AnyZodObject) => {
+  return originalTemplate
+    .omit({
+      id: true,
+      type: true,
+    })
+    .merge(ZMetaData);
+};
+
+export const ZAppEditSimpleTableUIESchema = createAppUIEEditTemplate(
+  ZSimpleTableUIESchema
+).describe('AppEditPrimeNgSimpleTableUIESchema');
+export const ZAppEditSimpleTextUIESchema = createAppUIEEditTemplate(ZSimpleTextUIESchema).describe(
+  'AppEditPrimeNgSimpleTextUIESchema'
+);
+export const ZAppEditSimpleImageUIESchema = createAppUIEEditTemplate(
+  ZSimpleImageUIESchema
+).describe('AppEditPrimeNgSimpleImageUIESchema');
+export const ZAppEditSimpleGridUIESchema = createAppUIEEditTemplate(
+  ZSimpleGridLayoutUIESchema
+).describe('AppEditSimpleGridUIESchema');

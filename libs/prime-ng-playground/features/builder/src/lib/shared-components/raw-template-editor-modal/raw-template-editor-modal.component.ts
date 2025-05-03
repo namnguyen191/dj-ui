@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  effect,
   inject,
   input,
   linkedSignal,
@@ -13,14 +15,21 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
+import { SimpleGridLayoutElementType } from '@dj-ui/common/shared';
 import { UIElementTemplateService } from '@dj-ui/core';
+import {
+  SimpleImageElementType,
+  SimpleTableElementType,
+  SimpleTextElementType,
+} from '@dj-ui/prime-ng-ext/shared';
 import {
   type AppUIElementTemplate,
   type AppUIElementTemplateEditableFields,
-  CodeEditorComponent,
-  type CodeEditorConfigs,
   type FilterQuery,
   filterTemplatesByQuery,
+  type JSONCodeEditorConfigs,
+  JsonEditorComponent,
+  MonacoEditorService,
   UIElementTemplatesStore,
 } from '@dj-ui/prime-ng-playground/shared';
 import type { Plugin } from 'prettier';
@@ -32,11 +41,20 @@ import { Button } from 'primeng/button';
 import { Dialog } from 'primeng/dialog';
 import { ProgressSpinner } from 'primeng/progressspinner';
 import { Toast } from 'primeng/toast';
-import { filter, from, map, Subject, switchMap, tap } from 'rxjs';
+import { filter, firstValueFrom, from, Subject, switchMap, tap } from 'rxjs';
+
+const BASE_SCHEMA_URL = 'dj-ui-schemas';
+const ELEMENT_TYPE_TO_SCHEMA_URL = {
+  [SimpleTableElementType]: `${BASE_SCHEMA_URL}/AppEditPrimeNgSimpleTableUIESchema.json`,
+  [SimpleTextElementType]: `${BASE_SCHEMA_URL}/AppEditPrimeNgSimpleTextUIESchema.json`,
+  [SimpleImageElementType]: `${BASE_SCHEMA_URL}/AppEditPrimeNgSimpleImageUIESchema.json`,
+  [SimpleGridLayoutElementType]: `${BASE_SCHEMA_URL}/AppEditSimpleGridUIESchema.json`,
+};
+type ElementType = keyof typeof ELEMENT_TYPE_TO_SCHEMA_URL;
 
 @Component({
   selector: 'prime-ng-playground-builder-feat-raw-template-editor-modal',
-  imports: [CommonModule, CodeEditorComponent, Dialog, Button, ProgressSpinner, FormsModule, Toast],
+  imports: [CommonModule, JsonEditorComponent, Dialog, Button, ProgressSpinner, FormsModule, Toast],
   providers: [MessageService],
   templateUrl: './raw-template-editor-modal.component.html',
   styleUrl: './raw-template-editor-modal.component.scss',
@@ -46,13 +64,18 @@ export class RawTemplateEditorModalComponent {
   readonly #uiElementTemplatesStore = inject(UIElementTemplatesStore);
   readonly #uiElementTemplateService = inject(UIElementTemplateService);
   readonly #messageService = inject(MessageService);
+  readonly #monacoEditorService = inject(MonacoEditorService);
+  readonly #httpClient = inject(HttpClient);
 
   readonly query = input.required<Required<FilterQuery>>();
   readonly visible = input.required<boolean>();
 
   readonly editCancel = output<void>();
 
-  readonly loadingSig = this.#uiElementTemplatesStore.isPending;
+  readonly loadingCountSig = signal<number>(0);
+  readonly loadingSig = computed<boolean>(() => {
+    return this.#uiElementTemplatesStore.isPending() || this.loadingCountSig() > 0;
+  });
 
   protected readonly codeChangeSubject = new Subject<string>();
   readonly errorStateSig = signal<'noError' | 'isError' | 'isPending'>('noError');
@@ -99,25 +122,32 @@ export class RawTemplateEditorModalComponent {
     }
   );
 
-  protected readonly codeEditorConfigsSig: Signal<CodeEditorConfigs | null> = toSignal(
+  readonly #prettifiedInitialCodesSig: Signal<string | null> = toSignal(
     toObservable(this.#currentEditableFieldsSig).pipe(
       filter((editableFields) => editableFields !== null),
       switchMap((editableFields) => {
         const rawJSON = JSON.stringify(editableFields);
         return from(this.#formatJSON(rawJSON));
-      }),
-      map(
-        (prettifiedEditableFields) =>
-          ({
-            language: 'json',
-            initialValue: prettifiedEditableFields,
-          }) as CodeEditorConfigs
-      )
+      })
     ),
     {
       initialValue: null,
     }
   );
+
+  protected readonly codeEditorConfigsSig: Signal<JSONCodeEditorConfigs | null> = computed(() => {
+    const currentTemplate = this.#currentTemplateSig();
+    const prettifiedInitialCodes = this.#prettifiedInitialCodesSig();
+
+    if (!currentTemplate || !prettifiedInitialCodes) {
+      return null;
+    }
+
+    return {
+      schemaId: currentTemplate.type,
+      initialValue: prettifiedInitialCodes,
+    };
+  });
 
   readonly #codeSig = linkedSignal<string>(() => {
     const codeEditorConfigs = this.codeEditorConfigsSig();
@@ -125,8 +155,24 @@ export class RawTemplateEditorModalComponent {
     return codeEditorConfigs?.initialValue ?? '';
   });
 
+  readonly #fetchJSONSchemaEffect = effect(
+    () => {
+      const template = this.#currentTemplateSig();
+
+      if (!template) {
+        return;
+      }
+
+      this.#downloadAndRegisterJSONSchema(template.type as ElementType);
+      this.#fetchJSONSchemaEffect.destroy();
+    },
+    {
+      manualCleanup: true,
+    }
+  );
+
   // eslint-disable-next-line no-unused-private-class-members
-  readonly #processCodeChange = this.codeChangeSubject
+  readonly #processCodeChangeSubscription = this.codeChangeSubject
     .pipe(
       tap({
         next: () => {
@@ -199,5 +245,18 @@ export class RawTemplateEditorModalComponent {
       console.log('Something went wrong:', err);
       return false;
     }
+  }
+
+  async #downloadAndRegisterJSONSchema(elementType: ElementType): Promise<void> {
+    this.loadingCountSig.update((prev) => prev + 1);
+    const schemaFetcher = (): Promise<unknown> =>
+      firstValueFrom(this.#httpClient.get<unknown>(ELEMENT_TYPE_TO_SCHEMA_URL[elementType]));
+
+    await this.#monacoEditorService.registerJSONSchema({
+      schemaId: elementType,
+      schemaFetcher,
+    });
+
+    this.loadingCountSig.update((prev) => prev - 1);
   }
 }

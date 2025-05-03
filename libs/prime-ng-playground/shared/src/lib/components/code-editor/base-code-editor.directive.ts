@@ -1,6 +1,5 @@
-import { CommonModule } from '@angular/common';
 import {
-  Component,
+  Directive,
   effect,
   ElementRef,
   inject,
@@ -14,26 +13,21 @@ import {
 import { debounce } from 'lodash-es';
 
 import {
+  type IStandaloneEditorConstructionOptions,
   type MonacoEditorInstance,
   MonacoEditorService,
 } from '../../services/monaco-editor.service';
 
 export type CodeEditorConfigs = {
-  language: 'typescript' | 'javascript' | 'json' | 'text';
   initialValue?: string;
   valueChangeDebounceTime?: number;
 };
 
-@Component({
-  selector: 'prime-ng-playground-shared-code-editor',
-  imports: [CommonModule],
-  templateUrl: './code-editor.component.html',
-  styleUrl: './code-editor.component.scss',
-})
-export class CodeEditorComponent {
-  readonly #monacoEditorService = inject(MonacoEditorService);
+@Directive()
+export abstract class BaseCodeEditorDirective<T extends CodeEditorConfigs> {
+  protected readonly monacoEditorService = inject(MonacoEditorService);
 
-  readonly configs = input.required<CodeEditorConfigs>();
+  readonly configs = input.required<T>();
 
   readonly valueChanged = output<string>();
 
@@ -67,26 +61,35 @@ export class CodeEditorComponent {
     editorInstance.onDidChangeModelContent(onModelChange);
   });
 
-  #createMonacoEditor(configs: CodeEditorConfigs): Promise<MonacoEditorInstance> {
-    const editorContainer = untracked(this.editorContainerSig).nativeElement;
-    while (editorContainer.hasChildNodes() && editorContainer.firstChild) {
-      editorContainer.removeChild(editorContainer.firstChild);
-    }
-
+  protected createWrapperElement(editorContainer: HTMLElement): HTMLDivElement {
     const wrapperElement = document.createElement('div');
     wrapperElement.style.width = '100%';
     wrapperElement.style.height = '100%';
     editorContainer.appendChild(wrapperElement);
 
-    return this.#monacoEditorService.createEditor(wrapperElement, {
-      language: configs.language,
-      value: configs.initialValue ?? '',
+    return wrapperElement;
+  }
+
+  async #createMonacoEditor(configs: CodeEditorConfigs): Promise<MonacoEditorInstance> {
+    const editorContainer = untracked(this.editorContainerSig).nativeElement;
+    while (editorContainer.hasChildNodes() && editorContainer.firstChild) {
+      editorContainer.removeChild(editorContainer.firstChild);
+    }
+
+    const wrapperElement = this.createWrapperElement(editorContainer);
+
+    const extraConfigs = await this.setupAndGetConfigs();
+    return this.monacoEditorService.createEditor(wrapperElement, {
       theme: 'vs-dark',
       wordWrap: 'on',
       minimap: {
         enabled: false,
       },
       automaticLayout: true,
+      value: configs.initialValue ?? '',
+      ...extraConfigs,
     });
   }
+
+  protected abstract setupAndGetConfigs(): Promise<Partial<IStandaloneEditorConstructionOptions>>;
 }

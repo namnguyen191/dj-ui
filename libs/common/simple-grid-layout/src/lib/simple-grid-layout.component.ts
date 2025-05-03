@@ -6,22 +6,22 @@ import {
   input,
   type InputSignal,
 } from '@angular/core';
-import { SimpleGridLayoutElementType, SimpleGridLayoutSymbol } from '@dj-ui/common/shared';
+import {
+  type GridConfigOption,
+  SimpleGridLayoutElementType,
+  SimpleGridLayoutSymbol,
+  type SimpleGridLayoutUIEConfigs,
+  type SimpleGridUIElementPositionAndSize,
+  type UIElementInstanceConfigOption,
+  ZGridConfigOption,
+  ZSimpleGridLayoutUIEConfigs,
+} from '@dj-ui/common/shared';
 import {
   BaseUIElementComponent,
   type UIElementImplementation,
   UIElementRendererDirective,
 } from '@dj-ui/core';
 import { parseZodWithDefault } from '@namnguyen191/types-helper';
-
-import {
-  type GridConfigOption,
-  type SimpleGridLayoutUIEConfigs,
-  type SimpleGridUIElementPositionAndSize,
-  type UIElementInstanceConfigOption,
-  ZGridConfigOption,
-  ZSimpleGridLayoutUIEConfigs,
-} from './simple-grid-layout-interfaces';
 
 type GridItem = {
   id: string;
@@ -64,8 +64,17 @@ export class SimpleGridLayoutComponent
   };
   gridConfigOption: InputSignal<GridConfigOption> = input(this.#defaultGridConfigOption, {
     alias: 'grid',
-    transform: (val) =>
-      parseZodWithDefault<GridConfigOption>(ZGridConfigOption, val, this.#defaultGridConfigOption),
+    transform: (val) => {
+      const userConfig = parseZodWithDefault<GridConfigOption>(
+        ZGridConfigOption,
+        val,
+        this.#defaultGridConfigOption
+      );
+      return {
+        ...this.#defaultGridConfigOption,
+        ...userConfig,
+      };
+    },
   });
 
   uiElementInstancesConfigOption: InputSignal<UIElementInstanceConfigOption[]> = input([], {

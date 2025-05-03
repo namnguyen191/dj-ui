@@ -1,5 +1,5 @@
 export * from './lib/app-template';
-export * from './lib/components/code-editor/code-editor.component';
+export * from './lib/components/code-editor/json-editor/json-editor.component';
 export * from './lib/mock-templates';
 export * from './lib/services/app-idb.service';
 export * from './lib/services/monaco-editor.service';

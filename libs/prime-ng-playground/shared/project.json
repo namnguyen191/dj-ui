@@ -5,5 +5,13 @@
   "prefix": "lib",
   "projectType": "library",
   "tags": ["type:util", "scope:prime-ng-playground"],
-  "targets": {}
+  "targets": {
+    "generate-json-schema-with-zod": {
+      "executor": "nx:run-commands",
+      "options": {
+        "cwd": "libs/prime-ng-playground/shared",
+        "commands": ["tsx generate-json-schemas.ts"]
+      }
+    }
+  }
 }

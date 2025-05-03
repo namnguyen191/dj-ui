@@ -2,6 +2,9 @@ import { createUIElementTemplateSchema } from '@dj-ui/core';
 import type { UnionToTuple } from 'type-fest';
 import { z } from 'zod';
 
+export const SimpleTableElementType = 'SIMPLE_TABLE';
+export const SimpleTableSymbol = Symbol('SimpleTable');
+
 export const ZTableRowObject = z.record(
   z.string(),
   z.union([z.string(), z.number(), z.boolean(), z.bigint(), z.symbol()])

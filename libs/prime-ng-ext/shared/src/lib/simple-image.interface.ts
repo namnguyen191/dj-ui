@@ -1,6 +1,9 @@
 import { createUIElementTemplateSchema } from '@dj-ui/core';
 import { z } from 'zod';
 
+export const SimpleImageElementType = 'SIMPLE_IMAGE';
+export const SimpleImageSymbol = Symbol('SimpleImage');
+
 export const ZImageUrlConfigOption = z.string({
   errorMap: () => ({ message: 'Image url must be a string' }),
 });
