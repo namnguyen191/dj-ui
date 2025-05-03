@@ -1,6 +1,9 @@
 import { createUIElementTemplateSchema } from '@dj-ui/core';
 import { z } from 'zod';
 
+export const SimpleGridLayoutElementType = 'SIMPLE_GRID_LAYOUT';
+export const SimpleGridLayoutSymbol = Symbol('SimpleGridLayout');
+
 export const ZGridConfigOption = z.strictObject({
   columns: z.number().optional(),
   rowHeight: z.string().optional(),

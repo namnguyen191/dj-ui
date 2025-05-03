@@ -1,7 +1,7 @@
 import { HttpErrorResponse } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { UIElementTemplateService } from '@dj-ui/core';
-import type { ZSimpleTextUIETemplate } from '@dj-ui/prime-ng-ext/simple-text';
+import type { ZSimpleTextUIETemplate } from '@dj-ui/prime-ng-ext/shared';
 import { firstValueFrom, from, map, Observable, switchMap, tap } from 'rxjs';
 
 import type { AppUIElementTemplate, CreateAppUIElementTemplate, TimeStamp } from '../app-template';

@@ -2,18 +2,18 @@ import { CommonModule } from '@angular/common';
 import { NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input, type InputSignal } from '@angular/core';
 import { BaseUIElementComponent, type UIElementImplementation } from '@dj-ui/core';
-import { SimpleImageElementType, SimpleTextSymbol } from '@dj-ui/prime-ng-ext/shared';
-import { parseZodWithDefault } from '@namnguyen191/types-helper';
-
 import {
   type AltLabelConfigOption,
   type ImageUrlConfigOption,
   type PriorityConfigOption,
   type SimpleImageConfigs,
+  SimpleImageElementType,
+  SimpleImageSymbol,
   ZAltLabelConfigOption,
   ZImageUrlConfigOption,
   ZPriorityConfigOption,
-} from './simple-image.interface';
+} from '@dj-ui/prime-ng-ext/shared';
+import { parseZodWithDefault } from '@namnguyen191/types-helper';
 
 @Component({
   selector: 'dj-ui-prime-ng-simple-image',
@@ -27,7 +27,7 @@ export class SimpleImageComponent
   implements UIElementImplementation<SimpleImageConfigs>
 {
   static override readonly ELEMENT_TYPE = SimpleImageElementType;
-  static override readonly ELEMENT_SYMBOL = SimpleTextSymbol;
+  static override readonly ELEMENT_SYMBOL = SimpleImageSymbol;
 
   override getElementType(): string {
     return SimpleImageComponent.ELEMENT_TYPE;

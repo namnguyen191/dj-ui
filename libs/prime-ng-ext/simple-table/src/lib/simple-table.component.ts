@@ -8,7 +8,17 @@ import {
   output,
 } from '@angular/core';
 import { BaseUIElementComponent, type UIElementImplementation } from '@dj-ui/core';
-import { SimpleTableElementType, SimpleTableSymbol } from '@dj-ui/prime-ng-ext/shared';
+import {
+  type PaginationChangedPayload,
+  SimpleTableElementType,
+  SimpleTableSymbol,
+  type SimpleTableUIEConfigs,
+  type SimpleTableUIEEvents,
+  type TableColumnsConfig,
+  type TablePaginationConfigs,
+  type TableRowsConfig,
+  ZSimpleTableUIEConfigs,
+} from '@dj-ui/prime-ng-ext/shared';
 import { parseZodWithDefault } from '@namnguyen191/types-helper';
 import { isEmpty } from 'lodash-es';
 import { PaginatorModule, type PaginatorState } from 'primeng/paginator';
@@ -16,15 +26,6 @@ import { TableModule } from 'primeng/table';
 
 import { ColumnsTemplateTypeDirective } from './columns-type.directive';
 import { RowsTemplateTypeDirective } from './rows-type.directive';
-import {
-  type PaginationChangedPayload,
-  type SimpleTableUIEConfigs,
-  type SimpleTableUIEEvents,
-  type TableColumnsConfig,
-  type TablePaginationConfigs,
-  type TableRowsConfig,
-  ZSimpleTableUIEConfigs,
-} from './simple-table.interface';
 
 @Component({
   selector: 'dj-ui-prime-ng-simple-table',

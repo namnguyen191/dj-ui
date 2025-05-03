@@ -24,6 +24,11 @@
             "glob": "**/*",
             "input": "libs/prime-ng-playground/shared/src/lib/dj-ui-templates",
             "output": "dj-ui-templates"
+          },
+          {
+            "glob": "**/*",
+            "input": "libs/prime-ng-playground/shared/generated-json-schemas",
+            "output": "dj-ui-schemas"
           }
         ],
         "styles": ["apps/prime-ng-playground/src/styles.scss"],

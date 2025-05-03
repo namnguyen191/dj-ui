@@ -1,16 +1,22 @@
 @let errorState = errorStateSig();
 @let codeEditorConfigs = codeEditorConfigsSig();
 
-<p-dialog header="Editor" [modal]="true" [visible]="visible()" (visibleChange)="editCancel.emit()">
+<p-dialog
+  class="dialog-container"
+  header="Editor"
+  [modal]="true"
+  [visible]="visible()"
+  (visibleChange)="editCancel.emit()"
+>
   <section class="modal-content">
     @if (loadingSig() || !codeEditorConfigs) {
       <p-progress-spinner ariaLabel="loading" />
     } @else {
       <div class="modal-content__editor">
-        <prime-ng-playground-shared-code-editor
+        <prime-ng-playground-shared-json-editor
           [configs]="codeEditorConfigs"
           (valueChanged)="codeChangeSubject.next($event)"
-        ></prime-ng-playground-shared-code-editor>
+        ></prime-ng-playground-shared-json-editor>
       </div>
       <div class="modal-content__btn-container">
         <p-button

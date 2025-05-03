@@ -1,6 +1,5 @@
 import { Directive } from '@angular/core';
-
-import type { TableColumnsConfig, TableRowObject } from './simple-table.interface';
+import type { TableColumnsConfig, TableRowObject } from '@dj-ui/prime-ng-ext/shared';
 
 @Directive({ selector: 'ng-template[rows]' })
 export class RowsTemplateTypeDirective {
