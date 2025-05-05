@@ -4,9 +4,10 @@ import * as fs from 'fs';
 import { ZodType } from 'zod';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 
-import { ZSimpleImageUIESchema } from './simple-image/src/lib/simple-image.interface';
-import { ZSimpleTableUIESchema } from './simple-table/src/lib/simple-table.interface';
-import { ZSimpleTextUIESchema } from './simple-text/src/lib/simple-text.interface';
+import { ZImagesCarouselUIESchema } from './shared/src/lib/images-carousel.interface';
+import { ZSimpleImageUIESchema } from './shared/src/lib/simple-image.interface';
+import { ZSimpleTableUIESchema } from './shared/src/lib/simple-table.interface';
+import { ZSimpleTextUIESchema } from './shared/src/lib/simple-text.interface';
 
 const generateJSONSchemaFromZodTypes = (zodTypes: ZodType[]): void => {
   for (const zt of zodTypes) {
@@ -24,4 +25,5 @@ generateJSONSchemaFromZodTypes([
   ZSimpleTextUIESchema,
   ZSimpleImageUIESchema,
   ZSimpleTableUIESchema,
+  ZImagesCarouselUIESchema,
 ]);

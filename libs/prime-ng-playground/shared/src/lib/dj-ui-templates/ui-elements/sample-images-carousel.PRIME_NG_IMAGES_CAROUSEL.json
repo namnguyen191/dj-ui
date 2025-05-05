@@ -1,0 +1,15 @@
+{
+  "id": "sample-images-carousel.PRIME_NG_IMAGES_CAROUSEL",
+  "type": "IMAGES_CAROUSEL",
+  "name": "Sample images carousel",
+  "description": "A sample UIE that display a bunch of shrimps images in a carousel",
+  "createdAt": "2025-04-05T17:07:36.743Z",
+  "updatedAt": "2025-04-05T17:07:36.743Z",
+  "options": {
+    "imageTemplates": [
+      "sulawesi-whitesock-image.PRIME_NG_SIMPLE_IMAGE",
+      "blue-diamond-neocaridina-image.PRIME_NG_SIMPLE_IMAGE",
+      "purple-metallic-caridina-image.PRIME_NG_SIMPLE_IMAGE"
+    ]
+  }
+}

@@ -24,6 +24,7 @@
     "test:all": "nx run-many --all --skip-nx-cache --parallel=12 -t test",
     "e2e:affected": "nx affected -t e2e",
     "e2e:all": "nx run-many --all --skip-nx-cache --parallel=12 -t e2e",
+    "generate-json-schema:all": "nx run-many --all --skip-nx-cache --parallel=12 -t generate-json-schema-with-zod",
     "clean-artifacts": "nx reset && rm -rf .nx .angular dist tmp node_modules/.cache"
   },
   "dependencies": {

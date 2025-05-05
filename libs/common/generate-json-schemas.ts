@@ -4,7 +4,7 @@ import * as fs from 'fs';
 import { ZodType } from 'zod';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 
-import { ZSimpleGridLayoutUIESchema } from './simple-grid-layout/src/lib/simple-grid-layout-interfaces';
+import { ZSimpleGridLayoutUIESchema } from './shared/src/lib/simple-grid-layout-interfaces';
 
 const generateJSONSchemaFromZodTypes = (zodTypes: ZodType[]): void => {
   for (const zt of zodTypes) {

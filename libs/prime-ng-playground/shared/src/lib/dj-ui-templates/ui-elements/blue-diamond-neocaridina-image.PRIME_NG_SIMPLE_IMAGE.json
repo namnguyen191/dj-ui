@@ -1,0 +1,12 @@
+{
+  "id": "blue-diamond-neocaridina-image.PRIME_NG_SIMPLE_IMAGE",
+  "type": "SIMPLE_IMAGE",
+  "name": "Blue diamond neocaridina shrimp image",
+  "description": "An image of a blue diamond neocaridina shrimp",
+  "createdAt": "2025-04-05T17:07:36.743Z",
+  "updatedAt": "2025-04-05T17:07:36.743Z",
+  "options": {
+    "imageUrl": "https://www.bluecrownaqua.com/cdn/shop/products/Blue_dream_3.jpg?v=1539065881",
+    "altLabel": "Sulawesi Whitesock shrimp"
+  }
+}

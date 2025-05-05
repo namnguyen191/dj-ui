@@ -1,0 +1,115 @@
+{
+  "type": "object",
+  "properties": {
+    "remoteResourceIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "stateSubscription": {
+      "type": "object",
+      "properties": {
+        "watchedScopes": {
+          "type": "object",
+          "properties": {
+            "global": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "local": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "variables": {
+          "type": "object",
+          "additionalProperties": {}
+        }
+      },
+      "required": [
+        "watchedScopes"
+      ],
+      "additionalProperties": false
+    },
+    "options": {
+      "type": "object",
+      "properties": {
+        "isInterpolationLoading": {
+          "type": "boolean"
+        },
+        "isInterpolationError": {
+          "type": "boolean"
+        },
+        "isResourceLoading": {
+          "type": "boolean"
+        },
+        "isResourceError": {
+          "type": "boolean"
+        },
+        "isLoading": {
+          "type": "boolean"
+        },
+        "isError": {
+          "type": "boolean"
+        },
+        "images": {
+          "type": "array",
+          "items": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "object",
+                "properties": {
+                  "imageUrl": {
+                    "type": "string"
+                  },
+                  "altLabel": {
+                    "type": "string"
+                  },
+                  "priority": {
+                    "type": "boolean"
+                  }
+                },
+                "required": [
+                  "imageUrl",
+                  "altLabel",
+                  "priority"
+                ],
+                "additionalProperties": false
+              }
+            ]
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "eventsHooks": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    },
+    "name": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "options",
+    "name",
+    "description"
+  ],
+  "additionalProperties": false,
+  "description": "AppEditPrimeNgCarouselImagesUIESchema",
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}

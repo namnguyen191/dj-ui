@@ -37,10 +37,10 @@ export abstract class BaseTemplateService<T extends Template> {
     existingTemplateSubject.next(registeringTemplate);
   }
 
-  registerTemplate(template: T): void {
+  registerTemplate<TSub extends T>(template: TSub): void {
     const templateId = template.id;
     const existingTemplateSubject = this.#templateSubjectMap[templateId];
-    const registeredTemplate: ConfigWithStatus<T> = {
+    const registeredTemplate: ConfigWithStatus<TSub> = {
       id: templateId,
       status: 'loaded',
       config: template,
@@ -101,11 +101,21 @@ export abstract class BaseTemplateService<T extends Template> {
     });
   }
 
-  updateOrRegisterTemplate(template: T): void {
+  updateOrRegisterTemplate<TSub extends T>(template: TSub): void {
     if (this.#templateSubjectMap[template.id]) {
       this.updateTemplate(template);
     } else {
       this.registerTemplate(template);
+    }
+  }
+
+  deleteTemplate(id: TemplateId): void {
+    if (this.#templateSubjectMap[id]) {
+      this.#templateSubjectMap[id].complete();
+      // eslint-disable-next-line @typescript-eslint/no-dynamic-delete
+      delete this.#templateSubjectMap[id];
+    } else {
+      console.warn(`Template with id ${id} does not exist. Nothing to delete!`);
     }
   }
 }

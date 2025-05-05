@@ -71,6 +71,10 @@
     {
       "fileMatch": ["**/*.PRIME_NG_SIMPLE_TABLE.json"],
       "url": "/libs/prime-ng-ext/generated-json-schemas/PrimeNgSimpleTableUIESchema.json"
+    },
+    {
+      "fileMatch": ["**/*.PRIME_NG_IMAGES_CAROUSEL.json"],
+      "url": "/libs/prime-ng-ext/generated-json-schemas/PrimeNgImagesCarouselUIESchema.json"
     }
   ]
 }

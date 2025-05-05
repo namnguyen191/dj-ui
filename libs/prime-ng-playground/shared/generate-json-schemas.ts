@@ -5,6 +5,7 @@ import { ZodType } from 'zod';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 
 import {
+  ZAppEditImagesCarouselUIESchema,
   ZAppEditSimpleGridUIESchema,
   ZAppEditSimpleImageUIESchema,
   ZAppEditSimpleTableUIESchema,
@@ -28,4 +29,5 @@ generateJSONSchemaFromZodTypes([
   ZAppEditSimpleTextUIESchema,
   ZAppEditSimpleImageUIESchema,
   ZAppEditSimpleGridUIESchema,
+  ZAppEditImagesCarouselUIESchema,
 ]);

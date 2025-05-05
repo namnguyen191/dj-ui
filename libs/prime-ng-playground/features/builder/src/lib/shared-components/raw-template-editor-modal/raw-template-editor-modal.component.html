@@ -4,7 +4,11 @@
 <p-dialog
   class="dialog-container"
   header="Editor"
+  [closeOnEscape]="true"
+  [dismissableMask]="true"
+  [draggable]="false"
   [modal]="true"
+  [resizable]="false"
   [visible]="visible()"
   (visibleChange)="editCancel.emit()"
 >
