@@ -27,6 +27,7 @@ import {
   type ImagesConfigOption,
   type ImageTemplateId,
   SimpleImageElementType,
+  SimpleImageSymbol,
   type SimpleImageUIESchema,
   ZImagesConfigOption,
 } from '@dj-ui/prime-ng-ext/shared';
@@ -54,6 +55,8 @@ export class ImagesCarouselComponent
   override getSymbol(): symbol {
     return ImagesCarouselComponent.ELEMENT_SYMBOL;
   }
+
+  SimpleImageSymbol = SimpleImageSymbol;
 
   #uiElementTemplateService = inject(UIElementTemplateService);
 

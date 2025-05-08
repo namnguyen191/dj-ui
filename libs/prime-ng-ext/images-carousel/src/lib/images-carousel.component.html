@@ -16,7 +16,10 @@
         (keypress)="setImageToPreview(imageTemplateId)"
       >
         <div class="slides-container__slide__snapper">
-          <ng-container [djuiUIElementRenderer]="imageTemplateId"></ng-container>
+          <ng-container
+            [djuiUIElementRenderer]="imageTemplateId"
+            [requiredComponentSymbols]="[SimpleImageSymbol]"
+          ></ng-container>
         </div>
       </li>
     }
@@ -46,6 +49,9 @@
   (visibleChange)="closeCurrentPreviewImage()"
 >
   <div *ngIf="currentPreviewImageSig() as currentPreviewImage" class="preview-image">
-    <ng-container [djuiUIElementRenderer]="currentPreviewImage"></ng-container>
+    <ng-container
+      [djuiUIElementRenderer]="currentPreviewImage"
+      [requiredComponentSymbols]="[SimpleImageSymbol]"
+    ></ng-container>
   </div>
 </p-dialog>

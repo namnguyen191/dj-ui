@@ -13,6 +13,7 @@
       [resizableColumns]="resizableColumnsConfigOption()"
       [showGridlines]="gridLinesConfigOption()"
       [stripedRows]="stripesConfigOption()"
+      [style.--data-row-height]="stylesConfigOption().fixedDataRowsHeight"
       [value]="rowsConfigOption()"
     >
       <ng-template #header columns let-columns>
@@ -28,7 +29,23 @@
         <tr>
           @for (col of columns; track $index) {
             <td>
-              {{ rowData[col.id] }}
+              @if (col.templateId) {
+                @let curColData = rowData[col.id];
+                @if (isUnknownRecord(curColData)) {
+                  <ng-container
+                    [configsOverride]="curColData"
+                    [djuiUIElementRenderer]="col.templateId"
+                    [requiredComponentSymbols]="tableCellSupportedTemplates"
+                  ></ng-container>
+                } @else {
+                  <span
+                    >Row data is of invalid format. Required an object that represent an options for
+                    that template {{ col.templateId }} but received {{ curColData }}</span
+                  >
+                }
+              } @else {
+                {{ rowData[col.id] }}
+              }
             </td>
           }
         </tr>

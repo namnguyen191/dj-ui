@@ -84,6 +84,9 @@
               },
               "disableResizable": {
                 "type": "boolean"
+              },
+              "templateId": {
+                "type": "string"
               }
             },
             "required": [
@@ -111,6 +114,10 @@
                 {
                   "type": "integer",
                   "format": "int64"
+                },
+                {
+                  "type": "object",
+                  "additionalProperties": {}
                 }
               ]
             }
@@ -127,6 +134,15 @@
             },
             "totalDataLength": {
               "type": "number"
+            }
+          },
+          "additionalProperties": false
+        },
+        "styles": {
+          "type": "object",
+          "properties": {
+            "fixedDataRowsHeight": {
+              "type": "string"
             }
           },
           "additionalProperties": false

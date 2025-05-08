@@ -16,6 +16,9 @@
     "stripes": true,
     "gridLines": true,
     "resizableColumns": true,
+    "styles": {
+      "fixedDataRowsHeight": "6rem"
+    },
     "columns": [
       {
         "id": "id",
@@ -37,6 +40,11 @@
       {
         "id": "types",
         "label": "Types"
+      },
+      {
+        "id": "image",
+        "label": "Image",
+        "templateId": "pokemon-table-row-image.PRIME_NG_SIMPLE_IMAGE"
       }
     ],
     "rows": "<${ return this.remoteResourcesStates?.results?.[\"POKEMON_PAGINATION.REMOTE_RESOURCE\"]?.result?.pokemons ?? [] }$>",

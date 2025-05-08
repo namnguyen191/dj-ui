@@ -7,7 +7,14 @@ export const SimpleTableSymbol = Symbol('SimpleTable');
 
 export const ZTableRowObject = z.record(
   z.string(),
-  z.union([z.string(), z.number(), z.boolean(), z.bigint(), z.symbol()])
+  z.union([
+    z.string(),
+    z.number(),
+    z.boolean(),
+    z.bigint(),
+    z.symbol(),
+    z.record(z.string(), z.unknown()),
+  ])
 );
 export type TableRowObject = z.infer<typeof ZTableRowObject>;
 export const ZTableRowsConfig = z.array(ZTableRowObject);
@@ -17,6 +24,7 @@ export const ZTableColumnObject = z.strictObject({
   id: z.string(),
   label: z.string(),
   disableResizable: z.boolean().optional(),
+  templateId: z.string().optional(),
 });
 export type TableColumnObject = z.infer<typeof ZTableColumnObject>;
 export const ZTableColumnsConfig = z.array(ZTableColumnObject);
@@ -28,6 +36,11 @@ export const ZTablePaginationConfigs = z.strictObject({
 });
 export type TablePaginationConfigs = z.infer<typeof ZTablePaginationConfigs>;
 
+export const ZTableStylesConfigs = z.strictObject({
+  fixedDataRowsHeight: z.string().optional(),
+});
+export type TableStylesConfigs = z.infer<typeof ZTableStylesConfigs>;
+
 export const ZSimpleTableUIEConfigs = z.object({
   title: z.string(),
   resizableColumns: z.boolean(),
@@ -36,6 +49,7 @@ export const ZSimpleTableUIEConfigs = z.object({
   columns: ZTableColumnsConfig,
   rows: ZTableRowsConfig,
   pagination: ZTablePaginationConfigs,
+  styles: ZTableStylesConfigs,
 });
 
 export type SimpleTableUIEConfigs = z.infer<typeof ZSimpleTableUIEConfigs>;
