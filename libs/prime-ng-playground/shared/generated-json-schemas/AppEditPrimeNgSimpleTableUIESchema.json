@@ -33,9 +33,6 @@
           "additionalProperties": {}
         }
       },
-      "required": [
-        "watchedScopes"
-      ],
       "additionalProperties": false
     },
     "options": {

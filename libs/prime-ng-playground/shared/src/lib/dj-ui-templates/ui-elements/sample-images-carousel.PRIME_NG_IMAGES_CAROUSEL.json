@@ -6,10 +6,14 @@
   "createdAt": "2025-04-05T17:07:36.743Z",
   "updatedAt": "2025-04-05T17:07:36.743Z",
   "options": {
-    "imageTemplates": [
+    "images": [
       "sulawesi-whitesock-image.PRIME_NG_SIMPLE_IMAGE",
       "blue-diamond-neocaridina-image.PRIME_NG_SIMPLE_IMAGE",
-      "purple-metallic-caridina-image.PRIME_NG_SIMPLE_IMAGE"
+      "purple-metallic-caridina-image.PRIME_NG_SIMPLE_IMAGE",
+      {
+        "imageUrl": "https://reefbuilders.com/wp-content/blogs.dir/1/files/2015/08/harlequin-shrimp-asterina-predator.jpg",
+        "altLabel": "Harlequin Shrimp"
+      }
     ]
   }
 }

@@ -1,7 +1,5 @@
 <p-table
-  selectionMode="single"
   [loading]="loadingSig()"
-  [metaKeySelection]="true"
   [showGridlines]="true"
   [stripedRows]="true"
   [value]="allTemplatesInfoSig()"
@@ -22,12 +20,13 @@
     </tr>
   </ng-template>
   <ng-template #body let-template>
-    <tr (click)="navigateToEditPage(template.id)">
+    <tr class="data-row">
       <td>{{ template.id }}</td>
       <td>{{ template.name }}</td>
       <td>{{ template.description }}</td>
       <td>{{ template.createdAt | date }}</td>
       <td>{{ template.updatedAt | date }}</td>
+      <a class="data-row__link-placeholder" [routerLink]="['.', template.id]"> </a>
     </tr>
   </ng-template>
 </p-table>

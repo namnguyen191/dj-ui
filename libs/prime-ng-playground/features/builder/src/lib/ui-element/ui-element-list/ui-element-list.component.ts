@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, computed, inject, type Signal } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {
   layoutUIElement,
   RemoteResourceTemplatesStore,
@@ -8,13 +8,13 @@ import {
   UIElementTemplatesStore,
 } from '@dj-ui/prime-ng-playground/shared';
 import { ConfirmationService } from 'primeng/api';
-import { ButtonModule } from 'primeng/button';
+import { Button } from 'primeng/button';
 import { ConfirmDialog } from 'primeng/confirmdialog';
 import { TableModule } from 'primeng/table';
 
 @Component({
   selector: 'prime-ng-playground-builder-feat-ui-element-list',
-  imports: [TableModule, ButtonModule, ConfirmDialog, CommonModule],
+  imports: [TableModule, Button, ConfirmDialog, CommonModule, RouterLink],
   providers: [ConfirmationService],
   templateUrl: './ui-element-list.component.html',
   styleUrl: './ui-element-list.component.scss',

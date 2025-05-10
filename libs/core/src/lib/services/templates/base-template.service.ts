@@ -118,4 +118,8 @@ export abstract class BaseTemplateService<T extends Template> {
       console.warn(`Template with id ${id} does not exist. Nothing to delete!`);
     }
   }
+
+  clearAllTemplates(): void {
+    this.#templateSubjectMap = {};
+  }
 }

@@ -1,7 +1,12 @@
 import type { AnyUIElementTemplate } from '@dj-ui/core';
 
 import pokemonWithPaginationRR from '../lib/dj-ui-templates/remote-resources/POKEMON_PAGINATION.REMOTE_RESOURCE.json';
+import pokemonParallelRR from '../lib/dj-ui-templates/remote-resources/POKEMON_PARALLEL.REMOTE_RESOURCE.json';
+import top50Pokemons from '../lib/dj-ui-templates/remote-resources/TOP_50_POKEMONS.REMOTE_RESOURCE.json';
+import usPopWithPaginationRR from '../lib/dj-ui-templates/remote-resources/US_POP_PAGINATION.REMOTE_RESOURCE.json';
 import blueDiamondNeocaridina from '../lib/dj-ui-templates/ui-elements/blue-diamond-neocaridina-image.PRIME_NG_SIMPLE_IMAGE.json';
+import sampleMixRequestsTable from '../lib/dj-ui-templates/ui-elements/mix-requests-table.PRIME_NG_SIMPLE_TABLE.json';
+import pokemonInMemoryPaginationTable from '../lib/dj-ui-templates/ui-elements/pokemon-in-memory-pagination-table.PRIME_NG_SIMPLE_TABLE.json';
 import pokemonServerSidePaginationTable from '../lib/dj-ui-templates/ui-elements/pokemon-server-side-pagination-table.PRIME_NG_SIMPLE_TABLE.json';
 import samplePokemonTableRowImage from '../lib/dj-ui-templates/ui-elements/pokemon-table-row-image.PRIME_NG_SIMPLE_IMAGE.json';
 import purpleMetallicCaridina from '../lib/dj-ui-templates/ui-elements/purple-metallic-caridina-image.PRIME_NG_SIMPLE_IMAGE.json';
@@ -18,6 +23,13 @@ export const mockUIElementTemplates: CreateAppUIElementTemplate<AnyUIElementTemp
   purpleMetallicCaridina,
   sampleImagesCarousel,
   samplePokemonTableRowImage,
+  sampleMixRequestsTable,
+  pokemonInMemoryPaginationTable,
 ];
 
-export const mockRemoteResourceTemplates: AppRemoteResourceTemplate[] = [pokemonWithPaginationRR];
+export const mockRemoteResourceTemplates: AppRemoteResourceTemplate[] = [
+  pokemonWithPaginationRR,
+  pokemonParallelRR,
+  usPopWithPaginationRR,
+  top50Pokemons,
+];

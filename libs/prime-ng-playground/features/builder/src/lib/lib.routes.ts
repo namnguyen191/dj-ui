@@ -21,6 +21,8 @@ const provideDJUIBuilder = (): EnvironmentProviders => {
     [
       provideDJUI(),
       provideDJUICommon(),
+      UIElementTemplatesStore,
+      RemoteResourceTemplatesStore,
       {
         provide: COMMON_SETUP_CONFIG,
         useFactory: (): SetupConfigs => {
