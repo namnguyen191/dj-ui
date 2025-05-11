@@ -35,12 +35,12 @@
       "@dj-ui/core": ["libs/core/src/index.ts"],
       "@dj-ui/core/js-interpolation-worker": ["libs/core/js-interpolation-worker/src/index.ts"],
       "@dj-ui/prime-ng-ext": ["libs/prime-ng-ext/src/index.ts"],
+      "@dj-ui/prime-ng-ext/card": ["libs/prime-ng-ext/card/src/index.ts"],
       "@dj-ui/prime-ng-ext/images-carousel": ["libs/prime-ng-ext/images-carousel/src/index.ts"],
       "@dj-ui/prime-ng-ext/shared": ["libs/prime-ng-ext/shared/src/index.ts"],
       "@dj-ui/prime-ng-ext/simple-image": ["libs/prime-ng-ext/simple-image/src/index.ts"],
       "@dj-ui/prime-ng-ext/simple-table": ["libs/prime-ng-ext/simple-table/src/index.ts"],
       "@dj-ui/prime-ng-ext/simple-text": ["libs/prime-ng-ext/simple-text/src/index.ts"],
-      "@dj-ui/prime-ng-ext/card": ["libs/prime-ng-ext/card/src/index.ts"],
       "@dj-ui/prime-ng-playground/features/builder": [
         "libs/prime-ng-playground/features/builder/src/index.ts"
       ],
