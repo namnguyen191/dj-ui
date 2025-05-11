@@ -1,6 +1,9 @@
 {
   "id": "home-introduction.PRIME_NG_SIMPLE_TEXT",
   "type": "SIMPLE_TEXT",
+  "name": "Home introduction text",
+  "description": "An element that displays some simple text to give introduction about DJUI",
+  "createdAt": "2025-04-05T17:07:36.743Z",
   "options": {
     "textBlocks": [
       {

@@ -33,6 +33,9 @@
           "additionalProperties": {}
         }
       },
+      "required": [
+        "watchedScopes"
+      ],
       "additionalProperties": false
     },
     "options": {
@@ -56,56 +59,34 @@
         "isError": {
           "type": "boolean"
         },
-        "grid": {
-          "type": "object",
-          "properties": {
-            "columns": {
-              "type": "number"
-            },
-            "rowHeight": {
-              "type": "string"
-            },
-            "gap": {
-              "type": "string"
-            },
-            "padding": {
-              "type": "string"
-            }
-          },
-          "additionalProperties": false
-        },
-        "uiElementInstances": {
+        "images": {
           "type": "array",
           "items": {
-            "type": "object",
-            "properties": {
-              "id": {
+            "anyOf": [
+              {
                 "type": "string"
               },
-              "uiElementTemplateId": {
-                "type": "string"
-              },
-              "positionAndSize": {
+              {
                 "type": "object",
                 "properties": {
-                  "cols": {
-                    "type": "number"
-                  },
-                  "rows": {
-                    "type": "number"
-                  },
-                  "maxHeight": {
+                  "imageUrl": {
                     "type": "string"
+                  },
+                  "altLabel": {
+                    "type": "string"
+                  },
+                  "priority": {
+                    "type": "boolean"
                   }
                 },
+                "required": [
+                  "imageUrl",
+                  "altLabel",
+                  "priority"
+                ],
                 "additionalProperties": false
               }
-            },
-            "required": [
-              "id",
-              "uiElementTemplateId"
-            ],
-            "additionalProperties": false
+            ]
           }
         }
       },
@@ -129,6 +110,6 @@
     "description"
   ],
   "additionalProperties": false,
-  "description": "AppEditSimpleGridUIESchema",
+  "description": "AppEditPrimeNgCarouselImagesUIESchema",
   "$schema": "http://json-schema.org/draft-07/schema#"
 }

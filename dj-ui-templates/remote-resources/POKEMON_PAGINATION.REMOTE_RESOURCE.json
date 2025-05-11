@@ -21,10 +21,10 @@
           "method": "POST",
           "body": {
             "operationName": "GetPokemons",
-            "query": "<${ return `query GetPokemons {\n  totalCount: pokemon_v2_pokemon_aggregate {\n    aggregate {\n      count\n    }\n  }\n  pokemons: pokemon_v2_pokemon(offset: ${(this.state.variables.currentPage) * (this.state.variables.currentItemPerPage)}, limit: ${this.state.variables.currentItemPerPage}) {\n    name\n    id\n    height\n    pokemon_v2_pokemonabilities {\n      pokemon_v2_ability {\n        name\n      }\n    }\n    pokemon_v2_pokemontypes {\n      pokemon_v2_type {\n        name\n      }\n    }\n  }\n}` }$>"
+            "query": "<${ return`query GetPokemons {\n  totalCount: pokemon_v2_pokemon_aggregate {\n    aggregate {\n      count\n    }\n  }\n  pokemons: pokemon_v2_pokemon(offset: ${this.state.variables.currentPage*this.state.variables.currentItemPerPage}, limit: ${this.state.variables.currentItemPerPage}) {\n    name\n    id\n    height\n    pokemon_v2_pokemonabilities {\n      pokemon_v2_ability {\n        name\n      }\n    }\n    pokemon_v2_pokemontypes {\n      pokemon_v2_type {\n        name\n      }\n    }\n    pokemon_v2_pokemonsprites {\n      sprites(path: \"other.home.front_default\")\n    }\n  }\n}`; }$>"
           }
         },
-        "interpolation": "<${ return{pokemons:this.$current.data.pokemons.map((rawPokemonData=>({id:rawPokemonData.id,name:rawPokemonData.name,height:rawPokemonData.height,abilities:rawPokemonData.pokemon_v2_pokemonabilities.map((abilityData=>abilityData.pokemon_v2_ability.name)).join(\", \"),types:rawPokemonData.pokemon_v2_pokemontypes.map((typeData=>typeData.pokemon_v2_type.name)).join(\", \")}))),totalCount:this.$current.data.totalCount.aggregate.count}; }$>"
+        "interpolation": "<${ return{pokemons:this.$current.data.pokemons.map((rawPokemonData=>({id:rawPokemonData.id,name:rawPokemonData.name,height:rawPokemonData.height,image:{imageUrl:rawPokemonData.pokemon_v2_pokemonsprites[0].sprites,altLabel:\"Image of \"+rawPokemonData.name},abilities:rawPokemonData.pokemon_v2_pokemonabilities.map((abilityData=>abilityData.pokemon_v2_ability.name)).join(\", \"),types:rawPokemonData.pokemon_v2_pokemontypes.map((typeData=>typeData.pokemon_v2_type.name)).join(\", \")}))),totalCount:this.$current.data.totalCount.aggregate.count}; }$>"
       }
     ]
   }

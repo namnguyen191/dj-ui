@@ -1,0 +1,13 @@
+{
+  "id": "sulawesi-whitesock-image.PRIME_NG_SIMPLE_IMAGE",
+  "type": "SIMPLE_IMAGE",
+  "name": "Sulawesi whitesock shrimp image",
+  "description": "An image of a Sulawesi whitesock shrimp",
+  "createdAt": "2025-04-05T17:07:36.743Z",
+  "updatedAt": "2025-04-05T17:07:36.743Z",
+  "options": {
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Caridina-dennerli.jpg",
+    "altLabel": "Sulawesi Whitesock shrimp",
+    "priority": true
+  }
+}

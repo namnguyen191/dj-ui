@@ -1,0 +1,22 @@
+{
+  "id": "TOP_50_POKEMONS.REMOTE_RESOURCE",
+  "name": "Top 50 pokemons",
+  "description": "A remote resource that fetches pokemon data for the top 50 ones",
+  "createdAt": "2025-04-05T17:07:36.743Z",
+  "options": {
+    "requests": [
+      {
+        "fetcherId": "httpFetcher",
+        "configs": {
+          "endpoint": "https://beta.pokeapi.co/graphql/v1beta",
+          "method": "POST",
+          "body": {
+            "operationName": "GetTop50Pokemons",
+            "query": "query GetTop50Pokemons { pokemons: pokemon_v2_pokemon(limit: 50) { name id height pokemon_v2_pokemonabilities { pokemon_v2_ability { name } } pokemon_v2_pokemontypes { pokemon_v2_type { name } } pokemon_v2_pokemonsprites { sprites(path: \"other.home.front_default\") } } }"
+          }
+        },
+        "interpolation": "<${ return{pokemons:this.$current.data.pokemons.map((rawPokemonData=>({id:rawPokemonData.id,name:rawPokemonData.name,height:rawPokemonData.height,image:{imageUrl:rawPokemonData.pokemon_v2_pokemonsprites[0].sprites,altLabel:\"Image of \"+rawPokemonData.name},abilities:rawPokemonData.pokemon_v2_pokemonabilities.map((abilityData=>abilityData.pokemon_v2_ability.name)).join(\", \"),types:rawPokemonData.pokemon_v2_pokemontypes.map((typeData=>typeData.pokemon_v2_type.name)).join(\", \")})))} }$>"
+      }
+    ]
+  }
+}

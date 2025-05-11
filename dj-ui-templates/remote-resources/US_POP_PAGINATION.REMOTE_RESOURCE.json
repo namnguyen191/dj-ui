@@ -1,0 +1,34 @@
+{
+  "id": "US_POP_PAGINATION.REMOTE_RESOURCE",
+  "name": "US population pagination remote resource",
+  "description": "A remote resource that fetches US population data with support for pagination",
+  "createdAt": "2025-04-05T17:07:36.743Z",
+  "stateSubscription": {
+    "watchedScopes": {
+      "global": ["page"]
+    }
+  },
+  "options": {
+    "requests": [
+      {
+        "fetcherId": "httpFetcher",
+        "configs": {
+          "endpoint": "<${ return 'https://datausa.io/api/data?drilldowns=State&measures=Population&year=20' + (this.state.global.page?.pageSize ?? 20) }$>",
+          "method": "GET"
+        },
+        "interpolation": "<${ return this.$current.data }$>"
+      }
+    ],
+    "onSuccess": [
+      {
+        "type": "addToState",
+        "payload": {
+          "scope": "global",
+          "data": {
+            "usPopulation": "<${ return [...this.state.global.usPopulation ?? [], ...this.$result] }$> "
+          }
+        }
+      }
+    ]
+  }
+}

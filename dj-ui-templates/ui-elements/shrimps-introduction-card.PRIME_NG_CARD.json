@@ -1,0 +1,15 @@
+{
+  "id": "shrimps-introduction-card.PRIME_NG_CARD",
+  "type": "CARD",
+  "name": "Shrimps introduction card",
+  "description": "A card that introduces the shrimps keeping hobby",
+  "createdAt": "2025-04-05T17:07:36.743Z",
+  "options": {
+    "topBanner": {
+      "templateId": "sample-images-carousel.PRIME_NG_IMAGES_CAROUSEL"
+    },
+    "title": "Welcome shrimp keeper!",
+    "subTitle": "A introduction to the art of shrimp keeping!",
+    "body": "Keeping shrimp in an aquarium is a delicate yet rewarding aspect of the hobby, blending beauty with balance. These tiny invertebrates not only add vibrant color and activity to tanks but also serve as natural cleaners, feeding on algae and detritus. Successful shrimp keeping requires stable water parameters, minimal pollutants, and plenty of hiding spots to support molting and breeding. Enthusiasts often cultivate planted tanks with driftwood and mosses to mimic natural habitats, creating a serene, self-sustaining ecosystem. With care and patience, shrimp-keeping becomes both a visual delight and a peaceful pursuit."
+  }
+}
