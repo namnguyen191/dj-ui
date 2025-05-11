@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { computed, inject } from '@angular/core';
 import { SimpleGridLayoutElementType } from '@dj-ui/common/shared';
-import type { UIElementTemplate } from '@dj-ui/core';
+import { type UIElementTemplate, UIElementTemplateService } from '@dj-ui/core';
 import { withEntitiesAndLoaders } from '@dj-ui/utils';
 import {
   patchState,
@@ -36,7 +36,6 @@ export const layoutUIElement = new Set([SimpleGridLayoutElementType]);
 export type UIElementTemplateInfo = TemplateInfo & Pick<UIElementTemplate, 'type'>;
 
 export const UIElementTemplatesStore = signalStore(
-  { providedIn: 'root' },
   withState(uiElementTemplatesStoreInitialState),
   withEntitiesAndLoaders<
     AppUIElementTemplate,
@@ -82,15 +81,22 @@ export const UIElementTemplatesStore = signalStore(
       { equal: isEqual }
     ),
   })),
-  withMethods((store, uieTemplatesAPIService = inject(UIElementTemplateAPIService)) => ({
-    updateQuery: (query: UIElementTemplatesStoreState['query']): void => {
-      patchState(store, { query });
-    },
-    resetMockTemplates: async (): Promise<void> => {
-      await uieTemplatesAPIService.resetExampleTemplates();
-      await store.loadAll();
-    },
-  })),
+  withMethods(
+    (
+      store,
+      uieTemplatesAPIService = inject(UIElementTemplateAPIService),
+      uiElementTemplateService = inject(UIElementTemplateService)
+    ) => ({
+      updateQuery: (query: UIElementTemplatesStoreState['query']): void => {
+        patchState(store, { query });
+      },
+      resetMockTemplates: async (): Promise<void> => {
+        await uieTemplatesAPIService.resetExampleTemplates();
+        await store.loadAll();
+        uiElementTemplateService.clearAllTemplates();
+      },
+    })
+  ),
   withHooks({
     onInit: async ({ loadAll }) => {
       await loadAll();

@@ -112,10 +112,11 @@ export class UIElementRendererDirective {
   readonly #uiElementInfiniteErrorComponent = inject(ELEMENT_RENDERER_CONFIG, { optional: true })
     ?.uiElementInfiniteErrorComponent;
 
-  uiElementTemplateId: InputSignal<string> = input.required({
+  readonly uiElementTemplateId: InputSignal<string> = input.required({
     alias: 'djuiUIElementRenderer',
   });
-  requiredComponentSymbols = input<symbol[]>([]);
+  readonly requiredComponentSymbols = input<symbol[]>([]);
+  readonly configsOverride = input<UnknownRecord>({});
 
   readonly uiElementTemplate: Signal<UIElementTemplateWithStatus | undefined> =
     computedFromObservable(() => {
@@ -250,10 +251,21 @@ export class UIElementRendererDirective {
       ),
     };
 
+    const configsOverride: UserProvidedInputsStreams = Object.entries(
+      this.configsOverride()
+    ).reduce(
+      (accInputs, [inputName, inputVal]) => ({
+        ...accInputs,
+        [inputName]: of(inputVal),
+      }),
+      {}
+    );
+
     const inputsStreams: InputsStreams = {
       ...inputsFromRemoteResource,
       ...loadingAndErrorInputs,
       ...inputsWithInterpolationTracking,
+      ...configsOverride,
     };
 
     const debouncedAndDistinctInputs = Object.fromEntries(

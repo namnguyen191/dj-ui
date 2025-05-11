@@ -1,0 +1,47 @@
+{
+  "id": "mix-requests-table.PRIME_NG_SIMPLE_TABLE",
+  "type": "SIMPLE_TABLE",
+  "name": "Mix requests table",
+  "description": "A table that demonstrate how to combine multiple remote resources",
+  "createdAt": "2025-04-05T17:07:36.743Z",
+  "updatedAt": "2025-04-05T17:07:36.743Z",
+  "remoteResourceIds": ["POKEMON_PARALLEL.REMOTE_RESOURCE", "US_POP_PAGINATION.REMOTE_RESOURCE"],
+  "options": {
+    "title": "US population over the year and pokemon data",
+    "columns": [
+      {
+        "id": "state",
+        "label": "State"
+      },
+      {
+        "id": "year",
+        "label": "Year"
+      },
+      {
+        "id": "population",
+        "label": "Population"
+      },
+      {
+        "id": "id",
+        "label": "ID"
+      },
+      {
+        "id": "name",
+        "label": "Name"
+      },
+      {
+        "id": "height",
+        "label": "Height"
+      },
+      {
+        "id": "weight",
+        "label": "Weight"
+      },
+      {
+        "id": "types",
+        "label": "Types"
+      }
+    ],
+    "rows": "<${ const pokemonRows=this.remoteResourcesStates?.results?.[\"POKEMON_PARALLEL.REMOTE_RESOURCE\"]?.result?.map((({id:id,name:name,height:height,weight:weight,types:types})=>({id:id,name:name,height:height,weight:weight,types:types.map((typeObj=>typeObj.type.name)).join(\", \")})))??[];const usPopulationRows=this.remoteResourcesStates?.results?.[\"US_POP_PAGINATION.REMOTE_RESOURCE\"]?.result?.map((({State:state,Year:year,Population:population})=>({state:state,year:year,population:population})))??[];const missingPokemonRow={id:\"No data\",name:\"No data\",height:\"No data\",weight:\"No data\",types:\"No data\"};let combinedRows=usPopulationRows.map(((usPopRow,idx)=>{const matchingPokemonRow=pokemonRows[idx];if(matchingPokemonRow){return{...usPopRow,...matchingPokemonRow}}return{...usPopRow,...missingPokemonRow}}));return combinedRows; }$>"
+  }
+}

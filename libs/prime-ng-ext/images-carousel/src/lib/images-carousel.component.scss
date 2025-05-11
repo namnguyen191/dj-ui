@@ -1,0 +1,77 @@
+@mixin remove-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scrollbar-color: transparent transparent;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+:host {
+  display: flex;
+  height: 100%;
+  position: relative;
+
+  @include remove-scrollbar;
+
+  .slides-container {
+    flex: 1 1 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+    scroll-snap-type: x mandatory;
+
+    &__slide {
+      position: relative;
+      flex: 0 0 100%;
+      width: 100%;
+      list-style: none;
+
+      &__snapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        cursor: zoom-in;
+        scroll-snap-align: center;
+      }
+    }
+  }
+
+  .navigation-controls-container {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    &__navigation-list {
+      display: flex;
+      justify-content: center;
+      gap: 5px;
+
+      &__item {
+        display: block;
+        background-color: var(--p-button-secondary-color);
+        width: 1.5rem;
+        height: 1.5rem;
+        background-clip: content-box;
+        border: 0.25rem solid transparent;
+        border-radius: 50%;
+        cursor: pointer;
+
+        &:hover {
+          background-color: var(--p-button-secondary-hover-color);
+        }
+      }
+    }
+  }
+
+  .preview-image {
+    width: 60vw;
+    height: 50vh;
+  }
+}

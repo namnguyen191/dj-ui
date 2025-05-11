@@ -29,16 +29,18 @@ export type StateMap = {
 
 export type WatchedPath = string;
 export type StateSubscriptionConfig = {
-  watchedScopes: {
+  watchedScopes?: {
     [K in AvailableStateScope]?: WatchedPath[];
   };
   variables?: Record<string, unknown>;
 };
 export const ZStateSubscriptionConfig = z.strictObject({
-  watchedScopes: z.strictObject({
-    global: z.array(z.string()).optional(),
-    local: z.array(z.string()).optional(),
-  }),
+  watchedScopes: z
+    .strictObject({
+      global: z.array(z.string()).optional(),
+      local: z.array(z.string()).optional(),
+    })
+    .optional(),
   variables: z.record(z.any()).optional(),
 }) satisfies z.ZodType<StateSubscriptionConfig>;
 
@@ -61,7 +63,8 @@ export const getStatesSubscriptionAsContext = (
 ): Observable<StateMap> => {
   const { watchedScopes, variables } = stateSubscription;
 
-  const { local: localSubscription, global: globalSubscription } = watchedScopes;
+  const localSubscription = watchedScopes?.local ?? [];
+  const globalSubscription = watchedScopes?.global ?? [];
 
   const stateStoreService = inject(StateStoreService);
   const interpolationService = inject(InterpolationService);

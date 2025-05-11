@@ -17,7 +17,7 @@ export type Request = z.infer<typeof ZRequest>;
 export const ZRemoteResourceTemplate = z
   .strictObject({
     id: z.string(),
-    stateSubscription: ZStateSubscriptionConfig,
+    stateSubscription: ZStateSubscriptionConfig.optional(),
     options: z.strictObject({
       runCondition: z.boolean().optional(),
       requests: z.array(ZRequest),

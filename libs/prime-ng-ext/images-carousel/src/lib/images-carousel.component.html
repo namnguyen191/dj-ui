@@ -1,0 +1,57 @@
+@let imageTemplateIds = imageTemplateIdsSig();
+
+@if (isLoadingConfigOption()) {
+  <span>Loading...</span>
+} @else if (isErrorConfigOption()) {
+  <span>Something went wrong</span>
+} @else {
+  <ol class="slides-container">
+    @for (imageTemplateId of imageTemplateIds; track $index) {
+      <li
+        #carouselSlide
+        class="slides-container__slide"
+        [attr.aria-hidden]="true"
+        [id]="imageTemplateId"
+        (click)="setImageToPreview(imageTemplateId)"
+        (keypress)="setImageToPreview(imageTemplateId)"
+      >
+        <div class="slides-container__slide__snapper">
+          <ng-container
+            [djuiUIElementRenderer]="imageTemplateId"
+            [requiredComponentSymbols]="[SimpleImageSymbol]"
+          ></ng-container>
+        </div>
+      </li>
+    }
+  </ol>
+  <aside class="navigation-controls-container">
+    <ol class="navigation-controls-container__navigation-list">
+      @for (imageTemplateId of imageTemplateIds; track $index) {
+        <li
+          aria-hidden="true"
+          class="navigation-controls-container__navigation-list__item"
+          role="button"
+          (click)="changeToSlide(imageTemplateId)"
+          (keypress)="changeToSlide(imageTemplateId)"
+        ></li>
+      }
+    </ol>
+  </aside>
+}
+
+<p-dialog
+  [closeOnEscape]="true"
+  [dismissableMask]="true"
+  [draggable]="false"
+  [modal]="true"
+  [resizable]="false"
+  [visible]="!!currentPreviewImageSig()"
+  (visibleChange)="closeCurrentPreviewImage()"
+>
+  <div *ngIf="currentPreviewImageSig() as currentPreviewImage" class="preview-image">
+    <ng-container
+      [djuiUIElementRenderer]="currentPreviewImage"
+      [requiredComponentSymbols]="[SimpleImageSymbol]"
+    ></ng-container>
+  </div>
+</p-dialog>

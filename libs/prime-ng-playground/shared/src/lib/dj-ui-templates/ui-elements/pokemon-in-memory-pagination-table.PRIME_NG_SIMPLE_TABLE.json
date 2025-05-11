@@ -1,0 +1,69 @@
+{
+  "id": "pokemon-in-memory-pagination-table.PRIME_NG_SIMPLE_TABLE.json",
+  "type": "SIMPLE_TABLE",
+  "name": "Pokemon in memory pagination table",
+  "description": "A table that fetch a bunch of pokemon using in-memory pagination",
+  "createdAt": "2025-04-05T17:07:36.743Z",
+  "remoteResourceIds": ["TOP_50_POKEMONS.REMOTE_RESOURCE"],
+  "stateSubscription": {
+    "watchedScopes": {
+      "global": ["pokemonInMemoryPagination"]
+    },
+    "variables": {
+      "currentPage": "<${ return this.state?.global?.pokemonInMemoryPagination?.selectedPage ?? 0 }$>",
+      "currentItemPerPage": "<${ return this.state?.global?.pokemonInMemoryPagination?.pageLength ?? 10 }$>"
+    }
+  },
+  "options": {
+    "title": "Pokemon in-memory pagination table",
+    "styles": {
+      "fixedDataRowsHeight": "6rem"
+    },
+    "columns": [
+      {
+        "id": "id",
+        "label": "Id",
+        "disableResizable": true
+      },
+      {
+        "id": "name",
+        "label": "Name"
+      },
+      {
+        "id": "height",
+        "label": "Height"
+      },
+      {
+        "id": "abilities",
+        "label": "Abilities"
+      },
+      {
+        "id": "types",
+        "label": "Types"
+      },
+      {
+        "id": "image",
+        "label": "Image",
+        "templateId": "pokemon-table-row-image.PRIME_NG_SIMPLE_IMAGE"
+      }
+    ],
+    "rows": "<${ return this.remoteResourcesStates?.results?.[\"TOP_50_POKEMONS.REMOTE_RESOURCE\"]?.result?.pokemons.slice(this.state.variables.currentPage * this.state.variables.currentItemPerPage, (this.state.variables.currentPage + 1) * this.state.variables.currentItemPerPage) ?? [] }$>",
+    "pagination": {
+      "totalDataLength": 50,
+      "pageSizes": [10, 15, 25, 50]
+    }
+  },
+  "eventsHooks": {
+    "paginationChanged": [
+      {
+        "type": "addToState",
+        "payload": {
+          "scope": "global",
+          "data": {
+            "pokemonInMemoryPagination": "<${ return this.$eventOutput }$>"
+          }
+        }
+      }
+    ]
+  }
+}

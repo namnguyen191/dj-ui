@@ -30,9 +30,6 @@
           "additionalProperties": {}
         }
       },
-      "required": [
-        "watchedScopes"
-      ],
       "additionalProperties": false
     },
     "options": {
@@ -89,7 +86,6 @@
   },
   "required": [
     "id",
-    "stateSubscription",
     "options"
   ],
   "additionalProperties": false,

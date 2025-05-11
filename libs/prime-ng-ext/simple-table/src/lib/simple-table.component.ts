@@ -7,9 +7,14 @@ import {
   type InputSignal,
   output,
 } from '@angular/core';
-import { BaseUIElementComponent, type UIElementImplementation } from '@dj-ui/core';
+import {
+  BaseUIElementComponent,
+  type UIElementImplementation,
+  UIElementRendererDirective,
+} from '@dj-ui/core';
 import {
   type PaginationChangedPayload,
+  SimpleImageSymbol,
   SimpleTableElementType,
   SimpleTableSymbol,
   type SimpleTableUIEConfigs,
@@ -17,12 +22,14 @@ import {
   type TableColumnsConfig,
   type TablePaginationConfigs,
   type TableRowsConfig,
+  type TableStylesConfigs,
   ZSimpleTableUIEConfigs,
 } from '@dj-ui/prime-ng-ext/shared';
 import { parseZodWithDefault } from '@namnguyen191/types-helper';
 import { isEmpty } from 'lodash-es';
 import { PaginatorModule, type PaginatorState } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
+import type { UnknownRecord } from 'type-fest';
 
 import { ColumnsTemplateTypeDirective } from './columns-type.directive';
 import { RowsTemplateTypeDirective } from './rows-type.directive';
@@ -35,6 +42,7 @@ import { RowsTemplateTypeDirective } from './rows-type.directive';
     ColumnsTemplateTypeDirective,
     RowsTemplateTypeDirective,
     PaginatorModule,
+    UIElementRendererDirective,
   ],
   templateUrl: './simple-table.component.html',
   styleUrl: './simple-table.component.scss',
@@ -55,58 +63,62 @@ export class SimpleTableComponent
     return SimpleTableComponent.ELEMENT_SYMBOL;
   }
 
-  defaultTitle = 'Default title';
-  titleConfigOption: InputSignal<SimpleTableUIEConfigs['title']> = input(this.defaultTitle, {
-    alias: 'title',
-    transform: (val) =>
-      parseZodWithDefault(ZSimpleTableUIEConfigs.shape.title, val, this.defaultTitle),
-  });
-
-  defaultResizableColumns = false;
-  resizableColumnsConfigOption: InputSignal<SimpleTableUIEConfigs['resizableColumns']> = input(
-    this.defaultResizableColumns,
+  readonly #defaultTitle = 'Default title';
+  readonly titleConfigOption: InputSignal<SimpleTableUIEConfigs['title']> = input(
+    this.#defaultTitle,
     {
+      alias: 'title',
+      transform: (val) =>
+        parseZodWithDefault(ZSimpleTableUIEConfigs.shape.title, val, this.#defaultTitle),
+    }
+  );
+
+  readonly #defaultResizableColumns = false;
+  readonly resizableColumnsConfigOption: InputSignal<SimpleTableUIEConfigs['resizableColumns']> =
+    input(this.#defaultResizableColumns, {
       alias: 'resizableColumns',
       transform: (val) =>
         parseZodWithDefault(
           ZSimpleTableUIEConfigs.shape.resizableColumns,
           val,
-          this.defaultResizableColumns
+          this.#defaultResizableColumns
         ),
+    });
+
+  readonly #defaultStripes = false;
+  readonly stripesConfigOption: InputSignal<SimpleTableUIEConfigs['stripes']> = input(
+    this.#defaultStripes,
+    {
+      alias: 'stripes',
+      transform: (val) =>
+        parseZodWithDefault(ZSimpleTableUIEConfigs.shape.stripes, val, this.#defaultStripes),
     }
   );
 
-  defaultStripes = false;
-  stripesConfigOption: InputSignal<SimpleTableUIEConfigs['stripes']> = input(this.defaultStripes, {
-    alias: 'stripes',
-    transform: (val) =>
-      parseZodWithDefault(ZSimpleTableUIEConfigs.shape.stripes, val, this.defaultStripes),
-  });
-
-  defaultGridLines = false;
-  gridLinesConfigOption: InputSignal<SimpleTableUIEConfigs['stripes']> = input(
-    this.defaultGridLines,
+  readonly #defaultGridLines = false;
+  readonly gridLinesConfigOption: InputSignal<SimpleTableUIEConfigs['stripes']> = input(
+    this.#defaultGridLines,
     {
       alias: 'gridLines',
       transform: (val) =>
-        parseZodWithDefault(ZSimpleTableUIEConfigs.shape.gridLines, val, this.defaultGridLines),
+        parseZodWithDefault(ZSimpleTableUIEConfigs.shape.gridLines, val, this.#defaultGridLines),
     }
   );
 
-  columnsConfigOption: InputSignal<TableColumnsConfig> = input([], {
+  readonly columnsConfigOption: InputSignal<TableColumnsConfig> = input([], {
     alias: 'columns',
     transform: (val) =>
       parseZodWithDefault<TableColumnsConfig>(ZSimpleTableUIEConfigs.shape.columns, val, []),
   });
 
-  rowsConfigOption: InputSignal<TableRowsConfig> = input([], {
+  readonly rowsConfigOption: InputSignal<TableRowsConfig> = input([], {
     alias: 'rows',
     transform: (val) =>
       parseZodWithDefault<TableRowsConfig>(ZSimpleTableUIEConfigs.shape.rows, val, []),
   });
 
-  readonly DEFAULT_PAGINATION_PAGE_SIZES = [5, 10, 20];
-  paginationConfigOption: InputSignal<TablePaginationConfigs> = input(
+  readonly #defaultPaginationPageSizes = [5, 10, 20];
+  readonly paginationConfigOption: InputSignal<TablePaginationConfigs> = input(
     {},
     {
       alias: 'pagination',
@@ -115,18 +127,33 @@ export class SimpleTableComponent
           ZSimpleTableUIEConfigs.shape.pagination,
           val,
           {
-            pageSizes: this.DEFAULT_PAGINATION_PAGE_SIZES,
+            pageSizes: this.#defaultPaginationPageSizes,
           }
         );
         return result;
       },
     }
   );
-  shouldDisplayPagination = computed(() => !isEmpty(this.paginationConfigOption()));
+  protected readonly shouldDisplayPagination = computed(
+    () => !isEmpty(this.paginationConfigOption())
+  );
 
-  paginationChanged = output<PaginationChangedPayload>();
+  readonly #defaultTableStyles: TableStylesConfigs = {};
+  readonly stylesConfigOption: InputSignal<TableStylesConfigs> = input(this.#defaultTableStyles, {
+    alias: 'styles',
+    transform: (val) =>
+      parseZodWithDefault<TableStylesConfigs>(
+        ZSimpleTableUIEConfigs.shape.styles,
+        val,
+        this.#defaultTableStyles
+      ),
+  });
 
-  pageChange(e: PaginatorState): void {
+  protected tableCellSupportedTemplates = [SimpleImageSymbol];
+
+  readonly paginationChanged = output<PaginationChangedPayload>();
+
+  protected pageChange(e: PaginatorState): void {
     const { page, rows } = e;
 
     if (page === undefined || rows === undefined) {
@@ -138,5 +165,9 @@ export class SimpleTableComponent
       pageLength: rows,
       selectedPage: page,
     });
+  }
+
+  protected isUnknownRecord(input: unknown): input is UnknownRecord {
+    return typeof input === 'object';
   }
 }

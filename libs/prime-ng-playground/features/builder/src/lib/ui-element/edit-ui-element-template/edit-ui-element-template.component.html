@@ -7,7 +7,9 @@
   (click)="toggleModal(true)"
 />
 
-<ng-container [djuiUIElementRenderer]="currentUIElementTemplateId"></ng-container>
+<div class="ui-element-container">
+  <ng-container [djuiUIElementRenderer]="currentUIElementTemplateId"></ng-container>
+</div>
 
 <prime-ng-playground-builder-feat-raw-template-editor-modal
   [query]="{ id: currentUIElementTemplateId, isLayout: false }"

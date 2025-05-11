@@ -1,0 +1,10 @@
+:host {
+  display: contents;
+
+  .card {
+    &__top-banner {
+      width: 100%;
+      height: 200px;
+    }
+  }
+}

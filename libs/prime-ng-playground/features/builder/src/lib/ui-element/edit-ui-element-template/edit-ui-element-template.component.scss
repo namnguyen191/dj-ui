@@ -4,7 +4,13 @@
   position: relative;
   display: flex;
   justify-content: center;
-  align-items: center;
+  padding-top: 3rem;
+  height: calc(100vh - global.$main-nav-height);
+
+  .ui-element-container {
+    width: 500px;
+    height: 500px;
+  }
 
   .open-template-editor-btn {
     position: absolute;

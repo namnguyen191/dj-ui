@@ -29,3 +29,4 @@ export type SimpleImageConfigs = z.infer<typeof ZSimpleImageConfigs>;
 export const ZSimpleImageUIESchema = createUIElementTemplateSchema(ZSimpleImageConfigs).describe(
   'PrimeNgSimpleImageUIESchema'
 );
+export type SimpleImageUIESchema = z.infer<typeof ZSimpleImageUIESchema>;

@@ -1,0 +1,12 @@
+{
+  "id": "pokemon-table-row-image.PRIME_NG_SIMPLE_IMAGE",
+  "type": "SIMPLE_IMAGE",
+  "name": "Pokemon table row image",
+  "description": "A simple image UI element meant to be used in the pokemon table",
+  "createdAt": "2025-04-05T17:07:36.743Z",
+  "updatedAt": "2025-04-05T17:07:36.743Z",
+  "options": {
+    "imageUrl": "This will be override by the table",
+    "altLabel": "This will be override by the table"
+  }
+}

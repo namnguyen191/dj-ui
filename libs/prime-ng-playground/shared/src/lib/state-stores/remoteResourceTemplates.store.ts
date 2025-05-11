@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { computed, inject } from '@angular/core';
+import { RemoteResourceTemplateService } from '@dj-ui/core';
 import { withEntitiesAndLoaders } from '@dj-ui/utils';
 import {
   patchState,
@@ -28,7 +29,6 @@ const remoteResourceTemplatesStoreInitialState: RemoteResourceTemplatesStoreStat
 };
 
 export const RemoteResourceTemplatesStore = signalStore(
-  { providedIn: 'root' },
   withState(remoteResourceTemplatesStoreInitialState),
   withEntitiesAndLoaders<
     AppRemoteResourceTemplate,
@@ -66,13 +66,18 @@ export const RemoteResourceTemplatesStore = signalStore(
     }),
   })),
   withMethods(
-    (store, remoteResourceTemplateAPIService = inject(RemoteResourceTemplateAPIService)) => ({
+    (
+      store,
+      remoteResourceTemplateAPIService = inject(RemoteResourceTemplateAPIService),
+      remoteResourceTemplateService = inject(RemoteResourceTemplateService)
+    ) => ({
       updateQuery: (query: RemoteResourceTemplatesStoreState['query']): void => {
         patchState(store, { query });
       },
       resetMockTemplates: async (): Promise<void> => {
         await remoteResourceTemplateAPIService.resetExampleTemplates();
         await store.loadAll();
+        remoteResourceTemplateService.clearAllTemplates();
       },
     })
   ),

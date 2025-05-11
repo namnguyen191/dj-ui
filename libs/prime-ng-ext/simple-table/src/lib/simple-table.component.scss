@@ -15,6 +15,12 @@
       flex-shrink: 1;
       overflow: scroll;
 
+      tr {
+        td {
+          height: var(--data-row-height, auto);
+        }
+      }
+
       /* stylelint-disable-next-line selector-pseudo-element-no-unknown */
       ::ng-deep {
         // override so that the header can stay sticky while not having to defined a "scrollHeight"

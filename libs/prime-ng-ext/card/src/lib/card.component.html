@@ -1,0 +1,28 @@
+@let topBannerTempId = topBannerTemplateId();
+@let titleConfig = titleConfigOption();
+@let subTitleConfig = subTitleConfigOption();
+@let bodyConfig = bodyConfigOption();
+
+@if (isLoadingConfigOption()) {
+  <span>Loading...</span>
+} @else if (isErrorConfigOption()) {
+  <span>Something went wrong</span>
+} @else {
+  <p-card class="card" [style]="{ overflow: 'hidden' }">
+    @if (topBannerTempId !== defaultTopBannerConfigOption.templateId) {
+      <ng-template #header>
+        <div class="card__top-banner">
+          <ng-container
+            [djuiUIElementRenderer]="topBannerTempId"
+            [requiredComponentSymbols]="topBannerSupportedElements"
+          ></ng-container>
+        </div>
+      </ng-template>
+    }
+    <ng-template #title> {{ titleConfig }} </ng-template>
+    <ng-template #subtitle> {{ subTitleConfig }} </ng-template>
+    <p>
+      {{ bodyConfig }}
+    </p>
+  </p-card>
+}

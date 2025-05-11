@@ -15,9 +15,13 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
+import { CommonComponentLoader } from '@dj-ui/common';
 import { SimpleGridLayoutElementType } from '@dj-ui/common/shared';
 import { UIElementTemplateService } from '@dj-ui/core';
+import { PrimeNgComponentLoader } from '@dj-ui/prime-ng-ext';
 import {
+  CardElementType,
+  ImagesCarouselElementType,
   SimpleImageElementType,
   SimpleTableElementType,
   SimpleTextElementType,
@@ -43,12 +47,19 @@ import { ProgressSpinner } from 'primeng/progressspinner';
 import { Toast } from 'primeng/toast';
 import { filter, firstValueFrom, from, Subject, switchMap, tap } from 'rxjs';
 
+type ElementTypeToSchemaUrl = {
+  [K in keyof typeof PrimeNgComponentLoader]: string;
+} & {
+  [K in keyof typeof CommonComponentLoader]: string;
+};
 const BASE_SCHEMA_URL = 'dj-ui-schemas';
-const ELEMENT_TYPE_TO_SCHEMA_URL = {
+const ELEMENT_TYPE_TO_SCHEMA_URL: ElementTypeToSchemaUrl = {
   [SimpleTableElementType]: `${BASE_SCHEMA_URL}/AppEditPrimeNgSimpleTableUIESchema.json`,
   [SimpleTextElementType]: `${BASE_SCHEMA_URL}/AppEditPrimeNgSimpleTextUIESchema.json`,
   [SimpleImageElementType]: `${BASE_SCHEMA_URL}/AppEditPrimeNgSimpleImageUIESchema.json`,
   [SimpleGridLayoutElementType]: `${BASE_SCHEMA_URL}/AppEditSimpleGridUIESchema.json`,
+  [ImagesCarouselElementType]: `${BASE_SCHEMA_URL}/AppEditPrimeNgImagesCarouselUIESchema.json`,
+  [CardElementType]: `${BASE_SCHEMA_URL}/AppEditPrimeNgCardUIESchema.json`,
 };
 type ElementType = keyof typeof ELEMENT_TYPE_TO_SCHEMA_URL;
 
@@ -252,10 +263,17 @@ export class RawTemplateEditorModalComponent {
     const schemaFetcher = (): Promise<unknown> =>
       firstValueFrom(this.#httpClient.get<unknown>(ELEMENT_TYPE_TO_SCHEMA_URL[elementType]));
 
-    await this.#monacoEditorService.registerJSONSchema({
-      schemaId: elementType,
-      schemaFetcher,
-    });
+    try {
+      await this.#monacoEditorService.registerJSONSchema({
+        schemaId: elementType,
+        schemaFetcher,
+      });
+    } catch (error) {
+      console.error(
+        'Could not fetch and register JSON schema, editor will not have auto complete: ',
+        error
+      );
+    }
 
     this.loadingCountSig.update((prev) => prev - 1);
   }
