@@ -4,6 +4,7 @@ import * as fs from 'fs';
 import { ZodType } from 'zod';
 import { zodToJsonSchema } from 'zod-to-json-schema';
 
+import { ZCardUIESchema } from './shared/src/lib/card.interface';
 import { ZImagesCarouselUIESchema } from './shared/src/lib/images-carousel.interface';
 import { ZSimpleImageUIESchema } from './shared/src/lib/simple-image.interface';
 import { ZSimpleTableUIESchema } from './shared/src/lib/simple-table.interface';
@@ -26,4 +27,5 @@ generateJSONSchemaFromZodTypes([
   ZSimpleImageUIESchema,
   ZSimpleTableUIESchema,
   ZImagesCarouselUIESchema,
+  ZCardUIESchema,
 ]);

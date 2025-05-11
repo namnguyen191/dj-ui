@@ -3,11 +3,11 @@ import {
   ChangeDetectionStrategy,
   Component,
   computed,
+  DestroyRef,
   ElementRef,
   inject,
   input,
   type InputSignal,
-  type OnDestroy,
   type Signal,
   signal,
   viewChildren,
@@ -43,15 +43,13 @@ import { Dialog } from 'primeng/dialog';
 })
 export class ImagesCarouselComponent
   extends BaseUIElementComponent
-  implements UIElementImplementation<ImagesCarouselConfigs>, OnDestroy
+  implements UIElementImplementation<ImagesCarouselConfigs>
 {
   static override readonly ELEMENT_TYPE = ImagesCarouselElementType;
   static override readonly ELEMENT_SYMBOL = ImagesCarouselSymbol;
-
   override getElementType(): string {
     return ImagesCarouselComponent.ELEMENT_TYPE;
   }
-
   override getSymbol(): symbol {
     return ImagesCarouselComponent.ELEMENT_SYMBOL;
   }
@@ -59,6 +57,7 @@ export class ImagesCarouselComponent
   SimpleImageSymbol = SimpleImageSymbol;
 
   #uiElementTemplateService = inject(UIElementTemplateService);
+  #destroyRef = inject(DestroyRef);
 
   readonly imagesConfigOption: InputSignal<ImagesConfigOption> = input([] as ImagesConfigOption, {
     alias: 'images',
@@ -80,17 +79,10 @@ export class ImagesCarouselComponent
 
   protected readonly currentPreviewImageSig = signal<string | null>(null);
 
-  ngOnDestroy(): void {
-    for (const templateId of this.#embeddedTemplateIds) {
-      this.#uiElementTemplateService.deleteTemplate(templateId);
-    }
-  }
-
   #isImageTemplateId(imageItem: ImageItem): imageItem is ImageTemplateId {
     return typeof imageItem === 'string';
   }
 
-  #embeddedTemplateIds: string[] = [];
   #processImagesConfigOption(imagesConfigOption: ImagesConfigOption): string[] {
     return imagesConfigOption.map((item) => {
       if (this.#isImageTemplateId(item)) {
@@ -99,12 +91,14 @@ export class ImagesCarouselComponent
 
       const embeddedTemplateId = crypto.randomUUID();
 
-      this.#uiElementTemplateService.updateOrRegisterTemplate<SimpleImageUIESchema>({
-        id: embeddedTemplateId,
-        type: SimpleImageElementType,
-        options: item,
+      this.#uiElementTemplateService.updateOrRegisterTemporaryTemplate<SimpleImageUIESchema>({
+        template: {
+          id: embeddedTemplateId,
+          type: SimpleImageElementType,
+          options: item,
+        },
+        destroyRef: this.#destroyRef,
       });
-      this.#embeddedTemplateIds.push(embeddedTemplateId);
       return embeddedTemplateId;
     });
   }

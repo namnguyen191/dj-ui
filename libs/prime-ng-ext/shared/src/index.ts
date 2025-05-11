@@ -1,3 +1,4 @@
+export * from './lib/card.interface';
 export * from './lib/images-carousel.interface';
 export * from './lib/simple-image.interface';
 export * from './lib/simple-table.interface';

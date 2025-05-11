@@ -20,6 +20,7 @@ import { SimpleGridLayoutElementType } from '@dj-ui/common/shared';
 import { UIElementTemplateService } from '@dj-ui/core';
 import { PrimeNgComponentLoader } from '@dj-ui/prime-ng-ext';
 import {
+  CardElementType,
   ImagesCarouselElementType,
   SimpleImageElementType,
   SimpleTableElementType,
@@ -58,6 +59,7 @@ const ELEMENT_TYPE_TO_SCHEMA_URL: ElementTypeToSchemaUrl = {
   [SimpleImageElementType]: `${BASE_SCHEMA_URL}/AppEditPrimeNgSimpleImageUIESchema.json`,
   [SimpleGridLayoutElementType]: `${BASE_SCHEMA_URL}/AppEditSimpleGridUIESchema.json`,
   [ImagesCarouselElementType]: `${BASE_SCHEMA_URL}/AppEditPrimeNgImagesCarouselUIESchema.json`,
+  [CardElementType]: `${BASE_SCHEMA_URL}/AppEditPrimeNgCardUIESchema.json`,
 };
 type ElementType = keyof typeof ELEMENT_TYPE_TO_SCHEMA_URL;
 

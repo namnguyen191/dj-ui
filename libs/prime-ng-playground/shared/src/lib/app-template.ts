@@ -1,6 +1,7 @@
 import { ZSimpleGridLayoutUIESchema } from '@dj-ui/common/shared';
 import type { RemoteResourceTemplate, UIElementTemplate } from '@dj-ui/core';
 import {
+  ZCardUIESchema,
   ZImagesCarouselUIESchema,
   ZSimpleImageUIESchema,
   ZSimpleTableUIESchema,
@@ -71,3 +72,6 @@ export const ZAppEditImagesCarouselUIESchema = createAppUIEEditTemplate(
 export const ZAppEditSimpleGridUIESchema = createAppUIEEditTemplate(
   ZSimpleGridLayoutUIESchema
 ).describe('AppEditSimpleGridUIESchema');
+export const ZAppEditCardUIESchema = createAppUIEEditTemplate(ZCardUIESchema).describe(
+  'AppEditPrimeNgCardUIESchema'
+);

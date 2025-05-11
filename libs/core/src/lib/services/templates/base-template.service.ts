@@ -1,4 +1,4 @@
-import { inject } from '@angular/core';
+import { DestroyRef, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
 import { logError } from '../../utils/logging';
@@ -116,6 +116,20 @@ export abstract class BaseTemplateService<T extends Template> {
       delete this.#templateSubjectMap[id];
     } else {
       console.warn(`Template with id ${id} does not exist. Nothing to delete!`);
+    }
+  }
+
+  updateOrRegisterTemporaryTemplate<TSub extends T>(params: {
+    template: TSub;
+    destroyRef: DestroyRef;
+  }): void {
+    const { template, destroyRef } = params;
+
+    if (this.#templateSubjectMap[template.id]) {
+      this.updateTemplate(template);
+    } else {
+      this.registerTemplate(template);
+      destroyRef.onDestroy(() => this.deleteTemplate(template.id));
     }
   }
 

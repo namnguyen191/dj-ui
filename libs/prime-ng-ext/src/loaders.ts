@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import type { ComponentLoadersMap } from '@dj-ui/common/shared';
 import {
+  CardElementType,
   ImagesCarouselElementType,
   SimpleImageElementType,
   SimpleTableElementType,
@@ -16,4 +17,5 @@ export const PrimeNgComponentLoader = {
     import('@dj-ui/prime-ng-ext/simple-table').then((m) => m.SimpleTableComponent),
   [ImagesCarouselElementType]: () =>
     import('@dj-ui/prime-ng-ext/images-carousel').then((m) => m.ImagesCarouselComponent),
+  [CardElementType]: () => import('@dj-ui/prime-ng-ext/card').then((m) => m.CardComponent),
 } satisfies ComponentLoadersMap;

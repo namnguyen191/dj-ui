@@ -1,0 +1,181 @@
+{
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "type": {
+      "type": "string"
+    },
+    "remoteResourceIds": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "stateSubscription": {
+      "type": "object",
+      "properties": {
+        "watchedScopes": {
+          "type": "object",
+          "properties": {
+            "global": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "local": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "additionalProperties": false
+        },
+        "variables": {
+          "type": "object",
+          "additionalProperties": {}
+        }
+      },
+      "additionalProperties": false
+    },
+    "options": {
+      "type": "object",
+      "properties": {
+        "isInterpolationLoading": {
+          "type": "boolean"
+        },
+        "isInterpolationError": {
+          "type": "boolean"
+        },
+        "isResourceLoading": {
+          "type": "boolean"
+        },
+        "isResourceError": {
+          "type": "boolean"
+        },
+        "isLoading": {
+          "type": "boolean"
+        },
+        "isError": {
+          "type": "boolean"
+        },
+        "topBanner": {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "templateId": {
+                  "type": "string"
+                }
+              },
+              "required": [
+                "templateId"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "const": "SIMPLE_IMAGE"
+                },
+                "configs": {
+                  "type": "object",
+                  "properties": {
+                    "imageUrl": {
+                      "type": "string"
+                    },
+                    "altLabel": {
+                      "type": "string"
+                    },
+                    "priority": {
+                      "type": "boolean"
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "type",
+                "configs"
+              ],
+              "additionalProperties": false
+            },
+            {
+              "type": "object",
+              "properties": {
+                "type": {
+                  "type": "string",
+                  "const": "IMAGES_CAROUSEL"
+                },
+                "configs": {
+                  "type": "object",
+                  "properties": {
+                    "images": {
+                      "type": "array",
+                      "items": {
+                        "anyOf": [
+                          {
+                            "type": "string"
+                          },
+                          {
+                            "type": "object",
+                            "properties": {
+                              "imageUrl": {
+                                "$ref": "#/properties/options/properties/topBanner/anyOf/1/properties/configs/properties/imageUrl"
+                              },
+                              "altLabel": {
+                                "$ref": "#/properties/options/properties/topBanner/anyOf/1/properties/configs/properties/altLabel"
+                              },
+                              "priority": {
+                                "$ref": "#/properties/options/properties/topBanner/anyOf/1/properties/configs/properties/priority"
+                              }
+                            },
+                            "additionalProperties": false
+                          }
+                        ]
+                      }
+                    }
+                  },
+                  "additionalProperties": false
+                }
+              },
+              "required": [
+                "type",
+                "configs"
+              ],
+              "additionalProperties": false
+            }
+          ]
+        },
+        "title": {
+          "type": "string"
+        },
+        "subTitle": {
+          "type": "string"
+        },
+        "body": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "eventsHooks": {
+      "type": "object",
+      "properties": {},
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "id",
+    "type",
+    "options"
+  ],
+  "additionalProperties": false,
+  "description": "PrimeNgCardUIESchema",
+  "$schema": "http://json-schema.org/draft-07/schema#"
+}
