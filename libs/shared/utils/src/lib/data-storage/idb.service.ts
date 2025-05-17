@@ -162,11 +162,6 @@ export class IdbRepo<T> {
       const req: IDBRequest<undefined> = store.delete(id);
 
       req.onsuccess = (): void => {
-        if (req.result === undefined) {
-          resolve();
-          return;
-        }
-
         resolve(req.result);
       };
       req.onerror = (): void => {

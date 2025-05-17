@@ -81,7 +81,7 @@ export class RawTemplateEditorModalComponent {
   readonly query = input.required<Required<FilterQuery>>();
   readonly visible = input.required<boolean>();
 
-  readonly editCancel = output<void>();
+  readonly editCancel = output();
 
   readonly loadingCountSig = signal<number>(0);
   readonly loadingSig = computed<boolean>(() => {
@@ -109,7 +109,8 @@ export class RawTemplateEditorModalComponent {
       );
     }
 
-    return templatesFilteredById[0] as AppUIElementTemplate;
+    // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+    return templatesFilteredById[0]!;
   });
 
   readonly #currentEditableFieldsSig: Signal<AppUIElementTemplateEditableFields | null> = computed(
@@ -174,7 +175,7 @@ export class RawTemplateEditorModalComponent {
         return;
       }
 
-      this.#downloadAndRegisterJSONSchema(template.type as ElementType);
+      void this.#downloadAndRegisterJSONSchema(template.type as ElementType);
       this.#fetchJSONSchemaEffect.destroy();
     },
     {

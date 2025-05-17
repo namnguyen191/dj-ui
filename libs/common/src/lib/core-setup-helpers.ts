@@ -130,7 +130,9 @@ export const setupEventsListener = (params: TemplatesHandlers): void => {
           warnMismatchTemplateId(missingRemoteResourceId)
         );
       }),
-      tap((remoteResource) => remoteResourceTemplateService.registerTemplate(remoteResource))
+      tap((remoteResource) => {
+        remoteResourceTemplateService.registerTemplate(remoteResource);
+      })
     );
 
     missingRemoteResources.subscribe();

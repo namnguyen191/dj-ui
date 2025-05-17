@@ -60,7 +60,7 @@ export const getRemoteResourcesStatesAsContext = (
   return combineLatest(remoteResourcesStatesMap).pipe(
     map((statesMap) => {
       const isAllLoading = Object.entries(statesMap).every(([, state]) => state.isLoading);
-      const isPartialLoading: string[] = Object.entries(statesMap).reduce(
+      const isPartialLoading: string[] = Object.entries(statesMap).reduce<string[]>(
         (acc, [curId, curState]) => {
           if (curState.isLoading) {
             return [...acc, curId];
@@ -68,10 +68,10 @@ export const getRemoteResourcesStatesAsContext = (
 
           return acc;
         },
-        [] as string[]
+        []
       );
       const isAllError = Object.entries(statesMap).every(([, state]) => state.isError);
-      const isPartialError: string[] = Object.entries(statesMap).reduce(
+      const isPartialError: string[] = Object.entries(statesMap).reduce<string[]>(
         (acc, [curId, curState]) => {
           if (curState.isError) {
             return [...acc, curId];
@@ -79,7 +79,7 @@ export const getRemoteResourcesStatesAsContext = (
 
           return acc;
         },
-        [] as string[]
+        []
       );
 
       return {
@@ -141,7 +141,8 @@ export class RemoteResourceService extends BaseRemoteResourceService {
         if (currentRequestIndex >= requests.length) {
           return EMPTY;
         }
-        const curReq = requests[currentRequestIndex] as Request;
+        // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+        const curReq = requests[currentRequestIndex]!;
         currentRequestIndex++;
         return this.#interpolateSequencedRequestOptions({
           req: curReq,
@@ -246,7 +247,9 @@ export class RemoteResourceService extends BaseRemoteResourceService {
     return remoteResourceTemplateObs.pipe(
       filter((rrt) => rrt.status === 'loaded'),
       tap({
-        next: () => this.setLoadingState(remoteResourceState),
+        next: () => {
+          this.setLoadingState(remoteResourceState);
+        },
       }),
       switchMap((rrt) => this.#processRequest(rrt.config).pipe(map((result) => ({ result, rrt })))),
       switchMap(({ result, rrt }) => {
@@ -278,9 +281,9 @@ export class RemoteResourceService extends BaseRemoteResourceService {
           context: ctx,
         });
       }),
-      catchError((err) => {
+      catchError((err: unknown) => {
         console.warn(`Fail to interpolate request options: ${err}`);
-        return err;
+        throw err;
       }),
       first()
     );
@@ -308,9 +311,9 @@ export class RemoteResourceService extends BaseRemoteResourceService {
           context: curState ?? {},
         })
       ),
-      catchError((err) => {
+      catchError((err: unknown) => {
         console.warn('Fail to interpolate parallel requests options');
-        return err;
+        throw err;
       })
     );
 
@@ -336,9 +339,9 @@ export class RemoteResourceService extends BaseRemoteResourceService {
             context: ctx,
           })
         ),
-        catchError((err) => {
+        catchError((err: unknown) => {
           console.warn('Failed to interpolate sequenced request result: ', err);
-          return err;
+          throw err;
         })
       );
       return requestResult$;
@@ -355,7 +358,8 @@ export class RemoteResourceService extends BaseRemoteResourceService {
     const { reqs, responses, stateSubscriptionConfig } = args;
     const results: Observable<unknown>[] = [];
     for (let i = 0; i < reqs.length; i++) {
-      const { interpolation } = reqs[i] as Request;
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const { interpolation } = reqs[i]!;
       if (interpolation) {
         const requestTransformationContext$ =
           this.getResourceRequestTransformationInterpolationContext({
@@ -369,9 +373,9 @@ export class RemoteResourceService extends BaseRemoteResourceService {
               context: ctx,
             })
           ),
-          catchError((err) => {
+          catchError((err: unknown) => {
             console.warn('Failed to interpolate parallel request result', err);
-            return err;
+            throw err;
           }),
           first()
         );
@@ -453,6 +457,7 @@ export class RemoteResourceService extends BaseRemoteResourceService {
     );
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-redundant-type-constituents
   #processRequest(rrt: RemoteResourceTemplate): Observable<unknown | typeof notRunResource> {
     const {
       stateSubscription,

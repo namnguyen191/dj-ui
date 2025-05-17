@@ -32,6 +32,6 @@ export class LayoutsListComponent {
   });
 
   navigateToEditPage(uieTemplateId: string): void {
-    this.#router.navigate(['.', uieTemplateId], { relativeTo: this.#activatedRoute });
+    void this.#router.navigate(['.', uieTemplateId], { relativeTo: this.#activatedRoute });
   }
 }

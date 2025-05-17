@@ -7,7 +7,7 @@ import { Directive, output } from '@angular/core';
   },
 })
 export class EmitOnClickDirective {
-  hostClicked = output<void>();
+  hostClicked = output();
 
   onClick(): void {
     this.hostClicked.emit();

@@ -6,7 +6,7 @@ export type RemoteResourceState = {
   status: 'init' | 'completed' | 'error';
   isLoading: boolean;
   isError: boolean;
-  result: unknown | null;
+  result: unknown;
 };
 
 export type RemoteResourcesStates = {

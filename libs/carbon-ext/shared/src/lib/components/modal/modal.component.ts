@@ -21,7 +21,7 @@ export class ModalComponent {
     alias: 'isOpen',
   });
 
-  closeDialog = output<void>();
+  closeDialog = output();
 
   dialogElementSig = viewChild<string, ElementRef<HTMLDialogElement>>('dialogEle', {
     read: ElementRef,

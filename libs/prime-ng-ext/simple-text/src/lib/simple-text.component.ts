@@ -54,7 +54,7 @@ export class SimpleTextComponent
   protected getTextBlockStyles(textBlockStyles: TextStyles): Record<string, string | undefined> {
     return {
       '--font-weight': textBlockStyles.weight?.toString(),
-      '--font-size': textBlockStyles.size ? textBlockStyles.size + 'px' : undefined,
+      '--font-size': textBlockStyles.size ? `${textBlockStyles.size}px` : undefined,
       '--background-color': textBlockStyles.backgroundColor,
     };
   }

@@ -82,7 +82,7 @@ export class CardComponent
       template: {
         id: tempId,
         type: topBannerConfig.type,
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment
         options: topBannerConfig.configs as any,
       },
       destroyRef: this.#destroyRef,

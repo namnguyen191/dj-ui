@@ -63,7 +63,7 @@ export class RawTemplateEditorModalComponent extends BaseModal {
   readonly errorStateSig = signal<'noError' | 'isError' | 'isPending'>('noError');
   #originalCode = '';
   readonly #templateEditableFields = computed<AppUIElementTemplateEditableFields | null>(() => {
-    const currentTemplate = this.#uiElementTemplatesStore.filteredUIElementTemplates()?.[0];
+    const currentTemplate = this.#uiElementTemplatesStore.filteredUIElementTemplates()[0];
     if (!currentTemplate) {
       return null;
     }
@@ -78,7 +78,7 @@ export class RawTemplateEditorModalComponent extends BaseModal {
   });
 
   readonly #templateUnEditableFields = computed<AppUIElementTemplateUnEditableFields | null>(() => {
-    const currentTemplate = this.#uiElementTemplatesStore.filteredUIElementTemplates()?.[0];
+    const currentTemplate = this.#uiElementTemplatesStore.filteredUIElementTemplates()[0];
     if (!currentTemplate) {
       return null;
     }
@@ -133,7 +133,7 @@ export class RawTemplateEditorModalComponent extends BaseModal {
     }
   }
 
-  // eslint-disable-next-line no-unused-private-class-members
+  // eslint-disable-next-line no-unused-private-class-members, @typescript-eslint/no-misused-promises
   #loadTemplateIntoCodeEffect = effect(async () => {
     const currentEditableTemplate = this.#templateEditableFields();
     if (!currentEditableTemplate) {

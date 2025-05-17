@@ -20,7 +20,9 @@ export class HomeComponent {
       items: [
         {
           label: 'Welcome to DJ-UI',
-          command: () => this.scrollToElement('3'),
+          command: (): void => {
+            this.scrollToElement('3');
+          },
         },
       ],
     },
@@ -29,7 +31,9 @@ export class HomeComponent {
       items: [
         {
           label: 'Requirements & commands',
-          command: () => this.scrollToElement('4'),
+          command: (): void => {
+            this.scrollToElement('4');
+          },
         },
       ],
     },
@@ -38,22 +42,27 @@ export class HomeComponent {
       items: [
         {
           label: 'Fetchers and component loaders',
-          command: () => this.scrollToElement('5'),
+          command: (): void => {
+            this.scrollToElement('5');
+          },
         },
         {
           label: 'Js runner',
-          command: () =>
-            this.scrollToElement('home-simple-setup-guide.PRIME_NG_SIMPLE_TEXT.js-runner'),
+          command: (): void => {
+            this.scrollToElement('home-simple-setup-guide.PRIME_NG_SIMPLE_TEXT.js-runner');
+          },
         },
         {
           label: 'Extension lib integration',
-          command: () =>
-            this.scrollToElement('home-simple-setup-guide.PRIME_NG_SIMPLE_TEXT.lib-integration'),
+          command: (): void => {
+            this.scrollToElement('home-simple-setup-guide.PRIME_NG_SIMPLE_TEXT.lib-integration');
+          },
         },
         {
           label: 'Basic usage',
-          command: () =>
-            this.scrollToElement('home-simple-setup-guide.PRIME_NG_SIMPLE_TEXT.basic-usage'),
+          command: (): void => {
+            this.scrollToElement('home-simple-setup-guide.PRIME_NG_SIMPLE_TEXT.basic-usage');
+          },
         },
       ],
     },

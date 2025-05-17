@@ -35,12 +35,13 @@ export class UIElementListComponent {
   });
 
   navigateToEditPage(uieTemplateId: string): void {
-    this.#router.navigate(['.', uieTemplateId], { relativeTo: this.#activatedRoute });
+    void this.#router.navigate(['.', uieTemplateId], { relativeTo: this.#activatedRoute });
   }
 
   confirmResetMockTemplates(event: Event): void {
     this.#confirmationService.confirm({
-      target: event.target as EventTarget,
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      target: event.target!,
       message:
         'Are you sure that you want to proceed? This will reset all the mock templates, including ones that have been modified by the user.',
       header: 'Confirmation',

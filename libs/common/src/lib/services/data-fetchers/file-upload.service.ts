@@ -23,7 +23,7 @@ export class FileUploadService {
     formData.append('file', file);
 
     return this.#httpClient.post(endpoint, formData, {
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-assignment
       responseType: responseType as any,
     });
   };

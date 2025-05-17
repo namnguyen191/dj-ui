@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unnecessary-type-parameters */
 import { DestroyRef, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
@@ -129,7 +130,9 @@ export abstract class BaseTemplateService<T extends Template> {
       this.updateTemplate(template);
     } else {
       this.registerTemplate(template);
-      destroyRef.onDestroy(() => this.deleteTemplate(template.id));
+      destroyRef.onDestroy(() => {
+        this.deleteTemplate(template.id);
+      });
     }
   }
 

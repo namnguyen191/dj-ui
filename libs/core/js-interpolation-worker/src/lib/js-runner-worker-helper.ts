@@ -18,6 +18,7 @@ export const runRawJs = (
   if (allowList) {
     contextOverride = restrictCurrentExecutionContextGlobal(allowList);
   }
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-call, @typescript-eslint/no-implied-eval, @typescript-eslint/no-unsafe-member-access
   const result: unknown = new Function(`${contextOverride}${rawJs}`).bind(context).call();
   return result;
 };

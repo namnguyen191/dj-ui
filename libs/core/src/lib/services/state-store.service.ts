@@ -69,11 +69,11 @@ export const getStatesSubscriptionAsContext = (
   const stateStoreService = inject(StateStoreService);
   const interpolationService = inject(InterpolationService);
 
-  const local: Observable<UnknownRecord> = localSubscription
+  const local: Observable<UnknownRecord> = localSubscription.length
     ? stateStoreService.getLocalStateByPaths(localSubscription)
     : of({});
 
-  const global: Observable<UnknownRecord> = globalSubscription
+  const global: Observable<UnknownRecord> = globalSubscription.length
     ? stateStoreService.getGlobalStateByPaths(globalSubscription)
     : of({});
 

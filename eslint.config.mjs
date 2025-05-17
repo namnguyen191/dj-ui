@@ -12,6 +12,7 @@ export default tseslint.config([
       '**/prettier.config.js',
       '**/node_modules',
       '**/eslint*.js',
+      '**/eslint*.mjs',
       '**/lint-staged.config.js',
       '**/generated-json-schemas/**',
       '**/vite.config.*.timestamp*',
@@ -87,7 +88,11 @@ export default tseslint.config([
   },
   {
     files: ['**/*.ts', '**/*.tsx'],
-    extends: [tseslint.configs.strict, tseslint.configs.stylistic],
+    extends: [
+      tseslint.configs.recommendedTypeChecked,
+      tseslint.configs.strictTypeChecked,
+      tseslint.configs.stylisticTypeChecked,
+    ],
     rules: {
       '@typescript-eslint/explicit-function-return-type': 'error',
       '@typescript-eslint/no-inferrable-types': 'off',
@@ -98,6 +103,8 @@ export default tseslint.config([
       '@typescript-eslint/no-extraneous-class': 'off',
       '@typescript-eslint/no-invalid-void-type': 'off',
       '@typescript-eslint/consistent-indexed-object-style': 'off',
+      '@typescript-eslint/no-unnecessary-type-assertion': 'off',
+      '@typescript-eslint/no-unnecessary-type-parameters': 'off',
       '@typescript-eslint/no-unused-vars': [
         'error',
         {
@@ -110,6 +117,12 @@ export default tseslint.config([
           ignoreRestSiblings: true,
         },
       ],
+    },
+    languageOptions: {
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: import.meta.dirname,
+      },
     },
   },
   {

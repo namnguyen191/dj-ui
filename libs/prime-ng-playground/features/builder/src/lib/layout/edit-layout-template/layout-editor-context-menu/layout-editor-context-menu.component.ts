@@ -70,7 +70,7 @@ export class LayoutEditorContextMenuComponent
           label: `Edit ${uieTemplateId}`,
           icon: 'pi pi-cog',
           command: (): void => {
-            this.#router.navigate(['builder', 'ui-element', uieTemplateId]);
+            void this.#router.navigate(['builder', 'ui-element', uieTemplateId]);
           },
         },
       ]);
@@ -96,10 +96,6 @@ export class LayoutEditorContextMenuComponent
 
   #getUIElementArea(e: MouseEvent): HTMLElement | null {
     const uiElementUID = untracked(this.uiElementComponentRef).instance.uid;
-
-    if (!uiElementUID) {
-      throw new Error('Element instance ID has not been received');
-    }
 
     let clickedElement = e.target as HTMLElement;
 

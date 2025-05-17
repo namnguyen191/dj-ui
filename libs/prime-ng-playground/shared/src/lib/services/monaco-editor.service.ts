@@ -35,9 +35,14 @@ export class MonacoEditorService {
   }
 
   #init(): void {
-    loader.init().then((monaco) => {
-      this.#monacoSig.set(monaco);
-    });
+    loader
+      .init()
+      .then((monaco) => {
+        this.#monacoSig.set(monaco);
+      })
+      .catch((err: unknown) => {
+        console.error('Could not initialize Monaco using the @monaco-editor/loader: ', err);
+      });
   }
 
   #getJSONSchemaURI(schemId: string): string {
