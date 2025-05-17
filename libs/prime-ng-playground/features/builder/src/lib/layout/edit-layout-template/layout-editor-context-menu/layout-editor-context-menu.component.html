@@ -1,0 +1,13 @@
+<div style="display: contents" (mouseup)="displayMenu($event)">
+  <ng-container #uiElementVCR> </ng-container>
+</div>
+
+<span
+  #contextMenu
+  class="context-menu"
+  id="context-menu"
+  [class.hide]="!isContextMenuShow()"
+  [class.show]="isContextMenuShow()"
+>
+  <p-menu [model]="menuItemsSig()" />
+</span>

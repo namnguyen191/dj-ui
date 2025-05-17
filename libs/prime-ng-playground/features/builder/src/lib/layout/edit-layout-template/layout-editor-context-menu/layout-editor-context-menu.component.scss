@@ -1,15 +1,11 @@
 :host {
-  display: block;
-  width: 100%;
-  height: 100%;
+  display: contents;
   position: relative;
 
   .context-menu {
-    position: absolute;
+    position: fixed;
     top: var(--pos-y);
     left: var(--pos-x);
-    width: 10rem;
-    background: var(--cds-layer-active-01);
     transition:
       opacity 0.5s ease,
       display 0.5s ease;
@@ -24,12 +20,6 @@
       display: none;
       transition-duration: 0.5s;
       transition-timing-function: ease-out;
-    }
-
-    .control-menu-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
     }
   }
 }

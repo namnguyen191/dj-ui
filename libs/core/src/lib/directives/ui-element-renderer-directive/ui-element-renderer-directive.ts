@@ -44,6 +44,7 @@ import type {
   BaseUIElementComponent,
   UIElementRequiredConfigs,
 } from '../../components/base-ui-element.component';
+import type { BaseUIElementWrapperComponent } from '../../components/base-ui-element-wrapper.component';
 import {
   type ActionHook,
   ActionHookService,
@@ -62,6 +63,7 @@ import { logSubscription, logWarning } from '../../utils/logging';
 
 export type ElementRendererConfig = {
   uiElementLoadingComponent?: Type<unknown>;
+  uiElementWrapperComponent?: Type<BaseUIElementWrapperComponent>;
   uiElementInfiniteErrorComponent?: Type<unknown>;
 };
 export const ELEMENT_RENDERER_CONFIG = new InjectionToken<ElementRendererConfig>(
@@ -107,10 +109,11 @@ export class UIElementRendererDirective {
   readonly #actionHookService = inject(ActionHookService);
   readonly #elementRef = inject(ElementRef);
   readonly #viewContainerRef = inject(ViewContainerRef);
-  readonly #uiElementLoadingComponent = inject(ELEMENT_RENDERER_CONFIG, { optional: true })
-    ?.uiElementLoadingComponent;
-  readonly #uiElementInfiniteErrorComponent = inject(ELEMENT_RENDERER_CONFIG, { optional: true })
-    ?.uiElementInfiniteErrorComponent;
+  readonly #elementRendererConfig = inject(ELEMENT_RENDERER_CONFIG, { optional: true });
+  readonly #uiElementLoadingComponent = this.#elementRendererConfig?.uiElementLoadingComponent;
+  readonly #uiElementInfiniteErrorComponent =
+    this.#elementRendererConfig?.uiElementInfiniteErrorComponent;
+  readonly #uiElementWrapperComponent = this.#elementRendererConfig?.uiElementWrapperComponent;
 
   readonly uiElementTemplateId: InputSignal<string> = input.required({
     alias: 'djuiUIElementRenderer',
@@ -136,8 +139,9 @@ export class UIElementRendererDirective {
   readonly #uiElementComponentRef: Signal<ComponentRef<BaseUIElementComponent> | null> = computed(
     () => {
       this.#viewContainerRef.clear();
+      const uiElementTemplate = this.uiElementTemplate();
 
-      if (this.uiElementTemplate()?.status !== 'loaded') {
+      if (uiElementTemplate?.status !== 'loaded') {
         if (this.#uiElementLoadingComponent) {
           this.#viewContainerRef.createComponent(this.#uiElementLoadingComponent);
         }
@@ -162,12 +166,25 @@ export class UIElementRendererDirective {
       const componentSymbol: symbol = (uiElementComp as unknown as typeof BaseUIElementComponent)
         .ELEMENT_SYMBOL;
       const requiredComponentSymbols = this.requiredComponentSymbols();
-
-      if (requiredComponentSymbols.length && !requiredComponentSymbols.includes(componentSymbol)) {
+      if (!this.#hasCorrectComponentSymbol(uiElementComp, requiredComponentSymbols)) {
         logWarning(
           `${uiElementTemplateId}: Wrong element received: expect ${requiredComponentSymbols.map((sym) => String(sym)).join('or ')} but got ${String(componentSymbol)}`
         );
         return null;
+      }
+
+      const uiElementWrapperComponent = this.#getUIElementWrapper(componentSymbol);
+      if (uiElementWrapperComponent) {
+        uiElementWrapperComponent.setInput('uiElementTemplate', uiElementTemplate.config);
+        const uiElementVCR = uiElementWrapperComponent.instance.uiElementVCR();
+
+        if (!uiElementVCR) {
+          return null;
+        }
+        const createdUIElementComponent = uiElementVCR.createComponent(uiElementComp);
+        uiElementWrapperComponent.setInput('uiElementComponentRef', createdUIElementComponent);
+
+        return createdUIElementComponent;
       }
 
       return this.#viewContainerRef.createComponent(uiElementComp);
@@ -467,5 +484,41 @@ export class UIElementRendererDirective {
         map((context) => !!context.remoteResourcesStates?.isPartialError.length)
       ),
     };
+  }
+
+  #hasCorrectComponentSymbol(
+    uiElementComp: Type<BaseUIElementComponent>,
+    requiredComponentSymbols: symbol[]
+  ): boolean {
+    const componentSymbol: symbol = (uiElementComp as unknown as typeof BaseUIElementComponent)
+      .ELEMENT_SYMBOL;
+
+    if (requiredComponentSymbols.length && !requiredComponentSymbols.includes(componentSymbol)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  #getUIElementWrapper(
+    componentSymbol: symbol
+  ): ComponentRef<BaseUIElementWrapperComponent> | null {
+    if (!this.#uiElementWrapperComponent) {
+      return null;
+    }
+
+    const excludedElements = (
+      this.#uiElementWrapperComponent as unknown as typeof BaseUIElementWrapperComponent
+    ).EXCLUDED_ELEMENTS;
+
+    if (excludedElements && !excludedElements.has(componentSymbol)) {
+      const uiElementWrapperComponent = this.#viewContainerRef.createComponent(
+        this.#uiElementWrapperComponent
+      );
+
+      return uiElementWrapperComponent;
+    }
+
+    return null;
   }
 }
