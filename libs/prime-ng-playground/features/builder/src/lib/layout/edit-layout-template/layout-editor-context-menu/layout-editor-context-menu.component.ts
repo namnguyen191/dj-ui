@@ -1,4 +1,4 @@
-import { CommonModule, DOCUMENT } from '@angular/common';
+import { DOCUMENT } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -11,27 +11,31 @@ import {
   untracked,
   viewChild,
 } from '@angular/core';
-import Edit16 from '@carbon/icons/es/edit/16';
-import SettingsView16 from '@carbon/icons/es/settings--view/16';
-import { UIElementExtraWrapperBaseComponent } from '@dj-ui/core';
-import { ContainedListModule } from 'carbon-components-angular/contained-list';
-import { IconModule, IconService } from 'carbon-components-angular/icon';
+import { Router } from '@angular/router';
+import { SimpleGridLayoutSymbol } from '@dj-ui/common/shared';
+import { BaseUIElementWrapperComponent } from '@dj-ui/core';
+import type { MenuItem } from 'primeng/api';
+import { Menu } from 'primeng/menu';
 
 @Component({
-  selector: 'namnguyen191-dui-ui-element-builder-context-menu-wrapper',
-  imports: [CommonModule, ContainedListModule, IconModule],
-  templateUrl: './dui-ui-element-builder-context-menu-wrapper.component.html',
-  styleUrl: './dui-ui-element-builder-context-menu-wrapper.component.scss',
+  selector: 'prime-ng-playground-builder-feat-layout-editor-context-menu',
+  imports: [Menu],
+  templateUrl: './layout-editor-context-menu.component.html',
+  styleUrl: './layout-editor-context-menu.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class DuiUIElementBuilderContextMenuWrapperComponent
-  extends UIElementExtraWrapperBaseComponent
+export class LayoutEditorContextMenuComponent
+  extends BaseUIElementWrapperComponent
   implements OnInit, OnDestroy
 {
-  readonly #document = inject(DOCUMENT);
-  readonly #iconService = inject(IconService);
+  static override readonly EXCLUDED_ELEMENTS = new Set<symbol>([SimpleGridLayoutSymbol]);
 
-  isContextMenuShow = signal<boolean>(false);
+  readonly #document = inject(DOCUMENT);
+  readonly #router = inject(Router);
+
+  protected readonly menuItemsSig = signal<MenuItem[]>([]);
+
+  readonly isContextMenuShow = signal<boolean>(false);
 
   private _contextMenuEleSig: Signal<ElementRef<HTMLDivElement> | undefined> = viewChild(
     'contextMenu',
@@ -44,60 +48,63 @@ export class DuiUIElementBuilderContextMenuWrapperComponent
     }
   };
 
-  #toggleContextMenu = (e: MouseEvent): void => {
-    if (this.#isLeftClickOutsideControlMenuArea(e)) {
-      this.isContextMenuShow.set(false);
-      return;
-    }
+  displayMenu(e: MouseEvent): void {
+    if (this.#isRightClickInsideUIElementArea(e)) {
+      e.stopPropagation();
 
-    if (this.#isRightClickInsideUIElementArea(e) && !this.#isWithinContextMenuArea(e)) {
       const contextMenuEle = untracked(this._contextMenuEleSig)?.nativeElement;
 
       if (!contextMenuEle) {
         console.error('Something is wrong. Context menu element is not found!');
         return;
       }
-
-      // Already right clicked on this area so it has to exists
-      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-      const uiElementArea = this.#getUIElementArea(e)!;
-
-      const uiElementAreaRect = uiElementArea.getBoundingClientRect();
-      const contextMenuX = `${e.clientX - uiElementAreaRect.left}px`;
-      const contextMenuY = `${e.clientY - uiElementAreaRect.top}px`;
+      const contextMenuX = `${e.clientX}px`;
+      const contextMenuY = `${e.clientY}px`;
 
       contextMenuEle.style.setProperty('--pos-x', contextMenuX);
       contextMenuEle.style.setProperty('--pos-y', contextMenuY);
       this.isContextMenuShow.set(true);
+      const uieTemplateId = untracked(this.uiElementTemplate).id;
+      this.menuItemsSig.set([
+        {
+          label: `Edit ${uieTemplateId}`,
+          icon: 'pi pi-cog',
+          command: (): void => {
+            this.#router.navigate(['builder', 'ui-element', uieTemplateId]);
+          },
+        },
+      ]);
+    }
+  }
+
+  #hideContextMenu = (e: MouseEvent): void => {
+    if (this.#isLeftClickOutsideControlMenuArea(e)) {
+      this.isContextMenuShow.set(false);
+      return;
     }
   };
 
-  constructor() {
-    super();
-    this.#iconService.registerAll([Edit16, SettingsView16] as object[]);
-  }
-
   ngOnInit(): void {
     this.#document.addEventListener('contextmenu', this.#preventDefaultContextMenu);
-    this.#document.addEventListener('mouseup', this.#toggleContextMenu, { passive: true });
+    this.#document.addEventListener('mouseup', this.#hideContextMenu, { passive: true });
   }
 
   ngOnDestroy(): void {
     this.#document.removeEventListener('contextmenu', this.#preventDefaultContextMenu);
-    this.#document.removeEventListener('mouseup', this.#toggleContextMenu);
+    this.#document.removeEventListener('mouseup', this.#hideContextMenu);
   }
 
   #getUIElementArea(e: MouseEvent): HTMLElement | null {
-    const uiElementId = untracked(this.uiElementInstance).id;
+    const uiElementUID = untracked(this.uiElementComponentRef).instance.uid;
 
-    if (!uiElementId) {
+    if (!uiElementUID) {
       throw new Error('Element instance ID has not been received');
     }
 
     let clickedElement = e.target as HTMLElement;
 
     while (clickedElement.parentElement) {
-      if (clickedElement.className === 'grid-item' && clickedElement.id === uiElementId) {
+      if (clickedElement.getAttribute('uid') === uiElementUID) {
         return clickedElement;
       }
 

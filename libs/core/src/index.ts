@@ -1,4 +1,5 @@
 export * from './lib/components/base-ui-element.component';
+export * from './lib/components/base-ui-element-wrapper.component';
 export * from './lib/directives/ui-element-renderer-directive/ui-element-renderer-directive';
 export * from './lib/global';
 export * from './lib/services/data-fetching.service';

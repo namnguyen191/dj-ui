@@ -55,7 +55,11 @@ export type UIElementImplementation<
 
 const defaultElementSymbol = Symbol('Default element');
 
-@Directive()
+@Directive({
+  host: {
+    '[attr.uid]': 'uid',
+  },
+})
 export abstract class BaseUIElementComponent
   implements UIElementImplementation<UIElementRequiredConfigs>
 {
@@ -99,4 +103,6 @@ export abstract class BaseUIElementComponent
     alias: 'isInterpolationError',
     transform: (val) => ZodIsLoading.parse(val),
   });
+
+  uid = crypto.randomUUID();
 }
