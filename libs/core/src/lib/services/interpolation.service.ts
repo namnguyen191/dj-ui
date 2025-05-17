@@ -180,7 +180,7 @@ export class InterpolationService {
 
       return (): void => {
         // Worker is in progress but we have not received a response yet
-        if (workerId !== undefined && !responseReceived) {
+        if (!responseReceived) {
           this.#abortWorker(workerId);
         }
 
@@ -192,6 +192,7 @@ export class InterpolationService {
   }
 
   #extractRawJs(input: string): RawJsString | null {
+    // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
     return (input.match(INTERPOLATION_REGEX)?.[2] as RawJsString) ?? null;
   }
 

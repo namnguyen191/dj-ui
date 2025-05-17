@@ -82,8 +82,8 @@ export const RemoteResourceTemplatesStore = signalStore(
     })
   ),
   withHooks({
-    onInit: async ({ loadAll }) => {
-      await loadAll();
+    onInit: ({ loadAll }) => {
+      void loadAll();
     },
   })
 );

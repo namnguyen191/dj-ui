@@ -88,13 +88,13 @@ export class CarbonButtonComponent
     }
   );
 
-  buttonClicked = output<void>();
+  buttonClicked = output();
   filesSelected = output<{ files: FileList }>();
 
   onClick(): void {
     this.buttonClicked.emit();
 
-    this.#handleFileSelection();
+    void this.#handleFileSelection();
   }
 
   async #handleFileSelection(): Promise<void> {

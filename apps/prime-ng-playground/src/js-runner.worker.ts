@@ -1,8 +1,11 @@
 /// <reference lib="webworker" />
 
-import { handleRunJsMessage } from '@dj-ui/core/js-interpolation-worker';
+import {
+  handleRunJsMessage,
+  type InterpolateWorkerEvent,
+} from '@dj-ui/core/js-interpolation-worker';
 
-addEventListener('message', (e) => {
+addEventListener('message', (e: MessageEvent<InterpolateWorkerEvent>) => {
   const allowList = new Set<string>(['console', 'JSON', 'Math', 'Intl']);
   handleRunJsMessage(e, allowList);
 });

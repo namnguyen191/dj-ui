@@ -70,7 +70,7 @@ export class DefaultActionsHooksService {
 
   navigate: ActionHookHandler<NavigateHookPayload> = ({ navigationType, url }) => {
     if (navigationType === 'internal') {
-      this.#router.navigateByUrl(url);
+      void this.#router.navigateByUrl(url);
     } else {
       window.open(url, '_blank')?.focus();
     }

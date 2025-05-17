@@ -68,7 +68,7 @@ export const UIElementTemplatesStore = signalStore(
           let matched = true;
 
           if (id) {
-            matched = matched && uiEleTemp.id === id;
+            matched = uiEleTemp.id === id;
           }
 
           if (isLayout) {
@@ -98,8 +98,8 @@ export const UIElementTemplatesStore = signalStore(
     })
   ),
   withHooks({
-    onInit: async ({ loadAll }) => {
-      await loadAll();
+    onInit: ({ loadAll }) => {
+      void loadAll();
     },
   })
 );
@@ -116,7 +116,7 @@ export const filterTemplatesByQuery = ({
     let matched = true;
 
     if (id) {
-      matched = matched && uiEleTemp.id === id;
+      matched = uiEleTemp.id === id;
     }
 
     if (isLayout) {
