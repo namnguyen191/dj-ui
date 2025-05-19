@@ -1,7 +1,7 @@
 import { untracked } from '@angular/core';
 import { patchState, signalStoreFeature, withMethods } from '@ngrx/signals';
 import type { EntityId } from '@ngrx/signals/entities';
-import { setAllEntities, setEntity, withEntities } from '@ngrx/signals/entities';
+import { removeEntity, setAllEntities, setEntity, withEntities } from '@ngrx/signals/entities';
 import type { UnknownRecord } from 'type-fest';
 
 import { setError, setFulfilled, setPending, withRequestStatus } from './request-status.store-feat';
@@ -15,12 +15,14 @@ type LoaderFunc<TEntity extends EntityLike, TCreatePayload, TUpdatePayload> = {
   fetchAll: () => Promise<TEntity[]>;
   create: (createPayload: TCreatePayload) => Promise<TEntity>;
   update: (updatePayload: TUpdatePayload) => Promise<TEntity>;
+  delete: (id: TEntity['id']) => Promise<void>;
 };
 type EntityMethod<TEntity extends EntityLike, TCreatePayload, TUpdatePayload> = {
   get: (id: TEntity['id']) => Promise<TEntity>;
   loadAll: () => Promise<TEntity[]>;
   add: (createPayload: TCreatePayload) => Promise<TEntity>;
   change: (updatePayload: TUpdatePayload) => Promise<TEntity>;
+  delete: (id: TEntity['id']) => Promise<void>;
 };
 
 export const withEntitiesAndLoaders = <TEntity extends EntityLike, TCreatePayload, TUpdatePayload>(
@@ -94,6 +96,19 @@ export const withEntitiesAndLoaders = <TEntity extends EntityLike, TCreatePayloa
             return updatedEntity;
           } catch (error) {
             setError('Something went wrong updating entity');
+            throw error;
+          }
+        },
+        delete: async (id) => {
+          if (!loader.delete) {
+            throw Error('delete loader was not provided');
+          }
+          patchState(store, setPending());
+          try {
+            await loader.delete(id);
+            patchState(store, removeEntity(id), setFulfilled());
+          } catch (error) {
+            setError(`Something went wrong deleting entity with id ${id}`);
             throw error;
           }
         },

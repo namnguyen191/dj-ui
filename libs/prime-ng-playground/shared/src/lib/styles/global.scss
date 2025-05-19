@@ -1,3 +1,5 @@
 $main-nav-z-index: 9999;
 $primary-floating-button: calc($main-nav-z-index - 1);
 $main-nav-height: 50px;
+
+$max-content-height: calc(100vh - $main-nav-height);

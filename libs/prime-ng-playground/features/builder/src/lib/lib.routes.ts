@@ -55,17 +55,29 @@ export const builderRoutes: Route[] = [
     children: [
       {
         path: 'ui-element',
-        loadComponent: () =>
-          import('./ui-element/ui-element-list/ui-element-list.component').then(
-            (m) => m.UIElementListComponent
-          ),
-      },
-      {
-        path: 'ui-element/:id',
-        loadComponent: () =>
-          import('./ui-element/edit-ui-element-template/edit-ui-element-template.component').then(
-            (m) => m.EditUIElementTemplateComponent
-          ),
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import('./ui-element/ui-element-list/ui-element-list.component').then(
+                (m) => m.UIElementListComponent
+              ),
+          },
+          {
+            path: 'create',
+            loadComponent: () =>
+              import(
+                './ui-element/create-ui-element-template/create-ui-element-template.component'
+              ).then((m) => m.CreateUIElementTemplateComponent),
+          },
+          {
+            path: ':id',
+            loadComponent: () =>
+              import(
+                './ui-element/edit-ui-element-template/edit-ui-element-template.component'
+              ).then((m) => m.EditUIElementTemplateComponent),
+          },
+        ],
       },
       {
         path: 'layout',

@@ -15,10 +15,8 @@ import {
 } from '@angular/core';
 import { takeUntilDestroyed, toObservable, toSignal } from '@angular/core/rxjs-interop';
 import { FormsModule } from '@angular/forms';
-import { CommonComponentLoader } from '@dj-ui/common';
 import { SimpleGridLayoutElementType } from '@dj-ui/common/shared';
 import { UIElementTemplateService } from '@dj-ui/core';
-import { PrimeNgComponentLoader } from '@dj-ui/prime-ng-ext';
 import {
   CardElementType,
   ImagesCarouselElementType,
@@ -35,6 +33,7 @@ import {
   JsonEditorComponent,
   MonacoEditorService,
   UIElementTemplatesStore,
+  type UIElementType,
 } from '@dj-ui/prime-ng-playground/shared';
 import type { Plugin } from 'prettier';
 import * as parserBabel from 'prettier/plugins/babel';
@@ -48,9 +47,7 @@ import { Toast } from 'primeng/toast';
 import { filter, firstValueFrom, from, Subject, switchMap, tap } from 'rxjs';
 
 type ElementTypeToSchemaUrl = {
-  [K in keyof typeof PrimeNgComponentLoader]: string;
-} & {
-  [K in keyof typeof CommonComponentLoader]: string;
+  [K in UIElementType]: string;
 };
 const BASE_SCHEMA_URL = 'dj-ui-schemas';
 const ELEMENT_TYPE_TO_SCHEMA_URL: ElementTypeToSchemaUrl = {
