@@ -1,0 +1,50 @@
+@use 'libs/prime-ng-playground/shared/src/lib/styles/global.scss';
+
+:host {
+  height: global.$max-content-height;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  position: relative;
+  align-items: center;
+
+  .progress-spinner {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(0, 0, 0, 0.5);
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+  }
+
+  .form-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+
+    input,
+    p-select {
+      width: 100%;
+    }
+
+    textarea {
+      width: 100%;
+      resize: none;
+    }
+
+    .id-input-field,
+    .name-input-field,
+    .type-input-field,
+    .description-input-field {
+      grid-column: span 2;
+    }
+
+    .btn-container {
+      grid-column: span 4;
+      display: flex;
+      gap: 1rem;
+    }
+  }
+}

@@ -102,6 +102,10 @@ export class UIElementTemplateAPIService {
     );
   }
 
+  deleteUIElementTemplate(id: string): Observable<void> {
+    return this.#uiElementTemplateRepo$.pipe(switchMap((repo) => repo.deleteOne(id)));
+  }
+
   async resetExampleTemplates(): Promise<void> {
     const repo = await firstValueFrom(this.#uiElementTemplateRepo$);
     for (const template of mockUIElementTemplates) {

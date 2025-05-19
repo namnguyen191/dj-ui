@@ -48,6 +48,7 @@ export const UIElementTemplatesStore = signalStore(
       firstValueFrom(uiElementTemplateAPIService.createUIElementTemplate(createPayload)),
     update: (updatePayload) =>
       firstValueFrom(uiElementTemplateAPIService.updateUIElementTemplate(updatePayload)),
+    delete: (id) => firstValueFrom(uiElementTemplateAPIService.deleteUIElementTemplate(id)),
   })),
   withComputed(({ entities, query }) => ({
     allUIElementTemplatesInfo: computed<UIElementTemplateInfo[]>(() => {

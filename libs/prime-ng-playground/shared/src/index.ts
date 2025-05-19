@@ -7,3 +7,4 @@ export * from './lib/services/remote-resource-template-api.service';
 export * from './lib/services/ui-element-template-api.service';
 export * from './lib/state-stores/remoteResourceTemplates.store';
 export * from './lib/state-stores/uiElementTemplates.store';
+export * from './lib/types/ui-element.type';

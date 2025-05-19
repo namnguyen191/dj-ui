@@ -1,13 +1,36 @@
+<p-contextmenu
+  #tableRowContextMenu
+  [model]="tableRowContextMenuItems"
+  (onHide)="selectedTemplateSig.set(null)"
+/>
+
 <p-table
+  class="table-container"
+  [contextMenu]="tableRowContextMenu"
   [loading]="loadingSig()"
   [showGridlines]="true"
   [stripedRows]="true"
   [value]="allTemplatesInfoSig()"
+  (contextMenuSelectionChange)="selectedTemplateSig.set($event)"
 >
   <ng-template #caption>
     <div class="table-title-container">
       <h2>UI element templates</h2>
-      <p-button icon="pi pi-refresh" raised rounded (onClick)="confirmResetMockTemplates($event)" />
+      <div class="table-title-container__actions-container">
+        <p-button
+          icon="pi pi-plus"
+          iconPos="right"
+          label="Create"
+          (onClick)="navigateToCreatePage()"
+        />
+        <p-button
+          icon="pi pi-refresh"
+          raised
+          rounded
+          severity="warn"
+          (onClick)="confirmResetMockTemplates($event)"
+        />
+      </div>
     </div>
   </ng-template>
   <ng-template #header>
@@ -20,7 +43,7 @@
     </tr>
   </ng-template>
   <ng-template #body let-template>
-    <tr class="data-row">
+    <tr class="data-row" [pContextMenuRow]="template">
       <td>{{ template.id }}</td>
       <td>{{ template.name }}</td>
       <td>{{ template.description }}</td>
