@@ -10,7 +10,7 @@ import { UIElementTemplatesStore } from '@dj-ui/prime-ng-playground/shared';
 import { Button } from 'primeng/button';
 import { map } from 'rxjs';
 
-import { RawTemplateEditorModalComponent } from '../../shared-components/raw-template-editor-modal/raw-template-editor-modal.component';
+import { RawTemplateEditorModalComponent } from '../../shared/components/raw-template-editor-modal/raw-template-editor-modal.component';
 import { LayoutEditorContextMenuComponent } from './layout-editor-context-menu/layout-editor-context-menu.component';
 
 @Component({

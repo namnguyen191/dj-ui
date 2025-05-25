@@ -81,18 +81,31 @@ export const builderRoutes: Route[] = [
       },
       {
         path: 'layout',
-        loadComponent: () =>
-          import('./layout/layouts-list/layouts-list.component').then(
-            (m) => m.LayoutsListComponent
-          ),
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import('./layout/layouts-list/layouts-list.component').then(
+                (m) => m.LayoutsListComponent
+              ),
+          },
+          {
+            path: 'create',
+            loadComponent: () =>
+              import('./layout/create-layout-template/create-layout-template.component').then(
+                (m) => m.CreateLayoytTemplateComponent
+              ),
+          },
+          {
+            path: ':id',
+            loadComponent: () =>
+              import('./layout/edit-layout-template/edit-layout-template.component').then(
+                (m) => m.EditLayoutTemplateComponent
+              ),
+          },
+        ],
       },
-      {
-        path: 'layout/:id',
-        loadComponent: () =>
-          import('./layout/edit-layout-template/edit-layout-template.component').then(
-            (m) => m.EditLayoutTemplateComponent
-          ),
-      },
+
       {
         path: '**',
         redirectTo: 'ui-element',

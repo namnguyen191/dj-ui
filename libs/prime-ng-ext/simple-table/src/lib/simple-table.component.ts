@@ -137,6 +137,22 @@ export class SimpleTableComponent
   protected readonly shouldDisplayPagination = computed(
     () => !isEmpty(this.paginationConfigOption())
   );
+  protected readonly numberOfFirstRows = computed<number>(() => {
+    const paginationConfig = this.paginationConfigOption();
+
+    if (
+      paginationConfig.currentPage === undefined ||
+      paginationConfig.currentPageLength === undefined
+    ) {
+      return 0;
+    }
+    return paginationConfig.currentPage * paginationConfig.currentPageLength;
+  });
+  protected readonly numberOfRowsToDisplayed = computed<number>(() => {
+    const paginationConfig = this.paginationConfigOption();
+
+    return paginationConfig.currentPageLength ?? paginationConfig.pageSizes?.[0] ?? 0;
+  });
 
   readonly #defaultTableStyles: TableStylesConfigs = {};
   readonly stylesConfigOption: InputSignal<TableStylesConfigs> = input(this.#defaultTableStyles, {

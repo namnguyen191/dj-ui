@@ -137,6 +137,12 @@
             },
             "totalDataLength": {
               "type": "number"
+            },
+            "currentPage": {
+              "type": "number"
+            },
+            "currentPageLength": {
+              "type": "number"
             }
           },
           "additionalProperties": false
