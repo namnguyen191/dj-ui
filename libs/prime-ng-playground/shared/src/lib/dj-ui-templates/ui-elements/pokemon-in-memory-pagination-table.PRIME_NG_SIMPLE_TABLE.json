@@ -1,5 +1,5 @@
 {
-  "id": "pokemon-in-memory-pagination-table.PRIME_NG_SIMPLE_TABLE.json",
+  "id": "pokemon-in-memory-pagination-table.PRIME_NG_SIMPLE_TABLE",
   "type": "SIMPLE_TABLE",
   "name": "Pokemon in memory pagination table",
   "description": "A table that fetch a bunch of pokemon using in-memory pagination",
@@ -50,7 +50,9 @@
     "rows": "<${ return this.remoteResourcesStates?.results?.[\"TOP_50_POKEMONS.REMOTE_RESOURCE\"]?.result?.pokemons.slice(this.state.variables.currentPage * this.state.variables.currentItemPerPage, (this.state.variables.currentPage + 1) * this.state.variables.currentItemPerPage) ?? [] }$>",
     "pagination": {
       "totalDataLength": 50,
-      "pageSizes": [10, 15, 25, 50]
+      "pageSizes": [10, 15, 25, 50],
+      "currentPage": "<${ this.state.variables.currentPage ?? 1 }$>",
+      "currentPageLength": "<${ this.state.variables.currentItemPerPage ?? 0 }$>"
     }
   },
   "eventsHooks": {

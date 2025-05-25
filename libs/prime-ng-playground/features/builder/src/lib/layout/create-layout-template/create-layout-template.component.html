@@ -1,0 +1,54 @@
+@if (uiElementTemplatesStore.isPending()) {
+  <p-progress-spinner ariaLabel="loading" class="progress-spinner" />
+}
+
+<p-card header="Create layout">
+  <form
+    class="form-container"
+    [formGroup]="createUIElementForm"
+    (ngSubmit)="createUIElementTemplate()"
+  >
+    <p-iftalabel class="id-input-field">
+      <input autocomplete="off" formControlName="id" id="id" pInputText />
+      <label for="id">{{ getFieldLabel('id') }}</label>
+    </p-iftalabel>
+
+    <p-iftalabel class="name-input-field">
+      <input autocomplete="off" formControlName="name" id="name" pInputText />
+      <label for="name">{{ getFieldLabel('name') }}</label>
+    </p-iftalabel>
+
+    <p-iftalabel class="type-input-field">
+      <p-select
+        formControlName="type"
+        inputId="type"
+        optionValue="key"
+        placeholder="Select the UI type"
+        [options]="uiElementTypes"
+      />
+
+      <label for="type">Layout Type</label>
+    </p-iftalabel>
+
+    <p-iftalabel class="description-input-field">
+      <textarea
+        cols="30"
+        formControlName="description"
+        name="description"
+        pTextarea
+        rows="5"
+      ></textarea>
+      <label for="description">{{ getFieldLabel('description') }}</label>
+    </p-iftalabel>
+
+    <div class="btn-container">
+      <p-button
+        label="Create"
+        type="submit"
+        [disabled]="createUIElementForm.invalid"
+        [pTooltip]="getFormSubmitButtonTooltip()"
+      />
+      <p-button label="Cancel" severity="danger" />
+    </div>
+  </form>
+</p-card>

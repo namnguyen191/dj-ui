@@ -9,8 +9,8 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import {
-  AlNonLayoutlUIElementTypes,
-  type NonLayoutUIElementTypes,
+  AllLayoutUIElementTypes,
+  type LayoutUIElementTypes,
   UIElementTemplatesStore,
 } from '@dj-ui/prime-ng-playground/shared';
 import { capitalize } from 'lodash-es';
@@ -27,13 +27,13 @@ import { isAlphaNumericValidator, isUIETemplateIdUniqueValidator } from '../../s
 
 type CreateUIElementForm = {
   id: FormControl<string>;
-  type: FormControl<NonLayoutUIElementTypes>;
+  type: FormControl<LayoutUIElementTypes>;
   name: FormControl<string>;
   description: FormControl<string>;
 };
 
 @Component({
-  selector: 'prime-ng-playground-builder-feat-create-ui-element-template',
+  selector: 'prime-ng-playground-builder-feat-create-layout-template',
   imports: [
     IftaLabelModule,
     InputTextModule,
@@ -45,11 +45,11 @@ type CreateUIElementForm = {
     ProgressSpinner,
     Tooltip,
   ],
-  templateUrl: './create-ui-element-template.component.html',
-  styleUrl: './create-ui-element-template.component.scss',
+  templateUrl: './create-layout-template.component.html',
+  styleUrl: './create-layout-template.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CreateUIElementTemplateComponent {
+export class CreateLayoytTemplateComponent {
   protected readonly uiElementTemplatesStore = inject(UIElementTemplatesStore);
   readonly #router = inject(Router);
 
@@ -64,7 +64,7 @@ export class CreateUIElementTemplateComponent {
         Validators.maxLength(50),
       ],
     }),
-    type: new FormControl('SIMPLE_TEXT', { nonNullable: true }),
+    type: new FormControl('SIMPLE_GRID_LAYOUT', { nonNullable: true }),
     name: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required, Validators.minLength(5), Validators.maxLength(50)],
@@ -75,7 +75,7 @@ export class CreateUIElementTemplateComponent {
     }),
   });
 
-  protected readonly uiElementTypes = Object.entries(AlNonLayoutlUIElementTypes).map(
+  protected readonly uiElementTypes = Object.entries(AllLayoutUIElementTypes).map(
     ([typeKey, typeLabel]) => ({
       key: typeKey,
       label: typeLabel,
@@ -92,7 +92,7 @@ export class CreateUIElementTemplateComponent {
       options: {},
     });
 
-    await this.#router.navigate(['builder', 'ui-element', createdUIETemplate.id]);
+    await this.#router.navigate(['builder', 'layout', createdUIETemplate.id]);
   }
 
   getFieldLabel(formControlName: keyof CreateUIElementForm): string {

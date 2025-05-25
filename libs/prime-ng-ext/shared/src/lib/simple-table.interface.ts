@@ -33,6 +33,8 @@ export type TableColumnsConfig = z.infer<typeof ZTableColumnsConfig>;
 export const ZTablePaginationConfigs = z.strictObject({
   pageSizes: z.array(z.number()).optional(),
   totalDataLength: z.number().optional(),
+  currentPage: z.number().optional(),
+  currentPageLength: z.number().optional(),
 });
 export type TablePaginationConfigs = z.infer<typeof ZTablePaginationConfigs>;
 

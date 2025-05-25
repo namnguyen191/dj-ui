@@ -8,6 +8,7 @@
   "scripts": {
     "prepare": "husky",
     "preinstall": "npx only-allow pnpm",
+    "start": "nx run prime-ng-playground:serve",
     "release-all": "nx release --skip-publish",
     "publish-all": "nx release publish",
     "check-circular-dep": "madge --circular --exclude 'dist' --extensions ts ./apps ./libs",
