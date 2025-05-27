@@ -42,6 +42,8 @@ export const RemoteResourceTemplatesStore = signalStore(
       firstValueFrom(remoteResourceTemplateAPIService.createRemoteResourceTemplate(createPayload)),
     update: (updatePayload) =>
       firstValueFrom(remoteResourceTemplateAPIService.updateRemoteResourceTemplate(updatePayload)),
+    delete: (id) =>
+      firstValueFrom(remoteResourceTemplateAPIService.deleteRemoteResourceTemplate(id)),
   })),
   withComputed(({ entities, query }) => ({
     allRemoteResourceTemplatesInfo: computed<TemplateInfo[]>(() => {

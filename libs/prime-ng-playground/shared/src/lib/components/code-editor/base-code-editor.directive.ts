@@ -21,6 +21,7 @@ import {
 export type CodeEditorConfigs = {
   initialValue?: string;
   valueChangeDebounceTime?: number;
+  readonly?: boolean;
 };
 
 @Directive()
@@ -61,6 +62,19 @@ export abstract class BaseCodeEditorDirective<T extends CodeEditorConfigs> {
     editorInstance.onDidChangeModelContent(onModelChange);
   });
 
+  #existingEditorInstance: MonacoEditorInstance | undefined;
+  // eslint-disable-next-line no-unused-private-class-members
+  readonly #disposePrevEditorInstance = effect((onCleanUp) => {
+    const editorInstance = this.editorInstanceResource.value();
+
+    this.#existingEditorInstance?.dispose();
+    this.#existingEditorInstance = editorInstance;
+
+    onCleanUp(() => {
+      this.#existingEditorInstance?.dispose();
+    });
+  });
+
   protected createWrapperElement(editorContainer: HTMLElement): HTMLDivElement {
     const wrapperElement = document.createElement('div');
     wrapperElement.style.width = '100%';
@@ -87,6 +101,7 @@ export abstract class BaseCodeEditorDirective<T extends CodeEditorConfigs> {
       },
       automaticLayout: true,
       value: configs.initialValue ?? '',
+      readOnly: !!configs.readonly,
       ...extraConfigs,
     });
   }

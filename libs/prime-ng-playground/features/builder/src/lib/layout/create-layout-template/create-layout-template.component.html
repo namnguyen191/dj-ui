@@ -48,7 +48,7 @@
         [disabled]="createUIElementForm.invalid"
         [pTooltip]="getFormSubmitButtonTooltip()"
       />
-      <p-button label="Cancel" severity="danger" />
+      <p-button label="Cancel" severity="danger" (onClick)="navigateToViewAllPage()" />
     </div>
   </form>
 </p-card>

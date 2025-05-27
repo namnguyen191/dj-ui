@@ -45,6 +45,9 @@
         "libs/prime-ng-playground/features/builder/src/index.ts"
       ],
       "@dj-ui/prime-ng-playground/shared": ["libs/prime-ng-playground/shared/src/index.ts"],
+      "@dj-ui/prime-ng-playground/shared/generated-json-schemas/*": [
+        "libs/prime-ng-playground/shared/generated-json-schemas/*"
+      ],
       "@dj-ui/utils": ["libs/shared/utils/src/index.ts"]
     }
   },

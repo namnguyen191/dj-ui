@@ -7,6 +7,7 @@ import { zodToJsonSchema } from 'zod-to-json-schema';
 import {
   ZAppEditCardUIESchema,
   ZAppEditImagesCarouselUIESchema,
+  ZAppEditRemoteResourceSchema,
   ZAppEditSimpleGridUIESchema,
   ZAppEditSimpleImageUIESchema,
   ZAppEditSimpleTableUIESchema,
@@ -32,4 +33,5 @@ generateJSONSchemaFromZodTypes([
   ZAppEditSimpleGridUIESchema,
   ZAppEditImagesCarouselUIESchema,
   ZAppEditCardUIESchema,
+  ZAppEditRemoteResourceSchema,
 ]);

@@ -7,7 +7,7 @@ import {
   type ValidationErrors,
   Validators,
 } from '@angular/forms';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {
   AlNonLayoutlUIElementTypes,
   type NonLayoutUIElementTypes,
@@ -52,6 +52,7 @@ type CreateUIElementForm = {
 export class CreateUIElementTemplateComponent {
   protected readonly uiElementTemplatesStore = inject(UIElementTemplatesStore);
   readonly #router = inject(Router);
+  readonly #activatedRoute = inject(ActivatedRoute);
 
   protected readonly createUIElementForm = new FormGroup<CreateUIElementForm>({
     id: new FormControl('', {
@@ -166,5 +167,14 @@ export class CreateUIElementTemplateComponent {
     }
 
     return errorMessages;
+  }
+
+  navigateToViewAllPage(): Promise<boolean> {
+    return this.#router.navigate([
+      '.',
+      {
+        relativeTo: this.#activatedRoute,
+      },
+    ]);
   }
 }

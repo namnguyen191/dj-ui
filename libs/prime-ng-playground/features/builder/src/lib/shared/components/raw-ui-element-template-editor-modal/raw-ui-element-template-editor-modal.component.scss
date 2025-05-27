@@ -1,0 +1,15 @@
+@use 'libs/prime-ng-playground/shared/src/lib/styles/global.scss';
+
+:host {
+  display: contents;
+
+  ::ng-deep {
+    .p-dialog-mask {
+      z-index: global.$primary-dialog !important;
+    }
+  }
+
+  .toast {
+    z-index: calc(global.$main-nav-z-index + 1);
+  }
+}

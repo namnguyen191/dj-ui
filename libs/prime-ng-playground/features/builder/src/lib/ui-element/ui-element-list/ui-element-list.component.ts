@@ -10,7 +10,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {
-  layoutUIElement,
+  LAYOUT_UI_ELEMENT_TYPE_SET,
   RemoteResourceTemplatesStore,
   type TemplateInfo,
   UIElementTemplatesStore,
@@ -56,7 +56,7 @@ export class UIElementListComponent {
   allTemplatesInfoSig: Signal<TemplateInfo[]> = computed(() => {
     const allTemplatesInfo = this.#uiElementTemplatesStore.allUIElementTemplatesInfo();
 
-    return allTemplatesInfo.filter((tempInfo) => !layoutUIElement.has(tempInfo.type));
+    return allTemplatesInfo.filter((tempInfo) => !LAYOUT_UI_ELEMENT_TYPE_SET.has(tempInfo.type));
   });
 
   navigateToEditPage(uieTemplateId: string): void {

@@ -93,7 +93,7 @@ export const builderRoutes: Route[] = [
             path: 'create',
             loadComponent: () =>
               import('./layout/create-layout-template/create-layout-template.component').then(
-                (m) => m.CreateLayoytTemplateComponent
+                (m) => m.CreateLayoutTemplateComponent
               ),
           },
           {
@@ -105,7 +105,32 @@ export const builderRoutes: Route[] = [
           },
         ],
       },
-
+      {
+        path: 'remote-resource',
+        children: [
+          {
+            path: '',
+            loadComponent: () =>
+              import(
+                './remote-resource/remote-resources-list/remote-resources-list.component'
+              ).then((m) => m.RemoteResourcesListComponent),
+          },
+          {
+            path: 'create',
+            loadComponent: () =>
+              import(
+                './remote-resource/create-remote-resource-template/create-remote-resource-template.component'
+              ).then((m) => m.CreateRemoteResourceTemplateComponent),
+          },
+          {
+            path: ':id',
+            loadComponent: () =>
+              import(
+                './remote-resource/edit-remote-resource-template/edit-remote-resource-template.component'
+              ).then((m) => m.EditRemoteResourceTemplateComponent),
+          },
+        ],
+      },
       {
         path: '**',
         redirectTo: 'ui-element',

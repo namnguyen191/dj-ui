@@ -1,12 +1,12 @@
-@if (uiElementTemplatesStore.isPending()) {
+@if (remoteResourceTemplatesStore.isPending()) {
   <p-progress-spinner ariaLabel="loading" class="progress-spinner" />
 }
 
-<p-card header="Create UI Element">
+<p-card header="Create remote resource">
   <form
     class="form-container"
-    [formGroup]="createUIElementForm"
-    (ngSubmit)="createUIElementTemplate()"
+    [formGroup]="createRemoteResourceForm"
+    (ngSubmit)="createRemoteResourceTemplate()"
   >
     <p-iftalabel class="id-input-field">
       <input autocomplete="off" formControlName="id" id="id" pInputText />
@@ -16,18 +16,6 @@
     <p-iftalabel class="name-input-field">
       <input autocomplete="off" formControlName="name" id="name" pInputText />
       <label for="name">{{ getFieldLabel('name') }}</label>
-    </p-iftalabel>
-
-    <p-iftalabel class="type-input-field">
-      <p-select
-        formControlName="type"
-        inputId="type"
-        optionValue="key"
-        placeholder="Select the UI type"
-        [options]="uiElementTypes"
-      />
-
-      <label for="type">UI Element Type</label>
     </p-iftalabel>
 
     <p-iftalabel class="description-input-field">
@@ -45,7 +33,7 @@
       <p-button
         label="Create"
         type="submit"
-        [disabled]="createUIElementForm.invalid"
+        [disabled]="createRemoteResourceForm.invalid"
         [pTooltip]="getFormSubmitButtonTooltip()"
       />
       <p-button label="Cancel" severity="danger" (onClick)="navigateToViewAllPage()" />

@@ -85,6 +85,10 @@ export class RemoteResourceTemplateAPIService {
     );
   }
 
+  deleteRemoteResourceTemplate(id: string): Observable<void> {
+    return this.#remoteResourceTemplateRepo$.pipe(switchMap((repo) => repo.deleteOne(id)));
+  }
+
   async resetExampleTemplates(): Promise<void> {
     const repo = await firstValueFrom(this.#remoteResourceTemplateRepo$);
     for (const template of mockRemoteResourceTemplates) {

@@ -1,10 +1,6 @@
 :host {
   display: contents;
 
-  .toast {
-    z-index: 9999;
-  }
-
   .dialog-container {
     ::ng-deep {
       .p-dialog-content {
