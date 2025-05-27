@@ -8,63 +8,55 @@ import {
   Validators,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import {
-  AllLayoutUIElementTypes,
-  type LayoutUIElementTypes,
-  UIElementTemplatesStore,
-} from '@dj-ui/prime-ng-playground/shared';
+import { RemoteResourceTemplatesStore } from '@dj-ui/prime-ng-playground/shared';
 import { capitalize } from 'lodash-es';
 import { Button } from 'primeng/button';
 import { Card } from 'primeng/card';
 import { IftaLabelModule } from 'primeng/iftalabel';
 import { InputTextModule } from 'primeng/inputtext';
 import { ProgressSpinner } from 'primeng/progressspinner';
-import { Select } from 'primeng/select';
 import { TextareaModule } from 'primeng/textarea';
 import { Tooltip } from 'primeng/tooltip';
 
-import { isAlphaNumericValidator, isUIETemplateIdUniqueValidator } from '../../shared/form-utils';
+import { isAlphaNumericValidator, isRRTemplateIdUniqueValidator } from '../../shared/form-utils';
 
-type CreateUIElementForm = {
+type CreateRemoteResourceForm = {
   id: FormControl<string>;
-  type: FormControl<LayoutUIElementTypes>;
   name: FormControl<string>;
   description: FormControl<string>;
 };
 
 @Component({
-  selector: 'prime-ng-playground-builder-feat-create-layout-template',
+  selector: 'prime-ng-playground-builder-feat-create-remote-resource-template',
   imports: [
     IftaLabelModule,
     InputTextModule,
     ReactiveFormsModule,
-    Select,
     Card,
     Button,
     TextareaModule,
     ProgressSpinner,
     Tooltip,
   ],
-  templateUrl: './create-layout-template.component.html',
-  styleUrl: './create-layout-template.component.scss',
+  templateUrl: './create-remote-resource-template.component.html',
+  styleUrl: './create-remote-resource-template.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CreateLayoutTemplateComponent {
-  protected readonly uiElementTemplatesStore = inject(UIElementTemplatesStore);
+export class CreateRemoteResourceTemplateComponent {
+  protected readonly remoteResourceTemplatesStore = inject(RemoteResourceTemplatesStore);
   readonly #router = inject(Router);
 
-  protected readonly createUIElementForm = new FormGroup<CreateUIElementForm>({
+  protected readonly createRemoteResourceForm = new FormGroup<CreateRemoteResourceForm>({
     id: new FormControl('', {
       nonNullable: true,
       validators: [
         Validators.required,
-        isUIETemplateIdUniqueValidator(),
+        isRRTemplateIdUniqueValidator(),
         isAlphaNumericValidator(),
         Validators.minLength(5),
         Validators.maxLength(50),
       ],
     }),
-    type: new FormControl('SIMPLE_GRID_LAYOUT', { nonNullable: true }),
     name: new FormControl('', {
       nonNullable: true,
       validators: [Validators.required, Validators.minLength(5), Validators.maxLength(50)],
@@ -75,29 +67,24 @@ export class CreateLayoutTemplateComponent {
     }),
   });
 
-  protected readonly uiElementTypes = Object.entries(AllLayoutUIElementTypes).map(
-    ([typeKey, typeLabel]) => ({
-      key: typeKey,
-      label: typeLabel,
-    })
-  );
-
-  protected async createUIElementTemplate(): Promise<void> {
-    if (this.createUIElementForm.invalid) {
+  protected async createRemoteResourceTemplate(): Promise<void> {
+    if (this.createRemoteResourceForm.invalid) {
       return;
     }
 
-    const createdUIETemplate = await this.uiElementTemplatesStore.add({
-      ...this.createUIElementForm.getRawValue(),
-      options: {},
+    const createdUIETemplate = await this.remoteResourceTemplatesStore.add({
+      ...this.createRemoteResourceForm.getRawValue(),
+      options: {
+        requests: [],
+      },
     });
 
-    await this.#router.navigate(['builder', 'layout', createdUIETemplate.id]);
+    await this.#router.navigate(['builder', 'remote-resource', createdUIETemplate.id]);
   }
 
-  protected getFieldLabel(formControlName: keyof CreateUIElementForm): string {
+  getFieldLabel(formControlName: keyof CreateRemoteResourceForm): string {
     const controlLabel = capitalize(formControlName);
-    const formControl = this.createUIElementForm.controls[formControlName];
+    const formControl = this.createRemoteResourceForm.controls[formControlName];
     const validationErrors = formControl.errors;
     if ((formControl.untouched && formControl.pristine) || !validationErrors) {
       return controlLabel;
@@ -113,12 +100,14 @@ export class CreateLayoutTemplateComponent {
   }
 
   protected getFormSubmitButtonTooltip(): string {
-    if (!this.createUIElementForm.invalid) {
+    if (!this.createRemoteResourceForm.invalid) {
       return '';
     }
 
     const errorForAllFieldsMessages: string[] = [];
-    for (const [formControlKey, formControl] of Object.entries(this.createUIElementForm.controls)) {
+    for (const [formControlKey, formControl] of Object.entries(
+      this.createRemoteResourceForm.controls
+    )) {
       if (!formControl.errors) {
         continue;
       }
@@ -131,7 +120,7 @@ export class CreateLayoutTemplateComponent {
   }
 
   protected navigateToViewAllPage(): Promise<boolean> {
-    return this.#router.navigate(['builder', 'layout']);
+    return this.#router.navigate(['builder', 'remote-resource']);
   }
 
   #getValidationErrorMessage(validationErrors: ValidationErrors): string[] {

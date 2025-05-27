@@ -10,12 +10,12 @@ import { UIElementTemplatesStore } from '@dj-ui/prime-ng-playground/shared';
 import { Button } from 'primeng/button';
 import { map } from 'rxjs';
 
-import { RawTemplateEditorModalComponent } from '../../shared/components/raw-template-editor-modal/raw-template-editor-modal.component';
+import { RawUIElementTemplateEditorModalComponent } from '../../shared/components/raw-ui-element-template-editor-modal/raw-ui-element-template-editor-modal.component';
 import { LayoutEditorContextMenuComponent } from './layout-editor-context-menu/layout-editor-context-menu.component';
 
 @Component({
   selector: 'prime-ng-playground-builder-feat-edit-layout-template',
-  imports: [UIElementRendererDirective, RawTemplateEditorModalComponent, Button],
+  imports: [UIElementRendererDirective, RawUIElementTemplateEditorModalComponent, Button],
   providers: [
     {
       provide: ELEMENT_RENDERER_CONFIG,

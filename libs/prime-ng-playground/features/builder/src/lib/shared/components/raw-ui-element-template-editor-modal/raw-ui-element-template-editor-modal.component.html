@@ -1,0 +1,10 @@
+<prime-ng-playground-builder-feat-json-editor-modal
+  [isLoading]="loadingSig()"
+  [isOpen]="visible()"
+  [jsonObj]="currentEditableFieldsSig() ?? {}"
+  [schemaConfig]="jsonSchemaConfigResource.value()"
+  (editCancel)="editCancel.emit()"
+  (save)="updateUIElementTemplate($event)"
+></prime-ng-playground-builder-feat-json-editor-modal>
+
+<p-toast class="toast" />

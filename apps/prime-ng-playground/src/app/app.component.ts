@@ -31,6 +31,11 @@ export class AppComponent {
           icon: 'pi pi-objects-column',
           routerLink: '/builder/layout',
         },
+        {
+          label: 'Remote Resources',
+          icon: 'pi pi-globe',
+          routerLink: '/builder/remote-resource',
+        },
       ],
     },
   ];

@@ -11,8 +11,8 @@
   <ng-container [djuiUIElementRenderer]="currentUIElementTemplateId"></ng-container>
 </div>
 
-<prime-ng-playground-builder-feat-raw-template-editor-modal
+<prime-ng-playground-builder-feat-raw-ui-element-template-editor-modal
   [query]="{ id: currentUIElementTemplateId, isLayout: false }"
   [visible]="isRawTemplateEditorModalOpenSig()"
   (editCancel)="toggleModal(false)"
-></prime-ng-playground-builder-feat-raw-template-editor-modal>
+></prime-ng-playground-builder-feat-raw-ui-element-template-editor-modal>

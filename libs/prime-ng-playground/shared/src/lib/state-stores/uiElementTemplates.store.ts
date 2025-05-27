@@ -31,7 +31,7 @@ const uiElementTemplatesStoreInitialState: UIElementTemplatesStoreState = {
   query: {},
 };
 
-export const layoutUIElement = new Set([SimpleGridLayoutElementType]);
+export const LAYOUT_UI_ELEMENT_TYPE_SET = new Set([SimpleGridLayoutElementType]);
 
 export type UIElementTemplateInfo = TemplateInfo & Pick<UIElementTemplate, 'type'>;
 
@@ -73,7 +73,7 @@ export const UIElementTemplatesStore = signalStore(
           }
 
           if (isLayout) {
-            matched = matched && layoutUIElement.has(uiEleTemp.type);
+            matched = matched && LAYOUT_UI_ELEMENT_TYPE_SET.has(uiEleTemp.type);
           }
 
           return matched;
@@ -121,9 +121,9 @@ export const filterTemplatesByQuery = ({
     }
 
     if (isLayout) {
-      matched = matched && layoutUIElement.has(uiEleTemp.type);
+      matched = matched && LAYOUT_UI_ELEMENT_TYPE_SET.has(uiEleTemp.type);
     } else {
-      matched = matched && !layoutUIElement.has(uiEleTemp.type);
+      matched = matched && !LAYOUT_UI_ELEMENT_TYPE_SET.has(uiEleTemp.type);
     }
 
     return matched;

@@ -24,7 +24,7 @@ export class JsonEditorComponent extends BaseCodeEditorDirective<JSONCodeEditorC
           schemaId,
           initialValue,
         })
-      : null;
+      : undefined;
     return {
       language: 'json',
       model,

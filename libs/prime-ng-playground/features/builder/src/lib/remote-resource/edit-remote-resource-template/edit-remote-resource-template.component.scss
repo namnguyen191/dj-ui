@@ -1,0 +1,27 @@
+@use 'libs/prime-ng-playground/shared/src/lib/styles/global.scss';
+
+:host {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: calc(global.$max-content-height);
+
+  .editor-container {
+    width: 75vw;
+    height: 75vh;
+  }
+
+  .open-template-editor-btn {
+    position: absolute;
+    z-index: global.$primary-floating-button;
+    top: 1rem;
+    right: 1rem;
+    opacity: 0.1;
+    transition: opacity 200ms ease-in;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+}

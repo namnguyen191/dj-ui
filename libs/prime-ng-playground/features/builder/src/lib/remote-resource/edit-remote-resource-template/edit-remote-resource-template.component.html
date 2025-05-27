@@ -1,0 +1,22 @@
+<p-button
+  aria-label="Open template editor"
+  class="open-template-editor-btn"
+  icon="pi pi-file-edit"
+  iconPos="bottom"
+  label="Open template editor"
+  (click)="toggleModal(true)"
+/>
+
+@if (editorConfigSig(); as editorConfig) {
+  <div class="editor-container">
+    <prime-ng-playground-shared-json-editor
+      [configs]="editorConfig"
+    ></prime-ng-playground-shared-json-editor>
+  </div>
+}
+
+<prime-ng-playground-builder-feat-raw-remote-resource-template-editor-modal
+  [id]="currentRemoteResourceTemplateId"
+  [visible]="isRawTemplateEditorModalOpenSig()"
+  (editCancel)="toggleModal(false)"
+></prime-ng-playground-builder-feat-raw-remote-resource-template-editor-modal>

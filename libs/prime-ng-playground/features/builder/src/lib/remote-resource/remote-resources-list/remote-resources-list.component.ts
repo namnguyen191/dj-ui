@@ -1,19 +1,7 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  inject,
-  type Signal,
-  signal,
-  untracked,
-} from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject, signal, untracked } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import {
-  LAYOUT_UI_ELEMENT_TYPE_SET,
-  type TemplateInfo,
-  UIElementTemplatesStore,
-} from '@dj-ui/prime-ng-playground/shared';
+import { RemoteResourceTemplatesStore, type TemplateInfo } from '@dj-ui/prime-ng-playground/shared';
 import { ConfirmationService, type MenuItem } from 'primeng/api';
 import { ButtonModule } from 'primeng/button';
 import { ConfirmDialog } from 'primeng/confirmdialog';
@@ -21,15 +9,15 @@ import { ContextMenu } from 'primeng/contextmenu';
 import { TableModule } from 'primeng/table';
 
 @Component({
-  selector: 'prime-ng-playground-builder-feat-layouts-list',
+  selector: 'prime-ng-playground-builder-feat-remote-resources-list',
   imports: [TableModule, ButtonModule, ConfirmDialog, CommonModule, ContextMenu, RouterLink],
   providers: [ConfirmationService],
-  templateUrl: './layouts-list.component.html',
-  styleUrl: './layouts-list.component.scss',
+  templateUrl: './remote-resources-list.component.html',
+  styleUrl: './remote-resources-list.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LayoutsListComponent {
-  readonly #uiElementTemplatesStore = inject(UIElementTemplatesStore);
+export class RemoteResourcesListComponent {
+  readonly #remoteResourceTemplatesStore = inject(RemoteResourceTemplatesStore);
   readonly #router = inject(Router);
   readonly #activatedRoute = inject(ActivatedRoute);
   readonly #confirmationService = inject(ConfirmationService);
@@ -50,12 +38,9 @@ export class LayoutsListComponent {
     },
   ];
 
-  protected loadingSig = this.#uiElementTemplatesStore.isPending;
-  allLayoutTemplatesInfoSig: Signal<TemplateInfo[]> = computed(() => {
-    const allTemplatesInfo = this.#uiElementTemplatesStore.allUIElementTemplatesInfo();
-
-    return allTemplatesInfo.filter((tempInfo) => LAYOUT_UI_ELEMENT_TYPE_SET.has(tempInfo.type));
-  });
+  protected loadingSig = this.#remoteResourceTemplatesStore.isPending;
+  allRemoteResourcesTemplatesInfoSig =
+    this.#remoteResourceTemplatesStore.allRemoteResourceTemplatesInfo;
 
   navigateToEditPage(uieTemplateId: string): void {
     void this.#router.navigate(['.', uieTemplateId], { relativeTo: this.#activatedRoute });
@@ -81,7 +66,7 @@ export class LayoutsListComponent {
         severity: 'danger',
       },
       accept: () => {
-        void this.#uiElementTemplatesStore.delete(templateId);
+        void this.#remoteResourceTemplatesStore.delete(templateId);
       },
     });
   }

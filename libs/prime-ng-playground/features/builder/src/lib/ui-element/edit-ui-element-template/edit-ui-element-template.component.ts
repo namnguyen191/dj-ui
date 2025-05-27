@@ -6,11 +6,11 @@ import { UIElementTemplatesStore } from '@dj-ui/prime-ng-playground/shared';
 import { Button } from 'primeng/button';
 import { map } from 'rxjs';
 
-import { RawTemplateEditorModalComponent } from '../../shared/components/raw-template-editor-modal/raw-template-editor-modal.component';
+import { RawUIElementTemplateEditorModalComponent } from '../../shared/components/raw-ui-element-template-editor-modal/raw-ui-element-template-editor-modal.component';
 
 @Component({
   selector: 'prime-ng-playground-builder-feat-edit-ui-element-template',
-  imports: [UIElementRendererDirective, RawTemplateEditorModalComponent, Button],
+  imports: [UIElementRendererDirective, RawUIElementTemplateEditorModalComponent, Button],
   templateUrl: './edit-ui-element-template.component.html',
   styleUrl: './edit-ui-element-template.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
