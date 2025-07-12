@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { Component, untracked } from '@angular/core';
 
 import type { IStandaloneEditorConstructionOptions } from '../../../services/monaco-editor.service';
@@ -10,7 +9,7 @@ export type JSONCodeEditorConfigs = CodeEditorConfigs & {
 
 @Component({
   selector: 'prime-ng-playground-shared-json-editor',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './json-editor.component.html',
   styleUrl: './json-editor.component.scss',
 })

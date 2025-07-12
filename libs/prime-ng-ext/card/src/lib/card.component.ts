@@ -7,6 +7,7 @@ import {
   input,
   type InputSignal,
 } from '@angular/core';
+import { parseZodWithDefault } from '@dj-ui/common/shared';
 import {
   BaseUIElementComponent,
   type UIElementImplementation,
@@ -28,7 +29,6 @@ import {
   ZTitleConfigOption,
   ZTopBannerConfigOption,
 } from '@dj-ui/prime-ng-ext/shared';
-import { parseZodWithDefault } from '@namnguyen191/types-helper';
 import { Card } from 'primeng/card';
 
 @Component({

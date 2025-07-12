@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -33,7 +32,7 @@ export type JsonSchemaConfig = {
 
 @Component({
   selector: 'prime-ng-playground-builder-feat-json-editor-modal',
-  imports: [CommonModule, JsonEditorComponent, Dialog, Button, ProgressSpinner, FormsModule],
+  imports: [JsonEditorComponent, Dialog, Button, ProgressSpinner, FormsModule],
   templateUrl: './json-editor-modal.component.html',
   styleUrl: './json-editor-modal.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -52,10 +51,10 @@ export class JsonEditorModalComponent {
   readonly errorStateSig = signal<'noError' | 'isError'>('noError');
 
   protected readonly prettifiedJSONResource: ResourceRef<string | undefined> = resource({
-    request: () => ({ jsonObj: this.jsonObj() }),
+    params: () => ({ jsonObj: this.jsonObj() }),
     equal: isEqual,
-    loader: ({ request }) => {
-      const { jsonObj } = request;
+    loader: ({ params }) => {
+      const { jsonObj } = params;
       const rawJSON = JSON.stringify(jsonObj);
       return formatJSON(rawJSON);
     },

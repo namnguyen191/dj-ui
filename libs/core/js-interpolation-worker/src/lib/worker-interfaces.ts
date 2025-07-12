@@ -8,7 +8,7 @@ export type BaseWorkerEventPayload = z.infer<typeof ZBaseWorkerEventPayload>;
 
 export const ZInterpolateWorkerEventPayload = ZBaseWorkerEventPayload.extend({
   rawJs: z.string(),
-  context: z.record(z.unknown(), z.unknown()),
+  context: z.record(z.string(), z.unknown()),
 });
 export type InterpolateWorkerEventPayload = z.infer<typeof ZInterpolateWorkerEventPayload>;
 export const ZInterpolateWorkerEvent = z.strictObject({

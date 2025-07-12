@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -16,12 +15,12 @@ import {
   ZGridConfigOption,
   ZSimpleGridLayoutUIEConfigs,
 } from '@dj-ui/common/shared';
+import { parseZodWithDefault } from '@dj-ui/common/shared';
 import {
   BaseUIElementComponent,
   type UIElementImplementation,
   UIElementRendererDirective,
 } from '@dj-ui/core';
-import { parseZodWithDefault } from '@namnguyen191/types-helper';
 
 type GridItem = {
   id: string;
@@ -36,7 +35,7 @@ const DEFAULT_GRID_PADDING: GridConfigOption['padding'] = '0px';
 
 @Component({
   selector: 'dj-ui-common-simple-grid-layout',
-  imports: [CommonModule, UIElementRendererDirective],
+  imports: [UIElementRendererDirective],
   templateUrl: './simple-grid-layout.component.html',
   styleUrl: './simple-grid-layout.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

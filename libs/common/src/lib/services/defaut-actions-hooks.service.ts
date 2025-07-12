@@ -1,12 +1,12 @@
 import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { ZodObjectType } from '@dj-ui/common/shared';
 import {
   type ActionHookHandler,
   RemoteResourceService,
   StateStoreService,
   ZodAvailableStateScope,
 } from '@dj-ui/core';
-import { ZodObjectType } from '@namnguyen191/types-helper';
 import { z } from 'zod';
 
 export const ZTriggerRemoteResourceHookPayload = z.strictObject(
@@ -14,7 +14,7 @@ export const ZTriggerRemoteResourceHookPayload = z.strictObject(
     remoteResourceId: z.string(),
   },
   {
-    errorMap: () => ({
+    error: () => ({
       message:
         'Invalid triggerRemoteResource action hook payload, example: { "type": "triggerRemoteResource", "payload": { "remoteResourceId": "123" }  } ',
     }),
@@ -28,7 +28,7 @@ export const ZAddToStateActionHookPayload = z.strictObject(
     data: ZodObjectType,
   },
   {
-    errorMap: () => ({
+    error: () => ({
       message:
         'Invalid addToState action hook payload, example: { "type": "addToState", "payload": { "scope": "global", data: "{ "some": "data" }" }  } ',
     }),
@@ -42,7 +42,7 @@ export const ZNavigateHookPayload = z.strictObject(
     url: z.string(),
   },
   {
-    errorMap: () => ({
+    error: () => ({
       message:
         'Invalid navigate action hook payload, example: { "type": "navigate", "payload": { "navigationType": "internal", url: "/my/route" }  } ',
     }),

@@ -1,10 +1,6 @@
 import { APP_BASE_HREF } from '@angular/common';
-import { HttpClient, provideHttpClient } from '@angular/common/http';
-import {
-  type ApplicationConfig,
-  inject,
-  provideExperimentalZonelessChangeDetection,
-} from '@angular/core';
+import { HttpClient, provideHttpClient, withFetch } from '@angular/common/http';
+import { type ApplicationConfig, inject, provideZonelessChangeDetection } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter, withHashLocation } from '@angular/router';
 import { CommonComponentLoader, provideDefaultDJUIConfig } from '@dj-ui/common';
@@ -22,7 +18,7 @@ import { appRoutes } from './app.routes';
 
 export const appConfig: ApplicationConfig = {
   providers: [
-    provideExperimentalZonelessChangeDetection(),
+    provideZonelessChangeDetection(),
     provideRouter(appRoutes, withHashLocation()),
     provideAnimationsAsync(),
     providePrimeNG({
@@ -30,7 +26,7 @@ export const appConfig: ApplicationConfig = {
         preset: Aura,
       },
     }),
-    provideHttpClient(),
+    provideHttpClient(withFetch()),
     provideDefaultDJUIConfig(),
     {
       provide: CREATE_JS_RUNNER_WORKER,

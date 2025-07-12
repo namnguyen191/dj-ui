@@ -1,13 +1,12 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input, type InputSignal } from '@angular/core';
 import {
   CarbonCarouselCardElementType,
   CarbonCarouselCardSymbol,
   CarbonCarouselSymbol,
 } from '@dj-ui/carbon-ext/shared';
+import { parseZodWithDefault } from '@dj-ui/common/shared';
 import { BaseUIElementComponent, type UIElementImplementation } from '@dj-ui/core';
 import { UIElementRendererDirective } from '@dj-ui/core';
-import { parseZodWithDefault } from '@namnguyen191/types-helper';
 
 import {
   type CarouselCardConfigs,
@@ -18,7 +17,7 @@ import {
 
 @Component({
   selector: 'dj-ui-carbon-carousel-card',
-  imports: [CommonModule, UIElementRendererDirective],
+  imports: [UIElementRendererDirective],
   templateUrl: './carbon-carousel-card.component.html',
   styleUrl: './carbon-carousel-card.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

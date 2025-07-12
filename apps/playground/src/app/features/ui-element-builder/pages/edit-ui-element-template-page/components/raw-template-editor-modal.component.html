@@ -29,7 +29,9 @@
       } @else {
         Save your changes
       }
-      <cds-loading *ngIf="errorState === 'isPending'" size="sm"></cds-loading>
+      @if (errorState === 'isPending') {
+        <cds-loading size="sm"></cds-loading>
+      }
     </button>
   </cds-modal-footer>
 </cds-modal>

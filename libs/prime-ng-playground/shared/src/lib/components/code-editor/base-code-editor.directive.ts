@@ -36,11 +36,11 @@ export abstract class BaseCodeEditorDirective<T extends CodeEditorConfigs> {
     viewChild.required('editorContainer');
 
   protected editorInstanceResource = resource({
-    request: () => ({
+    params: () => ({
       configs: this.configs(),
     }),
-    loader: ({ request }) => {
-      return this.#createMonacoEditor(request.configs);
+    loader: ({ params }) => {
+      return this.#createMonacoEditor(params.configs);
     },
   });
 

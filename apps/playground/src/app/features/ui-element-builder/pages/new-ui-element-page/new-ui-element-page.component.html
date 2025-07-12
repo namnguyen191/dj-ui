@@ -3,7 +3,9 @@
 @let nameError = getFieldErrorMessage('name');
 @let descriptionError = getFieldErrorMessage('description');
 
-<cds-loading *ngIf="isLoading" [isActive]="true" [overlay]="true"></cds-loading>
+@if (isLoading) {
+  <cds-loading [isActive]="true" [overlay]="true"></cds-loading>
+}
 
 <form class="new-ui-element-form" [formGroup]="newUIElementForm" (ngSubmit)="onSubmit()">
   <cds-dropdown formControlName="type" itemValueKey="value" label="Type">

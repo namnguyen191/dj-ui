@@ -1,9 +1,8 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, input, type InputSignal } from '@angular/core';
 import { CarbonTextCardElementType, CarbonTextCardSymbol } from '@dj-ui/carbon-ext/shared';
 import { EmitOnClickDirective } from '@dj-ui/common';
+import { parseZodWithDefault } from '@dj-ui/common/shared';
 import { BaseUIElementComponent, type UIElementImplementation } from '@dj-ui/core';
-import { parseZodWithDefault } from '@namnguyen191/types-helper';
 
 import {
   type AvatarUrlConfigOption,
@@ -23,7 +22,7 @@ import {
 
 @Component({
   selector: 'dj-ui-carbon-text-card',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './carbon-text-card.component.html',
   styleUrl: './carbon-text-card.component.scss',
   hostDirectives: [EmitOnClickDirective],

@@ -23,10 +23,11 @@
 
   <router-outlet></router-outlet>
 
-  <cds-toast
-    *ngIf="isNotificationDisplayed()"
-    class="toast-container"
-    [notificationObj]="notificationConfig"
-    (close)="isNotificationDisplayed.set(false)"
-  ></cds-toast>
+  @if (isNotificationDisplayed()) {
+    <cds-toast
+      class="toast-container"
+      [notificationObj]="notificationConfig"
+      (close)="isNotificationDisplayed.set(false)"
+    ></cds-toast>
+  }
 </div>

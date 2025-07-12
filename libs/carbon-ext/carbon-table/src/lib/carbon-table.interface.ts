@@ -1,5 +1,5 @@
+import { ZodNonEmptyPrimitive } from '@dj-ui/common/shared';
 import { createUIElementTemplateSchema } from '@dj-ui/core';
-import { ZodNonEmptyPrimitive } from '@namnguyen191/types-helper';
 import { z } from 'zod';
 
 export const ZodTableRowObject = z.array(ZodNonEmptyPrimitive);
@@ -12,7 +12,7 @@ export const ZodTableHeadersConfig = z.array(ZodNonEmptyPrimitive);
 export type TableHeadersConfig = z.infer<typeof ZodTableHeadersConfig>;
 
 export const ZodTableDescriptionConfig = z.string({
-  errorMap: () => ({ message: 'Table description must be a string' }),
+  error: () => ({ message: 'Table description must be a string' }),
 });
 export type TableDescriptionConfig = z.infer<typeof ZodTableDescriptionConfig>;
 

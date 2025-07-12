@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input, type InputSignal } from '@angular/core';
+import { parseZodWithDefault } from '@dj-ui/common/shared';
 import { BaseUIElementComponent, type UIElementImplementation } from '@dj-ui/core';
 import {
   type SimpleTextConfigs,
@@ -9,11 +9,10 @@ import {
   type TextStyles,
   ZTextBlocksConfigOption,
 } from '@dj-ui/prime-ng-ext/shared';
-import { parseZodWithDefault } from '@namnguyen191/types-helper';
 
 @Component({
   selector: 'dj-ui-prime-ng-simple-text',
-  imports: [CommonModule],
+  imports: [],
   templateUrl: './simple-text.component.html',
   styleUrl: './simple-text.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

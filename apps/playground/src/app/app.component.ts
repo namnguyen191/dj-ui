@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { registerSingleFileUploadDataFetcher, setupDefault } from '@dj-ui/common';
@@ -14,14 +13,7 @@ import { ResetLocalApiBtnComponent } from './components/reset-local-api-btn/rese
 
 @Component({
   selector: 'app-root',
-  imports: [
-    CommonModule,
-    RouterModule,
-    NotificationModule,
-    ThemeModule,
-    HeaderModule,
-    ResetLocalApiBtnComponent,
-  ],
+  imports: [RouterModule, NotificationModule, ThemeModule, HeaderModule, ResetLocalApiBtnComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -10,8 +9,8 @@ import {
 } from '@angular/core';
 import { CarbonButtonElementType, CarbonButtonSymbol } from '@dj-ui/carbon-ext/shared';
 import { FileService } from '@dj-ui/common';
+import { parseZodWithDefault } from '@dj-ui/common/shared';
 import { BaseUIElementComponent, type UIElementImplementation } from '@dj-ui/core';
-import { parseZodWithDefault } from '@namnguyen191/types-helper';
 import { ButtonModule, InlineLoadingModule } from 'carbon-components-angular';
 
 import {
@@ -24,7 +23,7 @@ import {
 
 @Component({
   selector: 'dj-ui-carbon-button',
-  imports: [CommonModule, ButtonModule, InlineLoadingModule],
+  imports: [ButtonModule, InlineLoadingModule],
   templateUrl: './carbon-button.component.html',
   styleUrl: './carbon-button.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

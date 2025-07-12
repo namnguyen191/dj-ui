@@ -1,6 +1,6 @@
-import { CommonModule } from '@angular/common';
 import { NgOptimizedImage } from '@angular/common';
 import { ChangeDetectionStrategy, Component, input, type InputSignal } from '@angular/core';
+import { parseZodWithDefault } from '@dj-ui/common/shared';
 import { BaseUIElementComponent, type UIElementImplementation } from '@dj-ui/core';
 import {
   type AltLabelConfigOption,
@@ -13,11 +13,10 @@ import {
   ZImageUrlConfigOption,
   ZPriorityConfigOption,
 } from '@dj-ui/prime-ng-ext/shared';
-import { parseZodWithDefault } from '@namnguyen191/types-helper';
 
 @Component({
   selector: 'dj-ui-prime-ng-simple-image',
-  imports: [CommonModule, NgOptimizedImage],
+  imports: [NgOptimizedImage],
   templateUrl: './simple-image.component.html',
   styleUrl: './simple-image.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

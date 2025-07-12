@@ -5,17 +5,17 @@ export const SimpleImageElementType = 'SIMPLE_IMAGE';
 export const SimpleImageSymbol = Symbol('SimpleImage');
 
 export const ZImageUrlConfigOption = z.string({
-  errorMap: () => ({ message: 'Image url must be a string' }),
+  error: () => ({ message: 'Image url must be a string' }),
 });
 export type ImageUrlConfigOption = z.infer<typeof ZImageUrlConfigOption>;
 
 export const ZAltLabelConfigOption = z.string({
-  errorMap: () => ({ message: 'Aria label must be a string' }),
+  error: () => ({ message: 'Aria label must be a string' }),
 });
 export type AltLabelConfigOption = z.infer<typeof ZAltLabelConfigOption>;
 
 export const ZPriorityConfigOption = z.boolean({
-  errorMap: () => ({ message: 'Priority must be a boolean' }),
+  error: () => ({ message: 'Priority must be a boolean' }),
 });
 export type PriorityConfigOption = z.infer<typeof ZPriorityConfigOption>;
 

@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -12,6 +11,7 @@ import {
   signal,
   viewChildren,
 } from '@angular/core';
+import { parseZodWithDefault } from '@dj-ui/common/shared';
 import {
   BaseUIElementComponent,
   logWarning,
@@ -31,12 +31,11 @@ import {
   type SimpleImageUIESchema,
   ZImagesConfigOption,
 } from '@dj-ui/prime-ng-ext/shared';
-import { parseZodWithDefault } from '@namnguyen191/types-helper';
 import { Dialog } from 'primeng/dialog';
 
 @Component({
   selector: 'dj-ui-prime-ng-images-carousel',
-  imports: [CommonModule, UIElementRendererDirective, Dialog],
+  imports: [UIElementRendererDirective, Dialog],
   templateUrl: './images-carousel.component.html',
   styleUrl: './images-carousel.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

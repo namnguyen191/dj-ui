@@ -4,7 +4,9 @@
   <span>Something went wrong fetching data</span>
 } @else {
   <div class="table-container">
-    <h3 *ngIf="titleConfigOption() as title" class="table-header">{{ title }}</h3>
+    @if (titleConfigOption(); as title) {
+      <h3 class="table-header">{{ title }}</h3>
+    }
 
     <p-table
       class="table-content"
@@ -52,16 +54,17 @@
       </ng-template>
     </p-table>
 
-    <p-paginator
-      *ngIf="shouldDisplayPagination()"
-      class="table-paginator"
-      currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
-      [first]="numberOfFirstRows()"
-      [rows]="numberOfRowsToDisplayed()"
-      [rowsPerPageOptions]="paginationConfig.pageSizes"
-      [showCurrentPageReport]="true"
-      [totalRecords]="paginationConfig.totalDataLength"
-      (onPageChange)="pageChange($event)"
-    />
+    @if (shouldDisplayPagination()) {
+      <p-paginator
+        class="table-paginator"
+        currentPageReportTemplate="Showing {first} to {last} of {totalRecords}"
+        [first]="numberOfFirstRows()"
+        [rows]="numberOfRowsToDisplayed()"
+        [rowsPerPageOptions]="paginationConfig.pageSizes"
+        [showCurrentPageReport]="true"
+        [totalRecords]="paginationConfig.totalDataLength"
+        (onPageChange)="pageChange($event)"
+      />
+    }
   </div>
 }

@@ -1,34 +1,35 @@
-<div
-  *ngIf="gridConfigOption() as grid"
-  class="grid"
-  [style.--grid-columns]="grid.columns"
-  [style.--grid-gap]="grid.gap"
-  [style.--grid-row-height]="grid.rowHeight"
-  [style.padding]="grid.padding"
->
-  @if (gridItems(); as gridItems) {
-    @if (gridItems.length > 0) {
-      @for (item of gridItems; track item.trackById) {
-        <div
-          class="grid-item"
-          [id]="item.elementInstance.id"
-          [style.--grid-item-columns]="
-            item.elementInstance.positionAndSize?.cols ?? DEFAULT_UI_ELEMENT_COLS
-          "
-          [style.--grid-item-max-height]="
-            item.elementInstance.positionAndSize?.maxHeight ?? DEFAULT_UI_ELEMENT_MAX_HEIGHT
-          "
-          [style.--grid-item-rows]="
-            item.elementInstance.positionAndSize?.rows ?? DEFAULT_UI_ELEMENT_ROWS
-          "
-        >
-          <ng-container
-            [djuiUIElementRenderer]="item.elementInstance.uiElementTemplateId"
-          ></ng-container>
-        </div>
+@if (gridConfigOption(); as grid) {
+  <div
+    class="grid"
+    [style.--grid-columns]="grid.columns"
+    [style.--grid-gap]="grid.gap"
+    [style.--grid-row-height]="grid.rowHeight"
+    [style.padding]="grid.padding"
+  >
+    @if (gridItems(); as gridItems) {
+      @if (gridItems.length > 0) {
+        @for (item of gridItems; track item.trackById) {
+          <div
+            class="grid-item"
+            [id]="item.elementInstance.id"
+            [style.--grid-item-columns]="
+              item.elementInstance.positionAndSize?.cols ?? DEFAULT_UI_ELEMENT_COLS
+            "
+            [style.--grid-item-max-height]="
+              item.elementInstance.positionAndSize?.maxHeight ?? DEFAULT_UI_ELEMENT_MAX_HEIGHT
+            "
+            [style.--grid-item-rows]="
+              item.elementInstance.positionAndSize?.rows ?? DEFAULT_UI_ELEMENT_ROWS
+            "
+          >
+            <ng-container
+              [djuiUIElementRenderer]="item.elementInstance.uiElementTemplateId"
+            ></ng-container>
+          </div>
+        }
+      } @else {
+        <span>This layout is empty</span>
       }
-    } @else {
-      <span>This layout is empty</span>
     }
-  }
-</div>
+  </div>
+}

@@ -76,11 +76,11 @@ export class RawUIElementTemplateEditorModalComponent {
 
   protected readonly jsonSchemaConfigResource: ResourceRef<JsonSchemaConfig | undefined> = resource(
     {
-      request: () => ({
+      params: () => ({
         uiElementType: this.#currentTemplateSig()?.type,
       }),
-      loader: async ({ request }) => {
-        const { uiElementType } = request;
+      loader: async ({ params }) => {
+        const { uiElementType } = params;
 
         if (!uiElementType) {
           return undefined;

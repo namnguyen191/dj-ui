@@ -11,7 +11,7 @@ import type { ConfigWithStatus } from './shared-types';
 export const createUIElementTemplateOptionsSchema = <T extends z.ZodObject<any>>(
   customOptionsSchema: T
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-) => ZUIElementRequiredConfigs.merge(customOptionsSchema).partial();
+) => ZUIElementRequiredConfigs.extend(customOptionsSchema.shape).partial();
 export const ZUIElementTemplateOptions = createUIElementTemplateOptionsSchema(z.object({}));
 export type UIElementTemplateOptions = z.infer<typeof ZUIElementTemplateOptions>;
 
@@ -32,7 +32,9 @@ export const createEventsToHooksMapSchema = <T extends string>(
     });
   }
 
-  return zObj;
+  return zObj as unknown as z.ZodType<{
+    [K in T]?: ActionHook[];
+  }>;
 };
 export const createUIElementTemplateSchema = <
   // eslint-disable-next-line @typescript-eslint/no-explicit-any

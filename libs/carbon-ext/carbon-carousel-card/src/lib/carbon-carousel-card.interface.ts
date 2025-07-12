@@ -2,17 +2,17 @@ import { createUIElementTemplateSchema } from '@dj-ui/core';
 import { z } from 'zod';
 
 export const ZTitleConfigOption = z.string({
-  errorMap: () => ({ message: 'Title must be a string' }),
+  error: () => ({ message: 'Title must be a string' }),
 });
 export type TitleConfigOption = z.infer<typeof ZTitleConfigOption>;
 
 export const ZDescriptionConfigOption = z.string({
-  errorMap: () => ({ message: 'Description must be a string' }),
+  error: () => ({ message: 'Description must be a string' }),
 });
 export type DescriptionConfigOption = z.infer<typeof ZDescriptionConfigOption>;
 
 export const ZCarouselIdConfigOption = z.string({
-  errorMap: () => ({
+  error: () => ({
     message: 'CarouselId must be a string',
   }),
 });

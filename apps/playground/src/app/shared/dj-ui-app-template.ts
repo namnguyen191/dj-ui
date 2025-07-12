@@ -17,8 +17,8 @@ export const ZTemplateInfo = z
   .strictObject({
     id: z.string(),
   })
-  .merge(ZTimeStamp)
-  .merge(ZMetaData);
+  .extend(ZTimeStamp.shape)
+  .extend(ZMetaData.shape);
 export type TemplateInfo = z.infer<typeof ZTemplateInfo>;
 
 export type AppUIElementTemplate = UIElementTemplate & TimeStamp & MetaData;
