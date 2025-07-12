@@ -1,3 +1,45 @@
+## 0.13.0 (2025-07-12)
+
+### 🚀 Features
+
+- update @namnguyen191 packages, adjust tsconfig, use enum for layout config ([#5](https://github.com/namnguyen191/dj-ui/pull/5))
+- refactor template service to extract common logic, adjust event interface ([#9](https://github.com/namnguyen191/dj-ui/pull/9))
+- Implement file upload ([#10](https://github.com/namnguyen191/dj-ui/pull/10))
+- Support extra wrapper and release new version ([#11](https://github.com/namnguyen191/dj-ui/pull/11))
+- add layout builder to playground and adjust layout component ([#12](https://github.com/namnguyen191/dj-ui/pull/12))
+- enable onpush change detection and move context menu to layout builder ([#13](https://github.com/namnguyen191/dj-ui/pull/13))
+- enable local api and deployment ([#14](https://github.com/namnguyen191/dj-ui/pull/14))
+- Add PrimeNG playground ([#20](https://github.com/namnguyen191/dj-ui/pull/20))
+- remove gridster ([#21](https://github.com/namnguyen191/dj-ui/pull/21))
+- prime ng simple table ([#22](https://github.com/namnguyen191/dj-ui/pull/22))
+- add prime-ng-playground ([#23](https://github.com/namnguyen191/dj-ui/pull/23))
+- fix routing issue with github pages and spa app ([#27](https://github.com/namnguyen191/dj-ui/pull/27))
+- Add auto complete to template editor ([#29](https://github.com/namnguyen191/dj-ui/pull/29))
+- add more sample elements ([#30](https://github.com/namnguyen191/dj-ui/pull/30))
+- add layout builder context ([#31](https://github.com/namnguyen191/dj-ui/pull/31))
+- enable eslint to have ts type check ([#32](https://github.com/namnguyen191/dj-ui/pull/32))
+- add create and delete for UIE ([#33](https://github.com/namnguyen191/dj-ui/pull/33))
+- add create and delete for layout ([#34](https://github.com/namnguyen191/dj-ui/pull/34))
+- scaffold a remote resource editor ([#35](https://github.com/namnguyen191/dj-ui/pull/35))
+- update to latest versions on most deps ([5663e7d](https://github.com/namnguyen191/dj-ui/commit/5663e7d))
+- change gh deploy to use node 24 ([1b818bd](https://github.com/namnguyen191/dj-ui/commit/1b818bd))
+
+### 🩹 Fixes
+
+- fix deployment by using checkout v4 ([#15](https://github.com/namnguyen191/dj-ui/pull/15))
+- fix deployment by changing pnpm version ([#16](https://github.com/namnguyen191/dj-ui/pull/16))
+- fix redirection logic and add icons ([#17](https://github.com/namnguyen191/dj-ui/pull/17))
+- use relative path for assets ([#18](https://github.com/namnguyen191/dj-ui/pull/18))
+- template editor loading and error issues ([#19](https://github.com/namnguyen191/dj-ui/pull/19))
+- failing build due to relative import ([#24](https://github.com/namnguyen191/dj-ui/pull/24))
+- set baseHref for prime-ng-playground ([#25](https://github.com/namnguyen191/dj-ui/pull/25))
+- add baseHref for templates fetchers ([#26](https://github.com/namnguyen191/dj-ui/pull/26))
+- change some assets to use relative path to work with base href ([#28](https://github.com/namnguyen191/dj-ui/pull/28))
+
+### ❤️ Thank You
+
+- Nam Nguyen @namnguyen191
+
 ## 0.12.0 (2025-05-11)
 
 ### 🚀 Features
