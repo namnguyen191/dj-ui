@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import { NgOptimizedImage } from '@angular/common';
 import {
   ChangeDetectionStrategy,
@@ -17,8 +16,8 @@ import {
   CarbonCarouselSymbol,
   ModalComponent,
 } from '@dj-ui/carbon-ext/shared';
+import { parseZodWithDefault } from '@dj-ui/common/shared';
 import { BaseUIElementComponent, logWarning, type UIElementImplementation } from '@dj-ui/core';
-import { parseZodWithDefault } from '@namnguyen191/types-helper';
 import { IconModule } from 'carbon-components-angular';
 
 import {
@@ -36,7 +35,7 @@ type CarouselImage = {
 
 @Component({
   selector: 'dj-ui-carbon-carousel',
-  imports: [CommonModule, RouterModule, IconModule, ModalComponent, NgOptimizedImage],
+  imports: [RouterModule, IconModule, ModalComponent, NgOptimizedImage],
   templateUrl: './carbon-carousel.component.html',
   styleUrl: './carbon-carousel.component.scss',
   host: {

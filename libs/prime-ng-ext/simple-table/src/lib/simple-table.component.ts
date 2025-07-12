@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -7,6 +6,7 @@ import {
   type InputSignal,
   output,
 } from '@angular/core';
+import { parseZodWithDefault } from '@dj-ui/common/shared';
 import {
   BaseUIElementComponent,
   type UIElementImplementation,
@@ -25,7 +25,6 @@ import {
   type TableStylesConfigs,
   ZSimpleTableUIEConfigs,
 } from '@dj-ui/prime-ng-ext/shared';
-import { parseZodWithDefault } from '@namnguyen191/types-helper';
 import { isEmpty } from 'lodash-es';
 import { PaginatorModule, type PaginatorState } from 'primeng/paginator';
 import { TableModule } from 'primeng/table';
@@ -37,7 +36,6 @@ import { RowsTemplateTypeDirective } from './rows-type.directive';
 @Component({
   selector: 'dj-ui-prime-ng-simple-table',
   imports: [
-    CommonModule,
     TableModule,
     ColumnsTemplateTypeDirective,
     RowsTemplateTypeDirective,

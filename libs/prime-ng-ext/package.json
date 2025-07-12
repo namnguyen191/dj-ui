@@ -1,6 +1,6 @@
 {
   "name": "@dj-ui/prime-ng-ext",
-  "version": "0.12.0",
+  "version": "0.13.0",
   "type": "module",
   "publishConfig": {
     "access": "public"
@@ -10,12 +10,11 @@
     "url": "https://github.com/namnguyen191/dj-ui"
   },
   "peerDependencies": {
-    "@angular/common": "^19.0.0",
-    "@angular/core": "^19.0.0",
-    "@dj-ui/core": "*",
-    "@dj-ui/common": "*",
-    "@namnguyen191/types-helper": "1.1.1",
-    "zod": "^3.23.8",
+    "@angular/common": "^20.0.0",
+    "@angular/core": "^20.0.0",
+    "@dj-ui/core": "0.13.0",
+    "@dj-ui/common": "0.13.0",
+    "zod": "^4.0.0",
     "primeng": "^19.0.8",
     "type-fest": "^4.29.0",
     "lodash-es": "^4.17.21"

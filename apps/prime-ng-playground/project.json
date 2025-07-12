@@ -69,7 +69,8 @@
           "buildTarget": "prime-ng-playground:build:development"
         }
       },
-      "defaultConfiguration": "development"
+      "defaultConfiguration": "development",
+      "continuous": true
     },
     "typecheck": {
       "executor": "nx:run-commands",

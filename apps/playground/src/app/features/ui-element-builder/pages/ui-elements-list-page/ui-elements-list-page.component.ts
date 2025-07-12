@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
@@ -21,7 +20,7 @@ import { UIElementTemplatesStore } from '../../../../state-store/uiElementTempla
 
 @Component({
   selector: 'namnguyen191-ui-elements-list-page',
-  imports: [CommonModule, TableModule, ButtonModule, RouterModule],
+  imports: [TableModule, ButtonModule, RouterModule],
   templateUrl: './ui-elements-list-page.component.html',
   styleUrl: './ui-elements-list-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

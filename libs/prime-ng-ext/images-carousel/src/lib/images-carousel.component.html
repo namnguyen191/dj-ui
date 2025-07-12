@@ -48,10 +48,12 @@
   [visible]="!!currentPreviewImageSig()"
   (visibleChange)="closeCurrentPreviewImage()"
 >
-  <div *ngIf="currentPreviewImageSig() as currentPreviewImage" class="preview-image">
-    <ng-container
-      [djuiUIElementRenderer]="currentPreviewImage"
-      [requiredComponentSymbols]="[SimpleImageSymbol]"
-    ></ng-container>
-  </div>
+  @if (currentPreviewImageSig(); as currentPreviewImage) {
+    <div class="preview-image">
+      <ng-container
+        [djuiUIElementRenderer]="currentPreviewImage"
+        [requiredComponentSymbols]="[SimpleImageSymbol]"
+      ></ng-container>
+    </div>
+  }
 </p-dialog>

@@ -29,8 +29,8 @@ export const ZTemplateInfo = z
   .strictObject({
     id: z.string(),
   })
-  .merge(ZTimeStamp)
-  .merge(ZMetaData);
+  .extend(ZTimeStamp.shape)
+  .extend(ZMetaData.shape);
 export type TemplateInfo = z.infer<typeof ZTemplateInfo>;
 
 export type AppUIElementTemplate = UIElementTemplate & TimeStamp & MetaData;
@@ -52,13 +52,13 @@ export type AppRemoteResourceTemplateEditableFields = Omit<
 
 // Let TS infer the type here
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-export const createAppUIEEditTemplate = (originalTemplate: z.AnyZodObject) => {
+export const createAppUIEEditTemplate = (originalTemplate: z.ZodObject) => {
   return originalTemplate
     .omit({
       id: true,
       type: true,
     })
-    .merge(ZMetaData);
+    .extend(ZMetaData.shape);
 };
 
 export const ZAppEditSimpleTableUIESchema = createAppUIEEditTemplate(
@@ -83,5 +83,5 @@ export const ZAppEditCardUIESchema = createAppUIEEditTemplate(ZCardUIESchema).de
 export const ZAppEditRemoteResourceSchema = ZRemoteResourceTemplate.omit({
   id: true,
 })
-  .merge(ZMetaData)
+  .extend(ZMetaData.shape)
   .describe('AppEditRemoteResourceSchema');

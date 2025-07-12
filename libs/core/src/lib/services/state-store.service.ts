@@ -41,7 +41,7 @@ export const ZStateSubscriptionConfig = z.strictObject({
       local: z.array(z.string()).optional(),
     })
     .optional(),
-  variables: z.record(z.any()).optional(),
+  variables: z.record(z.string(), z.any()).optional(),
 }) satisfies z.ZodType<StateSubscriptionConfig>;
 
 export const getStatesAsContext = (): Observable<StateMap> => {

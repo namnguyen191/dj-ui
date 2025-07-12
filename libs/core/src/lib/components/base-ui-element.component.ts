@@ -10,11 +10,11 @@ import type { UnknownRecord } from 'type-fest';
 import { z } from 'zod';
 
 export const ZodIsLoading = z.boolean({
-  invalid_type_error: 'loading state must be a boolean',
+  error: 'loading state must be a boolean',
 });
 
 export const ZodIsError = z.boolean({
-  invalid_type_error: 'error state must be a boolean',
+  error: 'error state must be a boolean',
 });
 
 export const ZUIElementRequiredConfigs = z.strictObject({

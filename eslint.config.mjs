@@ -139,7 +139,7 @@ export default tseslint.config([
             '@angular/compiler',
             'zod-to-json-schema',
             '@analogjs/vitest-angular',
-            '@angular/platform-browser-dynamic',
+            '@angular/platform-browser',
           ],
         },
       ],

@@ -19,7 +19,9 @@
         }
         @case ('list') {
           <figure class="list-container">
-            <figcaption *ngIf="textBlock.title as title">{{ title }}</figcaption>
+            @if (textBlock.title; as title) {
+              <figcaption>{{ title }}</figcaption>
+            }
             <ol
               [style]="{
                 'list-style-type': textBlock.listStyle,

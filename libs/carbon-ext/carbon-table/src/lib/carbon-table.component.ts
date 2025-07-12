@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -14,12 +13,12 @@ import {
   CarbonTableElementType,
   CarbonTableSymbol,
 } from '@dj-ui/carbon-ext/shared';
+import { parseZodWithDefault } from '@dj-ui/common/shared';
 import {
   BaseUIElementComponent,
   type UIElementImplementation,
   UIElementRendererDirective,
 } from '@dj-ui/core';
-import { parseZodWithDefault } from '@namnguyen191/types-helper';
 import {
   PaginationModel,
   PaginationModule,
@@ -43,7 +42,7 @@ import {
 
 @Component({
   selector: 'dj-ui-carbon-table',
-  imports: [CommonModule, TableModule, PaginationModule, UIElementRendererDirective],
+  imports: [TableModule, PaginationModule, UIElementRendererDirective],
   templateUrl: './carbon-table.component.html',
   styleUrl: './carbon-table.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

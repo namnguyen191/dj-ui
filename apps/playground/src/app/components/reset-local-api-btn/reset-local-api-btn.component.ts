@@ -1,5 +1,5 @@
-import { APP_BASE_HREF, CommonModule, DOCUMENT } from '@angular/common';
-import { Component, inject, signal } from '@angular/core';
+import { APP_BASE_HREF } from '@angular/common';
+import { Component, DOCUMENT, inject, signal } from '@angular/core';
 import { ButtonModule, ModalModule } from 'carbon-components-angular';
 
 import { RemoteResourceTemplatesAPIService } from '../../services/remote-resource-templates-api.service';
@@ -9,7 +9,7 @@ import { UIElementTemplatesLocalAPIService } from '../../services/ui-element-tem
 
 @Component({
   selector: 'app-reset-local-api-btn',
-  imports: [CommonModule, ButtonModule, ModalModule],
+  imports: [ButtonModule, ModalModule],
   templateUrl: './reset-local-api-btn.component.html',
   styleUrl: './reset-local-api-btn.component.scss',
 })

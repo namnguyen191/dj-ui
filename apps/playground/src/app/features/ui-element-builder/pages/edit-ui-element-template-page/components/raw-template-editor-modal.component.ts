@@ -1,4 +1,3 @@
-import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -36,7 +35,6 @@ export type IStandaloneEditorConstructionOptions = NonNullable<Parameters<typeof
 @Component({
   selector: 'namnguyen191-raw-template-editor-modal',
   imports: [
-    CommonModule,
     ModalModule,
     EditorComponent,
     FormsModule,

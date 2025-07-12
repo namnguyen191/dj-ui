@@ -40,10 +40,11 @@
   </aside>
 }
 
-<dj-ui-carbon-modal
-  *ngIf="currentPreviewImageSig() as currentPreviewImage"
-  [isOpen]="!!currentPreviewImage"
-  (closeDialog)="currentPreviewImageSig.set(null)"
->
-  <img alt="Preview image" class="preview-image" [src]="currentPreviewImage" />
-</dj-ui-carbon-modal>
+@if (currentPreviewImageSig(); as currentPreviewImage) {
+  <dj-ui-carbon-modal
+    [isOpen]="!!currentPreviewImage"
+    (closeDialog)="currentPreviewImageSig.set(null)"
+  >
+    <img alt="Preview image" class="preview-image" [src]="currentPreviewImage" />
+  </dj-ui-carbon-modal>
+}

@@ -49,9 +49,9 @@ export class EditRemoteResourceTemplateComponent {
   };
 
   readonly #prettifiedRemoteResourceResult: ResourceRef<string | undefined> = resource({
-    request: () => ({ remoteResourceState: this.remoteResourceStateSig() }),
-    loader: ({ request }) => {
-      const { remoteResourceState } = request;
+    params: () => ({ remoteResourceState: this.remoteResourceStateSig() }),
+    loader: ({ params }) => {
+      const { remoteResourceState } = params;
 
       if (!remoteResourceState || remoteResourceState.status !== 'completed') {
         return Promise.resolve(undefined);

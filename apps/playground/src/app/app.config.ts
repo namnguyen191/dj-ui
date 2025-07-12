@@ -1,6 +1,6 @@
-import { provideHttpClient, withInterceptors } from '@angular/common/http';
+import { provideHttpClient, withFetch, withInterceptors } from '@angular/common/http';
 import type { ApplicationConfig } from '@angular/core';
-import { inject, provideExperimentalZonelessChangeDetection } from '@angular/core';
+import { inject, provideZonelessChangeDetection } from '@angular/core';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { CarbonComponentLoader } from '@dj-ui/carbon-ext';
@@ -26,7 +26,7 @@ import { UIElementTemplatesStore } from './state-store/uiElementTemplates.store'
 export const appConfig: ApplicationConfig = {
   providers: [
     provideMonacoEditor(),
-    provideExperimentalZonelessChangeDetection(),
+    provideZonelessChangeDetection(),
     provideRouter(
       appRoutes,
       withInMemoryScrolling({
@@ -34,7 +34,7 @@ export const appConfig: ApplicationConfig = {
         scrollPositionRestoration: 'enabled',
       })
     ),
-    provideHttpClient(withInterceptors([globalDelayInterceptorFactory(100)])),
+    provideHttpClient(withFetch(), withInterceptors([globalDelayInterceptorFactory(100)])),
     provideAnimationsAsync(),
     {
       provide: CREATE_JS_RUNNER_WORKER,
