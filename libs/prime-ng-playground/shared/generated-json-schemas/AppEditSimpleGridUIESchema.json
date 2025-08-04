@@ -1,4 +1,6 @@
 {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "AppEditSimpleGridUIESchema",
   "type": "object",
   "properties": {
     "remoteResourceIds": {
@@ -30,6 +32,9 @@
         },
         "variables": {
           "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
           "additionalProperties": {}
         }
       },
@@ -128,7 +133,5 @@
     "name",
     "description"
   ],
-  "additionalProperties": false,
-  "description": "AppEditSimpleGridUIESchema",
-  "$schema": "http://json-schema.org/draft-07/schema#"
+  "additionalProperties": false
 }

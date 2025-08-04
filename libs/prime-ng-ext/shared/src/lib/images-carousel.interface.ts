@@ -16,7 +16,7 @@ export const ZImagesConfigOption = z.array(ZImageItem);
 export type ImagesConfigOption = z.infer<typeof ZImagesConfigOption>;
 
 export const ZImagesCarouselConfigs = z.strictObject({
-  images: ZImagesConfigOption,
+  images: ZImagesConfigOption.optional(),
 });
 
 export type ImagesCarouselConfigs = z.input<typeof ZImagesCarouselConfigs>;

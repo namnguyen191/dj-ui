@@ -62,46 +62,36 @@ export class SimpleTableComponent
   }
 
   readonly #defaultTitle = 'Default title';
-  readonly titleConfigOption: InputSignal<SimpleTableUIEConfigs['title']> = input(
-    this.#defaultTitle,
-    {
-      alias: 'title',
-      transform: (val) =>
-        parseZodWithDefault(ZSimpleTableUIEConfigs.shape.title, val, this.#defaultTitle),
-    }
-  );
+  readonly titleConfigOption = input(this.#defaultTitle, {
+    alias: 'title',
+    transform: (val) =>
+      parseZodWithDefault(ZSimpleTableUIEConfigs.shape.title, val, this.#defaultTitle),
+  });
 
   readonly #defaultResizableColumns = false;
-  readonly resizableColumnsConfigOption: InputSignal<SimpleTableUIEConfigs['resizableColumns']> =
-    input(this.#defaultResizableColumns, {
-      alias: 'resizableColumns',
-      transform: (val) =>
-        parseZodWithDefault(
-          ZSimpleTableUIEConfigs.shape.resizableColumns,
-          val,
-          this.#defaultResizableColumns
-        ),
-    });
+  readonly resizableColumnsConfigOption = input(this.#defaultResizableColumns, {
+    alias: 'resizableColumns',
+    transform: (val) =>
+      parseZodWithDefault(
+        ZSimpleTableUIEConfigs.shape.resizableColumns,
+        val,
+        this.#defaultResizableColumns
+      ),
+  });
 
   readonly #defaultStripes = false;
-  readonly stripesConfigOption: InputSignal<SimpleTableUIEConfigs['stripes']> = input(
-    this.#defaultStripes,
-    {
-      alias: 'stripes',
-      transform: (val) =>
-        parseZodWithDefault(ZSimpleTableUIEConfigs.shape.stripes, val, this.#defaultStripes),
-    }
-  );
+  readonly stripesConfigOption = input(this.#defaultStripes, {
+    alias: 'stripes',
+    transform: (val) =>
+      parseZodWithDefault(ZSimpleTableUIEConfigs.shape.stripes, val, this.#defaultStripes),
+  });
 
   readonly #defaultGridLines = false;
-  readonly gridLinesConfigOption: InputSignal<SimpleTableUIEConfigs['stripes']> = input(
-    this.#defaultGridLines,
-    {
-      alias: 'gridLines',
-      transform: (val) =>
-        parseZodWithDefault(ZSimpleTableUIEConfigs.shape.gridLines, val, this.#defaultGridLines),
-    }
-  );
+  readonly gridLinesConfigOption = input(this.#defaultGridLines, {
+    alias: 'gridLines',
+    transform: (val) =>
+      parseZodWithDefault(ZSimpleTableUIEConfigs.shape.gridLines, val, this.#defaultGridLines),
+  });
 
   readonly columnsConfigOption: InputSignal<TableColumnsConfig> = input([], {
     alias: 'columns',

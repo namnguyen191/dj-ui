@@ -11,7 +11,7 @@ export const ZTextBlocksConfigOption = z.array(ZTextBlockConfigOption);
 export type TextBlocksConfigOption = z.input<typeof ZTextBlocksConfigOption>;
 
 export const ZSimpleTextConfigs = z.strictObject({
-  textBlocks: ZTextBlocksConfigOption,
+  textBlocks: ZTextBlocksConfigOption.optional(),
 });
 export type SimpleTextConfigs = z.input<typeof ZSimpleTextConfigs>;
 

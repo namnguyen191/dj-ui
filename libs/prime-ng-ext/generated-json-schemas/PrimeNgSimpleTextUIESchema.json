@@ -1,4 +1,6 @@
 {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "PrimeNgSimpleTextUIESchema",
   "type": "object",
   "properties": {
     "id": {
@@ -36,6 +38,9 @@
         },
         "variables": {
           "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
           "additionalProperties": {}
         }
       },
@@ -124,10 +129,33 @@
                     ]
                   },
                   "styles": {
-                    "$ref": "#/properties/options/properties/textBlocks/items/anyOf/0/properties/styles"
+                    "type": "object",
+                    "properties": {
+                      "align": {
+                        "type": "string",
+                        "enum": [
+                          "left",
+                          "center",
+                          "right"
+                        ]
+                      },
+                      "weight": {
+                        "type": "number"
+                      },
+                      "size": {
+                        "type": "number"
+                      },
+                      "underline": {
+                        "type": "boolean"
+                      },
+                      "backgroundColor": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false
                   },
                   "id": {
-                    "$ref": "#/properties/options/properties/textBlocks/items/anyOf/0/properties/id"
+                    "type": "string"
                   },
                   "text": {
                     "type": "string"
@@ -149,10 +177,33 @@
                     ]
                   },
                   "styles": {
-                    "$ref": "#/properties/options/properties/textBlocks/items/anyOf/0/properties/styles"
+                    "type": "object",
+                    "properties": {
+                      "align": {
+                        "type": "string",
+                        "enum": [
+                          "left",
+                          "center",
+                          "right"
+                        ]
+                      },
+                      "weight": {
+                        "type": "number"
+                      },
+                      "size": {
+                        "type": "number"
+                      },
+                      "underline": {
+                        "type": "boolean"
+                      },
+                      "backgroundColor": {
+                        "type": "string"
+                      }
+                    },
+                    "additionalProperties": false
                   },
                   "id": {
-                    "$ref": "#/properties/options/properties/textBlocks/items/anyOf/0/properties/id"
+                    "type": "string"
                   },
                   "title": {
                     "type": "string"
@@ -164,6 +215,7 @@
                     }
                   },
                   "listStyle": {
+                    "default": "circle",
                     "type": "string",
                     "enum": [
                       "circle",
@@ -187,13 +239,13 @@
                       "upper-greek",
                       "upper-latin",
                       "upper-roman"
-                    ],
-                    "default": "circle"
+                    ]
                   }
                 },
                 "required": [
                   "type",
-                  "items"
+                  "items",
+                  "listStyle"
                 ],
                 "additionalProperties": false
               }
@@ -214,7 +266,5 @@
     "type",
     "options"
   ],
-  "additionalProperties": false,
-  "description": "PrimeNgSimpleTextUIESchema",
-  "$schema": "http://json-schema.org/draft-07/schema#"
+  "additionalProperties": false
 }

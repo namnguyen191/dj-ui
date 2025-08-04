@@ -1,4 +1,6 @@
 {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "PrimeNgImagesCarouselUIESchema",
   "type": "object",
   "properties": {
     "id": {
@@ -36,6 +38,9 @@
         },
         "variables": {
           "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
           "additionalProperties": {}
         }
       },
@@ -101,7 +106,5 @@
     "type",
     "options"
   ],
-  "additionalProperties": false,
-  "description": "PrimeNgImagesCarouselUIESchema",
-  "$schema": "http://json-schema.org/draft-07/schema#"
+  "additionalProperties": false
 }

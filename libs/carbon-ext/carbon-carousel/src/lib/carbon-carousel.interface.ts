@@ -17,8 +17,8 @@ export const ZAriaLabelConfigOption = z.string({
 export type AriaLabelConfigOption = z.infer<typeof ZAriaLabelConfigOption>;
 
 export const ZCarouselConfigs = z.object({
-  imageUrls: ZImageUrlsConfigOption,
-  ariaLabel: ZAriaLabelConfigOption,
+  imageUrls: ZImageUrlsConfigOption.optional(),
+  ariaLabel: ZAriaLabelConfigOption.optional(),
 });
 export type CarouselConfigs = z.infer<typeof ZCarouselConfigs>;
 

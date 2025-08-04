@@ -1,4 +1,6 @@
 {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "RemoteResourceTemplateSchema",
   "type": "object",
   "properties": {
     "id": {
@@ -27,6 +29,9 @@
         },
         "variables": {
           "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
           "additionalProperties": {}
         }
       },
@@ -53,7 +58,8 @@
               }
             },
             "required": [
-              "fetcherId"
+              "fetcherId",
+              "configs"
             ],
             "additionalProperties": false
           }
@@ -88,7 +94,5 @@
     "id",
     "options"
   ],
-  "additionalProperties": false,
-  "description": "RemoteResourceTemplateSchema",
-  "$schema": "http://json-schema.org/draft-07/schema#"
+  "additionalProperties": false
 }

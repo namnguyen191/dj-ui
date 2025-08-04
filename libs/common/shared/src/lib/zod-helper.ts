@@ -19,13 +19,7 @@ export const parseZodWithDefault = <T>(zodType: z.ZodType, val: unknown, default
   }
 };
 
-export const ZodNonEmptyPrimitive = z.union([
-  z.string(),
-  z.number(),
-  z.boolean(),
-  z.bigint(),
-  z.symbol(),
-]);
+export const ZodNonEmptyPrimitive = z.union([z.string(), z.number(), z.boolean()]);
 
 export const ZodObjectType = z.record(z.string(), z.any(), {
   error: 'must be an object with key-value',

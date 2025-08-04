@@ -32,12 +32,12 @@ export const ZClickableConfigOption = z.boolean({
 export type ClickableConfigOption = z.infer<typeof ZClickableConfigOption>;
 
 export const ZTextCardConfigs = z.object({
-  title: ZTitleConfigOption,
-  subTitle: ZSubTitleConfigOption,
-  avatarUrl: ZAvatarUrlConfigOption,
-  imageUrl: ZImageUrlConfigOption,
-  body: ZBodyConfigOption,
-  clickable: ZClickableConfigOption,
+  title: ZTitleConfigOption.optional(),
+  subTitle: ZSubTitleConfigOption.optional(),
+  avatarUrl: ZAvatarUrlConfigOption.optional(),
+  imageUrl: ZImageUrlConfigOption.optional(),
+  body: ZBodyConfigOption.optional(),
+  clickable: ZClickableConfigOption.optional(),
 });
 export type TextCardConfigs = z.infer<typeof ZTextCardConfigs>;
 
