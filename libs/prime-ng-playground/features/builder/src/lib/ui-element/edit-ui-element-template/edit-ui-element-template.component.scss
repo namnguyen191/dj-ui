@@ -7,11 +7,6 @@
   padding-top: 3rem;
   height: calc(100vh - global.$main-nav-height);
 
-  .ui-element-container {
-    width: 500px;
-    height: 500px;
-  }
-
   .open-template-editor-btn {
     position: absolute;
     z-index: global.$primary-floating-button;

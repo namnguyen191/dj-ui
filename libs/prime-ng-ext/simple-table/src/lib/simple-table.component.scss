@@ -28,6 +28,12 @@
         .p-datatable {
           height: 100% !important;
 
+          &:has(dj-ui-prime-ng-simple-image) {
+            .p-datatable-thead {
+              z-index: 1;
+            }
+          }
+
           .p-datatable-table-container {
             height: 100% !important;
           }

@@ -7,9 +7,21 @@
   (click)="toggleModal(true)"
 />
 
-<div class="ui-element-container">
+<p-dialog
+  [closable]="false"
+  [draggable]="false"
+  [modal]="true"
+  [style]="{ width: '60vw', height: '75vh' }"
+  [visible]="true"
+>
+  <ng-template #header>
+    <div>
+      <h3>UI Preview</h3>
+      <span>Drag bottom right to resize</span>
+    </div>
+  </ng-template>
   <ng-container [djuiUIElementRenderer]="currentUIElementTemplateId"></ng-container>
-</div>
+</p-dialog>
 
 <prime-ng-playground-builder-feat-raw-ui-element-template-editor-modal
   [query]="{ id: currentUIElementTemplateId, isLayout: false }"
