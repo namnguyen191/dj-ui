@@ -1,3 +1,4 @@
+import { ZodNonEmptyPrimitive } from '@dj-ui/common/shared';
 import { createUIElementTemplateSchema } from '@dj-ui/core';
 import type { UnionToTuple } from 'type-fest';
 import { z } from 'zod';
@@ -7,14 +8,7 @@ export const SimpleTableSymbol = Symbol('SimpleTable');
 
 export const ZTableRowObject = z.record(
   z.string(),
-  z.union([
-    z.string(),
-    z.number(),
-    z.boolean(),
-    z.bigint(),
-    z.symbol(),
-    z.record(z.string(), z.unknown()),
-  ])
+  z.union([ZodNonEmptyPrimitive, z.record(z.string(), z.unknown())])
 );
 export type TableRowObject = z.infer<typeof ZTableRowObject>;
 export const ZTableRowsConfig = z.array(ZTableRowObject);
@@ -44,14 +38,14 @@ export const ZTableStylesConfigs = z.strictObject({
 export type TableStylesConfigs = z.infer<typeof ZTableStylesConfigs>;
 
 export const ZSimpleTableUIEConfigs = z.object({
-  title: z.string(),
-  resizableColumns: z.boolean(),
-  stripes: z.boolean(),
-  gridLines: z.boolean(),
-  columns: ZTableColumnsConfig,
-  rows: ZTableRowsConfig,
-  pagination: ZTablePaginationConfigs,
-  styles: ZTableStylesConfigs,
+  title: z.string().optional(),
+  resizableColumns: z.boolean().optional(),
+  stripes: z.boolean().optional(),
+  gridLines: z.boolean().optional(),
+  columns: ZTableColumnsConfig.optional(),
+  rows: ZTableRowsConfig.optional(),
+  pagination: ZTablePaginationConfigs.optional(),
+  styles: ZTableStylesConfigs.optional(),
 });
 
 export type SimpleTableUIEConfigs = z.infer<typeof ZSimpleTableUIEConfigs>;

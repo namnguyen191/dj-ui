@@ -10,6 +10,7 @@ import { isEmpty } from 'lodash-es';
 import {
   BehaviorSubject,
   filter,
+  first,
   forkJoin,
   map,
   Observable,
@@ -164,7 +165,8 @@ export class InterpolationService {
           this.#assertWorkerId(workerId);
           this.#markWorkerAsFree(workerId);
           responseReceived = true;
-        })
+        }),
+        first()
       );
 
       const waitForWorkerResponseSubscription = waitForWorkerResponse$.subscribe({

@@ -1,4 +1,6 @@
 {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "PrimeNgSimpleImageUIESchema",
   "type": "object",
   "properties": {
     "id": {
@@ -36,6 +38,9 @@
         },
         "variables": {
           "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
           "additionalProperties": {}
         }
       },
@@ -85,7 +90,5 @@
     "type",
     "options"
   ],
-  "additionalProperties": false,
-  "description": "PrimeNgSimpleImageUIESchema",
-  "$schema": "http://json-schema.org/draft-07/schema#"
+  "additionalProperties": false
 }

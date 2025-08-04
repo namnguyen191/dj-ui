@@ -1,17 +1,16 @@
 import { Injectable } from '@angular/core';
 import { z } from 'zod';
 
-import { ZUIElementRequiredConfigs } from '../../components/base-ui-element.component';
+import { ZUIElementBaseConfigs } from '../../components/base-ui-element.component';
 import { type ActionHook, ZodActionHook } from '../events-and-actions/action-hook.service';
 import { ZStateSubscriptionConfig } from '../state-store.service';
 import { BaseTemplateService, type MissingTemplateEvent } from './base-template.service';
 import type { ConfigWithStatus } from './shared-types';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export const createUIElementTemplateOptionsSchema = <T extends z.ZodObject<any>>(
-  customOptionsSchema: T
+export const createUIElementTemplateOptionsSchema = <T extends z.ZodRawShape>(
+  customOptionsSchema: z.ZodObject<T>
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
-) => ZUIElementRequiredConfigs.extend(customOptionsSchema.shape).partial();
+) => ZUIElementBaseConfigs.extend(customOptionsSchema.shape);
 export const ZUIElementTemplateOptions = createUIElementTemplateOptionsSchema(z.object({}));
 export type UIElementTemplateOptions = z.infer<typeof ZUIElementTemplateOptions>;
 
@@ -36,23 +35,25 @@ export const createEventsToHooksMapSchema = <T extends string>(
     [K in T]?: ActionHook[];
   }>;
 };
+
+export const ZBaseTemplateSchema = z.strictObject({
+  id: z.string(),
+  type: z.string(),
+  remoteResourceIds: z.array(z.string()).optional(),
+  stateSubscription: ZStateSubscriptionConfig.optional(),
+});
 export const createUIElementTemplateSchema = <
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  TConfigs extends z.ZodObject<any>,
+  TConfigs extends z.ZodRawShape,
   TEvent extends string,
 >(
-  configs: TConfigs,
+  configs: z.ZodObject<TConfigs>,
   events: TEvent[] = []
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 ) => {
-  return z.strictObject({
-    id: z.string(),
-    type: z.string(),
-    remoteResourceIds: z.array(z.string()).optional(),
-    stateSubscription: ZStateSubscriptionConfig.optional(),
+  return ZBaseTemplateSchema.extend({
     options: createUIElementTemplateOptionsSchema(configs),
     eventsHooks: createEventsToHooksMapSchema(events).optional(),
-  });
+  }).strict();
 };
 export const ZBaseUIElementTemplate = createUIElementTemplateSchema(z.object({}), []);
 export type UIElementTemplate = z.infer<typeof ZBaseUIElementTemplate>;

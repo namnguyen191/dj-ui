@@ -1,14 +1,13 @@
 import '@angular/compiler';
 
 import * as fs from 'fs';
-import { ZodType } from 'zod';
-import { zodToJsonSchema } from 'zod-to-json-schema';
+import { z } from 'zod';
 
 import { ZSimpleGridLayoutUIESchema } from './shared/src/lib/simple-grid-layout-interfaces';
 
-const generateJSONSchemaFromZodTypes = (zodTypes: ZodType[]): void => {
+const generateJSONSchemaFromZodTypes = (zodTypes: z.ZodType[]): void => {
   for (const zt of zodTypes) {
-    const jsonSchema = zodToJsonSchema(zt);
+    const jsonSchema = z.toJSONSchema(zt);
     const outFolder = `./generated-json-schemas`;
     const outFile = `${outFolder}/${zt.description ?? 'NoDescription'}.json`;
     if (!fs.existsSync(outFolder)) {

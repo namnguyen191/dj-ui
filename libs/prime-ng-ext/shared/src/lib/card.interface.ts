@@ -35,10 +35,10 @@ export const ZBodyConfigOption = z.string();
 export type BodyConfigOption = z.infer<typeof ZBodyConfigOption>;
 
 export const ZCardConfigs = z.strictObject({
-  topBanner: ZTopBannerConfigOption,
-  title: ZTitleConfigOption,
-  subTitle: ZSubTitleConfigOption,
-  body: ZBodyConfigOption,
+  topBanner: ZTopBannerConfigOption.optional(),
+  title: ZTitleConfigOption.optional(),
+  subTitle: ZSubTitleConfigOption.optional(),
+  body: ZBodyConfigOption.optional(),
 });
 
 export type CardConfigs = z.input<typeof ZCardConfigs>;

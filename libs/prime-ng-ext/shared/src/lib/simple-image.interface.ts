@@ -20,9 +20,9 @@ export const ZPriorityConfigOption = z.boolean({
 export type PriorityConfigOption = z.infer<typeof ZPriorityConfigOption>;
 
 export const ZSimpleImageConfigs = z.object({
-  imageUrl: ZImageUrlConfigOption,
-  altLabel: ZAltLabelConfigOption,
-  priority: ZPriorityConfigOption,
+  imageUrl: ZImageUrlConfigOption.optional(),
+  altLabel: ZAltLabelConfigOption.optional(),
+  priority: ZPriorityConfigOption.optional(),
 });
 export type SimpleImageConfigs = z.infer<typeof ZSimpleImageConfigs>;
 

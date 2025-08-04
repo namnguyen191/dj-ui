@@ -1,4 +1,6 @@
 {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "PrimeNgCardUIESchema",
   "type": "object",
   "properties": {
     "id": {
@@ -36,6 +38,9 @@
         },
         "variables": {
           "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
           "additionalProperties": {}
         }
       },
@@ -126,13 +131,13 @@
                             "type": "object",
                             "properties": {
                               "imageUrl": {
-                                "$ref": "#/properties/options/properties/topBanner/anyOf/1/properties/configs/properties/imageUrl"
+                                "type": "string"
                               },
                               "altLabel": {
-                                "$ref": "#/properties/options/properties/topBanner/anyOf/1/properties/configs/properties/altLabel"
+                                "type": "string"
                               },
                               "priority": {
-                                "$ref": "#/properties/options/properties/topBanner/anyOf/1/properties/configs/properties/priority"
+                                "type": "boolean"
                               }
                             },
                             "additionalProperties": false
@@ -175,7 +180,5 @@
     "type",
     "options"
   ],
-  "additionalProperties": false,
-  "description": "PrimeNgCardUIESchema",
-  "$schema": "http://json-schema.org/draft-07/schema#"
+  "additionalProperties": false
 }

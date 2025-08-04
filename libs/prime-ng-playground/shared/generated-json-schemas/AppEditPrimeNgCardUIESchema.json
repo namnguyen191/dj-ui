@@ -1,4 +1,6 @@
 {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "AppEditPrimeNgCardUIESchema",
   "type": "object",
   "properties": {
     "remoteResourceIds": {
@@ -30,6 +32,9 @@
         },
         "variables": {
           "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
           "additionalProperties": {}
         }
       },
@@ -120,13 +125,13 @@
                             "type": "object",
                             "properties": {
                               "imageUrl": {
-                                "$ref": "#/properties/options/properties/topBanner/anyOf/1/properties/configs/properties/imageUrl"
+                                "type": "string"
                               },
                               "altLabel": {
-                                "$ref": "#/properties/options/properties/topBanner/anyOf/1/properties/configs/properties/altLabel"
+                                "type": "string"
                               },
                               "priority": {
-                                "$ref": "#/properties/options/properties/topBanner/anyOf/1/properties/configs/properties/priority"
+                                "type": "boolean"
                               }
                             },
                             "additionalProperties": false
@@ -175,7 +180,5 @@
     "name",
     "description"
   ],
-  "additionalProperties": false,
-  "description": "AppEditPrimeNgCardUIESchema",
-  "$schema": "http://json-schema.org/draft-07/schema#"
+  "additionalProperties": false
 }

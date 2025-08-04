@@ -29,8 +29,8 @@ export const ZUIElementInstanceConfigOption = z.strictObject({
 export type UIElementInstanceConfigOption = z.infer<typeof ZUIElementInstanceConfigOption>;
 
 export const ZSimpleGridLayoutUIEConfigs = z.strictObject({
-  grid: ZGridConfigOption,
-  uiElementInstances: z.array(ZUIElementInstanceConfigOption),
+  grid: ZGridConfigOption.optional(),
+  uiElementInstances: z.array(ZUIElementInstanceConfigOption).optional(),
 });
 
 export type SimpleGridLayoutUIEConfigs = z.infer<typeof ZSimpleGridLayoutUIEConfigs>;

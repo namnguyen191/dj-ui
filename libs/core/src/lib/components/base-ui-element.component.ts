@@ -17,29 +17,35 @@ export const ZodIsError = z.boolean({
   error: 'error state must be a boolean',
 });
 
-export const ZUIElementRequiredConfigs = z.strictObject({
-  isInterpolationLoading: z.boolean(),
-  isInterpolationError: z.boolean(),
-  isResourceLoading: z.boolean(),
-  isResourceError: z.boolean(),
-  isLoading: z.boolean(),
-  isError: z.boolean(),
+export const ZUIElementBaseConfigs = z.strictObject({
+  isInterpolationLoading: z.boolean().optional(),
+  isInterpolationError: z.boolean().optional(),
+  isResourceLoading: z.boolean().optional(),
+  isResourceError: z.boolean().optional(),
+  isLoading: z.boolean().optional(),
+  isError: z.boolean().optional(),
 });
-export type UIElementRequiredConfigs = z.infer<typeof ZUIElementRequiredConfigs>;
+export type UIElementBaseConfigs = z.infer<typeof ZUIElementBaseConfigs>;
 
+type UIElementInputOptionKey<TInputKey extends string, TInputVal> = undefined extends TInputVal
+  ? `${TInputKey}ConfigOption`
+  : `${TInputKey}RequiredConfigOption`;
+type UIElementInputOptionValue<TInputVal> =
+  | InputSignal<Exclude<TInputVal, undefined>>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  | InputSignalWithTransform<Exclude<TInputVal, undefined>, any>;
 type CreateUIElementInputOptions<TConfigs> = Required<{
-  [K in keyof TConfigs as K extends string ? `${K}ConfigOption` : never]:
-    | InputSignal<TConfigs[K]>
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    | InputSignalWithTransform<any, TConfigs[K]>;
+  [K in keyof TConfigs as K extends string
+    ? UIElementInputOptionKey<K, TConfigs[K]>
+    : never]: UIElementInputOptionValue<TConfigs[K]>;
 }>;
 
-export type UIElementRequiredInputOptions = CreateUIElementInputOptions<UIElementRequiredConfigs>;
+export type UIElementRequiredInputOptions = CreateUIElementInputOptions<UIElementBaseConfigs>;
 
 export type UIElementRequiredInputs = {
-  [K in keyof UIElementRequiredConfigs as K extends string ? `${K}ConfigOption` : never]:
-    | UIElementRequiredConfigs[K]
-    | Observable<UIElementRequiredConfigs[K]>;
+  [K in keyof UIElementBaseConfigs as K extends string ? `${K}ConfigOption` : never]:
+    | UIElementBaseConfigs[K]
+    | Observable<UIElementBaseConfigs[K]>;
 };
 
 type CreateUIElementEventsOutputs<TEvents extends UnknownRecord> = Required<{
@@ -61,7 +67,7 @@ const defaultElementSymbol = Symbol('Default element');
   },
 })
 export abstract class BaseUIElementComponent
-  implements UIElementImplementation<UIElementRequiredConfigs>
+  implements UIElementImplementation<UIElementBaseConfigs>
 {
   static readonly ELEMENT_TYPE: string = 'DEFAULT_ABSTRACT_COMPONENT';
   static readonly ELEMENT_SYMBOL: symbol = defaultElementSymbol;

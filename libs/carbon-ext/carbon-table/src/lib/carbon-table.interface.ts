@@ -24,12 +24,12 @@ export const ZodTablePaginationConfigs = z.object({
 export type TablePaginationConfigs = z.infer<typeof ZodTablePaginationConfigs>;
 
 export const ZodCarbonTableUIElementComponentConfigs = z.object({
-  title: z.string(),
-  headers: ZodTableHeadersConfig,
-  rows: ZodTableRowsConfig,
-  description: ZodTableDescriptionConfig,
-  pagination: ZodTablePaginationConfigs,
-  primaryButtonId: z.string(),
+  title: z.string().optional(),
+  headers: ZodTableHeadersConfig.optional(),
+  rows: ZodTableRowsConfig.optional(),
+  description: ZodTableDescriptionConfig.optional(),
+  pagination: ZodTablePaginationConfigs.optional(),
+  primaryButtonId: z.string().optional(),
 });
 
 export type CarbonTableUIElementComponentConfigs = z.infer<

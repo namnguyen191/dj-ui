@@ -19,9 +19,9 @@ export const ZCarouselIdConfigOption = z.string({
 export type CarouselIdConfigOption = z.infer<typeof ZCarouselIdConfigOption>;
 
 export const ZCarouselCardConfigs = z.object({
-  title: ZTitleConfigOption,
-  description: ZDescriptionConfigOption,
-  carouselId: ZCarouselIdConfigOption,
+  title: ZTitleConfigOption.optional(),
+  description: ZDescriptionConfigOption.optional(),
+  carouselId: ZCarouselIdConfigOption.optional(),
 });
 export type CarouselCardConfigs = z.infer<typeof ZCarouselCardConfigs>;
 

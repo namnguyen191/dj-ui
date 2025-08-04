@@ -2,10 +2,10 @@ import { NgOptimizedImage } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  computed,
   ElementRef,
   input,
   type InputSignal,
-  type InputSignalWithTransform,
   type Signal,
   signal,
   viewChildren,
@@ -58,15 +58,18 @@ export class CarbonCarouselComponent
     return CarbonCarouselComponent.ELEMENT_SYMBOL;
   }
 
-  imageUrlsConfigOption: InputSignalWithTransform<CarouselImage[], string[]> = input([], {
+  imageUrlsConfigOption = input([], {
     alias: 'imageUrls',
     transform: (val) => {
-      const ulrs = parseZodWithDefault<ImageUrlsConfigOption>(ZImageUrlsConfigOption, val, []);
-      return ulrs.map((url, idx) => ({
-        imageUrl: url,
-        imageId: `carousel-slide-${idx}`,
-      }));
+      return parseZodWithDefault<ImageUrlsConfigOption>(ZImageUrlsConfigOption, val, []);
     },
+  });
+  imageUrls: Signal<CarouselImage[]> = computed(() => {
+    const ulrs = this.imageUrlsConfigOption();
+    return ulrs.map((url, idx) => ({
+      imageUrl: url,
+      imageId: `carousel-slide-${idx}`,
+    }));
   });
 
   #defaultAriaLabel = 'images gallery';
