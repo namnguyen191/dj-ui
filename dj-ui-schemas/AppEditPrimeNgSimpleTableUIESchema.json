@@ -1,4 +1,6 @@
 {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "AppEditPrimeNgSimpleTableUIESchema",
   "type": "object",
   "properties": {
     "remoteResourceIds": {
@@ -30,6 +32,9 @@
         },
         "variables": {
           "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
           "additionalProperties": {}
         }
       },
@@ -97,23 +102,29 @@
           "type": "array",
           "items": {
             "type": "object",
+            "propertyNames": {
+              "type": "string"
+            },
             "additionalProperties": {
               "anyOf": [
                 {
-                  "type": "string"
-                },
-                {
-                  "type": "number"
-                },
-                {
-                  "type": "boolean"
-                },
-                {
-                  "type": "integer",
-                  "format": "int64"
+                  "anyOf": [
+                    {
+                      "type": "string"
+                    },
+                    {
+                      "type": "number"
+                    },
+                    {
+                      "type": "boolean"
+                    }
+                  ]
                 },
                 {
                   "type": "object",
+                  "propertyNames": {
+                    "type": "string"
+                  },
                   "additionalProperties": {}
                 }
               ]
@@ -187,7 +198,5 @@
     "name",
     "description"
   ],
-  "additionalProperties": false,
-  "description": "AppEditPrimeNgSimpleTableUIESchema",
-  "$schema": "http://json-schema.org/draft-07/schema#"
+  "additionalProperties": false
 }

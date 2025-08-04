@@ -1,4 +1,6 @@
 {
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "AppEditRemoteResourceSchema",
   "type": "object",
   "properties": {
     "stateSubscription": {
@@ -24,6 +26,9 @@
         },
         "variables": {
           "type": "object",
+          "propertyNames": {
+            "type": "string"
+          },
           "additionalProperties": {}
         }
       },
@@ -50,7 +55,8 @@
               }
             },
             "required": [
-              "fetcherId"
+              "fetcherId",
+              "configs"
             ],
             "additionalProperties": false
           }
@@ -92,7 +98,5 @@
     "name",
     "description"
   ],
-  "additionalProperties": false,
-  "description": "AppEditRemoteResourceSchema",
-  "$schema": "http://json-schema.org/draft-07/schema#"
+  "additionalProperties": false
 }
