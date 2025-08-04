@@ -4,13 +4,19 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UIElementRendererDirective } from '@dj-ui/core';
 import { UIElementTemplatesStore } from '@dj-ui/prime-ng-playground/shared';
 import { Button } from 'primeng/button';
+import { DialogModule } from 'primeng/dialog';
 import { map } from 'rxjs';
 
 import { RawUIElementTemplateEditorModalComponent } from '../../shared/components/raw-ui-element-template-editor-modal/raw-ui-element-template-editor-modal.component';
 
 @Component({
   selector: 'prime-ng-playground-builder-feat-edit-ui-element-template',
-  imports: [UIElementRendererDirective, RawUIElementTemplateEditorModalComponent, Button],
+  imports: [
+    UIElementRendererDirective,
+    RawUIElementTemplateEditorModalComponent,
+    Button,
+    DialogModule,
+  ],
   templateUrl: './edit-ui-element-template.component.html',
   styleUrl: './edit-ui-element-template.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
