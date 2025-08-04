@@ -1,17 +1,37 @@
 import {
   ComponentRef,
+  computed,
   Directive,
+  EnvironmentInjector,
   inject,
   InjectionToken,
   input,
   type InputSignal,
   reflectComponentType,
+  runInInjectionContext,
   type Signal,
   Type,
   ViewContainerRef,
 } from '@angular/core';
 import { computedFromObservable } from '@namnguyen191/common-angular-helper';
-import { BehaviorSubject, catchError, EMPTY, map, Observable, of, switchMap, tap } from 'rxjs';
+import { isEqual } from 'lodash-es';
+import {
+  BehaviorSubject,
+  catchError,
+  combineLatest,
+  distinctUntilChanged,
+  EMPTY,
+  first,
+  from,
+  map,
+  Observable,
+  of,
+  shareReplay,
+  switchMap,
+  tap,
+  throttleTime,
+} from 'rxjs';
+import type { UnknownRecord } from 'type-fest';
 
 import type {
   BaseUIElementComponent,
@@ -20,12 +40,14 @@ import type {
 import type { BaseUIElementWrapperComponent } from '../../components/base-ui-element-wrapper.component';
 import { InterpolationService } from '../../services/interpolation.service';
 import type { RemoteResourcesStates } from '../../services/remote-resource/remote-resource.interface';
-import { type StateMap } from '../../services/state-store.service';
+import { getRemoteResourcesStatesAsContext } from '../../services/remote-resource/remote-resource.service';
+import { getStatesSubscriptionAsContext, type StateMap } from '../../services/state-store.service';
 import {
   type UIElementTemplateOptions,
   UIElementTemplateService,
   type UIElementTemplateWithStatus,
 } from '../../services/templates/ui-element-template.service';
+import { UIElementFactoryService } from '../../services/ui-element-factory.service';
 
 export type ElementRendererConfig = {
   uiElementLoadingComponent?: Type<unknown>;
@@ -66,20 +88,166 @@ export type InputWithInterpolationTrackingStreams = BaseInputFromInterpolationTr
 
 @Directive()
 export class BaseUIElementRendererDirective {
-  readonly #elementRendererConfig = inject(ELEMENT_RENDERER_CONFIG, { optional: true });
-  readonly #uiElementWrapperComponent = this.#elementRendererConfig?.uiElementWrapperComponent;
+  readonly #environmentInjector = inject(EnvironmentInjector);
   readonly #uiElementTemplatesService = inject(UIElementTemplateService);
+  readonly #uiElementFactoryService = inject(UIElementFactoryService);
 
   protected readonly interpolationService = inject(InterpolationService);
   protected readonly viewContainerRef = inject(ViewContainerRef);
+  protected readonly elementRendererConfig = inject(ELEMENT_RENDERER_CONFIG, { optional: true });
+
+  readonly #uiElementWrapperComponent = this.elementRendererConfig?.uiElementWrapperComponent;
 
   readonly uiElementTemplateId: InputSignal<string> = input.required({
     alias: 'djuiUIElementRenderer',
   });
+  readonly requiredComponentSymbols = input<symbol[]>([]);
+  readonly configsOverride = input<UnknownRecord>({});
 
   protected readonly uiElementTemplate: Signal<UIElementTemplateWithStatus | undefined> =
     computedFromObservable(() => {
       return this.#uiElementTemplatesService.getTemplate(this.uiElementTemplateId());
+    });
+
+  protected readonly uiElementComponent: Signal<Type<BaseUIElementComponent> | undefined> =
+    computedFromObservable(() => {
+      const uiElementTemp = this.uiElementTemplate();
+      if (!uiElementTemp || !uiElementTemp.config) {
+        return of(undefined);
+      }
+
+      return from(this.#uiElementFactoryService.getUIElement(uiElementTemp.config.type));
+    });
+
+  protected readonly elementInterpolationContext: Signal<Observable<ElementInputsInterpolationContext> | null> =
+    computed(() => {
+      const uiElementTemplate = this.uiElementTemplate();
+
+      if (!uiElementTemplate || !(uiElementTemplate.status === 'loaded')) {
+        return null;
+      }
+
+      const { remoteResourceIds, stateSubscription } = uiElementTemplate.config;
+
+      const state = stateSubscription
+        ? runInInjectionContext(this.#environmentInjector, () =>
+            getStatesSubscriptionAsContext(stateSubscription, `UI Element ${uiElementTemplate.id}`)
+          )
+        : of(null);
+      const remoteResourcesStates = remoteResourceIds?.length
+        ? runInInjectionContext(this.#environmentInjector, () =>
+            getRemoteResourcesStatesAsContext(remoteResourceIds)
+          )
+        : of(null);
+
+      return combineLatest({
+        remoteResourcesStates,
+        state,
+      }).pipe(
+        shareReplay({
+          refCount: true,
+          bufferSize: 1,
+        })
+      );
+    });
+
+  protected readonly componentInputsStream: Signal<InputStreams | null> = computed(() => {
+    const uiElementTemplate = this.uiElementTemplate();
+    const elementInterpolationContext$ = this.elementInterpolationContext();
+
+    if (uiElementTemplate?.status !== 'loaded' || !elementInterpolationContext$) {
+      return null;
+    }
+
+    const {
+      config: { options: templateOptions, remoteResourceIds },
+    } = uiElementTemplate;
+
+    const inputsFromRemoteResource: BaseInputFromRemoteResourceStreams = remoteResourceIds?.length
+      ? this.generateInputsFromRemoteResource({
+          elementInterpolationContext$,
+        })
+      : {
+          isResourceLoading: of(false),
+          isResourceError: of(false),
+        };
+
+    const inputsWithInterpolationTracking: BaseInputFromInterpolationTrackingStreams =
+      this.generateInputsWithInterpolationTracking({
+        templateOptions,
+        elementInterpolationContext$,
+      });
+
+    const loadingAndErrorInputs: Pick<BaseInputStreams, 'isLoading' | 'isError'> = {
+      isLoading: combineLatest({
+        isResourceLoading: inputsFromRemoteResource.isResourceLoading,
+        isInterpolationLoading: inputsWithInterpolationTracking.isInterpolationLoading,
+      }).pipe(
+        map(
+          ({ isResourceLoading, isInterpolationLoading }) =>
+            !!isResourceLoading || !!isInterpolationLoading
+        )
+      ),
+      isError: combineLatest({
+        isResourceError: inputsFromRemoteResource.isResourceError,
+        isInterpolationError: inputsWithInterpolationTracking.isInterpolationError,
+      }).pipe(
+        map(
+          ({ isResourceError, isInterpolationError }) => !!isResourceError || !!isInterpolationError
+        )
+      ),
+    };
+
+    const configsOverride: UserProvidedInputStreams = Object.entries(this.configsOverride()).reduce(
+      (accInputs, [inputName, inputVal]) => ({
+        ...accInputs,
+        [inputName]: of(inputVal),
+      }),
+      {}
+    );
+
+    const inputsStreams: InputStreams = {
+      ...inputsFromRemoteResource,
+      ...loadingAndErrorInputs,
+      ...inputsWithInterpolationTracking,
+      ...configsOverride,
+    };
+
+    const debouncedAndDistinctInputs = Object.fromEntries(
+      Object.entries(inputsStreams).map(([inputName, valObs]) => [
+        inputName,
+        valObs.pipe(
+          distinctUntilChanged(isEqual),
+          throttleTime(500, undefined, { leading: true, trailing: true })
+        ),
+      ])
+    ) as InputStreams;
+
+    return debouncedAndDistinctInputs;
+  });
+
+  readonly componentRequiredInputs: Signal<Record<string, unknown> | undefined> =
+    computedFromObservable(() => {
+      const allInputs = this.componentInputsStream();
+      const component = this.uiElementComponent();
+
+      if (!allInputs || !component) {
+        return of(undefined);
+      }
+
+      const requiredInputNames = this.getComponentRequiredInputs(component);
+      const streams: Partial<InputStreams> = {};
+      for (const requiredInputName of requiredInputNames) {
+        streams[requiredInputName] = allInputs[requiredInputName];
+      }
+
+      if (Object.keys(streams).length === 0) {
+        return of({});
+      }
+
+      return combineLatest(streams as Record<string, Observable<unknown>>).pipe(
+        first()
+      ) as Observable<Record<string, unknown>>;
     });
 
   protected checkInputExistsForComponent(

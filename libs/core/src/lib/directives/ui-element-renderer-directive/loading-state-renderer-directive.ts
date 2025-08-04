@@ -1,19 +1,17 @@
-import { computed, Directive, effect, inject, type Signal } from '@angular/core';
+import { computed, Directive, effect, type Signal } from '@angular/core';
 
-import {
-  BaseUIElementRendererDirective,
-  ELEMENT_RENDERER_CONFIG,
-} from './base-ui-element-renderer-directive';
+import { BaseUIElementRendererDirective } from './base-ui-element-renderer-directive';
 
 @Directive()
 export class LoadingStateRendererDirective extends BaseUIElementRendererDirective {
-  readonly #elementRendererConfig = inject(ELEMENT_RENDERER_CONFIG, { optional: true });
-
-  readonly #uiElementLoadingComponent = this.#elementRendererConfig?.uiElementLoadingComponent;
+  readonly #uiElementLoadingComponent = this.elementRendererConfig?.uiElementLoadingComponent;
 
   readonly isLoading: Signal<boolean> = computed(() => {
     const uiElementTemplate = this.uiElementTemplate();
-    if (uiElementTemplate?.status !== 'loaded') {
+    const uiElementComp = this.uiElementComponent();
+    const requiredInputs = this.componentRequiredInputs();
+
+    if (uiElementTemplate?.status !== 'loaded' || !uiElementComp || !requiredInputs) {
       return true;
     }
 

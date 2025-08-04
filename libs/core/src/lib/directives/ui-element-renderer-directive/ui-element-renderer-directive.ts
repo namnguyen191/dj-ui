@@ -3,32 +3,12 @@ import {
   computed,
   Directive,
   effect,
-  EnvironmentInjector,
   inject,
-  input,
   OutputEmitterRef,
-  runInInjectionContext,
   type Signal,
-  Type,
   untracked,
 } from '@angular/core';
-import { computedFromObservable } from '@namnguyen191/common-angular-helper';
-import { isEqual } from 'lodash-es';
-import {
-  combineLatest,
-  distinctUntilChanged,
-  first,
-  from,
-  map,
-  Observable,
-  of,
-  shareReplay,
-  Subject,
-  switchMap,
-  take,
-  takeUntil,
-  throttleTime,
-} from 'rxjs';
+import { Subject, switchMap, take, takeUntil } from 'rxjs';
 import type { UnknownRecord } from 'type-fest';
 
 import type { BaseUIElementComponent } from '../../components/base-ui-element.component';
@@ -36,19 +16,8 @@ import {
   type ActionHook,
   ActionHookService,
 } from '../../services/events-and-actions/action-hook.service';
-import { getRemoteResourcesStatesAsContext } from '../../services/remote-resource/remote-resource.service';
-import { getStatesSubscriptionAsContext } from '../../services/state-store.service';
-import { UIElementFactoryService } from '../../services/ui-element-factory.service';
 import { logSubscription, logWarning } from '../../utils/logging';
-import {
-  type BaseInputFromInterpolationTrackingStreams,
-  type BaseInputFromRemoteResourceStreams,
-  type BaseInputStreams,
-  BaseUIElementRendererDirective,
-  type ElementInputsInterpolationContext,
-  type InputStreams,
-  type UserProvidedInputStreams,
-} from './base-ui-element-renderer-directive';
+import { BaseUIElementRendererDirective } from './base-ui-element-renderer-directive';
 import { InfiniteStateRendererDirective } from './infinite-state-renderer-directive';
 import { LoadingStateRendererDirective } from './loading-state-renderer-directive';
 
@@ -66,29 +35,12 @@ import { LoadingStateRendererDirective } from './loading-state-renderer-directiv
   ],
 })
 export class UIElementRendererDirective extends BaseUIElementRendererDirective {
-  readonly #uiElementFactoryService = inject(UIElementFactoryService);
-  readonly #environmentInjector = inject(EnvironmentInjector);
   readonly #actionHookService = inject(ActionHookService);
   readonly #infiniteStateRendererDirective = inject(InfiniteStateRendererDirective);
   readonly #loadingStateRendererDirective = inject(LoadingStateRendererDirective);
 
-  readonly requiredComponentSymbols = input<symbol[]>([]);
-  readonly configsOverride = input<UnknownRecord>({});
-
-  readonly uiElementComponent: Signal<Type<BaseUIElementComponent> | undefined> =
-    computedFromObservable(() => {
-      const uiElementTemp = this.uiElementTemplate();
-      if (!uiElementTemp || !uiElementTemp.config) {
-        return of(undefined);
-      }
-
-      return from(this.#uiElementFactoryService.getUIElement(uiElementTemp.config.type));
-    });
-
   readonly #uiElementComponentRef: Signal<ComponentRef<BaseUIElementComponent> | null> = computed(
     () => {
-      this.viewContainerRef.clear();
-
       if (this.#loadingStateRendererDirective.isLoading()) {
         return null;
       }
@@ -97,13 +49,12 @@ export class UIElementRendererDirective extends BaseUIElementRendererDirective {
         return null;
       }
 
-      const uiElementTemplate = this.uiElementTemplate();
-      const uiElementComp = this.uiElementComponent();
-      const requiredInputs = this.#componentRequiredInputs();
-
-      if (!uiElementTemplate || !uiElementComp || !requiredInputs) {
-        return null;
-      }
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const uiElementTemplate = this.uiElementTemplate()!;
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const uiElementComp = this.uiElementComponent()!;
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+      const requiredInputs = this.componentRequiredInputs()!;
 
       const uiElementTemplateId = untracked(this.uiElementTemplateId);
 
@@ -116,6 +67,8 @@ export class UIElementRendererDirective extends BaseUIElementRendererDirective {
         );
         return null;
       }
+
+      this.viewContainerRef.clear();
 
       let componentRef: ComponentRef<BaseUIElementComponent>;
 
@@ -143,143 +96,12 @@ export class UIElementRendererDirective extends BaseUIElementRendererDirective {
     }
   );
 
-  readonly #elementInterpolationContext: Signal<Observable<ElementInputsInterpolationContext> | null> =
-    computed(() => {
-      const uiElementTemplate = this.uiElementTemplate();
-
-      if (!uiElementTemplate || !(uiElementTemplate.status === 'loaded')) {
-        return null;
-      }
-
-      const { remoteResourceIds, stateSubscription } = uiElementTemplate.config;
-
-      const state = stateSubscription
-        ? runInInjectionContext(this.#environmentInjector, () =>
-            getStatesSubscriptionAsContext(stateSubscription, `UI Element ${uiElementTemplate.id}`)
-          )
-        : of(null);
-      const remoteResourcesStates = remoteResourceIds?.length
-        ? runInInjectionContext(this.#environmentInjector, () =>
-            getRemoteResourcesStatesAsContext(remoteResourceIds)
-          )
-        : of(null);
-
-      return combineLatest({
-        remoteResourcesStates,
-        state,
-      }).pipe(
-        shareReplay({
-          refCount: true,
-          bufferSize: 1,
-        })
-      );
-    });
-
-  readonly #componentInputsStream: Signal<InputStreams | null> = computed(() => {
-    const uiElementTemplate = this.uiElementTemplate();
-    const elementInterpolationContext$ = this.#elementInterpolationContext();
-
-    if (uiElementTemplate?.status !== 'loaded' || !elementInterpolationContext$) {
-      return null;
-    }
-
-    const {
-      config: { options: templateOptions, remoteResourceIds },
-    } = uiElementTemplate;
-
-    const inputsFromRemoteResource: BaseInputFromRemoteResourceStreams = remoteResourceIds?.length
-      ? this.generateInputsFromRemoteResource({
-          elementInterpolationContext$,
-        })
-      : {
-          isResourceLoading: of(false),
-          isResourceError: of(false),
-        };
-
-    const inputsWithInterpolationTracking: BaseInputFromInterpolationTrackingStreams =
-      this.generateInputsWithInterpolationTracking({
-        templateOptions,
-        elementInterpolationContext$,
-      });
-
-    const loadingAndErrorInputs: Pick<BaseInputStreams, 'isLoading' | 'isError'> = {
-      isLoading: combineLatest({
-        isResourceLoading: inputsFromRemoteResource.isResourceLoading,
-        isInterpolationLoading: inputsWithInterpolationTracking.isInterpolationLoading,
-      }).pipe(
-        map(
-          ({ isResourceLoading, isInterpolationLoading }) =>
-            !!isResourceLoading || !!isInterpolationLoading
-        )
-      ),
-      isError: combineLatest({
-        isResourceError: inputsFromRemoteResource.isResourceError,
-        isInterpolationError: inputsWithInterpolationTracking.isInterpolationError,
-      }).pipe(
-        map(
-          ({ isResourceError, isInterpolationError }) => !!isResourceError || !!isInterpolationError
-        )
-      ),
-    };
-
-    const configsOverride: UserProvidedInputStreams = Object.entries(this.configsOverride()).reduce(
-      (accInputs, [inputName, inputVal]) => ({
-        ...accInputs,
-        [inputName]: of(inputVal),
-      }),
-      {}
-    );
-
-    const inputsStreams: InputStreams = {
-      ...inputsFromRemoteResource,
-      ...loadingAndErrorInputs,
-      ...inputsWithInterpolationTracking,
-      ...configsOverride,
-    };
-
-    const debouncedAndDistinctInputs = Object.fromEntries(
-      Object.entries(inputsStreams).map(([inputName, valObs]) => [
-        inputName,
-        valObs.pipe(
-          distinctUntilChanged(isEqual),
-          throttleTime(500, undefined, { leading: true, trailing: true })
-        ),
-      ])
-    ) as InputStreams;
-
-    return debouncedAndDistinctInputs;
-  });
-
-  readonly #componentRequiredInputs: Signal<Record<string, unknown> | undefined> =
-    computedFromObservable(() => {
-      const allInputs = this.#componentInputsStream();
-      const component = this.uiElementComponent();
-
-      if (!allInputs || !component) {
-        return of(undefined);
-      }
-
-      const requiredInputNames = this.getComponentRequiredInputs(component);
-      const streams: Partial<InputStreams> = {};
-      for (const requiredInputName of requiredInputNames) {
-        streams[requiredInputName] = allInputs[requiredInputName];
-      }
-
-      if (Object.keys(streams).length === 0) {
-        return of({});
-      }
-
-      return combineLatest(streams as Record<string, Observable<unknown>>).pipe(
-        first()
-      ) as Observable<Record<string, unknown>>;
-    });
-
   // eslint-disable-next-line no-unused-private-class-members
   readonly #componentSetupEffect = effect((onCleanup) => {
-    const componentInputsStream = this.#componentInputsStream();
+    const componentInputsStream = this.componentInputsStream();
     const componentRef = this.#uiElementComponentRef();
     const uiElementTemplate = this.uiElementTemplate();
-    const elementInterpolationContext = this.#elementInterpolationContext();
+    const elementInterpolationContext = this.elementInterpolationContext();
 
     if (
       !componentInputsStream ||
