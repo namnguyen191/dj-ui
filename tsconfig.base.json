@@ -48,7 +48,9 @@
       "@dj-ui/prime-ng-playground/shared/generated-json-schemas/*": [
         "libs/prime-ng-playground/shared/generated-json-schemas/*"
       ],
-      "@dj-ui/utils": ["libs/shared/utils/src/index.ts"]
+      "@dj-ui/utils": ["libs/shared/utils/src/index.ts"],
+      "@djui/carbon-cool-components": ["libs/carbon-cool-components/src/index.ts"],
+      "@djui/carbon-cool-components/*": ["libs/carbon-cool-components/*/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp", "**/eslint**.js"]

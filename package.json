@@ -67,6 +67,7 @@
     "@angular-devkit/build-angular": "20.1.0",
     "@angular-devkit/core": "20.1.0",
     "@angular-devkit/schematics": "20.1.0",
+    "@angular/build": "20.1.0",
     "@angular/cli": "20.1.0",
     "@angular/compiler-cli": "20.1.0",
     "@angular/language-service": "20.1.0",
@@ -118,6 +119,7 @@
     "typescript": "5.8.3",
     "typescript-eslint": "^8.33.1",
     "typescript-json-schema": "^0.65.1",
+    "verdaccio": "^6.0.5",
     "vite": "6.2.3",
     "vitest": "3.1.1"
   },
@@ -126,5 +128,8 @@
       "flatpickr": "4.6.13",
       "less": "^4.2.1"
     }
+  },
+  "nx": {
+    "includedScripts": []
   }
 }

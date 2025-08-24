@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unnecessary-type-parameters */
 import { DestroyRef, inject } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 
