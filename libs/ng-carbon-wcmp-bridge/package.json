@@ -1,0 +1,9 @@
+{
+  "name": "@dj-ui/ng-carbon-wcmp-bridge",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/core": "^20.1.0",
+    "@carbon/web-components": "~2.36.0"
+  },
+  "sideEffects": false
+}

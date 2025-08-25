@@ -44,6 +44,7 @@
     "@angular/router": "20.1.0",
     "@carbon/icons": "^11.53.0",
     "@carbon/styles": "^1.70.0",
+    "@carbon/web-components": "^2.36.0",
     "@monaco-editor/loader": "^1.5.0",
     "@namnguyen191/common-angular-helper": "1.1.2",
     "@namnguyen191/common-js-helper": "1.1.3",
