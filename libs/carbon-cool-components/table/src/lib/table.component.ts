@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, input } from '@angular/core';
 
 @Component({
   selector: 'ccc-table',
@@ -6,4 +6,7 @@ import { Component } from '@angular/core';
   templateUrl: './table.component.html',
   styleUrl: './table.component.scss',
 })
-export class TableComponent {}
+export class TableComponent {
+  /** Text inside the button */
+  label = input<string>('Default label');
+}

@@ -17,6 +17,7 @@ export default tseslint.config([
       '**/generated-json-schemas/**',
       '**/vite.config.*.timestamp*',
       '**/vitest.config.*.timestamp*',
+      '**/documentation.json',
     ],
   },
   ...nx.configs['flat/base'],

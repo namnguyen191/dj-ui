@@ -1,0 +1,11 @@
+{
+  "extends": "../tsconfig.json",
+  "compilerOptions": {
+    "composite": true,
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true
+  },
+  "exclude": ["../**/*.spec.ts"],
+  "include": ["../**/*.ts", "../**/*.stories.mdx", "*.js", "*.ts"]
+}

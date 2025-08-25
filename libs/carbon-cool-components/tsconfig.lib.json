@@ -22,7 +22,9 @@
     "**/*.test.js",
     "**/*.spec.js",
     "**/*.test.jsx",
-    "**/*.spec.jsx"
+    "**/*.spec.jsx",
+    "**/*.stories.ts",
+    "**/*.stories.js"
   ],
   "include": ["**/*.ts"]
 }
