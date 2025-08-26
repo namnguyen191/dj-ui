@@ -48,15 +48,21 @@ export default tseslint.config([
           depConstraints: [
             {
               sourceTag: 'type:app',
-              onlyDependOnLibsWithTags: ['type:lib', 'type:util', 'type:feat'],
+              onlyDependOnLibsWithTags: [
+                'type:ui',
+                'type:data-access',
+                'type:backend',
+                'type:util',
+                'type:feat',
+              ],
             },
             {
               sourceTag: 'type:feat',
-              onlyDependOnLibsWithTags: ['type:lib', 'type:util'],
+              onlyDependOnLibsWithTags: ['type:ui', 'type:util', 'type:data-access'],
             },
             {
-              sourceTag: 'type:lib',
-              onlyDependOnLibsWithTags: ['type:util', 'type:lib'],
+              sourceTag: 'type:ui',
+              onlyDependOnLibsWithTags: ['type:util', 'type:ui'],
             },
             {
               sourceTag: 'scope:dj-ui-core',
@@ -72,7 +78,28 @@ export default tseslint.config([
             },
             {
               sourceTag: 'scope:prime-ng-playground',
-              onlyDependOnLibsWithTags: ['scope:prime-ng-playground', 'scope:shared'],
+              onlyDependOnLibsWithTags: [
+                'scope:prime-ng-playground',
+                'scope:dj-ui-extension',
+                'scope:dj-ui-core',
+                'scope:shared',
+              ],
+            },
+            {
+              sourceTag: 'design-system:carbon',
+              onlyDependOnLibsWithTags: [
+                'design-system:carbon',
+                'design-system:generic',
+                'type:util',
+              ],
+            },
+            {
+              sourceTag: 'design-system:prime-ng',
+              onlyDependOnLibsWithTags: [
+                'design-system:prime-ng',
+                'design-system:generic',
+                'type:util',
+              ],
             },
           ],
         },

@@ -4,6 +4,6 @@
   "sourceRoot": "libs/prime-ng-playground/features/builder/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": ["type:feat", "scope:prime-ng-playground"],
+  "tags": ["type:feat", "design-system:prime-ng", "scope:prime-ng-playground"],
   "targets": {}
 }

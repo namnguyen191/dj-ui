@@ -4,7 +4,7 @@
   "sourceRoot": "libs/carbon-ext/src",
   "prefix": "dj-ui",
   "projectType": "library",
-  "tags": ["type:lib", "scope:dj-ui-extension", "scope:shared"],
+  "tags": ["type:ui", "design-system:carbon", "scope:dj-ui-extension"],
   "targets": {
     "build": {
       "executor": "@nx/angular:package",

@@ -4,7 +4,7 @@
   "sourceRoot": "libs/core/src",
   "prefix": "core",
   "projectType": "library",
-  "tags": ["type:lib", "scope:dj-ui-core", "scope:shared"],
+  "tags": ["type:ui", "scope:dj-ui-core", "design-system:generic"],
   "targets": {
     "build": {
       "executor": "@nx/angular:package",
