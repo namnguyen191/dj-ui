@@ -1,3 +1,41 @@
 :host {
-  display: block;
+  display: contents;
+
+  .header-row {
+    &:has(.is-resizing) {
+      cursor: ew-resize;
+
+      .header-cell {
+        .resize-handler:not(.is-resizing) {
+          opacity: 0 !important;
+        }
+      }
+    }
+
+    .header-cell {
+      position: relative;
+
+      .resize-handler {
+        opacity: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 5px;
+        height: 100%;
+        background-color: var(--cds-border-strong-01);
+        transition: opacity 250ms ease-in;
+        cursor: ew-resize;
+
+        &.is-resizing {
+          opacity: 1;
+        }
+      }
+
+      &:hover {
+        .resize-handler {
+          opacity: 1;
+        }
+      }
+    }
+  }
 }

@@ -1,1 +1,43 @@
-<p>table works! {{ label() }}</p>
+@let curResColId = currentResizingColumnId();
+<cds-table [style]="columnSizeVars()" [style.width.px]="table.getTotalSize()">
+  <cds-table-head>
+    @for (headerGroup of table.getHeaderGroups(); track headerGroup.id) {
+      <cds-table-header-row class="header-row">
+        @for (headerGroup of headerGroup.headers; track headerGroup.id) {
+          @if (!headerGroup.isPlaceholder) {
+            <ng-container
+              *flexRender="
+                headerGroup.column.columnDef.header;
+                props: headerGroup.getContext();
+                let header
+              "
+            >
+              <cds-table-header-cell class="header-cell" [cccTableResizableCell]="headerGroup.id"
+                >{{ header }}
+                <div
+                  class="resize-handler"
+                  [class.is-resizing]="curResColId === headerGroup.id"
+                  (mousedown)="headerGroup.getResizeHandler()($event)"
+                  (touchstart)="headerGroup.getResizeHandler()($event)"
+                ></div
+              ></cds-table-header-cell>
+            </ng-container>
+          }
+        }
+      </cds-table-header-row>
+    }
+  </cds-table-head>
+  <cds-table-body>
+    @for (row of table.getRowModel().rows; track row.id) {
+      <cds-table-row>
+        @for (cell of row.getVisibleCells(); track cell.id) {
+          <ng-container
+            *flexRender="cell.column.columnDef.cell; props: cell.getContext(); let cell"
+          >
+            <cds-table-cell>{{ cell }}</cds-table-cell>
+          </ng-container>
+        }
+      </cds-table-row>
+    }
+  </cds-table-body>
+</cds-table>
