@@ -24,10 +24,17 @@ jobs:
         with:
           version: 9.14.4
 
-      - name: Install and Build
+      - name: Install
         run: |
           pnpm install
+
+      - name: Build DJ-UI Prime NG Playground Angular App
+        run: |
           pnpm exec nx run prime-ng-playground:build --configuration=production
+
+      - name: Build CCC Components Storybook App
+        run: |
+          pnpm exec nx run carbon-cool-components:build-storybook --output-dir=dist/apps/prime-ng-playground/browser/storybook/carbon-cool-components
 
       - name: Deploy 🚀
         uses: JamesIves/github-pages-deploy-action@v4

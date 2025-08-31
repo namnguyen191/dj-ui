@@ -34,6 +34,8 @@
       "@dj-ui/common/simple-grid-layout": ["libs/common/simple-grid-layout/src/index.ts"],
       "@dj-ui/core": ["libs/core/src/index.ts"],
       "@dj-ui/core/js-interpolation-worker": ["libs/core/js-interpolation-worker/src/index.ts"],
+      "@dj-ui/ng-carbon-wcmp-bridge": ["libs/ng-carbon-wcmp-bridge/src/index.ts"],
+      "@dj-ui/ng-carbon-wcmp-bridge/*": ["libs/ng-carbon-wcmp-bridge/*/src/index.ts"],
       "@dj-ui/prime-ng-ext": ["libs/prime-ng-ext/src/index.ts"],
       "@dj-ui/prime-ng-ext/card": ["libs/prime-ng-ext/card/src/index.ts"],
       "@dj-ui/prime-ng-ext/images-carousel": ["libs/prime-ng-ext/images-carousel/src/index.ts"],
@@ -48,7 +50,9 @@
       "@dj-ui/prime-ng-playground/shared/generated-json-schemas/*": [
         "libs/prime-ng-playground/shared/generated-json-schemas/*"
       ],
-      "@dj-ui/utils": ["libs/shared/utils/src/index.ts"]
+      "@dj-ui/utils": ["libs/shared/utils/src/index.ts"],
+      "@djui/carbon-cool-components": ["libs/carbon-cool-components/src/index.ts"],
+      "@djui/carbon-cool-components/*": ["libs/carbon-cool-components/*/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp", "**/eslint**.js"]

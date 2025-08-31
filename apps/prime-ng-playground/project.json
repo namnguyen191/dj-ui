@@ -4,7 +4,7 @@
   "projectType": "application",
   "prefix": "app",
   "sourceRoot": "apps/prime-ng-playground/src",
-  "tags": ["type:app", "scope:prime-ng-playground"],
+  "tags": ["type:app", "design-system:prime-ng", "scope:prime-ng-playground"],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",

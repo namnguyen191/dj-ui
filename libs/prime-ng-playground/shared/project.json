@@ -4,7 +4,7 @@
   "sourceRoot": "libs/prime-ng-playground/shared/src",
   "prefix": "lib",
   "projectType": "library",
-  "tags": ["type:util", "scope:prime-ng-playground"],
+  "tags": ["type:util", "design-system:prime-ng", "scope:prime-ng-playground"],
   "targets": {
     "generate-json-schema-with-zod": {
       "executor": "nx:run-commands",
