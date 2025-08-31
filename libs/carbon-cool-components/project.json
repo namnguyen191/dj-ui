@@ -59,7 +59,7 @@
         "outputDir": "dist/storybook/carbon-cool-components",
         "configDir": "libs/carbon-cool-components/.storybook",
         "browserTarget": "carbon-cool-components:build-storybook",
-        "compodoc": true,
+        "compodoc": false,
         "compodocArgs": ["-e", "json", "-d", "libs/carbon-cool-components"]
       },
       "configurations": {
