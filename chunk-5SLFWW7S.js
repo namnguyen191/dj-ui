@@ -1,1 +1,0 @@
-import{f as t}from"./chunk-7JQNGYFA.js";import{a as e,u as o}from"./chunk-4YZRLV7F.js";var i="IMAGES_CAROUSEL",l=Symbol("ImagesCarousel"),m=e.string(),a=t.partial(),r=e.union([m,a]),s=e.array(r),p=e.strictObject({images:s.optional()}),c=o(p).describe("PrimeNgImagesCarouselUIESchema");export{i as a,l as b,s as c,p as d,c as e};
