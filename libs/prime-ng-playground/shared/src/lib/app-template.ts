@@ -1,9 +1,15 @@
-import { ZSimpleGridLayoutUIESchema } from '@dj-ui/common/shared';
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
-  type RemoteResourceTemplate,
-  type UIElementTemplate,
-  ZRemoteResourceTemplate,
-} from '@dj-ui/core';
+  generateAppRRTSchemas,
+  generateAppUIESchemas,
+  ZAddToStateActionHook,
+  ZHttpFetcher,
+  ZNavigateActionHook,
+  ZSingleFileUploadFetcher,
+  ZTriggerRemoteResourceActionHook,
+} from '@dj-ui/common';
+import { ZSimpleGridLayoutUIESchema } from '@dj-ui/common/shared';
+import { type RemoteResourceTemplate, type UIElementTemplate } from '@dj-ui/core';
 import {
   ZCardUIESchema,
   ZImagesCarouselUIESchema,
@@ -50,6 +56,12 @@ export type AppRemoteResourceTemplateEditableFields = Omit<
   keyof AppRemoteResourceTemplateUnEditableFields
 >;
 
+const appActionHooks = [
+  ZAddToStateActionHook,
+  ZTriggerRemoteResourceActionHook,
+  ZNavigateActionHook,
+];
+
 // Let TS infer the type here
 // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 export const createAppUIEEditTemplate = (originalTemplate: z.ZodObject) => {
@@ -61,27 +73,42 @@ export const createAppUIEEditTemplate = (originalTemplate: z.ZodObject) => {
     .extend(ZMetaData.shape);
 };
 
-export const ZAppEditSimpleTableUIESchema = createAppUIEEditTemplate(
-  ZSimpleTableUIESchema
-).describe('AppEditPrimeNgSimpleTableUIESchema');
-export const ZAppEditSimpleTextUIESchema = createAppUIEEditTemplate(ZSimpleTextUIESchema).describe(
+const appSchemas = generateAppUIESchemas({
+  uieSchemas: [
+    ZSimpleTableUIESchema,
+    ZSimpleTextUIESchema,
+    ZSimpleImageUIESchema,
+    ZImagesCarouselUIESchema,
+    ZSimpleGridLayoutUIESchema,
+    ZCardUIESchema,
+  ],
+  actionHookSchemas: appActionHooks,
+});
+
+export const ZAppEditSimpleTableUIESchema = createAppUIEEditTemplate(appSchemas[0]!).describe(
+  'AppEditPrimeNgSimpleTableUIESchema'
+);
+export const ZAppEditSimpleTextUIESchema = createAppUIEEditTemplate(appSchemas[1]!).describe(
   'AppEditPrimeNgSimpleTextUIESchema'
 );
-export const ZAppEditSimpleImageUIESchema = createAppUIEEditTemplate(
-  ZSimpleImageUIESchema
-).describe('AppEditPrimeNgSimpleImageUIESchema');
-export const ZAppEditImagesCarouselUIESchema = createAppUIEEditTemplate(
-  ZImagesCarouselUIESchema
-).describe('AppEditPrimeNgImagesCarouselUIESchema');
-export const ZAppEditSimpleGridUIESchema = createAppUIEEditTemplate(
-  ZSimpleGridLayoutUIESchema
-).describe('AppEditSimpleGridUIESchema');
-export const ZAppEditCardUIESchema = createAppUIEEditTemplate(ZCardUIESchema).describe(
+export const ZAppEditSimpleImageUIESchema = createAppUIEEditTemplate(appSchemas[2]!).describe(
+  'AppEditPrimeNgSimpleImageUIESchema'
+);
+export const ZAppEditImagesCarouselUIESchema = createAppUIEEditTemplate(appSchemas[3]!).describe(
+  'AppEditPrimeNgImagesCarouselUIESchema'
+);
+export const ZAppEditSimpleGridUIESchema = createAppUIEEditTemplate(appSchemas[4]!).describe(
+  'AppEditSimpleGridUIESchema'
+);
+export const ZAppEditCardUIESchema = createAppUIEEditTemplate(appSchemas[5]!).describe(
   'AppEditPrimeNgCardUIESchema'
 );
 
-export const ZAppEditRemoteResourceSchema = ZRemoteResourceTemplate.omit({
-  id: true,
+export const ZAppEditRemoteResourceSchema = generateAppRRTSchemas({
+  zRequests: [ZHttpFetcher, ZSingleFileUploadFetcher],
+  zActionHooks: appActionHooks,
 })
-  .extend(ZMetaData.shape)
+  .omit({
+    id: true,
+  })
   .describe('AppEditRemoteResourceSchema');

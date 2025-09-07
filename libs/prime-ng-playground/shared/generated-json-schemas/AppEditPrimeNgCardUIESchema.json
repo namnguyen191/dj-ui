@@ -86,13 +86,13 @@
                   "type": "object",
                   "properties": {
                     "imageUrl": {
-                      "type": "string"
+                      "$ref": "#/$defs/__schema0"
                     },
                     "altLabel": {
-                      "type": "string"
+                      "$ref": "#/$defs/__schema1"
                     },
                     "priority": {
-                      "type": "boolean"
+                      "$ref": "#/$defs/__schema2"
                     }
                   },
                   "additionalProperties": false
@@ -125,13 +125,13 @@
                             "type": "object",
                             "properties": {
                               "imageUrl": {
-                                "type": "string"
+                                "$ref": "#/$defs/__schema0"
                               },
                               "altLabel": {
-                                "type": "string"
+                                "$ref": "#/$defs/__schema1"
                               },
                               "priority": {
-                                "type": "boolean"
+                                "$ref": "#/$defs/__schema2"
                               }
                             },
                             "additionalProperties": false
@@ -164,9 +164,7 @@
       "additionalProperties": false
     },
     "eventsHooks": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": false
+      "type": "null"
     },
     "name": {
       "type": "string"
@@ -180,5 +178,16 @@
     "name",
     "description"
   ],
-  "additionalProperties": false
+  "additionalProperties": false,
+  "$defs": {
+    "__schema0": {
+      "type": "string"
+    },
+    "__schema1": {
+      "type": "string"
+    },
+    "__schema2": {
+      "type": "boolean"
+    }
+  }
 }

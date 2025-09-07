@@ -52,7 +52,10 @@
       ],
       "@dj-ui/utils": ["libs/shared/utils/src/index.ts"],
       "@djui/carbon-cool-components": ["libs/carbon-cool-components/src/index.ts"],
-      "@djui/carbon-cool-components/*": ["libs/carbon-cool-components/*/src/index.ts"]
+      "@djui/carbon-cool-components/*": [
+        "libs/carbon-cool-components/*/src/index.ts",
+        "libs/carbon-cool-components/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp", "**/eslint**.js"]

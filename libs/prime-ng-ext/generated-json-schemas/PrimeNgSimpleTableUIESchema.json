@@ -184,7 +184,8 @@
               "payload": {}
             },
             "required": [
-              "type"
+              "type",
+              "payload"
             ],
             "additionalProperties": false
           }

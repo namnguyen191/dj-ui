@@ -2,6 +2,7 @@ import { inject, Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ZodObjectType } from '@dj-ui/common/shared';
 import {
+  type ActionHook,
   type ActionHookHandler,
   RemoteResourceService,
   StateStoreService,
@@ -21,6 +22,11 @@ export const ZTriggerRemoteResourceHookPayload = z.strictObject(
   }
 );
 export type TriggerRemoteResourceHookPayload = z.infer<typeof ZTriggerRemoteResourceHookPayload>;
+export const ZTriggerRemoteResourceActionHook = z.strictObject({
+  type: z.literal('triggerRemoteResource'),
+  payload: ZTriggerRemoteResourceHookPayload,
+}) satisfies z.ZodType<ActionHook>;
+export type TriggerRemoteResourceActionHook = z.infer<typeof ZTriggerRemoteResourceActionHook>;
 
 export const ZAddToStateActionHookPayload = z.strictObject(
   {
@@ -35,6 +41,11 @@ export const ZAddToStateActionHookPayload = z.strictObject(
   }
 );
 export type AddToStateActionHookPayload = z.infer<typeof ZAddToStateActionHookPayload>;
+export const ZAddToStateActionHook = z.strictObject({
+  type: z.literal('addToState'),
+  payload: ZAddToStateActionHookPayload,
+}) satisfies z.ZodType<ActionHook>;
+export type AddToStateActionHook = z.infer<typeof ZAddToStateActionHook>;
 
 export const ZNavigateHookPayload = z.strictObject(
   {
@@ -49,6 +60,11 @@ export const ZNavigateHookPayload = z.strictObject(
   }
 );
 export type NavigateHookPayload = z.infer<typeof ZNavigateHookPayload>;
+export const ZNavigateActionHook = z.strictObject({
+  type: z.literal('navigate'),
+  payload: ZNavigateHookPayload,
+}) satisfies z.ZodType<ActionHook>;
+export type NavigateActionHook = z.infer<typeof ZNavigateActionHook>;
 
 @Injectable({
   providedIn: 'root',

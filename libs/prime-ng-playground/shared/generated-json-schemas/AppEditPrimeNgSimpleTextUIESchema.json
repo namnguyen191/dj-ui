@@ -75,33 +75,10 @@
                     ]
                   },
                   "styles": {
-                    "type": "object",
-                    "properties": {
-                      "align": {
-                        "type": "string",
-                        "enum": [
-                          "left",
-                          "center",
-                          "right"
-                        ]
-                      },
-                      "weight": {
-                        "type": "number"
-                      },
-                      "size": {
-                        "type": "number"
-                      },
-                      "underline": {
-                        "type": "boolean"
-                      },
-                      "backgroundColor": {
-                        "type": "string"
-                      }
-                    },
-                    "additionalProperties": false
+                    "$ref": "#/$defs/__schema0"
                   },
                   "id": {
-                    "type": "string"
+                    "$ref": "#/$defs/__schema1"
                   },
                   "text": {
                     "type": "string"
@@ -123,33 +100,10 @@
                     ]
                   },
                   "styles": {
-                    "type": "object",
-                    "properties": {
-                      "align": {
-                        "type": "string",
-                        "enum": [
-                          "left",
-                          "center",
-                          "right"
-                        ]
-                      },
-                      "weight": {
-                        "type": "number"
-                      },
-                      "size": {
-                        "type": "number"
-                      },
-                      "underline": {
-                        "type": "boolean"
-                      },
-                      "backgroundColor": {
-                        "type": "string"
-                      }
-                    },
-                    "additionalProperties": false
+                    "$ref": "#/$defs/__schema0"
                   },
                   "id": {
-                    "type": "string"
+                    "$ref": "#/$defs/__schema1"
                   },
                   "text": {
                     "type": "string"
@@ -171,33 +125,10 @@
                     ]
                   },
                   "styles": {
-                    "type": "object",
-                    "properties": {
-                      "align": {
-                        "type": "string",
-                        "enum": [
-                          "left",
-                          "center",
-                          "right"
-                        ]
-                      },
-                      "weight": {
-                        "type": "number"
-                      },
-                      "size": {
-                        "type": "number"
-                      },
-                      "underline": {
-                        "type": "boolean"
-                      },
-                      "backgroundColor": {
-                        "type": "string"
-                      }
-                    },
-                    "additionalProperties": false
+                    "$ref": "#/$defs/__schema0"
                   },
                   "id": {
-                    "type": "string"
+                    "$ref": "#/$defs/__schema1"
                   },
                   "title": {
                     "type": "string"
@@ -250,9 +181,7 @@
       "additionalProperties": false
     },
     "eventsHooks": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": false
+      "type": "null"
     },
     "name": {
       "type": "string"
@@ -266,5 +195,36 @@
     "name",
     "description"
   ],
-  "additionalProperties": false
+  "additionalProperties": false,
+  "$defs": {
+    "__schema0": {
+      "type": "object",
+      "properties": {
+        "align": {
+          "type": "string",
+          "enum": [
+            "left",
+            "center",
+            "right"
+          ]
+        },
+        "weight": {
+          "type": "number"
+        },
+        "size": {
+          "type": "number"
+        },
+        "underline": {
+          "type": "boolean"
+        },
+        "backgroundColor": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false
+    },
+    "__schema1": {
+      "type": "string"
+    }
+  }
 }

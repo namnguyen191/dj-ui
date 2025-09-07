@@ -82,7 +82,7 @@ export class RemoteResourceTemplatesLocalAPIService extends RemoteResourceTempla
       const templateWithCreatedAt = {
         ...template,
         createdAt: new Date().toUTCString(),
-      } as AppRemoteResourceTemplate;
+      } as unknown as AppRemoteResourceTemplate;
       await repo.createOne(templateWithCreatedAt);
     }
   }

@@ -3,6 +3,9 @@ export * from './lib/components/default-ui-element-loading-component/default-ui-
 export * from './lib/core-setup-helpers';
 export * from './lib/directives/emit-on-click.directive';
 export * from './lib/events-filters';
+export * from './lib/generate-app-schemas';
 export * from './lib/loaders';
+export * from './lib/services/data-fetchers/file-upload.service';
 export * from './lib/services/data-fetchers/http-fetcher.service';
+export * from './lib/services/defaut-actions-hooks.service';
 export * from './lib/services/file.service';

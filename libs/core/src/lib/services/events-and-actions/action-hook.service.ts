@@ -1,21 +1,23 @@
 import { Injectable } from '@angular/core';
-import { z, ZodError, ZodType } from 'zod';
+import type { JsonValue } from 'type-fest';
+import { z } from 'zod';
 
-export const ZodActionHook = z.object({
+export type ActionHook<TType extends string = string, TPayload extends JsonValue = JsonValue> = {
+  type: TType;
+  payload?: TPayload;
+};
+export const ZGenericActionHook = z.strictObject({
   type: z.string(),
-  payload: z.any().optional(),
-});
+  payload: z.any(),
+}) satisfies z.ZodType<ActionHook>;
 
-export type ActionHook = z.infer<typeof ZodActionHook>;
-
-export type ActionHookHandler<T extends ActionHook['payload'] = unknown> = (payload: T) => void;
-export type ActionHookPayloadParser = ZodType;
+export type ActionHookHandler<T extends ActionHook['payload']> = (payload: T) => void;
 
 export type ActionHookHandlerAndPayloadParserMap = {
   [hookId: string]: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     handler: ActionHookHandler<any>;
-    payloadParser?: ZodType;
+    actionHookSchema?: z.ZodType<ActionHook>;
   };
 };
 
@@ -25,12 +27,12 @@ export type ActionHookHandlerAndPayloadParserMap = {
 export class ActionHookService {
   #actionHookHandlerAndPayloadParserMap: ActionHookHandlerAndPayloadParserMap = {};
 
-  registerHook<T>(params: {
+  registerHook<T extends ActionHook['payload'] = never>(params: {
     hookId: string;
     handler: ActionHookHandler<T>;
-    payloadParser?: ZodType;
+    actionHookSchema?: z.ZodType<ActionHook>;
   }): void {
-    const { hookId, handler, payloadParser } = params;
+    const { hookId, handler, actionHookSchema } = params;
     const existing = this.#actionHookHandlerAndPayloadParserMap[hookId];
     if (existing) {
       console.warn(`The hook ${hookId} has already existed. Registering it again will override it`);
@@ -38,16 +40,16 @@ export class ActionHookService {
 
     this.#actionHookHandlerAndPayloadParserMap[hookId] = {
       handler,
-      payloadParser,
+      actionHookSchema,
     };
   }
 
   registerHooks(handlersAndParsersMap: ActionHookHandlerAndPayloadParserMap): void {
-    Object.entries(handlersAndParsersMap).forEach(([hookId, { handler, payloadParser }]) => {
+    Object.entries(handlersAndParsersMap).forEach(([hookId, { handler, actionHookSchema }]) => {
       this.registerHook({
         hookId,
         handler,
-        payloadParser,
+        actionHookSchema,
       });
     });
   }
@@ -60,12 +62,13 @@ export class ActionHookService {
       return;
     }
 
-    const payloadParser = this.#actionHookHandlerAndPayloadParserMap[hook.type]?.payloadParser;
-    if (payloadParser) {
+    const actionHookSchema =
+      this.#actionHookHandlerAndPayloadParserMap[hook.type]?.actionHookSchema;
+    if (actionHookSchema) {
       try {
-        payloadParser.parse(hook.payload);
+        actionHookSchema.parse(hook.payload);
       } catch (error) {
-        if (error instanceof ZodError) {
+        if (error instanceof z.ZodError) {
           console.warn(
             `Receiving: ${JSON.stringify(hook)} which is an invalid hook: ${error.message}`
           );

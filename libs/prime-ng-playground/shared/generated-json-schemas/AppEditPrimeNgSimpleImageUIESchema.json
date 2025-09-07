@@ -74,9 +74,7 @@
       "additionalProperties": false
     },
     "eventsHooks": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": false
+      "type": "null"
     },
     "name": {
       "type": "string"

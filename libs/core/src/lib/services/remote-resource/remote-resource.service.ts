@@ -29,10 +29,10 @@ import {
   type StateSubscriptionConfig,
 } from '../state-store.service';
 import {
+  type RemoteResourceRequest,
   type RemoteResourceTemplate,
   RemoteResourceTemplateService,
   type RemoteResourceTemplateWithStatus,
-  type Request,
 } from '../templates/remote-resource-template.service';
 import { BaseRemoteResourceService } from './base-remote-resource.service';
 import type {
@@ -131,7 +131,7 @@ export class RemoteResourceService extends BaseRemoteResourceService {
   }
 
   #processRequestsInSequence(
-    requests: Request[],
+    requests: RemoteResourceRequest[],
     stateSubscriptionConfig?: StateSubscriptionConfig
   ): Observable<unknown> {
     let currentRequestIndex = 0;
@@ -172,7 +172,7 @@ export class RemoteResourceService extends BaseRemoteResourceService {
   }
 
   #processRequestsInParallel(
-    requests: Request[],
+    requests: RemoteResourceRequest[],
     stateSubscriptionConfig?: StateSubscriptionConfig
   ): Observable<unknown[]> {
     return this.#interpolateParallelRequestOptions(requests, stateSubscriptionConfig).pipe(
@@ -264,7 +264,7 @@ export class RemoteResourceService extends BaseRemoteResourceService {
   }
 
   #interpolateSequencedRequestOptions(args: {
-    req: Request;
+    req: RemoteResourceRequest;
     accumulatedRequestsResults: unknown[];
     stateSubscriptionConfig?: StateSubscriptionConfig;
   }): Observable<UnknownRecord> {
@@ -292,7 +292,7 @@ export class RemoteResourceService extends BaseRemoteResourceService {
   }
 
   #interpolateParallelRequestOptions(
-    reqs: Request[],
+    reqs: RemoteResourceRequest[],
     stateSubscriptionConfig?: StateSubscriptionConfig
   ): Observable<FetcherIdToConfigMap> {
     const currentState$: Observable<StateMap | null> = stateSubscriptionConfig
@@ -321,7 +321,7 @@ export class RemoteResourceService extends BaseRemoteResourceService {
   }
 
   #interpolateSequencedRequestResult(
-    req: Request,
+    req: RemoteResourceRequest,
     requestResult: unknown,
     accumulatedRequestsResults: unknown[]
   ): Observable<unknown> {
@@ -351,7 +351,7 @@ export class RemoteResourceService extends BaseRemoteResourceService {
   }
 
   #interpolateParallelRequestsResult(args: {
-    reqs: Request[];
+    reqs: RemoteResourceRequest[];
     responses: unknown[];
     stateSubscriptionConfig?: StateSubscriptionConfig;
   }): Observable<unknown[]> {

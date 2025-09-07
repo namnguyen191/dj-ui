@@ -3,7 +3,7 @@ import '@angular/compiler';
 import * as fs from 'fs';
 import { z } from 'zod';
 
-import { ZRemoteResourceTemplate } from './src/lib/services/templates/remote-resource-template.service';
+import { ZGenericRemoteResourceTemplate } from './src/lib/services/templates/remote-resource-template.service';
 
 const generateJSONSchemaFromZodTypes = (zodTypes: z.ZodType[]): void => {
   for (const zt of zodTypes) {
@@ -17,4 +17,4 @@ const generateJSONSchemaFromZodTypes = (zodTypes: z.ZodType[]): void => {
   }
 };
 
-generateJSONSchemaFromZodTypes([ZRemoteResourceTemplate]);
+generateJSONSchemaFromZodTypes([ZGenericRemoteResourceTemplate]);

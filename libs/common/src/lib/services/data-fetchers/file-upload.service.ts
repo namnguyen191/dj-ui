@@ -1,12 +1,24 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import type { DataFetcher } from '@dj-ui/core';
+import { createZRemoteResourceRequest, type DataFetcher } from '@dj-ui/core';
+import { z } from 'zod';
 
 export type SingleFileUploadFetcherConfigs = {
   endpoint: string;
   file: File;
   responseType?: 'text' | 'json';
 };
+
+export const ZSingleFileUploadFetcherConfigs = z.strictObject({
+  endpoint: z.string(),
+  responseType: z.union([z.literal('text'), z.literal('json')]).optional(),
+  file: z.string(),
+});
+
+export const ZSingleFileUploadFetcher = createZRemoteResourceRequest(
+  'fileUpload',
+  ZSingleFileUploadFetcherConfigs
+);
 
 @Injectable({
   providedIn: 'root',
