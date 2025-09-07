@@ -15,7 +15,9 @@ import {
 
 const generateJSONSchemaFromZodTypes = (zodTypes: z.ZodType[]): void => {
   for (const zt of zodTypes) {
-    const jsonSchema = z.toJSONSchema(zt);
+    const jsonSchema = z.toJSONSchema(zt, {
+      reused: 'ref',
+    });
     const outFolder = `./generated-json-schemas`;
     const outFile = `${outFolder}/${zt.description ?? 'NoDescription'}.json`;
     if (!fs.existsSync(outFolder)) {

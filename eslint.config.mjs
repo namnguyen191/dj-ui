@@ -168,6 +168,7 @@ export default tseslint.config([
             'zod-to-json-schema',
             '@analogjs/vitest-angular',
             '@angular/platform-browser',
+            'type-fest',
           ],
         },
       ],

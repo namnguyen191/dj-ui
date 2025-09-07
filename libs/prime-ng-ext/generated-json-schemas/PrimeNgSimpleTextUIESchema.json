@@ -256,9 +256,7 @@
       "additionalProperties": false
     },
     "eventsHooks": {
-      "type": "object",
-      "properties": {},
-      "additionalProperties": false
+      "type": "null"
     }
   },
   "required": [

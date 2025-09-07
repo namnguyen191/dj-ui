@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
+import type { UnknownRecord } from 'type-fest';
 import { z } from 'zod';
 
 import { ZUIElementBaseConfigs } from '../../components/base-ui-element.component';
-import { type ActionHook, ZodActionHook } from '../events-and-actions/action-hook.service';
-import { ZStateSubscriptionConfig } from '../state-store.service';
+import { type ActionHook, ZGenericActionHook } from '../events-and-actions/action-hook.service';
+import { type StateSubscriptionConfig, ZStateSubscriptionConfig } from '../state-store.service';
 import { BaseTemplateService, type MissingTemplateEvent } from './base-template.service';
 import type { ConfigWithStatus } from './shared-types';
 
@@ -19,40 +20,72 @@ export type UnknownEvent = z.infer<typeof ZUnknownEvent>;
 export const ZNoEvent = z.literal('no-event');
 export type NoEvent = z.infer<typeof ZNoEvent>;
 
-export const createEventsToHooksMapSchema = <T extends string>(
-  events: T[]
+export const createEventsToHooksMapSchema = <
+  TEvent extends string,
+  const TZActionHook extends z.ZodType<ActionHook>,
+>(
+  events: TEvent[],
+  zActionHooks: TZActionHook[]
 ): z.ZodType<{
-  [K in T]?: ActionHook[];
+  [K in TEvent]?: z.infer<TZActionHook>[];
 }> => {
   let zObj = z.object({});
   for (const evt of events) {
-    zObj = zObj.extend({
-      [evt]: z.array(ZodActionHook).optional(),
-    });
+    if (zActionHooks.length) {
+      zObj = zObj.extend({
+        [evt]: z.array(z.union(zActionHooks)).optional(),
+      });
+    } else {
+      zObj = zObj.extend({
+        [evt]: z.array(ZGenericActionHook).optional(),
+      });
+    }
   }
 
   return zObj as unknown as z.ZodType<{
-    [K in T]?: ActionHook[];
+    [K in TEvent]?: z.infer<TZActionHook>[];
   }>;
 };
 
-export const ZBaseTemplateSchema = z.strictObject({
+export type UIETemplate<
+  TType extends string = string,
+  TOptions extends UnknownRecord = Record<string, unknown>,
+  TEvent extends string = string,
+  TActionHook extends ActionHook = ActionHook,
+> = {
+  id: string;
+  type: TType;
+  options: TOptions;
+  remoteResourceIds?: string[];
+  stateSubscription?: StateSubscriptionConfig;
+  eventsHooks?: {
+    [K in TEvent]: TActionHook[];
+  };
+};
+export const ZBaseUIETemplate = z.strictObject({
   id: z.string(),
   type: z.string(),
   remoteResourceIds: z.array(z.string()).optional(),
   stateSubscription: ZStateSubscriptionConfig.optional(),
-});
+  options: z.object(),
+}) satisfies z.ZodType<UIETemplate>;
+
 export const createUIElementTemplateSchema = <
   TConfigs extends z.ZodRawShape,
   TEvent extends string,
+  const TActionHook extends ActionHook,
+  const TZActionHook extends z.ZodType<TActionHook>,
 >(
-  configs: z.ZodObject<TConfigs>,
-  events: TEvent[] = []
+  zConfigs: z.ZodObject<TConfigs>,
+  events: TEvent[] = [],
+  zActionHooks?: TZActionHook[]
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
 ) => {
-  return ZBaseTemplateSchema.extend({
-    options: createUIElementTemplateOptionsSchema(configs),
-    eventsHooks: createEventsToHooksMapSchema(events).optional(),
+  return ZBaseUIETemplate.extend({
+    options: createUIElementTemplateOptionsSchema(zConfigs),
+    eventsHooks: events.length
+      ? createEventsToHooksMapSchema(events, zActionHooks ?? []).optional()
+      : z.null().optional(),
   }).strict();
 };
 export const ZBaseUIElementTemplate = createUIElementTemplateSchema(z.object({}), []);

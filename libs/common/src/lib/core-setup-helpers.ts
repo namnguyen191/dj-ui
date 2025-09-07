@@ -39,9 +39,9 @@ import { FileUploadService } from './services/data-fetchers/file-upload.service'
 import { HttpFetcherService } from './services/data-fetchers/http-fetcher.service';
 import {
   DefaultActionsHooksService,
-  ZAddToStateActionHookPayload,
-  ZNavigateHookPayload,
-  ZTriggerRemoteResourceHookPayload,
+  ZAddToStateActionHook,
+  ZNavigateActionHook,
+  ZTriggerRemoteResourceActionHook,
 } from './services/defaut-actions-hooks.service';
 import { FileService } from './services/file.service';
 
@@ -52,15 +52,15 @@ export const registerDefaultHook = (): void => {
   const actionHookHandlerAndPayloadParserMap: ActionHookHandlerAndPayloadParserMap = {
     addToState: {
       handler: defaultActionsHooksService.handleAddToState,
-      payloadParser: ZAddToStateActionHookPayload,
+      actionHookSchema: ZAddToStateActionHook,
     },
     triggerRemoteResource: {
       handler: defaultActionsHooksService.handleTriggerRemoteResource,
-      payloadParser: ZTriggerRemoteResourceHookPayload,
+      actionHookSchema: ZTriggerRemoteResourceActionHook,
     },
     navigate: {
       handler: defaultActionsHooksService.navigate,
-      payloadParser: ZNavigateHookPayload,
+      actionHookSchema: ZNavigateActionHook,
     },
   };
 
