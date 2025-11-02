@@ -84,9 +84,9 @@ export class UIElementRendererDirective extends BaseUIElementRendererDirective {
         uiElementWrapperComponent.setInput('uiElementComponentRef', createdUIElementComponent);
 
         componentRef = createdUIElementComponent;
+      } else {
+        componentRef = this.viewContainerRef.createComponent(uiElementComp);
       }
-
-      componentRef = this.viewContainerRef.createComponent(uiElementComp);
 
       for (const [inputName, inputVal] of Object.entries(requiredInputs)) {
         componentRef.setInput(inputName, inputVal);

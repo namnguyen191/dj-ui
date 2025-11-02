@@ -14,7 +14,7 @@ import {
 } from '@dj-ui/common/shared';
 import type { Template } from '@dj-ui/core';
 import {
-  type ActionHookHandlerAndPayloadParserMap,
+  type ActionHookHandlerAndParserMap,
   ActionHookService,
   DataFetchingService,
   ELEMENT_RENDERER_CONFIG,
@@ -49,7 +49,7 @@ export const registerDefaultHook = (): void => {
   const defaultActionsHooksService = inject(DefaultActionsHooksService);
   const actionHookService = inject(ActionHookService);
 
-  const actionHookHandlerAndPayloadParserMap: ActionHookHandlerAndPayloadParserMap = {
+  const ActionHookHandlerAndParserMap: ActionHookHandlerAndParserMap = {
     addToState: {
       handler: defaultActionsHooksService.handleAddToState,
       actionHookSchema: ZAddToStateActionHook,
@@ -64,7 +64,7 @@ export const registerDefaultHook = (): void => {
     },
   };
 
-  actionHookService.registerHooks(actionHookHandlerAndPayloadParserMap);
+  actionHookService.registerHooks(ActionHookHandlerAndParserMap);
 };
 
 export const registerSimpleHttpDataFetcher = (): void => {

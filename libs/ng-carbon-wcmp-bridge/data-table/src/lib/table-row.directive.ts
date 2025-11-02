@@ -1,10 +1,29 @@
 import '@carbon/web-components/es/components/data-table/table-row.js';
 
-import { Directive } from '@angular/core';
+import { Directive, input } from '@angular/core';
 import type CDSTableRow from '@carbon/web-components/es/components/data-table/table-row.js';
-import { CDSBaseDirective } from '@dj-ui/ng-carbon-wcmp-bridge/shared';
+import { CDSBaseDirective, type CDSDirectiveImpl } from '@dj-ui/ng-carbon-wcmp-bridge/shared';
 
 @Directive({
   selector: 'cds-table-row',
 })
-export class CDSTableRowDirective extends CDSBaseDirective<CDSTableRow> {}
+export class CDSTableRowDirective
+  extends CDSBaseDirective<CDSTableRow>
+  implements CDSDirectiveImpl<CDSTableRow>
+{
+  batchExpansion = input<boolean>();
+  disabled = input<boolean>();
+  even = input<boolean>();
+  expandable = input<boolean>();
+  expanded = input<boolean>();
+  filtered = input<boolean>();
+  hideCheckbox = input<boolean>();
+  highlighted = input<boolean>();
+  odd = input<boolean>();
+  overflowMenuOnHover = input<boolean>();
+  radio = input<boolean>();
+  selected = input<boolean>();
+  selectionLabel = input<string>();
+  selectionName = input<string>();
+  selectionValue = input<string>();
+}
