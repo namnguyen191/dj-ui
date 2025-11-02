@@ -13,7 +13,7 @@ export const ZGenericActionHook = z.strictObject({
 
 export type ActionHookHandler<T extends ActionHook['payload']> = (payload: T) => void;
 
-export type ActionHookHandlerAndPayloadParserMap = {
+export type ActionHookHandlerAndParserMap = {
   [hookId: string]: {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     handler: ActionHookHandler<any>;
@@ -25,7 +25,7 @@ export type ActionHookHandlerAndPayloadParserMap = {
   providedIn: 'root',
 })
 export class ActionHookService {
-  #actionHookHandlerAndPayloadParserMap: ActionHookHandlerAndPayloadParserMap = {};
+  #ActionHookHandlerAndParserMap: ActionHookHandlerAndParserMap = {};
 
   registerHook<T extends ActionHook['payload'] = never>(params: {
     hookId: string;
@@ -33,18 +33,18 @@ export class ActionHookService {
     actionHookSchema?: z.ZodType<ActionHook>;
   }): void {
     const { hookId, handler, actionHookSchema } = params;
-    const existing = this.#actionHookHandlerAndPayloadParserMap[hookId];
+    const existing = this.#ActionHookHandlerAndParserMap[hookId];
     if (existing) {
       console.warn(`The hook ${hookId} has already existed. Registering it again will override it`);
     }
 
-    this.#actionHookHandlerAndPayloadParserMap[hookId] = {
+    this.#ActionHookHandlerAndParserMap[hookId] = {
       handler,
       actionHookSchema,
     };
   }
 
-  registerHooks(handlersAndParsersMap: ActionHookHandlerAndPayloadParserMap): void {
+  registerHooks(handlersAndParsersMap: ActionHookHandlerAndParserMap): void {
     Object.entries(handlersAndParsersMap).forEach(([hookId, { handler, actionHookSchema }]) => {
       this.registerHook({
         hookId,
@@ -55,18 +55,17 @@ export class ActionHookService {
   }
 
   triggerActionHook(hook: ActionHook): void {
-    const handler = this.#actionHookHandlerAndPayloadParserMap[hook.type]?.handler;
+    const handler = this.#ActionHookHandlerAndParserMap[hook.type]?.handler;
     if (!handler) {
       console.warn(`No handler for hook ${hook.type}`);
 
       return;
     }
 
-    const actionHookSchema =
-      this.#actionHookHandlerAndPayloadParserMap[hook.type]?.actionHookSchema;
+    const actionHookSchema = this.#ActionHookHandlerAndParserMap[hook.type]?.actionHookSchema;
     if (actionHookSchema) {
       try {
-        actionHookSchema.parse(hook.payload);
+        actionHookSchema.parse(hook);
       } catch (error) {
         if (error instanceof z.ZodError) {
           console.warn(

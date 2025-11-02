@@ -6,6 +6,19 @@ import eslintPluginSimpleImportSort from 'eslint-plugin-simple-import-sort';
 import jsonParser from 'jsonc-eslint-parser';
 import tseslint from 'typescript-eslint';
 
+export const depsCheckIgnoredList = [
+  '@nx/devkit',
+  'vite',
+  '@analogjs/vite-plugin-angular',
+  '@nx/vite',
+  '@angular/compiler',
+  'zod-to-json-schema',
+  '@analogjs/vitest-angular',
+  '@angular/platform-browser',
+  'type-fest',
+  'jsonc-eslint-parser',
+];
+
 export default tseslint.config([
   {
     ignores: [
@@ -159,17 +172,7 @@ export default tseslint.config([
       '@nx/dependency-checks': [
         'error',
         {
-          ignoredDependencies: [
-            '@nx/devkit',
-            'vite',
-            '@analogjs/vite-plugin-angular',
-            '@nx/vite',
-            '@angular/compiler',
-            'zod-to-json-schema',
-            '@analogjs/vitest-angular',
-            '@angular/platform-browser',
-            'type-fest',
-          ],
+          ignoredDependencies: depsCheckIgnoredList,
         },
       ],
     },

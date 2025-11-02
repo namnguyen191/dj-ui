@@ -110,6 +110,7 @@
     "jsdom": "26.1.0",
     "jsonc-eslint-parser": "2.4.0",
     "lint-staged": "16.1.2 ",
+    "lit": "^3.3.1",
     "madge": "8.0.0",
     "ng-packagr": "20.1.0",
     "nx": "21.2.3",
